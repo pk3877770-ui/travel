@@ -1,0 +1,50 @@
+{
+    "\/": {
+        "title": "Karmana | Luxury Flights, Hotels &amp; Bespoke Travel",
+        "description": "Premium flights, five-star hotels, and curated packages with Karmana. Elite concierge, 24\/7 support, and exclusive rates worldwide.",
+        "keywords": "Karmana, luxury travel concierge, flight booking, hotel booking, holiday packages, bespoke travel, premium travel India",
+        "canonical": "http:\/\/localhost:3000\/",
+        "og_url": "http:\/\/localhost:3000\/",
+        "publisher": "http:\/\/localhost:3000\/",
+        "robots": "index, follow"
+    },
+    "\/flight-booking": {
+        "title": "Sovereign Skies | Luxury Flight Booking | Karmana",
+        "description": "Access unpublished rates and priority routing across 500+ global airlines. Experience elevated aviation with Karmana.",
+        "keywords": "business class flights, first class travel, private jet booking, luxury air travel",
+        "canonical": "https:\/\/karmana.com\/flight-booking"
+    },
+    "\/hotel-booking": {
+        "title": "Your Sanctuary of Grace | Luxury Hotel Booking | Karmana",
+        "description": "Preferred access to the world's most celebrated Five-Star properties and private estates.",
+        "keywords": "luxury hotels, 5 star resorts, boutique villas, exclusive stays",
+        "canonical": "https:\/\/karmana.com\/hotel-booking"
+    },
+    "\/about": {
+        "title": "About Karmana | Redefining the Art of Travel",
+        "description": "Learn about Karmana's commitment to excellence in luxury travel concierge services.",
+        "keywords": "about karmana, luxury travel agency, concierge services",
+        "canonical": "https:\/\/karmana.com\/about"
+    },
+    "\/contact": {
+        "title": "Contact Our Elite Concierge | Karmana",
+        "description": "Our global travel experts are available 24\/7 to orchestrate your next extraordinary journey.",
+        "keywords": "contact karmana, luxury travel support, travel concierge contact",
+        "canonical": "https:\/\/karmana.com\/contact"
+    },
+    "\/services": {
+        "title": "Bespoke Travel Services | Karmana",
+        "description": "From private jets to five-star accommodations, discover our suite of elite travel services.",
+        "keywords": "travel services, private jet hire, luxury concierge",
+        "canonical": "https:\/\/karmana.com\/services"
+    },
+    "\/terms": {
+        "title": "Terms of Service | Bookings, Payments  Liability | Karmana",
+        "description": "The legal terms and conditions governing your use of the Karmana platform.",
+        "keywords": "terms and conditions, legal, karmana",
+        "canonical": "http:\/\/localhost:3000\/terms",
+        "og_url": "",
+        "publisher": "",
+        "robots": "index, follow"
+    }
+}

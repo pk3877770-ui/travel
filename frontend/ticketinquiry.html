@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Inquiry | PNR Status &amp; Booking Lookup | Karmana</title>
+    <meta name="description" content="Check your Karmana flight: enter PNR, mobile, and airline for status, itinerary, seat, and gate. Manage bookings securely online.">
+    <meta name="keywords" content="PNR status, ticket inquiry, flight booking lookup, Karmana PNR, airline ticket check, booking confirmation">
+    <meta name="author" content="Karmana">
+    <meta name="publisher" content="Karmana">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="canonical" href="/ticketinquiry.html">
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Karmana">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ticketinquiry.html">
+    <meta property="og:title" content="Ticket Inquiry | PNR Status &amp; Booking Lookup | Karmana">
+    <meta property="og:description" content="Check your Karmana flight: enter PNR, mobile, and airline for status, itinerary, seat, and gate. Manage bookings securely online.">
+    <meta property="og:image" content="https://karmana.com/images/hero.jpg">
+    <meta property="og:image:secure_url" content="https://karmana.com/images/hero.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Karmana flight ticket inquiry and PNR lookup">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="/ticketinquiry.html">
+    <meta name="twitter:title" content="Ticket Inquiry | PNR Status &amp; Booking Lookup | Karmana">
+    <meta name="twitter:description" content="Check your Karmana flight: enter PNR, mobile, and airline for status, itinerary, seat, and gate. Manage bookings securely online.">
+    <meta name="twitter:image" content="https://karmana.com/images/hero.jpg">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <!-- Style -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .ticket-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .ticket-hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .ticket-hero p {
+            font-size: 1.3em;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .inquiry-section {
+            background: white;
+            padding: 80px 0;
+        }
+
+        .inquiry-form {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .inquiry-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+        }
+
+        .form-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.2em;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 18px;
+            left: 70px;
+            color: var(--slate-500);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 20px 20px 20px 70px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label,
+        .input-group select:focus + label,
+        .input-group select:valid + label {
+            top: -10px;
+            left: 70px;
+            font-size: 13px;
+            color: var(--accent);
+            background: white;
+            padding: 0 8px;
+        }
+
+        .input-group.select-group label {
+            position: relative;
+            top: 0;
+            left: 0;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--slate-600);
+            font-size: 0.95rem;
+            pointer-events: none;
+        }
+
+        .input-group.select-group .input-icons {
+            position: absolute;
+            left: 24px;
+            top: calc(50% + 14px);
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--slate-400);
+            z-index: 2;
+        }
+
+        .input-icons {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--slate-400);
+            z-index: 2;
+        }
+
+        .track-btn {
+            width: 100%;
+            padding: 22px;
+            background: linear-gradient(45deg, var(--accent), #ea580c);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .track-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.4);
+        }
+
+        .track-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .loading {
+            display: none;
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
+
+        .results-section {
+            display: none;
+            margin-top: 40px;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ticket-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .pnr-status {
+            background: rgba(255,255,255,0.2);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .status-confirmed { background: rgba(16, 185, 129, 0.3); }
+        .status-delayed { background: rgba(245, 158, 11, 0.3); }
+        .status-cancelled { background: rgba(239, 68, 68, 0.3); }
+
+        .ticket-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .detail-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .detail-label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .flight-route {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .route-cities {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .flight-number {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .no-results {
+            text-align: center;
+            color: var(--slate-500);
+            font-size: 1.2em;
+            padding: 60px 20px;
+        }
+
+        @media (max-width: 768px) {
+            .ticket-hero h1 {
+                font-size: 2em;
+            }
+
+            .inquiry-form {
+                padding: 30px 25px;
+            }
+
+            .ticket-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header (Loaded via script.js) -->
+    <div id="header"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="ticket-hero">
+            <div class="container">
+                <h1><i class="fas fa-search me-3"></i>Ticket Inquiry</h1>
+                <h2 class="visually-hidden">Check PNR status, booking details, and manage Karmana flight reservations</h2>
+                <p>Check your flight ticket status and manage your bookings with ease</p>
+            </div>
+        </section>
+
+        <!-- Inquiry Section -->
+        <section class="inquiry-section" aria-labelledby="ticket-track-heading">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="inquiry-form" data-aos="fade-up">
+                            <h2 id="ticket-track-heading" class="form-title">Track Your Ticket</h2>
+                            <h3 class="visually-hidden">Enter PNR, registered mobile number, and airline to retrieve ticket details</h3>
+
+                            <form id="inquiryForm">
+                                <div class="input-group">
+                                    <span class="input-icons"><i class="fas fa-ticket-alt"></i></span>
+                                    <input type="text" id="pnr" placeholder=" " maxlength="6" required>
+                                    <label for="pnr">PNR Number</label>
+                                </div>
+
+                                <div class="input-group">
+                                    <span class="input-icons"><i class="fas fa-mobile-alt"></i></span>
+                                    <input type="text" id="mobile" placeholder=" " maxlength="10" required>
+                                    <label for="mobile">Registered Mobile</label>
+                                </div>
+
+                                <div class="input-group select-group">
+                                    <label for="airline">Airline</label>
+                                    <span class="input-icons"><i class="fas fa-plane"></i></span>
+                                    <select id="airline" required>
+                                        <option value="">Select Airline</option>
+                                        <option value="AI">Air India (AI)</option>
+                                        <option value="6E">IndiGo (6E)</option>
+                                        <option value="SG">SpiceJet (SG)</option>
+                                        <option value="G8">GoFirst (G8)</option>
+                                        <option value="UK">Vistara (UK)</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="track-btn" id="trackBtn">
+                                    <i class="fas fa-search me-2"></i>Track Ticket
+                                </button>
+                                <button type="submit" class="track-btn loading" id="loadingBtn" disabled>
+                                    <i class="fas fa-spinner fa-spin me-2"></i>Searching...
+                                </button>
+                            </form>
+
+                            <!-- Results Section -->
+                            <div id="resultsSection" class="results-section">
+                                <div id="ticketResult" class="ticket-card">
+                                    <!-- Dynamic content here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Loaded via script.js) -->
+    <div id="footer"></div>
+
+    <!-- Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        document.getElementById('inquiryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const pnr = document.getElementById('pnr').value.toUpperCase();
+            const mobile = document.getElementById('mobile').value;
+            const airline = document.getElementById('airline').value;
+
+            // Validation
+            if (pnr.length !== 6 || !/^[A-Z0-9]{6}$/.test(pnr)) {
+                alert('❌ Please enter a valid 6-digit PNR (A-Z, 0-9)');
+                return;
+            }
+
+            if (!/^\d{10}$/.test(mobile)) {
+                alert('❌ Please enter a valid 10-digit mobile number');
+                return;
+            }
+
+            if (!airline) {
+                alert('❌ Please select an airline');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('trackBtn').style.display = 'none';
+            document.getElementById('loadingBtn').style.display = 'block';
+
+            // Simulate API call
+            setTimeout(() => {
+                document.getElementById('loadingBtn').style.display = 'none';
+                document.getElementById('trackBtn').style.display = 'block';
+
+                showTicketResult(pnr, mobile, airline);
+            }, 2500);
+        });
+
+        function showTicketResult(pnr, mobile, airline) {
+            const resultsSection = document.getElementById('resultsSection');
+            const ticketResult = document.getElementById('ticketResult');
+
+            // Random status for demo (real app mein API se aayega)
+            const statuses = [
+                { status: 'Confirmed', class: 'status-confirmed', code: 'CNF' },
+                { status: 'Delayed', class: 'status-delayed', code: 'DLY' },
+                { status: 'On Time', class: 'status-confirmed', code: 'ONT' },
+                { status: 'Cancelled', class: 'status-cancelled', code: 'CNL' }
+            ];
+
+            const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+
+            ticketResult.innerHTML = `
+                <h3 class="visually-hidden">Ticket lookup result summary</h3>
+                <div class="ticket-header">
+                    <div>
+                        <h4><i class="fas fa-check-circle me-2"></i>Booking Found!</h4>
+                        <div class="pnr-status ${randomStatus.class}">
+                            ${randomStatus.status} (${randomStatus.code})
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 14px; opacity: 0.8;">Booking ID</div>
+                        <div style="font-size: 22px; font-weight: 700;">KAR${pnr}</div>
+                    </div>
+                </div>
+
+                <div class="flight-route">
+                    <div class="route-cities">DEL → BOM</div>
+                    <div class="flight-number">${airline}672</div>
+                    <div style="margin-top: 15px; opacity: 0.9;">
+                        <i class="fas fa-plane-departure me-2"></i>14:30 |
+                        <i class="fas fa-plane-arrival me-2"></i>16:15 |
+                        <i class="fas fa-clock me-2"></i>1h 45m
+                    </div>
+                </div>
+
+                <div class="ticket-details">
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-calendar me-1"></i>Date</div>
+                        <div class="detail-value">15 Dec 2024</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-user me-1"></i>Passenger</div>
+                        <div class="detail-value">RAHUL KUMAR</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-chair me-1"></i>Seat</div>
+                        <div class="detail-value">12A (Window)</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-door-open me-1"></i>Gate</div>
+                        <div class="detail-value">B12</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-suitcase me-1"></i>Baggage</div>
+                        <div class="detail-value">15kg ✓</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-rupee-sign me-1"></i>Amount</div>
+                        <div class="detail-value">₹4,299</div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <a href="#" class="action-btn btn-primary"><i class="fas fa-check-in me-2"></i>Web Check-in</a>
+                    <a href="#" class="action-btn btn-secondary"><i class="fas fa-download me-2"></i>Download eTicket</a>
+                    <a href="#" class="action-btn btn-secondary"><i class="fas fa-times me-2"></i>Cancel Ticket</a>
+                    <a href="#" class="action-btn btn-secondary"><i class="fas fa-plus me-2"></i>Add Baggage</a>
+                </div>
+                <h5 class="visually-hidden">Self-service actions: web check-in, eTicket download, cancel, add baggage</h5>
+                <h6 class="visually-hidden">Demo PNR lookup itinerary and passenger details</h6>
+            `;
+
+            resultsSection.style.display = 'block';
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Auto-format mobile number
+        document.getElementById('mobile').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '').slice(0, 10);
+            e.target.value = value;
+        });
+
+        // PNR uppercase
+        document.getElementById('pnr').addEventListener('input', function(e) {
+            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        });
+    </script>
+</body>
+
+</html>

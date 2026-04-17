@@ -1,0 +1,286 @@
+"use client";
+
+import React from "react";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { Search, MapPin, Calendar, Users, Star, Crown, Heart, Clock, ShieldCheck, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const hotelCollection = [
+  {
+    id: 1,
+    name: "Azure Sands Resort",
+    location: "North Goa",
+    reviews: "1,247",
+    rating: "4.9",
+    price: "₹2,999",
+    oldPrice: "₹4,500",
+    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+    tags: ["TOP RATED", "Beachfront"],
+  },
+  {
+    id: 2,
+    name: "The Majestic Palace",
+    location: "Mumbai",
+    reviews: "2,563",
+    rating: "5.0",
+    price: "₹8,999",
+    oldPrice: "₹12,000",
+    image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&h=400&fit=crop",
+    tags: ["LEGENDARY", "Sea View"],
+  },
+  {
+    id: 3,
+    name: "Lumina Gardens",
+    location: "New Delhi",
+    reviews: "892",
+    rating: "4.7",
+    price: "₹1,999",
+    oldPrice: "₹3,500",
+    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=400&fit=crop",
+    tags: ["MODERN", "Urban Boutique"],
+  },
+];
+
+const perks = [
+  {
+    icon: Crown,
+    title: "VVIP Status",
+    desc: "Automatic upgrades and preferred treatment across our partner properties.",
+  },
+  {
+    icon: Heart,
+    title: "Curated Perks",
+    desc: "Complimentary breakfast, resort credits, and bespoke welcome amenities.",
+  },
+  {
+    icon: Clock,
+    title: "Flexible Check",
+    desc: "Guaranteed early check-in and late check-out for our elite members.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Assured Rates",
+    desc: "Access to unpublished private rates and price-match guarantee.",
+  },
+];
+
+export default function HotelBooking() {
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const params = new URLSearchParams();
+    formData.forEach((value, key) => {
+      if (value) params.append(key, value.toString());
+    });
+    router.push(`/hotel-booking?${params.toString()}`);
+  };
+
+  return (
+    <main className="min-h-screen bg-white dark:bg-slate-950">
+      {/* Hero Section */}
+      <section className="relative h-[80vh] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/40 to-white dark:to-slate-950 z-10" />
+          <img
+            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80"
+            alt="Hotel Hero"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        <div className="container max-w-7xl mx-auto px-6 relative z-20 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="inline-block bg-accent/20 text-accent px-6 py-2 rounded-full font-bold text-sm tracking-widest mb-6 border border-accent/20">
+              LUXURY RESIDENCIES
+            </span>
+            <h1 className="text-6xl md:text-8xl font-bold font-outfit text-white mb-6 leading-tight">
+              Your Sanctuary of <span className="text-accent">Grace</span>
+            </h1>
+            <p className="text-xl text-slate-200 mb-12 max-w-2xl mx-auto font-inter leading-relaxed">
+              Preferred access to the world's most celebrated Five-Star properties and private estates.
+            </p>
+
+            {/* Specialized Hotel Search */}
+            <div className="max-w-5xl mx-auto bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl p-8 md:p-12 text-left border border-slate-100 dark:border-slate-800">
+              <form onSubmit={handleSearch} className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-end">
+                <div className="lg:col-span-4 space-y-2">
+                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Destination or Property</label>
+                  <div className="relative group">
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50" />
+                    <input
+                      type="text"
+                      name="destination"
+                      placeholder="e.g. Kyoto, Maldives, St. Regis..."
+                      defaultValue="Goa, India"
+                      className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Check-in</label>
+                  <div className="relative group">
+                    <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50" />
+                    <input
+                      type="date"
+                      name="checkin"
+                      className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium appearance-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Check-out</label>
+                  <div className="relative group">
+                    <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50" />
+                    <input
+                      type="date"
+                      name="checkout"
+                      className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium appearance-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Travelers</label>
+                  <div className="relative group">
+                    <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50" />
+                    <select 
+                      name="travelers"
+                      className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium appearance-none cursor-pointer"
+                    >
+                      <option>2 Adults, 0 Children</option>
+                      <option>1 Adult</option>
+                      <option>Family (2+2)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    className="w-full bg-primary text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-primary-light transition-all shadow-xl shadow-primary/20 hover:-translate-y-1 active:scale-95"
+                  >
+                    <Search className="w-6 h-6" />
+                    Find Stays
+                  </button>
+                </div>
+              </form>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Signature Hotel Collection */}
+      <section className="py-24">
+        <div className="container max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <span className="text-accent font-black tracking-[0.3em] text-sm uppercase">Hand-picked Gems</span>
+            <h2 className="text-4xl md:text-5xl font-bold font-outfit mt-4 mb-6">Signature Hotel Collection</h2>
+            <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {hotelCollection.map((hotel, idx) => (
+              <motion.div
+                key={hotel.id}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none hover:-translate-y-2 transition-all duration-500"
+              >
+                <div className="relative h-72 overflow-hidden">
+                  <div className="absolute top-6 right-6 z-10 bg-accent text-primary px-4 py-2 rounded-full font-black text-xs">
+                    {hotel.tags[0]}
+                  </div>
+                  <img
+                    src={hotel.image}
+                    alt={hotel.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+                <div className="p-8">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-accent font-bold text-sm flex items-center gap-1">
+                      <Star className="w-4 h-4 fill-accent" /> {hotel.rating} ({hotel.reviews} Reviews)
+                    </span>
+                    <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 text-xs px-3 py-1 rounded-full">
+                      {hotel.tags[1]}
+                    </span>
+                  </div>
+                  <h3 className="text-2xl font-bold font-outfit mb-2">{hotel.name}</h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">{hotel.location} | Private Beach | World-Class Spa</p>
+                  
+                  <div className="flex justify-between items-center pt-6 border-t border-slate-100 dark:border-slate-800">
+                    <div>
+                      <span className="text-slate-400 text-sm line-through block">{hotel.oldPrice}</span>
+                      <span className="text-2xl font-black text-primary dark:text-accent">
+                        {hotel.price}
+                        <span className="text-slate-400 text-xs font-normal ml-1">/night</span>
+                      </span>
+                    </div>
+                    <button className="border-2 border-primary dark:border-accent text-primary dark:text-accent hover:bg-primary hover:text-white dark:hover:bg-accent dark:hover:text-primary px-6 py-3 rounded-2xl font-bold transition-all">
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Advantage Perks */}
+      <section className="py-24 bg-slate-50 dark:bg-slate-900">
+        <div className="container max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <span className="text-accent font-black tracking-[0.3em] text-sm uppercase">The Karmana Advantage</span>
+            <h2 className="text-4xl md:text-5xl font-bold font-outfit mt-4 mb-6">Elevating Your Stay Experience</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {perks.map((perk, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white dark:bg-slate-800 p-10 rounded-[2rem] text-center border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-200/50 dark:shadow-none hover:-translate-y-2 transition-all"
+              >
+                <div className="w-20 h-20 rounded-3xl bg-accent/10 flex items-center justify-center mx-auto mb-8">
+                  <perk.icon className="w-10 h-10 text-accent" />
+                </div>
+                <h4 className="text-2xl font-bold font-outfit mb-4">{perk.title}</h4>
+                <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                  {perk.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Explore Collection CTA */}
+      <section className="py-24 bg-secondary relative overflow-hidden">
+        <div className="container max-w-5xl mx-auto px-6 relative z-10 text-center text-white">
+          <h2 className="text-4xl md:text-6xl font-black font-outfit mb-8">Ready for True Sanctuary?</h2>
+          <p className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto">
+            Our members enjoy priority access to seasonal openings and unpublished private estate rates.
+          </p>
+          <button className="bg-accent hover:bg-accent-hover text-primary px-12 py-6 rounded-full font-black text-xl transition-all hover:-translate-y-2 shadow-2xl hover:shadow-accent/40 flex items-center gap-4 mx-auto">
+            Access Private Collection <ArrowRight className="w-6 h-6" />
+          </button>
+        </div>
+      </section>
+    </main>
+  );
+}
