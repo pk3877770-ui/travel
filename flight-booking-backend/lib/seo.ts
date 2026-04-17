@@ -1,6 +1,6 @@
 import { unstable_noStore as noStore } from 'next/cache';
-import fs from 'fs';
-import path from 'path';
+import dbConnect from './mongodb';
+import SeoMeta from '@/models/SeoMeta';
 
 export interface SEOData {
   title: string;
@@ -17,13 +17,12 @@ export interface SEORegistry {
 }
 
 /**
- * Fetches SEO metadata from the shared JSON file
+ * Fetches SEO metadata from MongoDB
  * @param routePath The current route (e.g., '/', '/about')
  * @returns SEOData object with defaults if not found
  */
 export async function getSEOMetadata(routePath: string): Promise<SEOData> {
   noStore();
-  const filePath = path.join(process.cwd(), 'public', 'seo-data.json');
   
   const defaultSEO: SEOData = {
     title: "Karmana | Luxury Travel Redefined",
@@ -36,16 +35,24 @@ export async function getSEOMetadata(routePath: string): Promise<SEOData> {
   };
 
   try {
-    if (!fs.existsSync(filePath)) {
+    await dbConnect();
+    const doc = await SeoMeta.findOne({ pagePath: routePath }).lean();
+
+    if (!doc) {
       return defaultSEO;
     }
 
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    const seoRegistry: SEORegistry = JSON.parse(fileContent);
-
-    return seoRegistry[routePath] || defaultSEO;
+    return {
+      title: doc.title || defaultSEO.title,
+      description: doc.description || defaultSEO.description,
+      keywords: doc.keywords || defaultSEO.keywords,
+      canonical: doc.canonical || defaultSEO.canonical,
+      og_url: doc.og_url || defaultSEO.og_url,
+      publisher: doc.publisher || defaultSEO.publisher,
+      robots: doc.robots || defaultSEO.robots,
+    };
   } catch (error) {
-    console.error('Error reading SEO metadata:', error);
+    console.error('Error reading SEO metadata from DB:', error);
     return defaultSEO;
   }
 }

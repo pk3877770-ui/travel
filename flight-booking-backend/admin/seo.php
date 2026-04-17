@@ -4,7 +4,7 @@
  * This script manages the SEO metadata stored in public/seo-data.json
  */
 
-$dataFile = '../public/seo-data.json';
+$dataFile = __DIR__ . '/../public/seo-data.json';
 $message = '';
 $status = '';
 

@@ -1,10 +1,26 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { logoutAction } from '../login/actions';
-import { promises as fs } from 'fs';
-import path from 'path';
+import dbConnect from '@/lib/mongodb';
+import SeoMeta from '@/models/SeoMeta';
 import SeoForm from './SeoForm';
 import Link from 'next/link';
+
+// All known site pages for the sidebar
+const ALL_PAGES = [
+  '/',
+  '/about',
+  '/contact',
+  '/flight-booking',
+  '/hotel-booking',
+  '/holiday-packages',
+  '/services',
+  '/terms',
+  '/privacy',
+  '/refund',
+  '/help-center',
+  '/ticket-inquiry',
+];
 
 export default async function SeoAdminPage({ searchParams }: { searchParams: Promise<{ edit?: string }> }) {
   const cookieStore = await cookies();
@@ -17,16 +33,19 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
   const { edit } = await searchParams;
   const currentPage = edit || '/';
 
-  const dataFile = path.join(process.cwd(), 'public', 'seo-data.json');
-  let seoData: Record<string, any> = {};
-  try {
-      const fileData = await fs.readFile(dataFile, 'utf8');
-      seoData = JSON.parse(fileData);
-  } catch(e) {
-      seoData = {};
-  }
+  await dbConnect();
+  const allDocs = await SeoMeta.find({}).lean();
   
-  const currentMetadata = seoData[currentPage] || {
+  // Build a map of existing DB entries
+  const seoMap: Record<string, any> = {};
+  allDocs.forEach((doc: any) => {
+    seoMap[doc.pagePath] = doc;
+  });
+
+  // Merge ALL_PAGES with any extra DB entries to ensure sidebar always shows all pages
+  const allPaths = [...new Set([...ALL_PAGES, ...Object.keys(seoMap)])];
+  
+  const currentMetadata = seoMap[currentPage] || {
       title: '',
       description: '',
       keywords: '',
@@ -54,9 +73,10 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
 
         {/* Scrollable Nav Area */}
         <nav className="flex-1 w-full overflow-y-auto px-6 py-8 flex flex-col gap-2 custom-scrollbar">
-            {Object.keys(seoData).map((pagePath) => {
+            {allPaths.map((pagePath) => {
                 const isActive = currentPage === pagePath;
                 const linkName = pagePath === '/' ? 'Home Page' : pagePath.replace(/[-/]/g, ' ').trim().replace(/\b\w/g, c => c.toUpperCase());
+                const hasData = !!seoMap[pagePath];
                 return (
                     <Link 
                         key={pagePath} 
@@ -69,7 +89,7 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
                     >
                         {/* Interactive Dot */}
                         <div className={`w-1.5 h-1.5 rounded-full mr-4 transition-all duration-500 ${
-                            isActive ? 'bg-slate-900 scale-125' : 'bg-transparent group-hover:bg-amber-500/50'
+                            isActive ? 'bg-slate-900 scale-125' : hasData ? 'bg-emerald-500' : 'bg-transparent group-hover:bg-amber-500/50'
                         }`}></div>
                         <span className="relative text-sm tracking-wide">{linkName}</span>
                     </Link>
