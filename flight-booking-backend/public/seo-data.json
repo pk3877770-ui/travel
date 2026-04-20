@@ -39,8 +39,8 @@
     "title": "Luxury Hotel Booking | Five-Star Stays | Karmana",
     "description": "Discover and book luxury hotels and resorts worldwide. Exclusive rates on 5-star properties curated by Karmana.",
     "keywords": "book hotels, luxury hotels, resort booking, 5 star hotels",
-    "canonical": "https://flight-booking-backend-gold.vercel.app/hotel-booking",
-    "og_url": "https://flight-booking-backend-gold.vercel.app/hotel-booking",
+    "canonical": "https:\/\/flight-booking-backend-gold.vercel.app\/hotel-booking",
+    "og_url": "https:\/\/flight-booking-backend-gold.vercel.app\/hotel-booking",
     "publisher": "https:\/\/flight-booking-backend-gold.vercel.app",
     "robots": "index, follow"
   },
