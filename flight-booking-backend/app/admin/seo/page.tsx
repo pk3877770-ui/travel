@@ -1,8 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { logoutAction } from '../login/actions';
-import dbConnect from '@/lib/mongodb';
-import SeoMeta from '@/models/SeoMeta';
+import { getAllSEOData, isMongoAvailable } from '@/lib/seo';
 import SeoForm from './SeoForm';
 import Link from 'next/link';
 
@@ -33,16 +32,10 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
   const { edit } = await searchParams;
   const currentPage = edit || '/';
 
-  await dbConnect();
-  const allDocs = await SeoMeta.find({}).lean();
-  
-  // Build a map of existing DB entries
-  const seoMap: Record<string, any> = {};
-  allDocs.forEach((doc: any) => {
-    seoMap[doc.pagePath] = doc;
-  });
+  const seoMap = await getAllSEOData();
+  const mongoAvailable = await isMongoAvailable();
 
-  // Merge ALL_PAGES with any extra DB entries to ensure sidebar always shows all pages
+  // Merge ALL_PAGES with any extra entries to ensure sidebar always shows all pages
   const allPaths = [...new Set([...ALL_PAGES, ...Object.keys(seoMap)])];
   
   const currentMetadata = seoMap[currentPage] || {
@@ -58,11 +51,6 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
   return (
     <div className="flex bg-[#020617] text-slate-50 font-sans min-h-screen">
       
-      {/* 
-        Fixed Sidebar for absolute bottom control
-        1. h-screen & sticky: Fills the viewport perfectly and never scrolls away
-        2. flex-col & overflow: The middle section scrolls if there are too many pages
-      */}
       <aside className="w-[320px] h-screen sticky top-0 bg-slate-900/40 backdrop-blur-3xl border-r border-white/10 flex flex-col items-center shadow-[10px_0_30px_-15px_rgba(0,0,0,0.5)] z-20">
         
         {/* Header Block */}
@@ -97,10 +85,7 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
             })}
         </nav>
 
-        {/* 
-          Absolute Bottom Logout Block
-          mt-auto forces this container to adhere flush to the bottom
-        */}
+        {/* Bottom Logout Block */}
         <div className="w-full p-6 bg-slate-900/30 border-t border-white/5 mt-auto shadow-[0_-10px_30px_-15px_rgba(0,0,0,0.5)]">
             <form action={logoutAction}>
                 <button className="w-full text-center px-4 py-4 bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl font-bold tracking-widest text-[10px] uppercase hover:bg-red-500 hover:text-white hover:shadow-[0_0_20px_rgba(239,68,68,0.3)] transition-all duration-300">
@@ -128,7 +113,14 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
                 </p>
             </header>
 
-            <SeoForm key={currentPage} currentPage={currentPage} currentMetadata={currentMetadata} />
+            {!mongoAvailable && (
+                <div className="p-5 mb-10 rounded-2xl border flex items-center gap-4 font-semibold text-sm bg-amber-500/10 border-amber-500/20 text-amber-400 animate-in fade-in zoom-in-95 duration-300">
+                    <div className="w-3 h-3 rounded-full bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]"></div>
+                    Read-only mode: MONGODB_URI not configured. Data loaded from seo-data.json. To enable editing, add MONGODB_URI to Vercel environment variables.
+                </div>
+            )}
+
+            <SeoForm key={currentPage} currentPage={currentPage} currentMetadata={currentMetadata} readOnly={!mongoAvailable} />
         </div>
       </main>
       

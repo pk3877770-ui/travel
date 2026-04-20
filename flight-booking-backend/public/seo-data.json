@@ -1,110 +1,110 @@
 {
-  "/": {
-    "title": "Karmana | Luxury Travel Redefined",
-    "description": "Experience the art of travel with Karmana's premium concierge services. Book luxury flights, hotels, and curated holiday packages.",
-    "keywords": "luxury travel, concierge, flights, hotels, Karmana",
-    "canonical": "https://flight-booking-backend-gold.vercel.app/",
-    "og_url": "https://karmana.com/",
-    "publisher": "https://karmana.com",
-    "robots": "index, follow"
-  },
-  "/about": {
-    "title": "About Us | Karmana Luxury Travel",
-    "description": "Learn about Karmana's mission to redefine luxury travel with world-class concierge services and curated experiences.",
-    "keywords": "about Karmana, luxury travel company, travel concierge, our story",
-    "canonical": "https://karmana.com/about",
-    "og_url": "https://karmana.com/about",
-    "publisher": "https://karmana.com",
-    "robots": "index, follow"
-  },
-  "/contact": {
-    "title": "Contact Us | Karmana Luxury Travel",
-    "description": "Get in touch with Karmana's travel experts. We're here to help you plan your perfect luxury journey.",
-    "keywords": "contact Karmana, travel support, customer service, luxury travel contact",
-    "canonical": "https://karmana.com/contact",
-    "og_url": "https://karmana.com/contact",
-    "publisher": "https://karmana.com",
-    "robots": "index, follow"
-  },
-  "/flight-booking": {
-    "title": "Book Flights | Karmana Luxury Travel",
-    "description": "Search and book premium flights worldwide with Karmana. Enjoy exclusive deals on business and first-class airfare.",
-    "keywords": "book flights, luxury flights, business class, first class, flight booking",
-    "canonical": "https://karmana.com/flight-booking",
-    "og_url": "https://karmana.com/flight-booking",
-    "publisher": "https://karmana.com",
-    "robots": "index, follow"
-  },
-  "/hotel-booking": {
-    "title": "Book Hotels | Karmana Luxury Travel",
-    "description": "Discover and book luxury hotels and resorts worldwide. Exclusive rates on 5-star properties curated by Karmana.",
-    "keywords": "book hotels, luxury hotels, resort booking, 5 star hotels",
-    "canonical": "https://karmana.com/hotel-booking",
-    "og_url": "https://karmana.com/hotel-booking",
-    "publisher": "https://karmana.com",
-    "robots": "index, follow"
-  },
-  "/holiday-packages": {
-    "title": "Holiday Packages | Karmana Luxury Travel",
-    "description": "Explore all-inclusive luxury holiday packages. Curated journeys with flights, hotels, and private transfers included.",
-    "keywords": "holiday packages, luxury vacation, all inclusive travel, curated holidays",
-    "canonical": "https://flight-booking-backend-gold.vercel.app/holiday-packages",
-    "og_url": "https://karmana.com/holiday-packages",
-    "publisher": "https://karmana.com",
-    "robots": "index, follow"
-  },
-  "/services": {
-    "title": "Our Services | Karmana Luxury Travel",
-    "description": "Explore Karmana's premium travel services including flight booking, hotel reservations, visa assistance, and concierge support.",
-    "keywords": "travel services, concierge, visa assistance, luxury travel services",
-    "canonical": "https://karmana.com/services",
-    "og_url": "https://karmana.com/services",
-    "publisher": "https://karmana.com",
-    "robots": "index, follow"
-  },
-  "/terms": {
-    "title": "Terms & Conditions | Karmana Luxury Travel",
-    "description": "Read Karmana's terms and conditions governing the use of our luxury travel services and website.",
-    "keywords": "terms and conditions, travel terms, Karmana policies, legal",
-    "canonical": "https://karmana.com/terms",
-    "og_url": "https://karmana.com/terms",
-    "publisher": "https://karmana.com",
-    "robots": "index, follow"
-  },
-  "/privacy": {
-    "title": "Privacy Policy | Karmana Luxury Travel",
-    "description": "Understand how Karmana collects, uses, and protects your personal data when using our travel services.",
-    "keywords": "privacy policy, data protection, personal data, Karmana privacy",
-    "canonical": "https://karmana.com/privacy",
-    "og_url": "https://karmana.com/privacy",
-    "publisher": "https://karmana.com",
-    "robots": "index, follow"
-  },
-  "/refund": {
-    "title": "Refund Policy | Karmana Luxury Travel",
-    "description": "Learn about Karmana's refund and cancellation policies for flights, hotels, and holiday packages.",
-    "keywords": "refund policy, cancellation, travel refund, booking cancellation",
-    "canonical": "https://karmana.com/refund",
-    "og_url": "https://karmana.com/refund",
-    "publisher": "https://karmana.com",
-    "robots": "index, follow"
-  },
-  "/help-center": {
-    "title": "Help Center | Karmana Luxury Travel",
-    "description": "Find answers to frequently asked questions and get support for your Karmana travel bookings.",
-    "keywords": "help center, FAQ, travel support, customer help, Karmana support",
-    "canonical": "https://karmana.com/help-center",
-    "og_url": "https://karmana.com/help-center",
-    "publisher": "https://karmana.com",
-    "robots": "index, follow"
-  },
-  "/ticket-inquiry": {
-    "title": "Ticket Inquiry | Karmana Luxury Travel",
-    "description": "Check the status of your ticket or PNR. Track your bookings and get real-time updates on your travel plans.",
-    "keywords": "ticket inquiry, PNR status, booking status, ticket tracking",
-    "canonical": "https://karmana.com/ticket-inquiry",
-    "og_url": "https://karmana.com/ticket-inquiry",
-    "publisher": "https://karmana.com",
-    "robots": "index, follow"
-  }
+    "\/": {
+        "title": "Karmana | Luxury Flights, Hotels Bespoke Travel",
+        "description": "Experience the art of travel with Karmana's premium concierge services. Book luxury flights, hotels, and curated holiday packages.",
+        "keywords": "luxury travel, concierge, flights, hotels, Karmana",
+        "canonical": "https:\/\/flight-booking-backend-gold.vercel.app\/",
+        "og_url": "https:\/\/karmana.com\/",
+        "publisher": "https:\/\/karmana.com",
+        "robots": "index, follow"
+    },
+    "\/about": {
+        "title": "About Us | Karmana Luxury Travel",
+        "description": "Learn about Karmana's mission to redefine luxury travel with world-class concierge services and curated experiences.",
+        "keywords": "about Karmana, luxury travel company, travel concierge, our story",
+        "canonical": "https:\/\/karmana.com\/about",
+        "og_url": "https:\/\/karmana.com\/about",
+        "publisher": "https:\/\/karmana.com",
+        "robots": "index, follow"
+    },
+    "\/contact": {
+        "title": "Contact Us | Karmana Luxury Travel",
+        "description": "Get in touch with Karmana's travel experts. We're here to help you plan your perfect luxury journey.",
+        "keywords": "contact Karmana, travel support, customer service, luxury travel contact",
+        "canonical": "https:\/\/karmana.com\/contact",
+        "og_url": "https:\/\/karmana.com\/contact",
+        "publisher": "https:\/\/karmana.com",
+        "robots": "index, follow"
+    },
+    "\/flight-booking": {
+        "title": "Book Flights | Karmana Luxury Travel",
+        "description": "Search and book premium flights worldwide with Karmana. Enjoy exclusive deals on business and first-class airfare.",
+        "keywords": "book flights, luxury flights, business class, first class, flight booking",
+        "canonical": "https:\/\/karmana.com\/flight-booking",
+        "og_url": "https:\/\/karmana.com\/flight-booking",
+        "publisher": "https:\/\/karmana.com",
+        "robots": "index, follow"
+    },
+    "\/hotel-booking": {
+        "title": "Book Hotels | Karmana Luxury Travel",
+        "description": "Discover and book luxury hotels and resorts worldwide. Exclusive rates on 5-star properties curated by Karmana.",
+        "keywords": "book hotels, luxury hotels, resort booking, 5 star hotels",
+        "canonical": "https:\/\/karmana.com\/hotel-booking",
+        "og_url": "https:\/\/karmana.com\/hotel-booking",
+        "publisher": "https:\/\/karmana.com",
+        "robots": "index, follow"
+    },
+    "\/holiday-packages": {
+        "title": "Holiday Packages | Karmana Luxury Travel",
+        "description": "Explore all-inclusive luxury holiday packages. Curated journeys with flights, hotels, and private transfers included.",
+        "keywords": "holiday packages, luxury vacation, all inclusive travel, curated holidays",
+        "canonical": "https:\/\/flight-booking-backend-gold.vercel.app\/holiday-packages",
+        "og_url": "https:\/\/karmana.com\/holiday-packages",
+        "publisher": "https:\/\/karmana.com",
+        "robots": "index, follow"
+    },
+    "\/services": {
+        "title": "Our Services | Karmana Luxury Travel",
+        "description": "Explore Karmana's premium travel services including flight booking, hotel reservations, visa assistance, and concierge support.",
+        "keywords": "travel services, concierge, visa assistance, luxury travel services",
+        "canonical": "https:\/\/karmana.com\/services",
+        "og_url": "https:\/\/karmana.com\/services",
+        "publisher": "https:\/\/karmana.com",
+        "robots": "index, follow"
+    },
+    "\/terms": {
+        "title": "Terms & Conditions | Karmana Luxury Travel",
+        "description": "Read Karmana's terms and conditions governing the use of our luxury travel services and website.",
+        "keywords": "terms and conditions, travel terms, Karmana policies, legal",
+        "canonical": "https:\/\/karmana.com\/terms",
+        "og_url": "https:\/\/karmana.com\/terms",
+        "publisher": "https:\/\/karmana.com",
+        "robots": "index, follow"
+    },
+    "\/privacy": {
+        "title": "Privacy Policy | Karmana Luxury Travel",
+        "description": "Understand how Karmana collects, uses, and protects your personal data when using our travel services.",
+        "keywords": "privacy policy, data protection, personal data, Karmana privacy",
+        "canonical": "https:\/\/karmana.com\/privacy",
+        "og_url": "https:\/\/karmana.com\/privacy",
+        "publisher": "https:\/\/karmana.com",
+        "robots": "index, follow"
+    },
+    "\/refund": {
+        "title": "Refund Policy | Karmana Luxury Travel",
+        "description": "Learn about Karmana's refund and cancellation policies for flights, hotels, and holiday packages.",
+        "keywords": "refund policy, cancellation, travel refund, booking cancellation",
+        "canonical": "https:\/\/karmana.com\/refund",
+        "og_url": "https:\/\/karmana.com\/refund",
+        "publisher": "https:\/\/karmana.com",
+        "robots": "index, follow"
+    },
+    "\/help-center": {
+        "title": "Help Center | Karmana Luxury Travel",
+        "description": "Find answers to frequently asked questions and get support for your Karmana travel bookings.",
+        "keywords": "help center, FAQ, travel support, customer help, Karmana support",
+        "canonical": "https:\/\/karmana.com\/help-center",
+        "og_url": "https:\/\/karmana.com\/help-center",
+        "publisher": "https:\/\/karmana.com",
+        "robots": "index, follow"
+    },
+    "\/ticket-inquiry": {
+        "title": "Ticket Inquiry | Karmana Luxury Travel",
+        "description": "Check the status of your ticket or PNR. Track your bookings and get real-time updates on your travel plans.",
+        "keywords": "ticket inquiry, PNR status, booking status, ticket tracking",
+        "canonical": "https:\/\/karmana.com\/ticket-inquiry",
+        "og_url": "https:\/\/karmana.com\/ticket-inquiry",
+        "publisher": "https:\/\/karmana.com",
+        "robots": "index, follow"
+    }
 }

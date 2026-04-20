@@ -1,6 +1,6 @@
 import { unstable_noStore as noStore } from 'next/cache';
-import dbConnect from './mongodb';
-import SeoMeta from '@/models/SeoMeta';
+import fs from 'fs';
+import path from 'path';
 
 export interface SEOData {
   title: string;
@@ -17,7 +17,47 @@ export interface SEORegistry {
 }
 
 /**
- * Fetches SEO metadata from MongoDB
+ * Try to connect to MongoDB and read SEO data.
+ * Returns null if MongoDB is unavailable.
+ */
+async function tryMongoRead(routePath: string): Promise<SEOData | null> {
+  try {
+    const dbConnect = (await import('./mongodb')).default;
+    const SeoMeta = (await import('@/models/SeoMeta')).default;
+    await dbConnect();
+    const doc = await SeoMeta.findOne({ pagePath: routePath }).lean();
+    if (!doc) return null;
+    return {
+      title: doc.title || '',
+      description: doc.description || '',
+      keywords: doc.keywords || '',
+      canonical: doc.canonical || '',
+      og_url: doc.og_url || '',
+      publisher: doc.publisher || '',
+      robots: doc.robots || 'index, follow',
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Read SEO data from the JSON file fallback.
+ */
+function readJsonFile(routePath: string): SEOData | null {
+  try {
+    const filePath = path.join(process.cwd(), 'public', 'seo-data.json');
+    if (!fs.existsSync(filePath)) return null;
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    const registry: SEORegistry = JSON.parse(fileContent);
+    return registry[routePath] || null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Fetches SEO metadata. Tries MongoDB first, falls back to JSON file.
  * @param routePath The current route (e.g., '/', '/about')
  * @returns SEOData object with defaults if not found
  */
@@ -34,26 +74,54 @@ export async function getSEOMetadata(routePath: string): Promise<SEOData> {
     robots: "index, follow"
   };
 
+  // Try MongoDB first
+  const mongoData = await tryMongoRead(routePath);
+  if (mongoData) return { ...defaultSEO, ...mongoData };
+
+  // Fallback to JSON file
+  const jsonData = readJsonFile(routePath);
+  if (jsonData) return { ...defaultSEO, ...jsonData };
+
+  return defaultSEO;
+}
+
+/**
+ * Reads all SEO entries. Tries MongoDB first, falls back to JSON file.
+ */
+export async function getAllSEOData(): Promise<Record<string, any>> {
   try {
+    const dbConnect = (await import('./mongodb')).default;
+    const SeoMeta = (await import('@/models/SeoMeta')).default;
     await dbConnect();
-    const doc = await SeoMeta.findOne({ pagePath: routePath }).lean();
-
-    if (!doc) {
-      return defaultSEO;
+    const allDocs = await SeoMeta.find({}).lean();
+    const map: Record<string, any> = {};
+    allDocs.forEach((doc: any) => {
+      map[doc.pagePath] = doc;
+    });
+    return map;
+  } catch {
+    // Fallback to JSON file
+    try {
+      const filePath = path.join(process.cwd(), 'public', 'seo-data.json');
+      if (!fs.existsSync(filePath)) return {};
+      const fileContent = fs.readFileSync(filePath, 'utf8');
+      return JSON.parse(fileContent);
+    } catch {
+      return {};
     }
+  }
+}
 
-    return {
-      title: doc.title || defaultSEO.title,
-      description: doc.description || defaultSEO.description,
-      keywords: doc.keywords || defaultSEO.keywords,
-      canonical: doc.canonical || defaultSEO.canonical,
-      og_url: doc.og_url || defaultSEO.og_url,
-      publisher: doc.publisher || defaultSEO.publisher,
-      robots: doc.robots || defaultSEO.robots,
-    };
-  } catch (error) {
-    console.error('Error reading SEO metadata from DB:', error);
-    return defaultSEO;
+/**
+ * Checks if MongoDB is available
+ */
+export async function isMongoAvailable(): Promise<boolean> {
+  try {
+    const dbConnect = (await import('./mongodb')).default;
+    await dbConnect();
+    return true;
+  } catch {
+    return false;
   }
 }
 
