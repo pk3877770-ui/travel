@@ -54,11 +54,11 @@
     "robots": "index, follow"
   },
   "\/services": {
-    "title": "Our Services | Karmana Luxury Travel",
+    "title": "Travel Services | Private Jets, Hotels Concierge | Karmana",
     "description": "Explore Karmana's premium travel services including flight booking, hotel reservations, visa assistance, and concierge support.",
     "keywords": "travel services, concierge, visa assistance, luxury travel services",
-    "canonical": "https:\/\/flight-booking-backend-gold.vercel.app\/services",
-    "og_url": "https:\/\/flight-booking-backend-gold.vercel.app\/services",
+    "canonical": "https://flight-booking-backend-gold.vercel.app/services",
+    "og_url": "https://flight-booking-backend-gold.vercel.app/services",
     "publisher": "https:\/\/karmana.com",
     "robots": "index, follow"
   },
