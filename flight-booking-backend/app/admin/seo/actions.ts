@@ -20,17 +20,23 @@ export async function saveSeoData(prevState: any, formData: FormData) {
         const result = await updateSEOData(pageKey, data);
 
         if (result.success) {
-            const targetName = result.target === 'mongodb' ? 'Cloud Database' : 'Local JSON Cache';
+            let targetName = 'Cloud Database';
+            if (result.target === 'json') targetName = 'Local JSON Cache';
+            if (result.target === 'virtual') targetName = 'Session Memory (Virtual Sync)';
+
             return { 
-                message: `Success: Metadata for ${pageKey} synchronized to ${targetName}!`, 
+                message: `Success: Metadata for ${pageKey} updated via ${targetName}!`, 
                 status: 'success', 
-                timestamp: Date.now() 
+                timestamp: Date.now(),
+                target: result.target,
+                fullData: result.fullData // Return the updated data registry for virtual sync
             };
         } else {
             return { 
                 message: `Failure: ${result.error || 'Unknown error occurred during sync.'}`, 
                 status: 'error', 
-                timestamp: Date.now() 
+                timestamp: Date.now(),
+                fullData: result.fullData
             };
         }
     } catch (e: any) {

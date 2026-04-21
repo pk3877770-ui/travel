@@ -35,7 +35,6 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
   const seoMap = await getAllSEOData();
   const mongoAvailable = await isMongoAvailable();
   const isDev = process.env.NODE_ENV !== 'production';
-  const canEdit = mongoAvailable || isDev;
 
   // Merge ALL_PAGES with any extra entries to ensure sidebar always shows all pages
   const allPaths = [...new Set([...ALL_PAGES, ...Object.keys(seoMap)])];
@@ -51,18 +50,26 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
   };
 
   return (
-    <div className="flex bg-[#020617] text-slate-50 font-sans min-h-screen">
+    <div className="flex bg-[#030712] text-slate-100 font-sans min-h-screen selection:bg-amber-500/30 selection:text-amber-200">
       
-      <aside className="w-[320px] h-screen sticky top-0 bg-slate-900/40 backdrop-blur-3xl border-r border-white/10 flex flex-col items-center shadow-[10px_0_30px_-15px_rgba(0,0,0,0.5)] z-20">
+      {/* Cinematic Sidebar */}
+      <aside className="w-[340px] h-screen sticky top-0 bg-[#030712]/80 backdrop-blur-[40px] border-r border-white/[0.03] flex flex-col items-center shadow-[20px_0_50px_-20px_rgba(0,0,0,0.8)] z-30 transition-all duration-500">
         
-        {/* Header Block */}
-        <div className="w-full p-10 border-b border-white/5 bg-slate-900/20">
-            <h2 className="font-black text-3xl text-amber-500 tracking-[0.15em] text-center uppercase">Karmana</h2>
-            <p className="text-slate-400 text-[9px] text-center mt-3 font-bold tracking-widest uppercase">Global SEO Command</p>
+        {/* Aesthetic Branding Block */}
+        <div className="w-full p-12 border-b border-white/[0.03] bg-gradient-to-b from-white/[0.02] to-transparent relative overflow-hidden group">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <h2 className="font-extrabold text-4xl text-white tracking-[-0.03em] text-center flex flex-col items-center gap-1">
+                K<span className="text-amber-500 font-light italic text-5xl mt-[-5px]">A</span>RMANA
+            </h2>
+            <div className="flex items-center justify-center gap-3 mt-5">
+                <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-slate-700"></div>
+                <p className="text-slate-500 text-[10px] text-center font-black tracking-[0.3em] uppercase">Control Center</p>
+                <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-slate-700"></div>
+            </div>
         </div>
 
-        {/* Scrollable Nav Area */}
-        <nav className="flex-1 w-full overflow-y-auto px-6 py-8 flex flex-col gap-2 custom-scrollbar">
+        {/* Navigation Area */}
+        <nav className="flex-1 w-full overflow-y-auto px-6 py-10 flex flex-col gap-2.5 custom-scrollbar scroll-smooth">
             {allPaths.map((pagePath) => {
                 const isActive = currentPage === pagePath;
                 const linkName = pagePath === '/' ? 'Home Page' : pagePath.replace(/[-/]/g, ' ').trim().replace(/\b\w/g, c => c.toUpperCase());
@@ -71,61 +78,110 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
                     <Link 
                         key={pagePath} 
                         href={`?edit=${encodeURIComponent(pagePath)}`}
-                        className={`px-5 py-4 rounded-xl font-medium transition-all duration-300 flex items-center group relative overflow-hidden ${
+                        className={`px-6 py-4.5 rounded-2xl font-semibold transition-all duration-500 flex items-center group relative overflow-hidden ${
                             isActive 
-                            ? 'bg-amber-500 text-slate-900 shadow-lg shadow-amber-500/20' 
-                            : 'bg-transparent text-slate-400 hover:bg-white/5 hover:text-white'
+                            ? 'bg-amber-500 text-[#030712] translate-x-1 shadow-[0_10px_30px_-5px_rgba(245,158,11,0.3)] scale-[1.02]' 
+                            : 'bg-white/[0.02] text-slate-400 hover:bg-white/[0.05] hover:text-white hover:translate-x-1 border border-white/[0.02]'
                         }`}
                     >
-                        {/* Interactive Dot */}
-                        <div className={`w-1.5 h-1.5 rounded-full mr-4 transition-all duration-500 ${
-                            isActive ? 'bg-slate-900 scale-125' : hasData ? 'bg-emerald-500' : 'bg-transparent group-hover:bg-amber-500/50'
-                        }`}></div>
-                        <span className="relative text-sm tracking-wide">{linkName}</span>
+                        {/* Status Indicator */}
+                        <div className={`w-2 h-2 rounded-full mr-5 transition-all duration-700 relative ${
+                            isActive 
+                            ? 'bg-[#030712] scale-125' 
+                            : hasData 
+                                ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' 
+                                : 'bg-slate-800'
+                        }`}>
+                            {isActive && <span className="absolute inset-0 rounded-full animate-ping bg-[#030712] opacity-20"></span>}
+                        </div>
+                        <span className="relative text-[13px] tracking-tight">{linkName}</span>
+                        
+                        {/* Hover Gradient Effect */}
+                        {!isActive && <div className="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>}
                     </Link>
                 )
             })}
         </nav>
 
-        {/* Bottom Logout Block */}
-        <div className="w-full p-6 bg-slate-900/30 border-t border-white/5 mt-auto shadow-[0_-10px_30px_-15px_rgba(0,0,0,0.5)]">
+        {/* Interaction Footer */}
+        <div className="w-full p-8 bg-[#030712]/60 border-t border-white/[0.03] mt-auto">
             <form action={logoutAction}>
-                <button className="w-full text-center px-4 py-4 bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl font-bold tracking-widest text-[10px] uppercase hover:bg-red-500 hover:text-white hover:shadow-[0_0_20px_rgba(239,68,68,0.3)] transition-all duration-300">
-                    Terminate Session
+                <button className="w-full px-4 py-5 bg-rose-500/5 text-rose-500 border border-rose-500/10 rounded-2xl font-black tracking-widest text-[11px] uppercase hover:bg-rose-500 hover:text-white hover:shadow-[0_15px_40px_-10px_rgba(244,63,94,0.4)] transition-all duration-500 group overflow-hidden relative">
+                    <span className="relative z-10 group-hover:scale-110 block transition-transform">Terminate Session</span>
+                    <div className="absolute inset-0 bg-gradient-to-br from-rose-400 to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </button>
             </form>
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 flex flex-col items-center p-12 lg:p-20 relative overflow-hidden">
+      {/* Dynamic Main Stage */}
+      <main className="flex-1 flex flex-col items-center p-14 lg:p-24 relative overflow-hidden selection:bg-amber-400/30">
         
-        {/* Cinematic Background Lighting */}
-        <div className="absolute top-[5%] right-[10%] w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
-        <div className="absolute bottom-[5%] left-[20%] w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+        {/* Orchestration Lighting Effects */}
+        <div className="absolute top-[0%] left-[50%] -translate-x-1/2 w-[1200px] h-[800px] bg-amber-500/[0.03] rounded-full blur-[160px] pointer-events-none -z-10"></div>
+        <div className="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] bg-indigo-500/[0.03] rounded-full blur-[140px] pointer-events-none -z-10"></div>
+        <div className="absolute -bottom-[20%] -left-[10%] w-[600px] h-[600px] bg-emerald-500/[0.03] rounded-full blur-[140px] pointer-events-none -z-10"></div>
 
-        <div className="w-full max-w-5xl relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <header className="mb-14">
-                <h1 className="text-5xl font-black m-0 leading-tight text-white tracking-tight">Metadata <span className="text-amber-500 font-light italic">Orchestration</span></h1>
-                <p className="text-slate-400 mt-5 text-lg font-light tracking-wide">
-                    Currently tuning matrix parameters for core route: 
-                    <strong className="text-amber-400 font-mono bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-lg ml-3 tracking-widest text-sm shadow-inner shadow-amber-500/10">
-                        {currentPage}
-                    </strong>
-                </p>
+        <div className="w-full max-w-5xl relative z-10">
+            <header className="mb-16 flex flex-col gap-6">
+                <div className="flex items-center gap-4">
+                    <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-800 to-slate-800"></div>
+                    <span className="text-amber-500/50 font-mono text-[10px] tracking-[0.5em] uppercase">Matrix System v4.0</span>
+                    <div className="h-px flex-1 bg-gradient-to-l from-transparent via-slate-800 to-slate-800"></div>
+                </div>
+                
+                <div className="flex flex-col items-start gap-2">
+                    <h1 className="text-7xl font-black leading-[1] text-white tracking-tighter">
+                        Metadata <br/>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-orange-600 font-light italic">Orchestration</span>
+                    </h1>
+                </div>
+
+                <div className="flex items-center gap-6 mt-4">
+                    <div className="flex flex-col">
+                        <span className="text-slate-600 text-[10px] font-black uppercase tracking-widest mb-1">Target Cluster</span>
+                        <div className="flex items-center gap-4">
+                           <strong className="text-2xl font-medium text-slate-200 tracking-tight">{currentPage}</strong>
+                           <div className="h-4 w-px bg-slate-800"></div>
+                           <span className="text-emerald-500 font-mono text-xs flex items-center gap-2">
+                               <span className="relative flex h-2 w-2">
+                                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                               </span>
+                               ACTIVE_LINK
+                           </span>
+                        </div>
+                    </div>
+                </div>
             </header>
 
             {!mongoAvailable && (
-                <div className={`p-5 mb-10 rounded-2xl border flex items-center gap-4 font-semibold text-sm animate-in fade-in zoom-in-95 duration-300 ${isDev ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'}`}>
-                    <div className={`w-3 h-3 rounded-full shadow-[0_0_10px_rgba(0,0,0,0.5)] ${isDev ? 'bg-emerald-500' : 'bg-amber-500'}`}></div>
-                    {isDev 
-                        ? 'Local Mode: MONGODB_URI not detected. Changes will be persisted to public/seo-data.json for manual commit.' 
-                        : 'Read-only mode: MONGODB_URI not configured. To enable production editing, add MONGODB_URI to Vercel environment variables.'
-                    }
+                <div className={`group p-8 mb-12 rounded-[2rem] border backdrop-blur-xl flex flex-col md:flex-row md:items-center gap-6 transition-all duration-500 hover:scale-[1.01] ${isDev ? 'bg-emerald-500/[0.03] border-emerald-500/10' : 'bg-amber-500/[0.03] border-amber-500/10'}`}>
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-2xl transition-transform duration-500 group-hover:rotate-6 ${isDev ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'}`}>
+                        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <div className="flex-1">
+                        <h4 className={`text-lg font-bold mb-1 ${isDev ? 'text-emerald-400' : 'text-amber-400'}`}>
+                           {isDev ? "Local Virtual Synchronization Active" : "Operational Constraint: Cloud Persistence Disabled"}
+                        </h4>
+                        <p className="text-slate-400 text-sm leading-relaxed max-w-2xl">
+                           {isDev 
+                               ? "Deployment server NOT detected. Your edits will be saved directly to public/seo-data.json for your next repository commit." 
+                               : "The MONGODB_URI cluster was not located. Dashboard has entered 'Virtual Sync' mode — you can edit and download a fresh seo-data.json to update your core static metadata."
+                           }
+                        </p>
+                    </div>
+                    {!isDev && (
+                        <div className="px-6 py-3 bg-amber-500/10 rounded-xl text-amber-400 text-[10px] font-black tracking-widest uppercase border border-amber-500/20 whitespace-nowrap">
+                            Persistence Required
+                        </div>
+                    )}
                 </div>
             )}
 
-            <SeoForm key={currentPage} currentPage={currentPage} currentMetadata={currentMetadata} readOnly={!canEdit} isLocalJson={!mongoAvailable && isDev} />
+            <SeoForm key={currentPage} currentPage={currentPage} currentMetadata={currentMetadata} isLocalJson={!mongoAvailable} />
         </div>
       </main>
       

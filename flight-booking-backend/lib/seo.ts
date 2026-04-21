@@ -149,8 +149,9 @@ export function mapSEOToMetadata(seo: SEOData): any {
 /**
  * Saves SEO metadata. Tries MongoDB first.
  * If MongoDB is unavailable and we're NOT in production, it saves to public/seo-data.json.
+ * If we're in production and MongoDB is unavailable, it returns the updated registry for virtual sync.
  */
-export async function updateSEOData(pagePath: string, data: SEOData): Promise<{ success: boolean; target: 'mongodb' | 'json' | 'none'; error?: string }> {
+export async function updateSEOData(pagePath: string, data: SEOData): Promise<{ success: boolean; target: 'mongodb' | 'json' | 'virtual' | 'none'; fullData?: Record<string, any>; error?: string }> {
   // Try MongoDB first
   try {
     const dbConnect = (await import('./mongodb')).default;
@@ -164,26 +165,30 @@ export async function updateSEOData(pagePath: string, data: SEOData): Promise<{ 
     );
     return { success: true, target: 'mongodb' };
   } catch (mongoError: any) {
-    // If MongoDB failed, check if we can save to JSON (only in dev)
-    if (process.env.NODE_ENV === 'production') {
-       return { success: false, target: 'none', error: 'MongoDB unavailable in production. JSON saving disabled.' };
-    }
-
+    // Read the current JSON fallback to mix with the new change
+    let registry: SEORegistry = {};
     try {
       const filePath = path.join(process.cwd(), 'public', 'seo-data.json');
-      let registry: SEORegistry = {};
-      
       if (fs.existsSync(filePath)) {
         const fileContent = fs.readFileSync(filePath, 'utf8');
         registry = JSON.parse(fileContent);
       }
-      
-      registry[pagePath] = data;
+    } catch (e) {}
+
+    registry[pagePath] = data;
+
+    // If MongoDB failed, check if we can save to JSON (only in dev or if fs is writable)
+    if (process.env.NODE_ENV === 'production') {
+       // On Vercel, we return 'virtual' so the user can download the JSON
+       return { success: true, target: 'virtual', fullData: registry };
+    }
+
+    try {
+      const filePath = path.join(process.cwd(), 'public', 'seo-data.json');
       fs.writeFileSync(filePath, JSON.stringify(registry, null, 2));
-      
-      return { success: true, target: 'json' };
+      return { success: true, target: 'json', fullData: registry };
     } catch (jsonError: any) {
-      return { success: false, target: 'none', error: `Both MongoDB and JSON storage failed. JSON Error: ${jsonError.message}` };
+      return { success: false, target: 'none', error: `Both MongoDB and JSON storage failed. JSON Error: ${jsonError.message}`, fullData: registry };
     }
   }
 }
