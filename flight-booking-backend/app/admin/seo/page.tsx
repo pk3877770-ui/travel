@@ -34,6 +34,8 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
 
   const seoMap = await getAllSEOData();
   const mongoAvailable = await isMongoAvailable();
+  const isDev = process.env.NODE_ENV !== 'production';
+  const canEdit = mongoAvailable || isDev;
 
   // Merge ALL_PAGES with any extra entries to ensure sidebar always shows all pages
   const allPaths = [...new Set([...ALL_PAGES, ...Object.keys(seoMap)])];
@@ -114,13 +116,16 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
             </header>
 
             {!mongoAvailable && (
-                <div className="p-5 mb-10 rounded-2xl border flex items-center gap-4 font-semibold text-sm bg-amber-500/10 border-amber-500/20 text-amber-400 animate-in fade-in zoom-in-95 duration-300">
-                    <div className="w-3 h-3 rounded-full bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]"></div>
-                    Read-only mode: MONGODB_URI not configured. Data loaded from seo-data.json. To enable editing, add MONGODB_URI to Vercel environment variables.
+                <div className={`p-5 mb-10 rounded-2xl border flex items-center gap-4 font-semibold text-sm animate-in fade-in zoom-in-95 duration-300 ${isDev ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'}`}>
+                    <div className={`w-3 h-3 rounded-full shadow-[0_0_10px_rgba(0,0,0,0.5)] ${isDev ? 'bg-emerald-500' : 'bg-amber-500'}`}></div>
+                    {isDev 
+                        ? 'Local Mode: MONGODB_URI not detected. Changes will be persisted to public/seo-data.json for manual commit.' 
+                        : 'Read-only mode: MONGODB_URI not configured. To enable production editing, add MONGODB_URI to Vercel environment variables.'
+                    }
                 </div>
             )}
 
-            <SeoForm key={currentPage} currentPage={currentPage} currentMetadata={currentMetadata} readOnly={!mongoAvailable} />
+            <SeoForm key={currentPage} currentPage={currentPage} currentMetadata={currentMetadata} readOnly={!canEdit} isLocalJson={!mongoAvailable && isDev} />
         </div>
       </main>
       

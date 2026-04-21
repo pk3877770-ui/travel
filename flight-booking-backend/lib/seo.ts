@@ -145,3 +145,45 @@ export function mapSEOToMetadata(seo: SEOData): any {
     }
   };
 }
+
+/**
+ * Saves SEO metadata. Tries MongoDB first.
+ * If MongoDB is unavailable and we're NOT in production, it saves to public/seo-data.json.
+ */
+export async function updateSEOData(pagePath: string, data: SEOData): Promise<{ success: boolean; target: 'mongodb' | 'json' | 'none'; error?: string }> {
+  // Try MongoDB first
+  try {
+    const dbConnect = (await import('./mongodb')).default;
+    const SeoMeta = (await import('@/models/SeoMeta')).default;
+    await dbConnect();
+    
+    await SeoMeta.findOneAndUpdate(
+      { pagePath },
+      { ...data, pagePath },
+      { upsert: true }
+    );
+    return { success: true, target: 'mongodb' };
+  } catch (mongoError: any) {
+    // If MongoDB failed, check if we can save to JSON (only in dev)
+    if (process.env.NODE_ENV === 'production') {
+       return { success: false, target: 'none', error: 'MongoDB unavailable in production. JSON saving disabled.' };
+    }
+
+    try {
+      const filePath = path.join(process.cwd(), 'public', 'seo-data.json');
+      let registry: SEORegistry = {};
+      
+      if (fs.existsSync(filePath)) {
+        const fileContent = fs.readFileSync(filePath, 'utf8');
+        registry = JSON.parse(fileContent);
+      }
+      
+      registry[pagePath] = data;
+      fs.writeFileSync(filePath, JSON.stringify(registry, null, 2));
+      
+      return { success: true, target: 'json' };
+    } catch (jsonError: any) {
+      return { success: false, target: 'none', error: `Both MongoDB and JSON storage failed. JSON Error: ${jsonError.message}` };
+    }
+  }
+}

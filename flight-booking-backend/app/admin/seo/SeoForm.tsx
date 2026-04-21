@@ -2,8 +2,15 @@
 import { useActionState } from 'react';
 import { saveSeoData } from './actions';
 
-export default function SeoForm({ currentPage, currentMetadata, readOnly }: { currentPage: string, currentMetadata: any, readOnly?: boolean }) {
+export default function SeoForm({ currentPage, currentMetadata, readOnly, isLocalJson }: { currentPage: string, currentMetadata: any, readOnly?: boolean, isLocalJson?: boolean }) {
     const [state, formAction, isPending] = useActionState(saveSeoData, null);
+
+    const buttonLabel = () => {
+        if (isPending) return 'Synchronizing State...';
+        if (readOnly) return 'Read Only Mode';
+        if (isLocalJson) return 'Commit Metadata to Local JSON';
+        return 'Commit Metadata to Cloud Core';
+    };
 
     return (
         <div className="bg-slate-900/40 backdrop-blur-2xl border border-white/5 rounded-3xl p-10 md:p-14 shadow-2xl relative overflow-hidden">
@@ -73,8 +80,8 @@ export default function SeoForm({ currentPage, currentMetadata, readOnly }: { cu
                 </div>
 
                 <button type="submit" disabled={isPending || readOnly}
-                        className="md:col-span-2 bg-amber-500 text-slate-950 border-none p-5 rounded-2xl font-black tracking-widest uppercase text-[13px] cursor-pointer transition-all duration-300 hover:bg-amber-400 hover:-translate-y-1 hover:shadow-[0_15px_30px_-5px_rgba(245,158,11,0.4)] disabled:opacity-50 disabled:pointer-events-none disabled:transform-none mt-2">
-                    {isPending ? 'Synchronizing State...' : readOnly ? 'Read Only Mode' : 'Commit Metadata to Core'}
+                        className={`md:col-span-2 text-slate-950 border-none p-5 rounded-2xl font-black tracking-widest uppercase text-[13px] cursor-pointer transition-all duration-300 hover:-translate-y-1 mt-2 disabled:opacity-50 disabled:pointer-events-none disabled:transform-none ${isLocalJson ? 'bg-emerald-500 hover:bg-emerald-400 hover:shadow-[0_15px_30px_-5px_rgba(16,185,129,0.4)]' : 'bg-amber-500 hover:bg-amber-400 hover:shadow-[0_15px_30px_-5px_rgba(245,158,11,0.4)]'}`}>
+                    {buttonLabel()}
                 </button>
             </form>
         </div>
