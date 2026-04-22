@@ -1,138 +1,148 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { Plane, Hotel, Map, Headset, Shield, Car, Check } from "lucide-react";
+import { motion } from "framer-motion";
+import { Plane, Hotel, Map, Headset, Shield, Car, Check, ArrowRight, Sparkles } from "lucide-react";
 
-const ServicesClient = () => {
-  const services = [
-    {
-      title: "Global Aviation",
-      icon: <Plane className="w-8 h-8 text-accent" />,
-      desc: "First-class and private jet charters with seamless airport transfers and executive lounge access worldwide.",
-      features: ["Private Jet Charter", "Priority Boarding", "VIP Lounges"]
-    },
-    {
-      title: "Elite Residencies",
-      icon: <Hotel className="w-8 h-8 text-accent" />,
-      desc: "Exclusive partnerships with Five-Star hospitality groups and private villa curators across seven continents.",
-      features: ["Luxury Suite Upgrades", "Early Check-in/Late Out", "Resort Credits"],
-      featured: true
-    },
-    {
-      title: "Curated Journeys",
-      icon: <Map className="w-8 h-8 text-accent" />,
-      desc: "Meticulously planned holiday packages that focus on authentic experiences without sacrificing comfort.",
-      features: ["Bespoke Itineraries", "Private Local Guides", "Culinary Experiences"]
-    },
-    {
-      title: "24/7 Concierge",
-      icon: <Headset className="w-8 h-8 text-accent" />,
-      desc: "A dedicated lifestyle manager available globally to handle shifting plans, last-minute bookings, and local needs.",
-      features: ["Lifestyle Management", "Itinerary Changes", "Local Arrangements"]
-    },
-    {
-      title: "Total Protection",
-      icon: <Shield className="w-8 h-8 text-accent" />,
-      desc: "Elite travel insurance and medical assistance coverage ensuring your well-being in any part of the world.",
-      features: ["Medical Assistance", "Cancellation Cover", "Global Guard"]
-    },
-    {
-      title: "Ground Logistics",
-      icon: <Car className="w-8 h-8 text-accent" />,
-      desc: "Chauffeur-driven luxury vehicles and exotic car rentals awaiting your arrival at every destination.",
-      features: ["Chauffeur Service", "Airport Transfers", "Exotic Rentals"]
-    }
-  ];
+const services = [
+  {
+    icon: Plane,
+    title: "Global Aviation",
+    desc: "First-class and private jet charters with seamless airport transfers and executive lounge access worldwide.",
+    features: ["Private Jet Charter", "Priority Boarding", "VIP Lounges"]
+  },
+  {
+    icon: Hotel,
+    title: "Elite Residencies",
+    desc: "Exclusive partnerships with Five-Star hospitality groups and private villa curators across seven continents.",
+    features: ["Luxury Suite Upgrades", "Early Check-in/Late Out", "Resort Credits"],
+    highlight: true
+  },
+  {
+    icon: Map,
+    title: "Curated Journeys",
+    desc: "Meticulously planned holiday packages that focus on authentic experiences without sacrificing comfort.",
+    features: ["Bespoke Itineraries", "Private Local Guides", "Culinary Experiences"]
+  },
+  {
+    icon: Headset,
+    title: "24/7 Concierge",
+    desc: "A dedicated lifestyle manager available globally to handle shifting plans, last-minute bookings, and local needs.",
+    features: ["Personal Manager", "Lifestyle Support", "Emergency Changes"]
+  },
+  {
+    icon: Shield,
+    title: "Total Protection",
+    desc: "Elite travel insurance and medical assistance coverage ensuring your well-being in any part of the world.",
+    features: ["Global Coverage", "Medical Support", "Trip Cancellation"]
+  },
+  {
+    icon: Car,
+    title: "Ground Logistics",
+    desc: "Chauffeur-driven luxury vehicles and exotic car rentals awaiting your arrival at every destination.",
+    features: ["Private Chauffeur", "Luxury Vehicle Fleet", "Exotic Rentals"]
+  }
+];
 
+export default function ServicesPage() {
   return (
-    <main className="bg-white">
-      {/* Inner Hero */}
-      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-primary/60 z-10" />
-        <img
-          src="https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=1600&q=80"
-          alt="Services Hero"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="container relative z-20 text-center px-6">
-          <div className="animate-fade-in-up">
-            <span className="inline-block bg-accent text-primary px-4 py-1.5 mb-6 rounded-full font-bold text-sm tracking-wider">
-              EXCELLENCE DEFINED
-            </span>
-            <h1 className="text-4xl md:text-6xl font-black text-white font-outfit leading-tight mb-4">
-              Bespoke <span className="text-accent underline decoration-accent/30">Travel</span> Solutions
-            </h1>
-          </div>
+    <div className="pt-20 bg-white dark:bg-slate-950">
+      {/* Hero Section */}
+      <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/80 to-blue-900/40 z-10" />
+          <img
+            src="https://images.unsplash.com/photo-1474302770737-173ee21bab63?auto=format&fit=crop&w=1600&q=80"
+            alt="Services Hero"
+            className="w-full h-full object-cover grayscale-[0.3]"
+          />
+        </div>
+        <div className="container max-w-4xl mx-auto px-6 relative z-20 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="inline-block px-4 py-1.5 mb-6 rounded-full bg-accent text-primary text-xs font-black tracking-widest uppercase"
+          >
+            Excellence Defined
+          </motion.div>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-5xl md:text-7xl font-black font-outfit text-white mb-6"
+          >
+            Bespoke <span className="text-accent underline decoration-4 underline-offset-8">Travel</span> Solutions
+          </motion.h1>
         </div>
       </section>
 
-      {/* Services Intro */}
-      <section className="py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl md:text-5xl font-black font-outfit text-primary">Comprehensive Luxury Management</h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed">
-              We go beyond simple bookings, providing a complete ecosystem of travel services designed for the modern elite traveler.
-            </p>
+      {/* Services Overview */}
+      <section className="py-24 bg-white dark:bg-slate-950">
+        <div className="container max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20 max-w-2xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold font-outfit mb-6">Comprehensive Luxury Management</h2>
+            <p className="text-lg text-slate-500">We go beyond simple bookings, providing a complete ecosystem of travel services designed for the modern elite traveler.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <div 
-                key={index}
-                className={`p-10 rounded-[2.5rem] border-2 transition-all duration-500 hover:-translate-y-2 group ${
-                  service.featured 
-                    ? "border-accent shadow-2xl shadow-accent/10 bg-white" 
-                    : "border-slate-100 bg-slate-50/50 hover:bg-white hover:border-slate-200 hover:shadow-xl hover:shadow-slate-200/50"
-                }`}
+            {services.map((service, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ y: -10 }}
+                className={`p-10 rounded-[3rem] ${service.highlight ? 'bg-primary text-white border-2 border-accent/20' : 'bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800'} transition-all hover:shadow-2xl group relative overflow-hidden`}
               >
-                <div className="w-20 h-20 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                  {service.icon}
+                {service.highlight && (
+                    <div className="absolute top-8 right-8">
+                        <Sparkles className="w-6 h-6 text-accent animate-pulse" />
+                    </div>
+                )}
+                
+                <div className={`w-16 h-16 rounded-2xl ${service.highlight ? 'bg-accent/20' : 'bg-white dark:bg-slate-800 shadow-sm'} flex items-center justify-center mb-8`}>
+                  <service.icon className="w-8 h-8 text-accent" />
                 </div>
-                <h3 className="text-2xl font-black font-outfit text-primary mb-4 italic tracking-tight">{service.title}</h3>
-                <p className="text-slate-500 mb-8 leading-relaxed font-medium">{service.desc}</p>
-                <ul className="space-y-3">
-                  {service.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3 text-sm font-bold text-slate-400">
+
+                <h3 className="text-2xl font-bold font-outfit mb-4">{service.title}</h3>
+                <p className={`text-sm mb-8 leading-relaxed ${service.highlight ? 'text-slate-300' : 'text-slate-500'}`}>
+                  {service.desc}
+                </p>
+
+                <ul className="space-y-3 mb-4">
+                  {service.features.map((feature, fIdx) => (
+                    <li key={fIdx} className="flex items-center gap-3 text-xs font-bold uppercase tracking-wider">
                       <Check className="w-4 h-4 text-accent" />
-                      {feature}
+                      <span className={service.highlight ? 'text-slate-100' : 'text-slate-600'}>{feature}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-slate-900 py-32 px-6">
-        <div className="max-w-4xl mx-auto text-center space-y-10">
-          <h2 className="text-4xl md:text-6xl font-black font-outfit text-white leading-tight italic">
+      <section className="py-24 bg-slate-900 overflow-hidden relative">
+        <div className="absolute inset-0 bg-primary/20 backdrop-blur-3xl transform -rotate-12 scale-150" />
+        <div className="container max-w-4xl mx-auto px-6 relative z-10 text-center">
+          <motion.h2 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            className="text-4xl md:text-6xl font-black font-outfit text-white mb-8 tracking-tight"
+          >
             Ready to Elevate Your Perspective?
-          </h2>
-          <p className="text-white/60 text-xl md:text-2xl font-medium max-w-2xl mx-auto leading-relaxed">
+          </motion.h2>
+          <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
             Disconnect from the noise and reconnect with the soul of the world through our curated experiences.
           </p>
-          <div className="flex flex-wrap justify-center gap-6 pt-4">
-            <Link 
-              href="/contact" 
-              className="bg-accent hover:bg-accent-dark text-primary font-black px-10 py-5 rounded-full text-lg shadow-2xl hover:shadow-accent/20 transition-all transform hover:-translate-y-1"
-            >
+          <div className="flex flex-wrap justify-center gap-4">
+            <button className="bg-accent text-primary px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl shadow-accent/20">
               Request a Consultation
-            </Link>
-            <Link 
-              href="/" 
-              className="bg-transparent border-2 border-white/20 hover:border-white text-white font-black px-10 py-5 rounded-full text-lg transition-all"
-            >
-              Return to Home
-            </Link>
+            </button>
+            <button className="bg-transparent border border-white/20 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white/5 transition-all">
+              See All Offerings
+            </button>
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
-};
-
-export default ServicesClient;
+}
