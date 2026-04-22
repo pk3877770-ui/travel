@@ -3,8 +3,11 @@
    ======================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initial Load of Components
-    Promise.all([loadComponent('header', 'header.html'), loadComponent('footer', 'footer.html')])
+    // 1. Initial Load of Components & SEO
+    const componentsPromise = Promise.all([loadComponent('header', 'header.html'), loadComponent('footer', 'footer.html')]);
+    const seoPromise = applyDynamicSEO();
+
+    Promise.all([componentsPromise, seoPromise])
         .then(() => {
             initializeGlobalUI();
             setupMobileNavigation();
@@ -242,38 +245,96 @@ function updateNavigationState() {
 }
 
 /**
- * AOS Initialization
+ * Global SEO Injection System
+ * Fetches metadata from the dashboard and applies it to the static HTML
  */
-function initializeAOS() {
-    if (typeof AOS !== 'undefined') {
-        AOS.init({
-            duration: 1000,
-            easing: 'ease-in-out-cubic',
-            once: true,
-            mirror: false,
-            offset: 50
-        });
+async function applyDynamicSEO() {
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const localApi = 'http://localhost:3000';
+    const prodApi = 'https://flight-booking-backend-gold.vercel.app';
+
+    // Map filenames to Dashboard Keys
+    const pageMapping = {
+        'index.html': '/',
+        'home.html': '/',
+        'About.html': '/about',
+        'About_new.html': '/about',
+        'Contact.html': '/contact',
+        'Flightbooking.html': '/flight-booking',
+        'Hotel booking.html': '/hotel-booking',
+        'Holiday Packages.html': '/holiday-packages',
+        'servicesss.html': '/services',
+        'terms.html': '/terms',
+        'privacypolicy.html': '/privacy',
+        'refunds.html': '/refund',
+        'helpCenter.html': '/help-center',
+        'ticketinquiry.html': '/ticket-inquiry'
+    };
+
+    const filename = window.location.pathname.split('/').pop() || 'index.html';
+    const seoPath = pageMapping[filename] || '/';
+
+    try {
+        let response;
+        try {
+            // Try local first if we are on localhost
+            response = await fetch(`${isLocal ? localApi : prodApi}/api/seo?path=${encodeURIComponent(seoPath)}`);
+            if (!response.ok) throw new Error('API down');
+        } catch (localErr) {
+            // Fallback to production if local fails
+            if (isLocal) {
+                console.info('Local SEO API down, falling back to production...');
+                response = await fetch(`${prodApi}/api/seo?path=${encodeURIComponent(seoPath)}`);
+            } else {
+                throw localErr;
+            }
+        }
+        
+        const data = await response.json();
+        
+        // Apply Metadata
+        if (data.title) document.title = data.title;
+        
+        updateMetaTag('description', data.description);
+        updateMetaTag('keywords', data.keywords);
+        updateMetaTag('author', 'Karmana');
+        
+        // Open Graph
+        updateMetaTag('og:title', data.title, true);
+        updateMetaTag('og:description', data.description, true);
+        updateMetaTag('og:url', data.og_url, true);
+        
+        // Twitter
+        updateMetaTag('twitter:title', data.title);
+        updateMetaTag('twitter:description', data.description);
+
+        if (data.canonical) {
+            let canonical = document.querySelector('link[rel="canonical"]');
+            if (!canonical) {
+                canonical = document.createElement('link');
+                canonical.setAttribute('rel', 'canonical');
+                document.head.appendChild(canonical);
+            }
+            canonical.setAttribute('href', data.canonical);
+        }
+
+    } catch (err) {
+        console.warn('SEO Injection skipped:', err.message);
     }
 }
 
-// Search functionality
-function searchFlights() {
-    const from = document.getElementById('from').value;
-    const to = document.getElementById('to').value;
-    const date = document.getElementById('date').value;
-
-    // Mock data ya API call
-    displayFlights(mockFlightsData);
-}
-function displayFlights(flights) {
-    let html = '';
-    flights.forEach(flight => {
-        html += `
-        <div class="flight-card">
-            <h3>${flight.airline} - ${flight.flightNo}</h3>
-            <p>₹${flight.price} | ${flight.departure} → ${flight.arrival}</p>
-            <button onclick="selectFlight('${flight.id}')">Select</button>
-        </div>`;
-    });
-    document.getElementById('flightResults').innerHTML = html;
+/**
+ * Helper to update or create meta tags
+ */
+function updateMetaTag(name, content, isProperty = false) {
+    if (!content) return;
+    const attr = isProperty ? 'property' : 'name';
+    let tag = document.querySelector(`meta[${attr}="${name}"]`);
+    
+    if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute(attr, name);
+        document.head.appendChild(tag);
+    }
+    tag.setAttribute('content', content);
 }
