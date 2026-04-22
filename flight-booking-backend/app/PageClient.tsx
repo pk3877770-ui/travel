@@ -12,15 +12,46 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("loading");
-    // Emulated API call
-    setTimeout(() => {
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setStatus("loading");
+  //   // Emulated API call
+  //   setTimeout(() => {
+  //     setStatus("success");
+  //     setEmail("");
+  //   }, 1500);
+  // };
+  // ✅ REAL API CONNECTED VERSION
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!email) return;
+
+  setStatus("loading");
+
+  try {
+    const res = await fetch("/api/subscribe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
       setStatus("success");
       setEmail("");
-    }, 1500);
-  };
+    } else {
+      alert(data.message || "Something went wrong");
+      setStatus("idle");
+    }
+  } catch (error) {
+    alert("Server error");
+    setStatus("idle");
+  }
+};
 
   return (
     <main className="min-h-screen">
