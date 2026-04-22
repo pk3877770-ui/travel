@@ -1,6 +1,5 @@
-'use server'
-
 import { updateSEOData, SEOData } from '@/lib/seo';
+import { revalidatePath } from 'next/cache';
 
 export async function saveSeoData(prevState: any, formData: FormData) {
     const pageKey = formData.get('page_key') as string;
@@ -23,6 +22,8 @@ export async function saveSeoData(prevState: any, formData: FormData) {
             let targetName = 'Cloud Database';
             if (result.target === 'json') targetName = 'Local JSON Cache';
             if (result.target === 'virtual') targetName = 'Session Memory (Virtual Sync)';
+
+            revalidatePath('/admin/seo');
 
             return { 
                 message: `Success: Metadata for ${pageKey} updated via ${targetName}!`, 
