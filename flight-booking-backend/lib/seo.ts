@@ -56,6 +56,18 @@ function readJsonFile(routePath: string): SEOData | null {
   }
 }
 
+export function getDefaultSEO(routePath: string): SEOData {
+  return {
+    title: "Karmana | Luxury Travel Redefined",
+    description: "Experience the art of travel with Karmana's premium concierge services.",
+    keywords: "luxury travel, concierge, flights, hotels",
+    canonical: "https://flight-booking-backend-gold.vercel.app" + routePath,
+    og_url: "https://flight-booking-backend-gold.vercel.app" + routePath,
+    publisher: "https://karmana.com",
+    robots: "index, follow"
+  };
+}
+
 /**
  * Fetches SEO metadata. Tries MongoDB first, falls back to JSON file.
  * @param routePath The current route (e.g., '/', '/about')
@@ -64,15 +76,7 @@ function readJsonFile(routePath: string): SEOData | null {
 export async function getSEOMetadata(routePath: string): Promise<SEOData> {
   noStore();
   
-  const defaultSEO: SEOData = {
-    title: "Karmana | Luxury Travel Redefined",
-    description: "Experience the art of travel with Karmana's premium concierge services.",
-    keywords: "luxury travel, concierge, flights, hotels",
-    canonical: "https://karmana.com" + routePath,
-    og_url: "https://karmana.com" + routePath,
-    publisher: "https://karmana.com",
-    robots: "index, follow"
-  };
+  const defaultSEO = getDefaultSEO(routePath);
 
   // Try MongoDB first
   const mongoData = await tryMongoRead(routePath);
@@ -89,26 +93,30 @@ export async function getSEOMetadata(routePath: string): Promise<SEOData> {
  * Reads all SEO entries. Tries MongoDB first, falls back to JSON file.
  */
 export async function getAllSEOData(): Promise<Record<string, any>> {
+  // Always load JSON as base to ensure we have data if DB is empty or missing specific entries
+  let baseMap: Record<string, any> = {};
+  try {
+    const filePath = path.join(process.cwd(), 'public', 'seo-data.json');
+    if (fs.existsSync(filePath)) {
+      const fileContent = fs.readFileSync(filePath, 'utf8');
+      baseMap = JSON.parse(fileContent);
+    }
+  } catch (e) {}
+
   try {
     const dbConnect = (await import('./mongodb')).default;
     const SeoMeta = (await import('@/models/SeoMeta')).default;
     await dbConnect();
     const allDocs = await SeoMeta.find({}).lean();
-    const map: Record<string, any> = {};
+    
+    // Merge DB results over JSON base
+    const map = { ...baseMap };
     allDocs.forEach((doc: any) => {
       map[doc.pagePath] = doc;
     });
     return map;
   } catch {
-    // Fallback to JSON file
-    try {
-      const filePath = path.join(process.cwd(), 'public', 'seo-data.json');
-      if (!fs.existsSync(filePath)) return {};
-      const fileContent = fs.readFileSync(filePath, 'utf8');
-      return JSON.parse(fileContent);
-    } catch {
-      return {};
-    }
+    return baseMap;
   }
 }
 

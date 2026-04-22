@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { logoutAction } from '../login/actions';
-import { getAllSEOData, isMongoAvailable } from '@/lib/seo';
+import { getAllSEOData, isMongoAvailable, getDefaultSEO } from '@/lib/seo';
 import SeoForm from './SeoForm';
 import Link from 'next/link';
 
@@ -39,15 +39,8 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
   // Merge ALL_PAGES with any extra entries to ensure sidebar always shows all pages
   const allPaths = [...new Set([...ALL_PAGES, ...Object.keys(seoMap)])];
   
-  const currentMetadata = seoMap[currentPage] || {
-      title: '',
-      description: '',
-      keywords: '',
-      canonical: '',
-      og_url: '',
-      publisher: '',
-      robots: 'index, follow'
-  };
+  // Use specialized map data or fallback to global defaults
+  const currentMetadata = seoMap[currentPage] || getDefaultSEO(currentPage);
 
   return (
     <div className="flex bg-[#030712] text-slate-100 font-sans min-h-screen selection:bg-amber-500/30 selection:text-amber-200">
