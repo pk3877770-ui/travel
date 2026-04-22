@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Elite Circle | Karmana Luxury Travel Concierge</title>
+    <meta name="description" content="Subscribe to Karmana Elite Circle for private concierge access, exclusive rates, and bespoke travel inspiration.">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <!-- Style -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .subscribe-hero {
+            min-height: 80vh;
+            background: linear-gradient(rgba(3, 7, 18, 0.6), rgba(3, 7, 18, 0.9)), 
+                        url('https://images.unsplash.com/photo-1436491865332-7a61a109c0f3?w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            padding: 3rem;
+            transition: all 0.5s ease;
+        }
+
+        .benefit-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .subscribe-input {
+            background: rgba(0, 0, 0, 0.3) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            padding: 1.5rem !important;
+            border-radius: 1rem !important;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .subscribe-input:focus {
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.1) !important;
+        }
+    </style>
+</head>
+
+<body class="bg-dark">
+    <!-- Header -->
+    <div id="header"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="subscribe-hero text-center text-white">
+            <div class="container" data-aos="zoom-in">
+                <span class="badge bg-accent text-primary px-3 py-2 mb-4 rounded-pill fw-bold outfit uppercase tracking-widest">The Elite Circle</span>
+                <h1 class="display-3 outfit fw-bold mb-4">Elevate Your <span>Experience</span></h1>
+                <p class="fs-5 text-slate-300 mb-5 mx-auto" style="max-width: 600px;">
+                    Subscribe to receive private invitations to bespoke journeys, 
+                    first-access to elite rates, and curated travel inspiration from our global concierge team.
+                </p>
+                
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <form class="newsletter-form glass p-2 rounded-4 d-flex gap-2">
+                            <input type="email" class="form-control subscribe-input border-0" placeholder="Enter your elite email..." required>
+                            <button type="submit" class="btn-premium btn-accent px-5 rounded-3">Join Now</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="section-padding bg-[#030712]">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-4" data-aos="fade-up">
+                        <div class="benefit-card h-100">
+                            <div class="icon-lg bg-accent bg-opacity-10 rounded-4 d-flex align-items-center justify-content-center mb-4" style="width: 60px; height: 60px;">
+                                <i class="fas fa-crown text-accent fs-3"></i>
+                            </div>
+                            <h3 class="outfit text-white h4 mb-3">Priority Access</h3>
+                            <p class="text-slate-400">Be the first to know about private package releases and limited-time elite airline rates before they reach the public.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="benefit-card h-100">
+                            <div class="icon-lg bg-accent bg-opacity-10 rounded-4 d-flex align-items-center justify-content-center mb-4" style="width: 60px; height: 60px;">
+                                <i class="fas fa-concierge-bell text-accent fs-3"></i>
+                            </div>
+                            <h3 class="outfit text-white h4 mb-3">Concierge Insights</h3>
+                            <p class="text-slate-400">Weekly curated guides from our on-the-ground experts covering hidden gems and new luxury openings worldwide.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="benefit-card h-100">
+                            <div class="icon-lg bg-accent bg-opacity-10 rounded-4 d-flex align-items-center justify-content-center mb-4" style="width: 60px; height: 60px;">
+                                <i class="fas fa-gift text-accent fs-3"></i>
+                            </div>
+                            <h3 class="outfit text-white h4 mb-3">Member Privileges</h3>
+                            <p class="text-slate-400">Receive exclusive upgrades and member-only amenities at our partner five-star properties across the globe.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
