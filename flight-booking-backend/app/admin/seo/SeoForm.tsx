@@ -29,16 +29,16 @@ export default function SeoForm({ currentPage, currentMetadata, isLocalJson }: {
 
             {state?.message && (
                 <div key={state.timestamp} className={`p-6 mb-12 rounded-3xl border flex items-center justify-between gap-6 font-bold text-sm animate-in fade-in slide-in-from-top-4 duration-500 relative z-10 ${state.status === 'success' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-rose-500/10 border-rose-500/20 text-rose-400'}`}>
-                    <div className="flex items-center gap-4">
+                    <div className="flex-1 flex items-center gap-4">
                         {state.status === 'success' ? (
-                            <div className="relative flex h-4 w-4">
+                            <div className="relative flex h-4 w-4 shrink-0">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500"></span>
                             </div>
                         ) : (
-                            <div className="w-4 h-4 rounded-full bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.6)]"></div>
+                            <div className="w-4 h-4 rounded-full bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.6)] shrink-0"></div>
                         )}
-                        <span>{state.message}</span>
+                        <span className="leading-tight">{state.message}</span>
                     </div>
 
                     {state.target === 'virtual' && state.status === 'success' && (

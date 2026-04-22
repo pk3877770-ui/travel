@@ -177,8 +177,9 @@ export async function updateSEOData(pagePath: string, data: SEOData): Promise<{ 
 
     registry[pagePath] = data;
 
-    // If MongoDB failed, check if we can save to JSON (only in dev or if fs is writable)
-    if (process.env.NODE_ENV === 'production') {
+    // If MongoDB failed, check if we can save to JSON
+    // We only force 'virtual' mode if we are actually deployed on Vercel
+    if (process.env.VERCEL === '1') {
        // On Vercel, we return 'virtual' so the user can download the JSON
        return { success: true, target: 'virtual', fullData: registry };
     }

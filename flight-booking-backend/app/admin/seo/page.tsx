@@ -164,18 +164,18 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
                     </div>
                     <div className="flex-1">
                         <h4 className={`text-lg font-bold mb-1 ${isDev ? 'text-emerald-400' : 'text-amber-400'}`}>
-                           {isDev ? "Local Virtual Synchronization Active" : "Operational Constraint: Cloud Persistence Disabled"}
+                           {isDev ? "Local persistence active" : "Cloud write-access is currently disabled"}
                         </h4>
                         <p className="text-slate-400 text-sm leading-relaxed max-w-2xl">
                            {isDev 
-                               ? "Deployment server NOT detected. Your edits will be saved directly to public/seo-data.json for your next repository commit." 
-                               : "The MONGODB_URI cluster was not located. Dashboard has entered 'Virtual Sync' mode — you can edit and download a fresh seo-data.json to update your core static metadata."
+                               ? "Your changes will be saved directly to public/seo-data.json. To enable cloud-wide syncing, configure MONGODB_URI." 
+                               : "The cloud database connection (MONGODB_URI) is missing. You can still make edits, but you'll need to 'Export to JSON' and commit to the repo for changes to persist."
                            }
                         </p>
                     </div>
                     {!isDev && (
                         <div className="px-6 py-3 bg-amber-500/10 rounded-xl text-amber-400 text-[10px] font-black tracking-widest uppercase border border-amber-500/20 whitespace-nowrap">
-                            Persistence Required
+                            Virtual Sync Mode
                         </div>
                     )}
                 </div>
