@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Mail, Crown, Zap, Gift, ShieldCheck, Rocket, Plane, Bell, Star } from "lucide-react";
+import { Mail, Crown, Zap, Gift, ShieldCheck, Rocket, Plane, Bell, Star, Send } from "lucide-react";
 
 const benefits = [
   { 
@@ -121,9 +121,9 @@ export default function SubscribePage() {
                 <button onClick={() => setStatus("idle")} className="text-xs uppercase tracking-widest hover:underline mt-4">Back to main</button>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 p-3 rounded-[2.5rem] bg-white/[0.03] backdrop-blur-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+              <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 p-3 rounded-full bg-white/[0.03] backdrop-blur-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 <div className="flex-1 relative group">
-                  <Mail className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-amber-500 transition-colors" />
+                  <Mail className="absolute left-8 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-amber-500 transition-colors" />
                   <input 
                     type="email" 
                     required
@@ -136,10 +136,10 @@ export default function SubscribePage() {
                 <button 
                   type="submit" 
                   disabled={status === "loading"}
-                  className="px-12 py-5 rounded-[1.5rem] bg-amber-500 hover:bg-amber-400 text-[#030712] font-black text-sm uppercase tracking-[0.2em] transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 shadow-[0_10px_30px_rgba(245,158,11,0.3)]"
+                  className="px-12 py-5 rounded-full bg-[#f59e0b] hover:bg-[#fbbf24] text-[#030712] font-black text-sm uppercase tracking-[0.2em] transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 shadow-[0_10px_30px_rgba(245,158,11,0.3)] min-w-[220px]"
                 >
-                  {status === "loading" ? "Processing..." : "Join Now"}
-                  <Plane className="w-4 h-4" />
+                  {status === "loading" ? "Processing..." : "Subscribe"}
+                  <Send className="w-4 h-4" />
                 </button>
               </form>
             )}
