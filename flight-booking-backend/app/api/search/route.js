@@ -14,11 +14,10 @@ export async function GET(req) {
     let query = {};
 
     if (from) {
-      // Basic fuzzy search for city or code
-      query["departure.city"] = { $regex: from, $options: "i" };
+      query.from = { $regex: from, $options: "i" };
     }
     if (to) {
-      query["destination.city"] = { $regex: to, $options: "i" };
+      query.to = { $regex: to, $options: "i" };
     }
     if (date) {
       query.date = date;

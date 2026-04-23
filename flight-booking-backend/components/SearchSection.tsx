@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plane, Hotel, Box, Ship, Search, Calendar, Users, MapPin } from "lucide-react";
+import { Plane, Hotel, Box, Ship, Search, Calendar, Users, MapPin, Loader2, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -15,19 +15,43 @@ const tabs = [
 
 const SearchSection = () => {
   const [activeTab, setActiveTab] = useState("flights");
+  const [flights, setFlights] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const params = new URLSearchParams();
-    
-    formData.forEach((value, key) => {
-      if (value) params.append(key, value.toString());
-    });
+    if (activeTab !== "flights") {
+      const formData = new FormData(e.currentTarget);
+      const params = new URLSearchParams();
+      formData.forEach((value, key) => {
+        if (value) params.append(key, value.toString());
+      });
+      const destination = activeTab === "hotels" ? "/hotel-booking" : "/flight-booking";
+      router.push(`${destination}?${params.toString()}`);
+      return;
+    }
 
-    const destination = activeTab === "hotels" ? "/hotel-booking" : "/flight-booking";
-    router.push(`${destination}?${params.toString()}`);
+    setIsLoading(true);
+    setFlights([]);
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      const from = formData.get("from");
+      const to = formData.get("to");
+      const date = formData.get("date");
+
+      const res = await fetch(`/api/search?from=${from}&to=${to}&date=${date}`);
+      const data = await res.json();
+
+      if (data.success) {
+        setFlights(data.flights);
+      }
+    } catch (error) {
+      console.error("Search failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -132,13 +156,83 @@ const SearchSection = () => {
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full bg-primary text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-primary-light transition-all shadow-xl shadow-primary/20 hover:-translate-y-1 active:scale-95"
+                disabled={isLoading}
+                className="w-full bg-primary text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-primary-light transition-all shadow-xl shadow-primary/20 hover:-translate-y-1 active:scale-95 disabled:opacity-70"
               >
-                <Search className="w-6 h-6" />
-                Search
+                {isLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : <Search className="w-6 h-6" />}
+                {isLoading ? "Searching..." : "Search"}
               </button>
             </div>
           </form>
+
+          {/* Results Section */}
+          <AnimatePresence>
+            {flights.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mt-12 pt-12 border-t border-slate-100 dark:border-slate-800"
+              >
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="text-2xl font-bold font-outfit">Available Flights</h3>
+                  <span className="text-slate-400 font-medium">{flights.length} flights found</span>
+                </div>
+                <div className="grid gap-6">
+                  {flights.map((flight, idx) => (
+                    <motion.div
+                      key={flight._id || idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-700/50 p-6 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-8 hover:border-accent/30 transition-all hover:shadow-lg group"
+                    >
+                      <div className="flex items-center gap-6 w-full md:w-auto">
+                        <div className="w-14 h-14 rounded-2xl bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
+                          <Plane className="w-8 h-8 text-accent -rotate-45" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-lg">{flight.airline || "Karmana Air"}</div>
+                          <div className="text-slate-400 text-sm font-medium">{flight.flightNumber || "KA-102"}</div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-12 flex-1 justify-center">
+                        <div className="text-center">
+                          <div className="text-2xl font-black">{flight.departureTime || "10:00"}</div>
+                          <div className="text-slate-400 font-bold text-sm tracking-tighter uppercase">{flight.from}</div>
+                        </div>
+                        <div className="flex flex-col items-center gap-2 flex-1 max-w-[120px]">
+                          <div className="w-full h-[2px] bg-slate-200 dark:bg-slate-700 relative">
+                            <motion.div 
+                              animate={{ left: ["0%", "100%"] }}
+                              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                              className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-accent rounded-full shadow-[0_0_10px_rgba(var(--accent-rgb),0.5)]" 
+                            />
+                          </div>
+                          <div className="text-[10px] items-center font-black text-slate-300 uppercase tracking-widest">Non-stop</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-black">{flight.arrivalTime || "12:00"}</div>
+                          <div className="text-slate-400 font-bold text-sm tracking-tighter uppercase">{flight.to}</div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-8 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 pt-6 md:pt-0">
+                        <div className="text-right">
+                          <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Starting from</div>
+                          <div className="text-3xl font-black text-primary dark:text-white">₹{flight.price || "4,499"}</div>
+                        </div>
+                        <button className="bg-accent hover:bg-accent-hover text-primary p-4 rounded-2xl font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-accent/20">
+                          <ArrowRight className="w-6 h-6" />
+                        </button>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

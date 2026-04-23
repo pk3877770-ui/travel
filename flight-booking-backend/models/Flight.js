@@ -1,21 +1,15 @@
 import mongoose from "mongoose";
 
 const FlightSchema = new mongoose.Schema({
-  flightNumber: { type: String, required: true },
-  airline: { type: String, required: true },
-  departure: {
-    city: { type: String, required: true },
-    code: { type: String, required: true },
-    time: { type: String, required: true },
-  },
-  destination: {
-    city: { type: String, required: true },
-    code: { type: String, required: true },
-    time: { type: String, required: true },
-  },
-  price: { type: Number, required: true },
-  date: { type: String, required: true }, // YYYY-MM-DD
-  class: { type: String, enum: ["Economy", "Business", "First"], default: "Economy" },
+  from: { type: String, required: true },
+  to: { type: String, required: true },
+  date: { type: String, required: true },
+  travelers: { type: Number, default: 1 },
+  airline: { type: String, default: "Karmana Air" },
+  flightNumber: { type: String, default: "KA-000" },
+  price: { type: Number, default: 4500 },
+  departureTime: { type: String, default: "10:00 AM" },
+  arrivalTime: { type: String, default: "12:00 PM" },
 });
 
 export default mongoose.models.Flight || mongoose.model("Flight", FlightSchema);
