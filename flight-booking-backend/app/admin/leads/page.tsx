@@ -2,7 +2,6 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import dbConnect from '@/lib/mongodb';
 import Lead from '@/models/Lead';
-import Flight from '@/models/Flight';
 import Link from 'next/link';
 import { logoutAction } from '../login/actions';
 import { Search, MapPin, Calendar, Users, Trash2 } from 'lucide-react';
@@ -16,8 +15,8 @@ export default async function LeadsAdminPage() {
   }
 
   await dbConnect();
-  // Fetch from your 'flights' collection where your data is
-  const leads = await Flight.find({}).sort({ _id: -1 });
+  // Fetch from 'leads' collection which records every search inquiry
+  const leads = await Lead.find({}).sort({ createdAt: -1 });
 
   return (
     <div className="flex bg-[#030712] text-slate-100 font-sans min-h-screen selection:bg-amber-500/30">

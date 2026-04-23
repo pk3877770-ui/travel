@@ -42,8 +42,9 @@ const SearchSection = () => {
       const from = formData.get("from");
       const to = formData.get("to");
       const date = formData.get("date");
+      const travelers = formData.get("travelers");
 
-      const res = await fetch(`/api/search?from=${from}&to=${to}&date=${date}`);
+      const res = await fetch(`/api/search?from=${from}&to=${to}&date=${date}&travelers=${travelers}`);
       const data = await res.json();
 
       if (data.success) {
