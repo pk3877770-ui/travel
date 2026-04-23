@@ -17,6 +17,7 @@ const SearchSection = () => {
   const [activeTab, setActiveTab] = useState("flights");
   const [flights, setFlights] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
   const router = useRouter();
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,6 +34,7 @@ const SearchSection = () => {
     }
 
     setIsLoading(true);
+    setHasSearched(true);
     setFlights([]);
 
     try {
@@ -107,7 +109,7 @@ const SearchSection = () => {
                   type="text"
                   name="from"
                   placeholder="From where?"
-                  defaultValue="New Delhi (DEL)"
+                  defaultValue="Delhi"
                   className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium"
                 />
               </div>
@@ -121,6 +123,7 @@ const SearchSection = () => {
                   type="text"
                   name="to"
                   placeholder="Where to?"
+                  defaultValue="Mumbai"
                   className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium"
                 />
               </div>
@@ -167,6 +170,17 @@ const SearchSection = () => {
 
           {/* Results Section */}
           <AnimatePresence>
+            {hasSearched && flights.length === 0 && !isLoading && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="mt-12 p-8 text-center bg-slate-50 dark:bg-slate-800/20 rounded-3xl border border-dashed border-slate-200 dark:border-slate-700"
+              >
+                <Box className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">No flights available</h3>
+                <p className="text-slate-400">We couldn't find any flights matching your search. Try different cities or dates.</p>
+              </motion.div>
+            )}
             {flights.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
