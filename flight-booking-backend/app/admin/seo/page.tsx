@@ -62,7 +62,26 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
         </div>
 
         {/* Navigation Area */}
-        <nav className="flex-1 w-full overflow-y-auto px-6 py-10 flex flex-col gap-2.5 custom-scrollbar scroll-smooth">
+        <nav className="w-full px-6 py-6 border-b border-white/[0.03] flex flex-col gap-2">
+            <p className="px-6 text-[10px] font-black text-slate-600 uppercase tracking-widest mb-2">Systems</p>
+            <Link 
+                href="/admin/seo"
+                className="px-6 py-4 rounded-xl font-bold transition-all duration-300 flex items-center bg-amber-500 text-[#030712] shadow-lg shadow-amber-500/20"
+            >
+                <div className="w-1.5 h-1.5 rounded-full mr-4 bg-[#030712]"></div>
+                <span className="text-[13px]">SEO Orchestration</span>
+            </Link>
+            <Link 
+                href="/admin/leads"
+                className="px-6 py-4 rounded-xl font-bold transition-all duration-300 flex items-center text-slate-400 hover:bg-white/[0.05] hover:text-white"
+            >
+                <div className="w-1.5 h-1.5 rounded-full mr-4 bg-slate-800"></div>
+                <span className="text-[13px]">Captured Leads</span>
+            </Link>
+        </nav>
+
+        <nav className="flex-1 w-full overflow-y-auto px-6 py-6 flex flex-col gap-2 custom-scrollbar">
+            <p className="px-6 text-[10px] font-black text-slate-600 uppercase tracking-widest mb-2">Target Pages</p>
             {allPaths.map((pagePath) => {
                 const isActive = currentPage === pagePath;
                 const linkName = pagePath === '/' ? 'Home Page' : pagePath.replace(/[-/]/g, ' ').trim().replace(/\b\w/g, c => c.toUpperCase());

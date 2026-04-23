@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Flight from "@/models/Flight";
+import Lead from "@/models/Lead";
 
 export async function GET(req) {
   try {
@@ -10,6 +11,22 @@ export async function GET(req) {
     const from = searchParams.get("from");
     const to = searchParams.get("to");
     const date = searchParams.get("date");
+    const travelers = searchParams.get("travelers");
+
+    // Record the search as a lead
+    if (from || to) {
+      try {
+        await Lead.create({
+          from,
+          to,
+          date,
+          travelers: travelers || "1 Adult",
+          type: "Flight Search"
+        });
+      } catch (e) {
+        console.error("Failed to record lead:", e);
+      }
+    }
 
     let query = {};
 
