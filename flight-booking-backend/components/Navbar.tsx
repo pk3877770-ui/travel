@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Plane, Menu, X, Send } from "lucide-react";
+import { Plane, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -28,7 +28,6 @@ const Navbar = () => {
     { name: "Services", href: "/services" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
-    { name: "Subscribe", href: "/subscribe" },
   ];
 
   return (
@@ -63,13 +62,6 @@ const Navbar = () => {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
             </Link>
           ))}
-          <Link
-            href="/subscribe"
-            className="bg-accent hover:bg-accent-hover text-primary px-6 py-2.5 rounded-full font-bold flex items-center gap-2 transition-all shadow-lg hover:shadow-accent/20"
-          >
-            <Send className="w-4 h-4" />
-            Subscribe
-          </Link>
         </nav>
 
         {/* Mobile Toggle */}
@@ -98,17 +90,8 @@ const Navbar = () => {
                 className="text-xl text-white/90 hover:text-accent flex items-center justify-between group"
               >
                 {link.name}
-                <div className="w-0 h-0.5 bg-accent transition-all group-hover:w-4" />
               </Link>
             ))}
-            <Link
-              href="/subscribe"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="bg-accent text-primary p-4 rounded-2xl font-bold text-center flex items-center justify-center gap-2"
-            >
-              <Send className="w-5 h-5" />
-              Subscribe to Newsletter
-            </Link>
           </motion.div>
         )}
       </AnimatePresence>

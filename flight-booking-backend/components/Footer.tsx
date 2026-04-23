@@ -41,7 +41,6 @@ const Footer = () => {
                 { name: "Hotel Booking", href: "/hotel-booking" },
                 { name: "Flight Booking", href: "/flight-booking" },
                 { name: "About Karmana", href: "/about" },
-                { name: "Subscribe", href: "/subscribe" },
               ].map((item) => (
                 <li key={item.name}>
                   <Link
