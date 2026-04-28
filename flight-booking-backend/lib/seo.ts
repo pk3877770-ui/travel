@@ -63,7 +63,7 @@ export function getDefaultSEO(routePath: string): SEOData {
     keywords: "luxury travel, concierge, flights, hotels",
     canonical: "https://flight-booking-backend-gold.vercel.app" + routePath,
     og_url: "https://flight-booking-backend-gold.vercel.app" + routePath,
-    publisher: "https://karmana.com",
+    publisher: "https://flight-booking-backend-gold.vercel.app",
     robots: "index, follow"
   };
 }
@@ -75,7 +75,7 @@ export function getDefaultSEO(routePath: string): SEOData {
  */
 export async function getSEOMetadata(routePath: string): Promise<SEOData> {
   noStore();
-  
+
   const defaultSEO = getDefaultSEO(routePath);
 
   // Try MongoDB first
@@ -101,14 +101,14 @@ export async function getAllSEOData(): Promise<Record<string, any>> {
       const fileContent = fs.readFileSync(filePath, 'utf8');
       baseMap = JSON.parse(fileContent);
     }
-  } catch (e) {}
+  } catch (e) { }
 
   try {
     const dbConnect = (await import('./mongodb')).default;
     const SeoMeta = (await import('@/models/SeoMeta')).default;
     await dbConnect();
     const allDocs = await SeoMeta.find({}).lean();
-    
+
     // Merge DB results over JSON base
     const map = { ...baseMap };
     allDocs.forEach((doc: any) => {
@@ -165,7 +165,7 @@ export async function updateSEOData(pagePath: string, data: SEOData): Promise<{ 
     const dbConnect = (await import('./mongodb')).default;
     const SeoMeta = (await import('@/models/SeoMeta')).default;
     await dbConnect();
-    
+
     await SeoMeta.findOneAndUpdate(
       { pagePath },
       { ...data, pagePath },
@@ -181,15 +181,15 @@ export async function updateSEOData(pagePath: string, data: SEOData): Promise<{ 
         const fileContent = fs.readFileSync(filePath, 'utf8');
         registry = JSON.parse(fileContent);
       }
-    } catch (e) {}
+    } catch (e) { }
 
     registry[pagePath] = data;
 
     // If MongoDB failed, check if we can save to JSON
     // We only force 'virtual' mode if we are actually deployed on Vercel
     if (process.env.VERCEL === '1') {
-       // On Vercel, we return 'virtual' so the user can download the JSON
-       return { success: true, target: 'virtual', fullData: registry };
+      // On Vercel, we return 'virtual' so the user can download the JSON
+      return { success: true, target: 'virtual', fullData: registry };
     }
 
     try {

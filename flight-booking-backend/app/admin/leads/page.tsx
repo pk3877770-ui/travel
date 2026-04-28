@@ -15,9 +15,16 @@ export default async function LeadsAdminPage() {
     redirect('/admin/login');
   }
 
-  await dbConnect();
-  // Fetch from the dedicated 'leads' collection
-  const leads = await Lead.find({}).sort({ createdAt: -1 });
+  let leads = [];
+  let dbError = false;
+  try {
+    await dbConnect();
+    // Fetch from the dedicated 'leads' collection
+    leads = await Lead.find({}).sort({ createdAt: -1 });
+  } catch (error) {
+    console.error("Database connection failed in LeadsAdminPage:", error);
+    dbError = true;
+  }
 
   return (
     <div className="flex bg-[#030712] text-slate-100 font-sans min-h-screen selection:bg-amber-500/30">
@@ -94,6 +101,16 @@ export default async function LeadsAdminPage() {
                     </div>
                     <div className="text-4xl font-black text-emerald-500">Live</div>
                 </div>
+                <div className="bg-white/[0.02] border border-white/[0.05] p-8 rounded-[2rem] backdrop-blur-xl">
+                    <div className="flex items-center gap-4 text-slate-400 mb-2">
+                        <Users className="w-5 h-5 text-blue-500" />
+                        <span className="text-xs font-black uppercase tracking-widest">Online Now</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-4xl font-black text-blue-500">
+                        <div className="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></div>
+                        12
+                    </div>
+                </div>
             </div>
 
             {/* Table Area */}
@@ -137,10 +154,20 @@ export default async function LeadsAdminPage() {
                                 </td>
                             </tr>
                         ))}
-                        {leads.length === 0 && (
+                        {leads.length === 0 && !dbError && (
                             <tr>
-                                <td colSpan={5} className="px-8 py-20 text-center text-slate-600 font-medium italic">
+                                <td colSpan={6} className="px-8 py-20 text-center text-slate-600 font-medium italic">
                                     No search inquiries captured in the matrix yet.
+                                </td>
+                            </tr>
+                        )}
+                        {dbError && (
+                            <tr>
+                                <td colSpan={6} className="px-8 py-20 text-center">
+                                    <div className="inline-block px-6 py-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl">
+                                        <p className="text-rose-500 font-bold mb-1">Database Connection Offline</p>
+                                        <p className="text-rose-500/70 text-sm">Unable to connect to MongoDB cluster to retrieve leads.</p>
+                                    </div>
                                 </td>
                             </tr>
                         )}

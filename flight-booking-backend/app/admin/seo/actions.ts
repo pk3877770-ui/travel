@@ -1,3 +1,5 @@
+"use server";
+
 import { updateSEOData, SEOData } from '@/lib/seo';
 import { revalidatePath } from 'next/cache';
 
