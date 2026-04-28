@@ -22,8 +22,30 @@ const SearchSection = () => {
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const from = formData.get("from")?.toString() || "";
+    const to = formData.get("to")?.toString() || "";
+    const date = formData.get("date")?.toString() || "";
+    const travelers = formData.get("travelers")?.toString() || "";
+
+    // Save lead for all types of searches
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from,
+          to,
+          date,
+          travelers,
+          type: activeTab.charAt(0).toUpperCase() + activeTab.slice(1) + " Search"
+        }),
+      });
+    } catch (error) {
+      console.error("Failed to save lead:", error);
+    }
+
     if (activeTab !== "flights") {
-      const formData = new FormData(e.currentTarget);
       const params = new URLSearchParams();
       formData.forEach((value, key) => {
         if (value) params.append(key, value.toString());
@@ -38,12 +60,6 @@ const SearchSection = () => {
     setFlights([]);
 
     try {
-      const formData = new FormData(e.currentTarget);
-      const from = formData.get("from");
-      const to = formData.get("to");
-      const date = formData.get("date");
-      const travelers = formData.get("travelers");
-
       const res = await fetch(`/api/search?from=${from}&to=${to}&date=${date}&travelers=${travelers}`);
       const data = await res.json();
 

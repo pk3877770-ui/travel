@@ -2,6 +2,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import dbConnect from '@/lib/mongodb';
 import Flight from '@/models/Flight';
+import Lead from '@/models/Lead';
 import Link from 'next/link';
 import { logoutAction } from '../login/actions';
 import { Search, MapPin, Calendar, Users, Trash2 } from 'lucide-react';
@@ -15,8 +16,8 @@ export default async function LeadsAdminPage() {
   }
 
   await dbConnect();
-  // Fetch directly from your 'flights' collection as requested
-  const leads = await Flight.find({}).sort({ _id: -1 });
+  // Fetch from the dedicated 'leads' collection
+  const leads = await Lead.find({}).sort({ createdAt: -1 });
 
   return (
     <div className="flex bg-[#030712] text-slate-100 font-sans min-h-screen selection:bg-amber-500/30">
@@ -102,6 +103,7 @@ export default async function LeadsAdminPage() {
                         <tr className="border-b border-white/[0.05] bg-white/[0.01]">
                             <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Departure</th>
                             <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Destination</th>
+                            <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Type</th>
                             <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Travel Date</th>
                             <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Travelers</th>
                             <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em] text-right">Actions</th>
@@ -118,6 +120,9 @@ export default async function LeadsAdminPage() {
                                 </td>
                                 <td className="px-8 py-7 font-bold text-white uppercase tracking-tight">
                                     {lead.to}
+                                </td>
+                                <td className="px-8 py-7">
+                                    <span className="px-3 py-1 rounded-lg bg-amber-500/10 text-amber-500 text-[10px] font-black uppercase tracking-widest">{lead.type || 'Flight'}</span>
                                 </td>
                                 <td className="px-8 py-7 text-slate-400 font-medium font-mono text-sm">
                                     {lead.date || 'Flexible'}

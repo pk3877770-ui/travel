@@ -34,17 +34,45 @@ export default function Home() {
             
             <div className="max-w-lg mx-auto relative">
               <form 
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const form = e.currentTarget;
+                  const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+                  const button = form.querySelector("button");
+                  
+                  if (button) button.disabled = true;
+
+                  try {
+                    const res = await fetch("/api/newsletter", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ email }),
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                      alert("Thank you for joining Karmana Elite!");
+                      form.reset();
+                    } else {
+                      alert(data.message || "Something went wrong.");
+                    }
+                  } catch (err) {
+                    alert("Failed to subscribe. Please try again.");
+                  } finally {
+                    if (button) button.disabled = false;
+                  }
+                }}
                 className="flex flex-col sm:flex-row gap-4 w-full"
               >
                 <input 
                   type="email" 
+                  name="email"
                   placeholder="Enter your email address"
                   required
                   className="flex-1 bg-white/10 backdrop-blur-md border border-white/20 px-8 py-5 rounded-full text-white placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-accent/20 transition-all font-medium"
                 />
                 <button 
-                  className="bg-accent hover:bg-accent-hover text-primary px-10 py-5 rounded-full font-black text-lg transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-accent/20 flex items-center justify-center gap-3"
+                  type="submit"
+                  className="bg-accent hover:bg-accent-hover text-primary px-10 py-5 rounded-full font-black text-lg transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-accent/20 flex items-center justify-center gap-3 disabled:opacity-50"
                 >
                   <Send className="w-5 h-5" /> Join Today
                 </button>
