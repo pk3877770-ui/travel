@@ -25,6 +25,7 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
     let query = {};
     if (filter === 'flights') query = { type: { $regex: /Flight/i } };
     if (filter === 'holidays') query = { type: { $regex: /Holiday/i } };
+    if (filter === 'hotels') query = { type: { $regex: /Hotel/i } };
 
     // Fetch from the dedicated 'leads' collection
     let rawLeads = await Lead.find(query).sort({ createdAt: -1 });
@@ -140,6 +141,9 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
                 </Link>
                 <Link href="/admin/leads?filter=holidays" className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${filter === 'holidays' ? 'bg-amber-500 text-[#030712] shadow-[0_0_15px_rgba(245,158,11,0.3)]' : 'bg-white/[0.02] text-slate-400 hover:bg-white/[0.05] hover:text-white'}`}>
                     Holiday Leads
+                </Link>
+                <Link href="/admin/leads?filter=hotels" className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${filter === 'hotels' ? 'bg-amber-500 text-[#030712] shadow-[0_0_15px_rgba(245,158,11,0.3)]' : 'bg-white/[0.02] text-slate-400 hover:bg-white/[0.05] hover:text-white'}`}>
+                    Hotel Leads
                 </Link>
             </div>
 

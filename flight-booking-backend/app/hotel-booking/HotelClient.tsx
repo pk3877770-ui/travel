@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Search, MapPin, Calendar, Users, Star, Crown, Heart, Clock, ShieldCheck, ArrowRight } from "lucide-react";
+import { Search, MapPin, Calendar, Users, Star, Crown, Heart, Clock, ShieldCheck, ArrowRight, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const hotelCollection = [
@@ -68,14 +68,39 @@ const perks = [
 export default function HotelBooking() {
   const router = useRouter();
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSearching(true);
+    
     const formData = new FormData(e.currentTarget);
-    const params = new URLSearchParams();
-    formData.forEach((value, key) => {
-      if (value) params.append(key, value.toString());
-    });
-    router.push(`/hotel-booking?${params.toString()}`);
+    const destination = formData.get("destination")?.toString() || "";
+    const checkin = formData.get("checkin")?.toString() || "";
+    const checkout = formData.get("checkout")?.toString() || "";
+    const travelers = formData.get("travelers")?.toString() || "";
+
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: "Anywhere",
+          to: destination,
+          date: `${checkin} to ${checkout}`.trim() === 'to' ? 'Flexible' : `${checkin} to ${checkout}`,
+          travelers: travelers,
+          type: "Hotel Booking"
+        }),
+      });
+      
+      // Simulate search delay for UX
+      setTimeout(() => {
+        setIsSearching(false);
+      }, 1500);
+    } catch (error) {
+      console.error("Failed to save hotel lead:", error);
+      setIsSearching(false);
+    }
   };
 
   return (
@@ -166,10 +191,11 @@ export default function HotelBooking() {
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full bg-primary text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-primary-light transition-all shadow-xl shadow-primary/20 hover:-translate-y-1 active:scale-95"
+                    disabled={isSearching}
+                    className="w-full bg-primary text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-primary-light transition-all shadow-xl shadow-primary/20 hover:-translate-y-1 active:scale-95 disabled:opacity-70 disabled:hover:translate-y-0"
                   >
-                    <Search className="w-6 h-6" />
-                    Find Stays
+                    {isSearching ? <Loader2 className="w-6 h-6 animate-spin" /> : <Search className="w-6 h-6" />}
+                    {isSearching ? "Finding Stays..." : "Find Stays"}
                   </button>
                 </div>
               </form>
