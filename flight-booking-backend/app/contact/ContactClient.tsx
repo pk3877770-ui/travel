@@ -77,7 +77,7 @@ const ContactClient = () => {
                     <input 
                       type="text" 
                       name="name"
-                      className="w-full bg-white border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all" 
+                      className="w-full bg-white text-slate-900 placeholder:text-slate-400 border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all" 
                       placeholder="e.g. Alexander Vance" 
                       required 
                     />
@@ -87,7 +87,7 @@ const ContactClient = () => {
                     <input 
                       type="email" 
                       name="email"
-                      className="w-full bg-white border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all" 
+                      className="w-full bg-white text-slate-900 placeholder:text-slate-400 border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all" 
                       placeholder="e.g. alex@vance.com" 
                       required 
                     />
@@ -95,7 +95,7 @@ const ContactClient = () => {
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Subject</label>
-                  <select name="subject" className="w-full bg-white border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all appearance-none cursor-pointer">
+                  <select name="subject" className="w-full bg-white text-slate-900 border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all appearance-none cursor-pointer">
                     <option>Bespoke Journey Consultation</option>
                     <option>Boutique Hotel Inquiry</option>
                     <option>Private Aviation Request</option>
@@ -107,7 +107,7 @@ const ContactClient = () => {
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Detailed Message</label>
                   <textarea 
                     name="message"
-                    className="w-full bg-white border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all min-h-[180px] resize-none" 
+                    className="w-full bg-white text-slate-900 placeholder:text-slate-400 border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all min-h-[180px] resize-none" 
                     placeholder="Tell us about your dream destination..."
                     required
                   ></textarea>
