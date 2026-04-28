@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Clock, Calendar, Search, Compass, Ship, Plane, Utensils, Snowflake, Car, ArrowRight } from "lucide-react";
+import { MapPin, Clock, Calendar, Search, Compass, Ship, Plane, Utensils, Snowflake, Car, ArrowRight, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const signatureJourneys = [
@@ -51,6 +51,40 @@ const globalEscapes = [
 ];
 
 export default function HolidayPackages() {
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSearching(true);
+    
+    const formData = new FormData(e.currentTarget);
+    const destination = formData.get("destination")?.toString() || "";
+    const duration = formData.get("duration")?.toString() || "";
+
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: "Anywhere", // Not specified in form
+          to: destination,
+          date: duration, // We'll store duration in the date field
+          travelers: "2 Adults", // Default assumption for holiday packages
+          type: "Holiday Package"
+        }),
+      });
+      
+      // Simulate search delay for UX
+      setTimeout(() => {
+        setIsSearching(false);
+        // You can add routing here to a results page if needed
+      }, 1500);
+    } catch (error) {
+      console.error("Failed to save holiday lead:", error);
+      setIsSearching(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-white dark:bg-slate-950">
       {/* Hero Section */}
@@ -82,12 +116,12 @@ export default function HolidayPackages() {
 
             {/* Specialized Package Search */}
             <div className="max-w-5xl mx-auto bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl p-8 md:p-12 text-left border border-slate-100 dark:border-slate-800">
-               <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+               <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
                   <div className="lg:col-span-2 space-y-2">
                     <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Destination</label>
                     <div className="relative group">
                       <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50" />
-                      <select className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium appearance-none cursor-pointer">
+                      <select name="destination" className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium appearance-none cursor-pointer">
                         <option>Maldives Over-water Experience</option>
                         <option>Kerala Backwaters & Luxury</option>
                         <option>Manali Swiss-Chalet Adventure</option>
@@ -101,7 +135,7 @@ export default function HolidayPackages() {
                     <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Duration</label>
                     <div className="relative group">
                       <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50" />
-                      <select className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium appearance-none cursor-pointer">
+                      <select name="duration" className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium appearance-none cursor-pointer">
                         <option>4-5 Nights</option>
                         <option>6-8 Nights</option>
                         <option>10-14 Nights</option>
@@ -112,10 +146,11 @@ export default function HolidayPackages() {
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full bg-accent text-primary py-5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-accent-hover transition-all shadow-xl shadow-accent/20 hover:-translate-y-1 active:scale-95"
+                      disabled={isSearching}
+                      className="w-full bg-accent text-primary py-5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-accent-hover transition-all shadow-xl shadow-accent/20 hover:-translate-y-1 active:scale-95 disabled:opacity-70 disabled:hover:translate-y-0"
                     >
-                      <Compass className="w-6 h-6" />
-                      Explore
+                      {isSearching ? <Loader2 className="w-6 h-6 animate-spin" /> : <Compass className="w-6 h-6" />}
+                      {isSearching ? "Exploring..." : "Explore"}
                     </button>
                   </div>
                </form>
