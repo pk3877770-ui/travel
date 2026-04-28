@@ -7,7 +7,8 @@ import Link from 'next/link';
 import { logoutAction } from '../login/actions';
 import { Search, MapPin, Calendar, Users, Trash2 } from 'lucide-react';
 
-export default async function LeadsAdminPage() {
+export default async function LeadsAdminPage({ searchParams }: { searchParams: Promise<{ filter?: string }> }) {
+  const { filter } = await searchParams;
   const cookieStore = await cookies();
   const token = cookieStore.get('admin_token');
 
@@ -19,8 +20,14 @@ export default async function LeadsAdminPage() {
   let dbError = false;
   try {
     await dbConnect();
+    
+    // Build query based on filter
+    let query = {};
+    if (filter === 'flights') query = { type: { $regex: /Flight/i } };
+    if (filter === 'holidays') query = { type: { $regex: /Holiday/i } };
+
     // Fetch from the dedicated 'leads' collection
-    leads = await Lead.find({}).sort({ createdAt: -1 });
+    leads = await Lead.find(query).sort({ createdAt: -1 });
   } catch (error) {
     console.error("Database connection failed in LeadsAdminPage:", error);
     dbError = true;
@@ -111,6 +118,19 @@ export default async function LeadsAdminPage() {
                         12
                     </div>
                 </div>
+            </div>
+
+            {/* Filter Tabs */}
+            <div className="flex gap-4 mb-8">
+                <Link href="/admin/leads" className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${!filter ? 'bg-amber-500 text-[#030712] shadow-[0_0_15px_rgba(245,158,11,0.3)]' : 'bg-white/[0.02] text-slate-400 hover:bg-white/[0.05] hover:text-white'}`}>
+                    All Inquiries
+                </Link>
+                <Link href="/admin/leads?filter=flights" className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${filter === 'flights' ? 'bg-amber-500 text-[#030712] shadow-[0_0_15px_rgba(245,158,11,0.3)]' : 'bg-white/[0.02] text-slate-400 hover:bg-white/[0.05] hover:text-white'}`}>
+                    Flight Leads
+                </Link>
+                <Link href="/admin/leads?filter=holidays" className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${filter === 'holidays' ? 'bg-amber-500 text-[#030712] shadow-[0_0_15px_rgba(245,158,11,0.3)]' : 'bg-white/[0.02] text-slate-400 hover:bg-white/[0.05] hover:text-white'}`}>
+                    Holiday Leads
+                </Link>
             </div>
 
             {/* Table Area */}
