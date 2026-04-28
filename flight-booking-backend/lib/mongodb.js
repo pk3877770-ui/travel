@@ -24,6 +24,7 @@ async function dbConnect() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      family: 4, // Force IPv4, prevents ECONNREFUSED in Node >=17
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
