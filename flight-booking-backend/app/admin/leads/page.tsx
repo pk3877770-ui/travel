@@ -27,7 +27,17 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
     if (filter === 'holidays') query = { type: { $regex: /Holiday/i } };
 
     // Fetch from the dedicated 'leads' collection
-    leads = await Lead.find(query).sort({ createdAt: -1 });
+    let rawLeads = await Lead.find(query).sort({ createdAt: -1 });
+
+    // Deduplicate leads to prevent double-entries
+    const uniqueMap = new Map();
+    rawLeads.forEach(lead => {
+        const key = `${lead.from}-${lead.to}-${lead.date}-${lead.type}`.toLowerCase().replace("flights search", "flight search");
+        if (!uniqueMap.has(key)) {
+            uniqueMap.set(key, lead);
+        }
+    });
+    leads = Array.from(uniqueMap.values());
   } catch (error) {
     console.error("Database connection failed in LeadsAdminPage:", error);
     dbError = true;
