@@ -1,9 +1,41 @@
 "use client";
 
-import React from "react";
-import { Mail, Phone, MapPin, Send, Headset, Landmark } from "lucide-react";
+import React, { useState } from "react";
+import { Mail, Phone, MapPin, Send, Headset, Landmark, Loader2 } from "lucide-react";
 
 const ContactClient = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSuccess(false);
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name")?.toString() || "",
+      email: formData.get("email")?.toString() || "",
+      subject: formData.get("subject")?.toString() || "",
+      message: formData.get("message")?.toString() || ""
+    };
+
+    try {
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      setSuccess(true);
+      (e.target as HTMLFormElement).reset();
+    } catch (error) {
+      console.error("Failed to submit inquiry:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <main className="bg-white">
       {/* Inner Hero */}
@@ -38,12 +70,13 @@ const ContactClient = () => {
                 Provide your details and a brief description of your travel requirements. A personal concierge will contact you within the hour.
               </p>
               
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Full Name</label>
                     <input 
                       type="text" 
+                      name="name"
                       className="w-full bg-white border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all" 
                       placeholder="e.g. Alexander Vance" 
                       required 
@@ -53,6 +86,7 @@ const ContactClient = () => {
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Email Address</label>
                     <input 
                       type="email" 
+                      name="email"
                       className="w-full bg-white border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all" 
                       placeholder="e.g. alex@vance.com" 
                       required 
@@ -61,7 +95,7 @@ const ContactClient = () => {
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Subject</label>
-                  <select className="w-full bg-white border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all appearance-none cursor-pointer">
+                  <select name="subject" className="w-full bg-white border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all appearance-none cursor-pointer">
                     <option>Bespoke Journey Consultation</option>
                     <option>Boutique Hotel Inquiry</option>
                     <option>Private Aviation Request</option>
@@ -72,14 +106,22 @@ const ContactClient = () => {
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Detailed Message</label>
                   <textarea 
+                    name="message"
                     className="w-full bg-white border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all min-h-[180px] resize-none" 
                     placeholder="Tell us about your dream destination..."
+                    required
                   ></textarea>
                 </div>
-                <button type="submit" className="w-full bg-accent hover:bg-accent-dark text-primary font-black py-5 rounded-2xl flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 shadow-xl hover:shadow-accent/20">
-                  <Send className="w-5 h-5" />
-                  Submit Inquiry
+                <button type="submit" disabled={isSubmitting} className="w-full bg-accent hover:bg-accent-dark text-primary font-black py-5 rounded-2xl flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 shadow-xl hover:shadow-accent/20 disabled:opacity-70 disabled:hover:translate-y-0">
+                  {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
+                  {isSubmitting ? "Sending..." : "Submit Inquiry"}
                 </button>
+                {success && (
+                  <div className="p-4 bg-emerald-50 text-emerald-600 rounded-xl text-sm font-bold border border-emerald-100 flex items-center gap-3 animate-in fade-in slide-in-from-bottom-2">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                    Your inquiry has been sent to our concierge team.
+                  </div>
+                )}
               </form>
             </div>
 

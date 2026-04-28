@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import dbConnect from '@/lib/mongodb';
 import Flight from '@/models/Flight';
 import Lead from '@/models/Lead';
+import Contact from '@/models/Contact';
 import Link from 'next/link';
 import { logoutAction } from '../login/actions';
 import { Search, MapPin, Calendar, Users, Trash2 } from 'lucide-react';
@@ -27,18 +28,22 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
     if (filter === 'holidays') query = { type: { $regex: /Holiday/i } };
     if (filter === 'hotels') query = { type: { $regex: /Hotel/i } };
 
-    // Fetch from the dedicated 'leads' collection
-    let rawLeads = await Lead.find(query).sort({ createdAt: -1 });
+    if (filter === 'contacts') {
+        leads = await Contact.find({}).sort({ createdAt: -1 });
+    } else {
+        // Fetch from the dedicated 'leads' collection
+        let rawLeads = await Lead.find(query).sort({ createdAt: -1 });
 
-    // Deduplicate leads to prevent double-entries
-    const uniqueMap = new Map();
-    rawLeads.forEach(lead => {
-        const key = `${lead.from}-${lead.to}-${lead.date}-${lead.type}`.toLowerCase().replace("flights search", "flight search");
-        if (!uniqueMap.has(key)) {
-            uniqueMap.set(key, lead);
-        }
-    });
-    leads = Array.from(uniqueMap.values());
+        // Deduplicate leads to prevent double-entries
+        const uniqueMap = new Map();
+        rawLeads.forEach(lead => {
+            const key = `${lead.from}-${lead.to}-${lead.date}-${lead.type}`.toLowerCase().replace("flights search", "flight search");
+            if (!uniqueMap.has(key)) {
+                uniqueMap.set(key, lead);
+            }
+        });
+        leads = Array.from(uniqueMap.values());
+    }
   } catch (error) {
     console.error("Database connection failed in LeadsAdminPage:", error);
     dbError = true;
@@ -145,12 +150,56 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
                 <Link href="/admin/leads?filter=hotels" className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${filter === 'hotels' ? 'bg-amber-500 text-[#030712] shadow-[0_0_15px_rgba(245,158,11,0.3)]' : 'bg-white/[0.02] text-slate-400 hover:bg-white/[0.05] hover:text-white'}`}>
                     Hotel Leads
                 </Link>
+                <Link href="/admin/leads?filter=contacts" className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${filter === 'contacts' ? 'bg-amber-500 text-[#030712] shadow-[0_0_15px_rgba(245,158,11,0.3)]' : 'bg-white/[0.02] text-slate-400 hover:bg-white/[0.05] hover:text-white'}`}>
+                    Contact Inquiries
+                </Link>
             </div>
 
             {/* Table Area */}
             <div className="bg-white/[0.02] border border-white/[0.05] rounded-[2.5rem] overflow-x-auto backdrop-blur-3xl shadow-2xl">
-                <table className="w-full text-left border-collapse min-w-[800px]">
-                    <thead>
+                {filter === 'contacts' ? (
+                  <table className="w-full text-left border-collapse min-w-[800px]">
+                      <thead>
+                          <tr className="border-b border-white/[0.05] bg-white/[0.01]">
+                              <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Date</th>
+                              <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Name</th>
+                              <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Email</th>
+                              <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Subject</th>
+                              <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Message</th>
+                          </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/[0.02]">
+                          {leads.map((lead: any) => (
+                              <tr key={lead._id} className="group hover:bg-white/[0.02] transition-colors">
+                                  <td className="px-8 py-7 text-sm text-slate-400">
+                                      {new Date(lead.createdAt).toISOString().split('T')[0]}
+                                  </td>
+                                  <td className="px-8 py-7 font-bold text-white text-sm">
+                                      {lead.name}
+                                  </td>
+                                  <td className="px-8 py-7 text-slate-300 text-sm">
+                                      <a href={`mailto:${lead.email}`} className="hover:text-amber-400 transition-colors">{lead.email}</a>
+                                  </td>
+                                  <td className="px-8 py-7">
+                                      <span className="px-3 py-1 rounded-lg bg-amber-500/10 text-amber-500 text-[10px] font-black uppercase tracking-widest">{lead.subject}</span>
+                                  </td>
+                                  <td className="px-8 py-7 text-sm text-slate-400 max-w-xs truncate" title={lead.message}>
+                                      {lead.message}
+                                  </td>
+                              </tr>
+                          ))}
+                          {leads.length === 0 && !dbError && (
+                              <tr>
+                                  <td colSpan={5} className="px-8 py-20 text-center text-slate-600 font-medium italic">
+                                      No contact inquiries found.
+                                  </td>
+                              </tr>
+                          )}
+                      </tbody>
+                  </table>
+                ) : (
+                  <table className="w-full text-left border-collapse min-w-[800px]">
+                      <thead>
                         <tr className="border-b border-white/[0.05] bg-white/[0.01]">
                             <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Departure</th>
                             <th className="px-8 py-6 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Destination</th>
@@ -207,6 +256,7 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
                         )}
                     </tbody>
                 </table>
+                )}
             </div>
         </div>
       </main>
