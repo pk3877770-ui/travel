@@ -16,13 +16,26 @@ export async function GET(req) {
     // Record the search in the 'leads' collection
     if (from || to) {
       try {
-        await Lead.create({
+        const type = "Flight Search";
+        const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+        
+        const existingLead = await Lead.findOne({
           from,
           to,
           date,
-          travelers: travelers || "1",
-          type: "Flight Search"
+          type,
+          createdAt: { $gte: fiveMinutesAgo }
         });
+
+        if (!existingLead) {
+          await Lead.create({
+            from,
+            to,
+            date,
+            travelers: travelers || "1",
+            type
+          });
+        }
       } catch (e) {
         console.error("Failed to record flight lead:", e);
       }
