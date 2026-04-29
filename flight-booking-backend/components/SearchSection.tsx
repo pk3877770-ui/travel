@@ -40,7 +40,7 @@ const SearchSection = () => {
           to,
           date,
           travelers,
-          type: activeTab.charAt(0).toUpperCase() + activeTab.slice(1) + " Search"
+          type: (activeTab === "flights" ? "Flight" : activeTab.charAt(0).toUpperCase() + activeTab.slice(1)) + " Search"
         }),
       });
     } catch (error) {

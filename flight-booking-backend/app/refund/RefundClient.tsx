@@ -7,6 +7,33 @@ import { cn } from "@/lib/utils";
 const RefundClient = () => {
   const [activeTab, setActiveTab] = useState("domestic");
 
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [actionMessage, setActionMessage] = useState<{title: string, msg: string} | null>(null);
+
+  const handleAction = (title: string) => {
+    if (title === "Refund Support") {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      return;
+    }
+
+    setActionLoading(title);
+    setTimeout(() => {
+      setActionLoading(null);
+      if (title === "Track Refund") {
+        setActionMessage({
+          title: "Refund Status: Processing",
+          msg: "Booking ID #KA-99283 is currently under review by the airline. Estimated resolution: 48 hours."
+        });
+      } else if (title === "Refund Receipt") {
+        setActionMessage({
+          title: "Receipt Generated",
+          msg: "Your refund summary has been generated and sent to your registered email address."
+        });
+      }
+      setTimeout(() => setActionMessage(null), 6000);
+    }, 2000);
+  };
+
   const tabs = [
     { id: "domestic", label: "Domestic Flights", icon: <Globe className="w-4 h-4" /> },
     { id: "international", label: "International", icon: <Globe className="w-4 h-4" /> },
@@ -15,7 +42,23 @@ const RefundClient = () => {
   ];
 
   return (
-    <main className="min-h-screen bg-slate-50 pt-20 pb-24 px-6 font-inter">
+    <main className="min-h-screen bg-slate-50 pt-20 pb-24 px-6 font-inter relative">
+      {/* Interaction Overlay */}
+      {actionMessage && (
+        <div className="fixed top-24 right-6 left-6 z-[100] animate-in slide-in-from-top-10 duration-500">
+          <div className="max-w-md mx-auto bg-primary text-white p-8 rounded-[2rem] shadow-2xl border border-accent/30 backdrop-blur-xl">
+            <h3 className="text-xl font-black font-outfit text-accent mb-2 italic">{actionMessage.title}</h3>
+            <p className="text-white/80 font-medium">{actionMessage.msg}</p>
+            <button 
+              onClick={() => setActionMessage(null)}
+              className="mt-6 text-xs font-black uppercase tracking-widest text-accent hover:underline"
+            >
+              Close Notification
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-6xl mx-auto space-y-12">
         {/* Header Section */}
         <section className="bg-white/95 backdrop-blur-xl border border-white/20 rounded-[2rem] p-12 text-center shadow-xl shadow-slate-200/50">
@@ -176,7 +219,16 @@ const RefundClient = () => {
                       { icon: "📄", title: "Refund Receipt", label: "Download refund details PDF" },
                       { icon: "📞", title: "Refund Support", label: "24/7 dedicated helpline" },
                     ].map((action, i) => (
-                      <div key={i} className="bg-gradient-to-br from-primary to-primary-light p-10 rounded-[2rem] text-center text-white shadow-xl hover:-translate-y-2 transition-all cursor-pointer border border-white/10 group">
+                      <div 
+                        key={i} 
+                        onClick={() => handleAction(action.title)}
+                        className="bg-gradient-to-br from-primary to-primary-light p-10 rounded-[2rem] text-center text-white shadow-xl hover:-translate-y-2 transition-all cursor-pointer border border-white/10 group relative overflow-hidden"
+                      >
+                        {actionLoading === action.title ? (
+                          <div className="absolute inset-0 bg-primary/80 backdrop-blur-sm flex items-center justify-center z-10">
+                            <Settings className="w-10 h-10 text-accent animate-spin" />
+                          </div>
+                        ) : null}
                         <div className="text-5xl mb-6 group-hover:scale-110 transition-transform">{action.icon}</div>
                         <h3 className="text-xl font-black font-outfit mb-2 text-accent italic">{action.title}</h3>
                         <p className="text-white/70 font-medium">{action.label}</p>

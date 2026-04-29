@@ -8,12 +8,13 @@ export async function POST(req) {
     const data = await req.json();
     
     // Server-side deduplication: Check if an identical lead was created recently (last 5 minutes)
+    const type = (data.type || "Flight Search").replace("Flights Search", "Flight Search");
     const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
     const existingLead = await Lead.findOne({
       from: data.from,
       to: data.to,
       date: data.date,
-      type: data.type || "Flight Search",
+      type,
       createdAt: { $gte: fiveMinutesAgo }
     });
 
@@ -26,7 +27,7 @@ export async function POST(req) {
       to: data.to,
       date: data.date,
       travelers: data.travelers,
-      type: data.type || "Flight Search"
+      type
     });
 
     return NextResponse.json({ success: true, lead });
