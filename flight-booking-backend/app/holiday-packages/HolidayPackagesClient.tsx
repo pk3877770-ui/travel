@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Clock, Calendar, Search, Compass, Ship, Plane, Utensils, Snowflake, Car, ArrowRight, Loader2 } from "lucide-react";
+import { MapPin, Clock, Calendar, Search, Compass, Ship, Plane, Utensils, Snowflake, Car, ArrowRight, Loader2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const signatureJourneys = [
@@ -52,6 +52,8 @@ const globalEscapes = [
 
 export default function HolidayPackages() {
   const [isSearching, setIsSearching] = useState(false);
+  const [packageInquiry, setPackageInquiry] = useState<number | null>(null);
+  const [inquirySuccess, setInquirySuccess] = useState<number | null>(null);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,10 +81,36 @@ export default function HolidayPackages() {
         setIsSearching(false);
         // You can add routing here to a results page if needed
       }, 1500);
-    } catch (error) {
-      console.error("Failed to save holiday lead:", error);
+    } finally {
       setIsSearching(false);
     }
+  };
+
+  const handlePackageInquiry = async (pkg: any) => {
+    setPackageInquiry(pkg.id || pkg.name);
+    
+    // Capture Holiday Inquiry Lead
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: "Anywhere",
+          to: pkg.title || pkg.name,
+          date: "Seasonal",
+          travelers: "2 Adults",
+          type: `Package Inquiry: ${pkg.title || pkg.name} (${pkg.price})`
+        }),
+      });
+    } catch (error) {
+      console.error("Holiday inquiry lead failed:", error);
+    }
+
+    setTimeout(() => {
+      setPackageInquiry(null);
+      setInquirySuccess(pkg.id || pkg.name);
+      setTimeout(() => setInquirySuccess(null), 5000);
+    }, 1200);
   };
 
   return (
@@ -206,8 +234,23 @@ export default function HolidayPackages() {
                         <span className="text-slate-400 text-xs font-normal ml-1">/pp</span>
                       </span>
                     </div>
-                    <button className="bg-primary hover:bg-primary-light text-white p-4 rounded-2xl transition-all shadow-lg">
-                      <ArrowRight className="w-5 h-5" />
+                    <button 
+                      onClick={() => handlePackageInquiry(pkg)}
+                      disabled={packageInquiry === pkg.id || inquirySuccess === pkg.id}
+                      className={cn(
+                        "p-4 rounded-2xl transition-all shadow-lg flex items-center justify-center min-w-[56px]",
+                        inquirySuccess === pkg.id
+                          ? "bg-emerald-500 text-white"
+                          : "bg-primary hover:bg-primary-light text-white"
+                      )}
+                    >
+                      {packageInquiry === pkg.id ? (
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                      ) : inquirySuccess === pkg.id ? (
+                        <Check className="w-5 h-5" />
+                      ) : (
+                        <ArrowRight className="w-5 h-5" />
+                      )}
                     </button>
                   </div>
                 </div>
@@ -234,6 +277,7 @@ export default function HolidayPackages() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 className="relative h-96 rounded-[2.5rem] overflow-hidden group cursor-pointer"
+                onClick={() => handlePackageInquiry(loc)}
               >
                 <img src={loc.image} alt={loc.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />

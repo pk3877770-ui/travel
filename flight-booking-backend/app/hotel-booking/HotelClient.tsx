@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Search, MapPin, Calendar, Users, Star, Crown, Heart, Clock, ShieldCheck, ArrowRight, Loader2 } from "lucide-react";
+import { Search, MapPin, Calendar, Users, Star, Crown, Heart, Clock, ShieldCheck, ArrowRight, Loader2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const hotelCollection = [
@@ -69,6 +69,8 @@ export default function HotelBooking() {
   const router = useRouter();
 
   const [isSearching, setIsSearching] = useState(false);
+  const [inquiryLoading, setInquiryLoading] = useState<number | null>(null);
+  const [inquirySuccess, setInquirySuccess] = useState<number | null>(null);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -97,10 +99,36 @@ export default function HotelBooking() {
       setTimeout(() => {
         setIsSearching(false);
       }, 1500);
-    } catch (error) {
-      console.error("Failed to save hotel lead:", error);
+    } finally {
       setIsSearching(false);
     }
+  };
+
+  const handleInquiry = async (hotel: any) => {
+    setInquiryLoading(hotel.id);
+    
+    // Capture Hotel Inquiry Lead
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: "Anywhere",
+          to: hotel.name,
+          date: "Anytime",
+          travelers: "2 Adults",
+          type: `Hotel Inquiry: ${hotel.name} (${hotel.price})`
+        }),
+      });
+    } catch (error) {
+      console.error("Hotel inquiry lead failed:", error);
+    }
+
+    setTimeout(() => {
+      setInquiryLoading(null);
+      setInquirySuccess(hotel.id);
+      setTimeout(() => setInquirySuccess(null), 5000);
+    }, 1200);
   };
 
   return (
@@ -253,8 +281,23 @@ export default function HotelBooking() {
                         <span className="text-slate-400 text-xs font-normal ml-1">/night</span>
                       </span>
                     </div>
-                    <button className="border-2 border-primary dark:border-accent text-primary dark:text-accent hover:bg-primary hover:text-white dark:hover:bg-accent dark:hover:text-primary px-6 py-3 rounded-2xl font-bold transition-all">
-                      View Details
+                    <button 
+                      onClick={() => handleInquiry(hotel)}
+                      disabled={inquiryLoading === hotel.id || inquirySuccess === hotel.id}
+                      className={cn(
+                        "px-6 py-3 rounded-2xl font-bold transition-all flex items-center justify-center gap-2 min-w-[140px]",
+                        inquirySuccess === hotel.id
+                          ? "bg-emerald-500 text-white border-emerald-500"
+                          : "border-2 border-primary dark:border-accent text-primary dark:text-accent hover:bg-primary hover:text-white dark:hover:bg-accent dark:hover:text-primary"
+                      )}
+                    >
+                      {inquiryLoading === hotel.id ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : inquirySuccess === hotel.id ? (
+                        <><Check className="w-4 h-4" /> Sent</>
+                      ) : (
+                        "View Details"
+                      )}
                     </button>
                   </div>
                 </div>

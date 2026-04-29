@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plane, Hotel, Box, Ship, Search, Calendar, Users, MapPin, Loader2, ArrowRight } from "lucide-react";
+import { Plane, Hotel, Box, Ship, Search, Calendar, Users, MapPin, Loader2, ArrowRight, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +17,8 @@ const SearchSection = () => {
   const [activeTab, setActiveTab] = useState("flights");
   const [flights, setFlights] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isBooking, setIsBooking] = useState<string | null>(null);
+  const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
   const router = useRouter();
 
@@ -71,6 +73,33 @@ const SearchSection = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleBookFlight = async (flight: any) => {
+    setIsBooking(flight._id || "temp");
+    
+    // Capture Booking Lead
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: flight.from,
+          to: flight.to,
+          date: flight.date,
+          travelers: "1 Adult",
+          type: `Booking: ${flight.airline} (${flight.price})`
+        }),
+      });
+    } catch (error) {
+      console.error("Booking lead failed:", error);
+    }
+
+    setTimeout(() => {
+      setIsBooking(null);
+      setBookingSuccess(flight._id || "temp");
+      setTimeout(() => setBookingSuccess(null), 5000);
+    }, 1500);
   };
 
   return (
@@ -254,8 +283,25 @@ const SearchSection = () => {
                           <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Starting from</div>
                           <div className="text-3xl font-black text-primary dark:text-white">₹{flight.price || "4,499"}</div>
                         </div>
-                        <button className="bg-accent hover:bg-accent-hover text-primary p-4 rounded-2xl font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-accent/20">
-                          <ArrowRight className="w-6 h-6" />
+                        <button 
+                          onClick={() => handleBookFlight(flight)}
+                          disabled={isBooking === (flight._id || idx) || bookingSuccess === (flight._id || idx)}
+                          className={cn(
+                            "p-4 rounded-2xl font-bold transition-all shadow-lg shadow-accent/20 active:scale-95 disabled:opacity-70 flex items-center justify-center min-w-[64px]",
+                            bookingSuccess === (flight._id || idx) 
+                              ? "bg-emerald-500 text-white" 
+                              : "bg-accent hover:bg-accent-hover text-primary hover:scale-105"
+                          )}
+                        >
+                          {isBooking === (flight._id || idx) ? (
+                            <Loader2 className="w-6 h-6 animate-spin" />
+                          ) : bookingSuccess === (flight._id || idx) ? (
+                            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
+                              <Check className="w-6 h-6" />
+                            </motion.div>
+                          ) : (
+                            <ArrowRight className="w-6 h-6" />
+                          )}
                         </button>
                       </div>
                     </motion.div>

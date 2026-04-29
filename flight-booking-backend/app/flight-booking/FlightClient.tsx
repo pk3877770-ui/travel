@@ -2,8 +2,8 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { Plane, Search, ArrowRight, ShieldCheck, Crown, RefreshCcw, HandCoins, MapPin, Calendar, Users, Globe } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plane, Search, ArrowRight, ShieldCheck, Crown, RefreshCcw, HandCoins, MapPin, Calendar, Users, Globe, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const flightDeals = [
@@ -21,6 +21,11 @@ const trustPillars = [
 
 export default function FlightBookingPage() {
   const router = useRouter();
+  const [flights, setFlights] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const [isBooking, setIsBooking] = React.useState<string | null>(null);
+  const [bookingSuccess, setBookingSuccess] = React.useState<string | null>(null);
+  const [hasSearched, setHasSearched] = React.useState(false);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,7 +57,50 @@ export default function FlightBookingPage() {
       console.error("Lead capture failed:", err);
     }
 
-    router.push(`/flight-booking?${params.toString()}`);
+    setLoading(true);
+    setHasSearched(true);
+    setFlights([]);
+
+    try {
+      const res = await fetch(`/api/search?from=${data.from}&to=${data.to}&date=${data.departure}&travelers=1`);
+      const searchData = await res.json();
+      if (searchData.success) {
+        setFlights(searchData.flights);
+      }
+    } catch (error) {
+      console.error("Search failed:", error);
+    } finally {
+      setLoading(false);
+    }
+
+    router.push(`/flight-booking?${params.toString()}`, { scroll: false });
+  };
+
+  const handleBookFlight = async (flight: any) => {
+    setIsBooking(flight._id || "temp");
+    
+    // Capture Booking Lead
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: flight.from,
+          to: flight.to,
+          date: flight.date,
+          travelers: "1 Adult",
+          type: `Booking (Direct): ${flight.airline} (${flight.price})`
+        }),
+      });
+    } catch (error) {
+      console.error("Booking lead failed:", error);
+    }
+
+    setTimeout(() => {
+      setIsBooking(null);
+      setBookingSuccess(flight._id || "temp");
+      setTimeout(() => setBookingSuccess(null), 5000);
+    }, 1500);
   };
 
   return (
@@ -164,13 +212,121 @@ export default function FlightBookingPage() {
                     />
                   </div>
                 </div>
-                <button className="w-full bg-primary text-white py-5 rounded-2xl font-black text-lg shadow-xl shadow-primary/20 hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
-                  <Search className="w-6 h-6" />
-                  Find Flights
+                <button 
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-primary text-white py-5 rounded-2xl font-black text-lg shadow-xl shadow-primary/20 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+                >
+                  {loading ? <RefreshCcw className="w-6 h-6 animate-spin" /> : <Search className="w-6 h-6" />}
+                  {loading ? "Searching..." : "Find Flights"}
                 </button>
               </div>
             </form>
           </motion.div>
+
+          {/* Results Section */}
+          <AnimatePresence>
+            {hasSearched && flights.length === 0 && !loading && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-12 p-12 text-center bg-white/5 backdrop-blur-md rounded-[3rem] border border-white/10"
+              >
+                <Plane className="w-16 h-16 text-slate-500 mx-auto mb-6 opacity-50" />
+                <h3 className="text-2xl font-bold text-white mb-3">No sovereign flights found</h3>
+                <p className="text-slate-400 max-w-md mx-auto">Our concierge is sourcing exclusive rates. Try adjusting your departure or destination for elite availability.</p>
+              </motion.div>
+            )}
+            
+            {flights.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-12 space-y-6"
+              >
+                <div className="flex items-center justify-between px-6 mb-8">
+                  <h3 className="text-2xl font-bold text-white font-outfit">Available Sovereign Flights</h3>
+                  <span className="bg-accent/10 text-accent px-4 py-1 rounded-full text-xs font-black tracking-widest border border-accent/20">
+                    {flights.length} ELITE OPTIONS FOUND
+                  </span>
+                </div>
+
+                <div className="grid gap-6">
+                  {flights.map((flight, idx) => (
+                    <motion.div
+                      key={flight._id || idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="bg-white/5 backdrop-blur-lg border border-white/10 p-8 rounded-[2.5rem] flex flex-col lg:flex-row items-center justify-between gap-10 hover:bg-white/10 transition-all hover:border-accent/30 group relative overflow-hidden"
+                    >
+                      <div className="flex items-center gap-8 w-full lg:w-auto">
+                        <div className="w-20 h-20 rounded-[1.5rem] bg-white/10 flex items-center justify-center shadow-inner">
+                          <Plane className="w-10 h-10 text-accent -rotate-45" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-2xl text-white font-outfit">{flight.airline || "Karmana Air"}</div>
+                          <div className="text-slate-400 text-sm font-black tracking-widest uppercase opacity-60">
+                            {flight.flightNumber || `KA-${100 + idx}`} • {flight.class || "Business"}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-16 flex-1 justify-center">
+                        <div className="text-center">
+                          <div className="text-3xl font-black text-white">{flight.departureTime || "10:00"}</div>
+                          <div className="text-slate-400 font-bold text-xs tracking-[0.2em] uppercase mt-2">{flight.from}</div>
+                        </div>
+                        <div className="flex flex-col items-center gap-3 flex-1 max-w-[200px]">
+                          <div className="w-full h-[2px] bg-white/10 relative">
+                            <motion.div 
+                              animate={{ left: ["0%", "100%"] }}
+                              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                              className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-accent rounded-full shadow-[0_0_15px_rgba(var(--accent-rgb),0.8)]" 
+                            />
+                          </div>
+                          <div className="text-[10px] font-black text-accent uppercase tracking-[0.3em]">Direct Flight</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-3xl font-black text-white">{flight.arrivalTime || "12:00"}</div>
+                          <div className="text-slate-400 font-bold text-xs tracking-[0.2em] uppercase mt-2">{flight.to}</div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-10 w-full lg:w-auto justify-between lg:justify-end border-t lg:border-t-0 border-white/5 pt-8 lg:pt-0">
+                        <div className="text-right">
+                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Fare starts at</p>
+                          <p className="text-4xl font-black text-white font-outfit">₹{flight.price || "4,499"}</p>
+                        </div>
+                        <button 
+                          onClick={() => handleBookFlight(flight)}
+                          disabled={isBooking === (flight._id || idx) || bookingSuccess === (flight._id || idx)}
+                          className={cn(
+                            "px-10 py-5 rounded-2xl font-black text-lg transition-all shadow-xl active:scale-95 disabled:opacity-70 flex items-center justify-center gap-3",
+                            bookingSuccess === (flight._id || idx) 
+                              ? "bg-emerald-500 text-white" 
+                              : "bg-accent hover:bg-accent-hover text-primary hover:-translate-y-1"
+                          )}
+                        >
+                          {isBooking === (flight._id || idx) ? (
+                            <RefreshCcw className="w-6 h-6 animate-spin" />
+                          ) : bookingSuccess === (flight._id || idx) ? (
+                            <>
+                              <Check className="w-6 h-6" /> Confirmed
+                            </>
+                          ) : (
+                            <>
+                              Book Now <ArrowRight className="w-6 h-6" />
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 
