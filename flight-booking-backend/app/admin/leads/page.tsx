@@ -27,9 +27,18 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
     if (filter === 'flights') query = { type: { $regex: /Flight/i } };
     if (filter === 'holidays') query = { type: { $regex: /Holiday/i } };
     if (filter === 'hotels') query = { type: { $regex: /Hotel/i } };
+    if (filter === 'ticket') query = { type: { $regex: /Ticket/i } };
 
     if (filter === 'contacts') {
-        leads = await Contact.find({}).sort({ createdAt: -1 });
+        let rawContacts = await Contact.find({}).sort({ createdAt: -1 });
+        const uniqueContacts = new Map();
+        rawContacts.forEach(contact => {
+            const key = `${contact.email}-${contact.subject}-${contact.message}`.toLowerCase().trim();
+            if (!uniqueContacts.has(key)) {
+                uniqueContacts.set(key, contact);
+            }
+        });
+        leads = Array.from(uniqueContacts.values());
     } else {
         // Fetch from the dedicated 'leads' collection
         let rawLeads = await Lead.find(query).sort({ createdAt: -1 });
@@ -152,6 +161,9 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
                 </Link>
                 <Link href="/admin/leads?filter=contacts" className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${filter === 'contacts' ? 'bg-amber-500 text-[#030712] shadow-[0_0_15px_rgba(245,158,11,0.3)]' : 'bg-white/[0.02] text-slate-400 hover:bg-white/[0.05] hover:text-white'}`}>
                     Contact Inquiries
+                </Link>
+                <Link href="/admin/leads?filter=ticket" className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${filter === 'ticket' ? 'bg-amber-500 text-[#030712] shadow-[0_0_15px_rgba(245,158,11,0.3)]' : 'bg-white/[0.02] text-slate-400 hover:bg-white/[0.05] hover:text-white'}`}>
+                    Ticket Inquiries
                 </Link>
             </div>
 

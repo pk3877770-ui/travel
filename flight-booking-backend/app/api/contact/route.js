@@ -7,6 +7,19 @@ export async function POST(req) {
     await dbConnect();
     const data = await req.json();
     
+    // Server-side deduplication: Check if identical message from same email exists recently
+    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
+    const existingContact = await Contact.findOne({
+      email: data.email,
+      subject: data.subject,
+      message: data.message,
+      createdAt: { $gte: tenMinutesAgo }
+    });
+
+    if (existingContact) {
+      return NextResponse.json({ success: true, message: "Duplicate inquiry ignored", contact: existingContact });
+    }
+
     const contact = await Contact.create({
       name: data.name,
       email: data.email,

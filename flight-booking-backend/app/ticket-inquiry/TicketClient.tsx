@@ -9,12 +9,29 @@ export default function TicketInquiry() {
   const [result, setResult] = useState<any>(null);
   const [form, setForm] = useState({ pnr: "", mobile: "", airline: "" });
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (form.pnr.length !== 6) return alert("Please enter a valid 6-digit PNR");
     
     setLoading(true);
     setResult(null);
+
+    // Capture Lead
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: form.pnr,
+          to: form.airline,
+          date: form.mobile,
+          travelers: "1 Passenger",
+          type: "Ticket Inquiry"
+        }),
+      });
+    } catch (err) {
+      console.error("Lead capture failed:", err);
+    }
 
     // Simulate API lookup
     setTimeout(() => {

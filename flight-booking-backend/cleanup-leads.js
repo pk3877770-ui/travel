@@ -19,25 +19,47 @@ async function cleanDuplicates() {
   
   const Lead = mongoose.models.Lead || mongoose.model('Lead', LeadSchema);
 
+  // Define Contact schema locally
+  const ContactSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    subject: String,
+    message: String
+  }, { timestamps: true });
+  const Contact = mongoose.models.Contact || mongoose.model('Contact', ContactSchema);
+
+  // Clean Leads
   const leads = await Lead.find({}).sort({ createdAt: -1 });
-  const seen = new Set();
-  let deletedCount = 0;
+  const seenLeads = new Set();
+  let deletedLeadsCount = 0;
 
   for (const lead of leads) {
-    const key = `${lead.from}-${lead.to}-${lead.date}-${lead.travelers}-${lead.type}`.toLowerCase();
-    
-    // Also consider "Flight Search" vs "Flights Search" as duplicate
+    const key = `${lead.from}-${lead.to}-${lead.date}-${lead.type}`.toLowerCase();
     const normalizedKey = key.replace("flights search", "flight search");
-
-    if (seen.has(normalizedKey)) {
+    if (seenLeads.has(normalizedKey)) {
       await Lead.findByIdAndDelete(lead._id);
-      deletedCount++;
+      deletedLeadsCount++;
     } else {
-      seen.add(normalizedKey);
+      seenLeads.add(normalizedKey);
     }
   }
 
-  console.log(`Deleted ${deletedCount} duplicate leads.`);
+  // Clean Contacts
+  const contacts = await Contact.find({}).sort({ createdAt: -1 });
+  const seenContacts = new Set();
+  let deletedContactsCount = 0;
+
+  for (const contact of contacts) {
+    const key = `${contact.email}-${contact.subject}-${contact.message}`.toLowerCase().trim();
+    if (seenContacts.has(key)) {
+      await Contact.findByIdAndDelete(contact._id);
+      deletedContactsCount++;
+    } else {
+      seenContacts.add(key);
+    }
+  }
+
+  console.log(`Deleted ${deletedLeadsCount} duplicate leads and ${deletedContactsCount} duplicate contacts.`);
   process.exit(0);
 }
 

@@ -7,6 +7,20 @@ export async function POST(req) {
     await dbConnect();
     const data = await req.json();
     
+    // Server-side deduplication: Check if an identical lead was created recently (last 5 minutes)
+    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+    const existingLead = await Lead.findOne({
+      from: data.from,
+      to: data.to,
+      date: data.date,
+      type: data.type || "Flight Search",
+      createdAt: { $gte: fiveMinutesAgo }
+    });
+
+    if (existingLead) {
+      return NextResponse.json({ success: true, message: "Duplicate lead ignored", lead: existingLead });
+    }
+
     const lead = await Lead.create({
       from: data.from,
       to: data.to,
