@@ -22,13 +22,36 @@ const trustPillars = [
 export default function FlightBookingPage() {
   const router = useRouter();
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const params = new URLSearchParams();
+    const data: any = {};
+    
     formData.forEach((value, key) => {
-      if (value) params.append(key, value.toString());
+      if (value) {
+        params.append(key, value.toString());
+        data[key] = value.toString();
+      }
     });
+
+    // Capture Lead
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: data.from || "Delhi",
+          to: data.to || "",
+          date: data.departure || "",
+          travelers: data.cabin || "Business Class",
+          type: "Flight Booking Lead"
+        }),
+      });
+    } catch (err) {
+      console.error("Lead capture failed:", err);
+    }
+
     router.push(`/flight-booking?${params.toString()}`);
   };
 

@@ -40,7 +40,49 @@ export async function GET(req) {
       query.date = date;
     }
 
-    const flights = await Flight.find(query).limit(10);
+    let flights = await Flight.find(query).limit(10);
+    
+    // Fallback Mock Data for demo/unreachable DB purposes
+    if (flights.length === 0) {
+      flights = [
+        {
+          _id: "mock1",
+          from: from || "Delhi",
+          to: to || "Mumbai",
+          date: date || "2026-05-01",
+          price: 4500,
+          airline: "Air India",
+          logo: "AI",
+          departureTime: "08:00",
+          arrivalTime: "10:15",
+          class: "First Class"
+        },
+        {
+          _id: "mock2",
+          from: from || "Delhi",
+          to: to || "Mumbai",
+          date: date || "2026-05-01",
+          price: 4200,
+          airline: "IndiGo",
+          logo: "6E",
+          departureTime: "11:30",
+          arrivalTime: "13:45",
+          class: "Business"
+        },
+        {
+          _id: "mock3",
+          from: from || "Delhi",
+          to: to || "Mumbai",
+          date: date || "2026-05-01",
+          price: 5800,
+          airline: "Vistara",
+          logo: "UK",
+          departureTime: "15:00",
+          arrivalTime: "17:15",
+          class: "Luxury"
+        }
+      ];
+    }
 
     return NextResponse.json({ success: true, count: flights.length, flights });
   } catch (error) {
