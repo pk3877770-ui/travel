@@ -2,16 +2,31 @@
 
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Ticket, Smartphone, Plane, Calendar, User, Layout, DoorOpen, Briefcase, IndianRupee, Download, CheckCircle, XCircle, Clock, Check } from "lucide-react";
+import { Search, Ticket, Smartphone, Plane, Calendar, User, Layout, DoorOpen, Briefcase, IndianRupee, Download, CheckCircle, XCircle, Clock, Check, Loader2 } from "lucide-react";
 
 export default function TicketInquiry() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [form, setForm] = useState({ pnr: "", mobile: "", airline: "" });
+  const [cancelling, setCancelling] = useState(false);
+  const [cancelled, setCancelled] = useState(false);
   const ticketRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleCancel = () => {
+    if (confirm("Are you sure you want to cancel this reservation? A cancellation fee may apply.")) {
+      setCancelling(true);
+      setTimeout(() => {
+        setCancelling(false);
+        setCancelled(true);
+        if (result) {
+          setResult({ ...result, status: "Cancellation Pending", statusType: "warning" });
+        }
+      }, 1500);
+    }
   };
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -222,7 +237,19 @@ export default function TicketInquiry() {
                    </div>
 
                    <div className="flex flex-wrap gap-4 justify-center relative z-10">
-                      <button className="bg-emerald-500 hover:bg-emerald-600 px-8 py-4 rounded-xl font-bold flex items-center gap-2 transition-all hover:-translate-y-1">
+                      <button 
+                        onClick={() => {
+                          const urls: { [key: string]: string } = {
+                            "AI": "https://www.airindia.in/web-check-in.htm",
+                            "6E": "https://www.goindigo.in/web-check-in.html",
+                            "SG": "https://www.spicejet.com/checkin",
+                            "UK": "https://www.airvistara.com/in/en/check-in"
+                          };
+                          const url = urls[form.airline] || "https://www.google.com/search?q=web+check-in";
+                          window.open(url, "_blank");
+                        }}
+                        className="bg-emerald-500 hover:bg-emerald-600 px-8 py-4 rounded-xl font-bold flex items-center gap-2 transition-all hover:-translate-y-1 print:hidden"
+                      >
                          <Check className="w-5 h-5" /> Web Check-in
                       </button>
                       <button 
@@ -231,8 +258,13 @@ export default function TicketInquiry() {
                       >
                          <Download className="w-5 h-5" /> eTicket PDF
                       </button>
-                      <button className="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 px-8 py-4 rounded-xl font-bold flex items-center gap-2 border border-rose-500/30 transition-all hover:-translate-y-1 print:hidden">
-                         <XCircle className="w-5 h-5" /> Cancel Reservation
+                      <button 
+                        onClick={handleCancel}
+                        disabled={cancelling || cancelled}
+                        className="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 px-8 py-4 rounded-xl font-bold flex items-center gap-2 border border-rose-500/30 transition-all hover:-translate-y-1 print:hidden disabled:opacity-50 disabled:translate-y-0"
+                      >
+                         {cancelling ? <Loader2 className="w-5 h-5 animate-spin" /> : <XCircle className="w-5 h-5" />}
+                         {cancelled ? "Cancellation Requested" : cancelling ? "Processing..." : "Cancel Reservation"}
                       </button>
                    </div>
                 </div>
