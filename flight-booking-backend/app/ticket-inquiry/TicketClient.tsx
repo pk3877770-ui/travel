@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Ticket, Smartphone, Plane, Calendar, User, Layout, DoorOpen, Briefcase, IndianRupee, Download, CheckCircle, XCircle, Clock, Check } from "lucide-react";
 
@@ -8,6 +8,11 @@ export default function TicketInquiry() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [form, setForm] = useState({ pnr: "", mobile: "", airline: "" });
+  const ticketRef = useRef<HTMLDivElement>(null);
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -164,7 +169,11 @@ export default function TicketInquiry() {
                 exit={{ opacity: 0, y: 20 }}
                 className="mt-16"
               >
-                <div className="bg-gradient-to-br from-primary to-primary-light text-white rounded-[2.5rem] p-8 md:p-12 shadow-3xl overflow-hidden relative">
+                <div 
+                  ref={ticketRef}
+                  id="printable-ticket"
+                  className="bg-gradient-to-br from-primary to-primary-light text-white rounded-[2.5rem] p-8 md:p-12 shadow-3xl overflow-hidden relative print:shadow-none print:bg-white print:text-black print:p-0 print:m-0"
+                >
                    {/* Ticket Background Pattern */}
                    <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
                       <Plane className="w-64 h-64" />
@@ -176,7 +185,7 @@ export default function TicketInquiry() {
                            <CheckCircle className="w-6 h-6 text-emerald-400" />
                            <h3 className="text-2xl font-bold font-outfit uppercase">Booking Confirmed</h3>
                         </div>
-                        <div className="bg-white/10 backdrop-blur-md px-6 py-2 rounded-full border border-white/20 inline-block text-lg font-black tracking-widest">
+                        <div className="bg-white/10 backdrop-blur-md px-6 py-2 rounded-full border border-white/20 inline-block text-lg font-black tracking-widest print:bg-slate-100 print:text-primary print:border-primary">
                            {result.status} (CNF)
                         </div>
                       </div>
@@ -202,7 +211,7 @@ export default function TicketInquiry() {
                         { icon: DoorOpen, label: "Gate", val: result.gate },
                         { icon: Briefcase, label: "Baggage", val: result.baggage },
                       ].map((item, i) => (
-                        <div key={i} className="bg-white/5 border border-white/10 p-6 rounded-2xl flex items-center gap-4">
+                        <div key={i} className="bg-white/5 border border-white/10 p-6 rounded-2xl flex items-center gap-4 print:bg-slate-50 print:border-slate-200 print:text-black">
                            <item.icon className="w-6 h-6 text-accent shrink-0" />
                            <div>
                               <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{item.label}</p>
@@ -216,10 +225,13 @@ export default function TicketInquiry() {
                       <button className="bg-emerald-500 hover:bg-emerald-600 px-8 py-4 rounded-xl font-bold flex items-center gap-2 transition-all hover:-translate-y-1">
                          <Check className="w-5 h-5" /> Web Check-in
                       </button>
-                      <button className="bg-white/10 hover:bg-white/20 px-8 py-4 rounded-xl font-bold flex items-center gap-2 border border-white/20 transition-all hover:-translate-y-1">
+                      <button 
+                        onClick={handlePrint}
+                        className="bg-white/10 hover:bg-white/20 px-8 py-4 rounded-xl font-bold flex items-center gap-2 border border-white/20 transition-all hover:-translate-y-1 print:hidden"
+                      >
                          <Download className="w-5 h-5" /> eTicket PDF
                       </button>
-                      <button className="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 px-8 py-4 rounded-xl font-bold flex items-center gap-2 border border-rose-500/30 transition-all hover:-translate-y-1">
+                      <button className="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 px-8 py-4 rounded-xl font-bold flex items-center gap-2 border border-rose-500/30 transition-all hover:-translate-y-1 print:hidden">
                          <XCircle className="w-5 h-5" /> Cancel Reservation
                       </button>
                    </div>
@@ -229,6 +241,33 @@ export default function TicketInquiry() {
           </AnimatePresence>
         </div>
       </section>
+      <style jsx global>{`
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          #printable-ticket, #printable-ticket * {
+            visibility: visible;
+          }
+          #printable-ticket {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+          }
+          /* Custom styles to make the dark ticket look good on white paper */
+          .bg-gradient-to-br {
+            background: white !important;
+            color: black !important;
+            border: 2px solid #0f172a !important;
+          }
+          .text-white { color: black !important; }
+          .text-slate-400 { color: #64748b !important; }
+          .bg-white\\/10 { background: #f1f5f9 !important; border: 1px solid #cbd5e1 !important; }
+          .bg-white\\/5 { background: #f8fafc !important; border: 1px solid #e2e8f0 !important; }
+          .print\\:hidden { display: none !important; }
+        }
+      `}</style>
     </main>
   );
 }
