@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { Plane, Tags, Headset, ShieldCheck, Zap, Smartphone, Receipt, Crown, Rocket, Globe, Globe2, Users } from "lucide-react";
 
 const stats = [
@@ -34,6 +35,7 @@ const team = [
 ];
 
 export default function AboutPage() {
+  const router = useRouter();
   return (
     <div className="pt-20">
       {/* Hero Section */}
@@ -206,7 +208,10 @@ export default function AboutPage() {
           <p className="text-xl text-primary/80 mb-12 max-w-2xl mx-auto font-medium">
             Find the best flights at unbeatable prices. Book now and save!
           </p>
-          <button className="bg-primary text-white hover:bg-black px-12 py-6 rounded-2xl font-black text-xl transition-all hover:-translate-y-1 shadow-2xl flex items-center gap-3 mx-auto">
+          <button 
+            onClick={() => router.push('/flight-booking')}
+            className="bg-primary text-white hover:bg-black px-12 py-6 rounded-2xl font-black text-xl transition-all hover:-translate-y-1 shadow-2xl flex items-center gap-3 mx-auto"
+          >
             <Plane className="w-8 h-8" />
             Find My Flight Now
           </button>
