@@ -34,7 +34,10 @@ const Hero = () => {
               From private island escapes to bespoke alpine retreats, we curate travel experiences that transcend the ordinary. Your journey to the extraordinary begins here.
             </p>
             <div className="flex flex-wrap gap-6">
-              <button className="bg-accent hover:bg-accent-hover text-primary px-10 py-5 rounded-full font-bold flex items-center gap-3 transition-all shadow-2xl hover:shadow-accent/40 hover:-translate-y-1">
+              <button 
+                onClick={() => document.getElementById('search-section')?.scrollIntoView({ behavior: 'smooth' })}
+                className="bg-accent hover:bg-accent-hover text-primary px-10 py-5 rounded-full font-bold flex items-center gap-3 transition-all shadow-2xl hover:shadow-accent/40 hover:-translate-y-1"
+              >
                 <Compass className="w-6 h-6" />
                 Explore Destinations
               </button>

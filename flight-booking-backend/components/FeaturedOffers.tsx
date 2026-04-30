@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { ArrowRight, Clock, Calendar, Plane } from "lucide-react";
 
 const offers = [
@@ -38,6 +39,7 @@ const offers = [
 ];
 
 const FeaturedOffers = () => {
+  const router = useRouter();
   return (
     <section className="py-24 bg-white dark:bg-slate-950">
       <div className="container max-w-7xl mx-auto px-6">
@@ -95,7 +97,10 @@ const FeaturedOffers = () => {
                     <offer.icon className="w-4 h-4" />
                     {offer.foot}
                   </div>
-                  <button className="text-primary dark:text-accent font-bold flex items-center gap-2 hover:gap-3 transition-all">
+                  <button 
+                    onClick={() => router.push('/flight-booking')}
+                    className="text-primary dark:text-accent font-bold flex items-center gap-2 hover:gap-3 transition-all"
+                  >
                     Book Now <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>

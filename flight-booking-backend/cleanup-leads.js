@@ -1,4 +1,8 @@
 const fs = require('fs');
+const dns = require('dns');
+// Set DNS servers to Google's to help resolve SRV records in restricted environments
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 const envContent = fs.readFileSync('.env.local', 'utf-8');
 const mongoUriLine = envContent.split('\n').find(line => line.startsWith('MONGODB_URI='));
 process.env.MONGODB_URI = mongoUriLine ? mongoUriLine.substring(mongoUriLine.indexOf('=') + 1).replace(/["'\r]/g, '').trim() : '';

@@ -75,35 +75,20 @@ const SearchSection = () => {
     }
   };
 
-  const handleBookFlight = async (flight: any) => {
-    setIsBooking(flight._id || "temp");
+  const handleBookFlight = (flight: any) => {
+    const params = new URLSearchParams();
+    params.append("book", "true");
+    params.append("airline", flight.airline || "Karmana Air");
+    params.append("from", flight.from);
+    params.append("to", flight.to);
+    params.append("price", flight.price || "4499");
+    params.append("date", flight.date || "");
     
-    // Capture Booking Lead
-    try {
-      await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          from: flight.from,
-          to: flight.to,
-          date: flight.date,
-          travelers: "1 Adult",
-          type: `Booking: ${flight.airline} (${flight.price})`
-        }),
-      });
-    } catch (error) {
-      console.error("Booking lead failed:", error);
-    }
-
-    setTimeout(() => {
-      setIsBooking(null);
-      setBookingSuccess(flight._id || "temp");
-      setTimeout(() => setBookingSuccess(null), 5000);
-    }, 1500);
+    router.push(`/flight-booking?${params.toString()}`);
   };
 
   return (
-    <section className="relative z-30 -mt-32 px-6">
+    <section id="search-section" className="relative z-30 -mt-32 px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}

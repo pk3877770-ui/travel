@@ -26,6 +26,22 @@ export default function FlightBookingPage() {
   const [isBooking, setIsBooking] = React.useState<string | null>(null);
   const [bookingSuccess, setBookingSuccess] = React.useState<string | null>(null);
   const [hasSearched, setHasSearched] = React.useState(false);
+  const [selectedFlight, setSelectedFlight] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    // Handle incoming booking from homepage
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("book") === "true") {
+      setSelectedFlight({
+        airline: params.get("airline"),
+        from: params.get("from"),
+        to: params.get("to"),
+        price: params.get("price"),
+        date: params.get("date"),
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,22 +56,7 @@ export default function FlightBookingPage() {
       }
     });
 
-    // Capture Lead
-    try {
-      await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          from: data.from || "Delhi",
-          to: data.to || "",
-          date: data.departure || "",
-          travelers: data.cabin || "Business Class",
-          type: "Flight Booking Lead"
-        }),
-      });
-    } catch (err) {
-      console.error("Lead capture failed:", err);
-    }
+    // Lead capture is now handled server-side in /api/search to prevent duplicates
 
     setLoading(true);
     setHasSearched(true);
@@ -76,31 +77,9 @@ export default function FlightBookingPage() {
     router.push(`/flight-booking?${params.toString()}`, { scroll: false });
   };
 
-  const handleBookFlight = async (flight: any) => {
-    setIsBooking(flight._id || "temp");
-    
-    // Capture Booking Lead
-    try {
-      await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          from: flight.from,
-          to: flight.to,
-          date: flight.date,
-          travelers: "1 Adult",
-          type: `Booking (Direct): ${flight.airline} (${flight.price})`
-        }),
-      });
-    } catch (error) {
-      console.error("Booking lead failed:", error);
-    }
-
-    setTimeout(() => {
-      setIsBooking(null);
-      setBookingSuccess(flight._id || "temp");
-      setTimeout(() => setBookingSuccess(null), 5000);
-    }, 1500);
+  const handleBookFlight = (flight: any) => {
+    setSelectedFlight(flight);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -117,7 +96,89 @@ export default function FlightBookingPage() {
         </div>
 
         <div className="container max-w-7xl mx-auto px-6 relative z-20">
-          <div className="text-center mb-16">
+          <AnimatePresence mode="wait">
+            {selectedFlight ? (
+              <motion.div
+                key="booking-form"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100 dark:border-slate-800"
+              >
+                <div className="bg-primary p-10 text-white flex justify-between items-center">
+                  <div>
+                    <h2 className="text-3xl font-bold font-outfit mb-2">Complete Your Booking</h2>
+                    <p className="text-slate-400">Finalize your sovereign journey with {selectedFlight.airline}</p>
+                  </div>
+                  <button 
+                    onClick={() => setSelectedFlight(null)}
+                    className="bg-white/10 hover:bg-white/20 p-4 rounded-full transition-all"
+                  >
+                    <ArrowRight className="w-6 h-6 rotate-180" />
+                  </button>
+                </div>
+                
+                <div className="p-10 md:p-14">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+                    <div className="space-y-6">
+                      <h3 className="text-lg font-black text-accent uppercase tracking-widest">Passenger Details</h3>
+                      <div className="space-y-4">
+                        <input type="text" placeholder="Full Name" className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" />
+                        <input type="email" placeholder="Email Address" className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" />
+                        <input type="tel" placeholder="Passport Number" className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" />
+                      </div>
+                    </div>
+                    <div className="space-y-6">
+                      <h3 className="text-lg font-black text-accent uppercase tracking-widest">Flight Summary</h3>
+                      <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800">
+                        <div className="flex justify-between items-center mb-6">
+                          <span className="text-slate-400 font-bold">Route</span>
+                          <span className="font-black">{selectedFlight.from} → {selectedFlight.to}</span>
+                        </div>
+                        <div className="flex justify-between items-center mb-6">
+                          <span className="text-slate-400 font-bold">Date</span>
+                          <span className="font-black">{selectedFlight.date || "TBD"}</span>
+                        </div>
+                        <div className="pt-6 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                          <span className="text-slate-400 font-bold">Total Fare</span>
+                          <span className="text-3xl font-black text-primary dark:text-white">₹{selectedFlight.price}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <button 
+                    onClick={async () => {
+                      setLoading(true);
+                      // Capture Lead
+                      await fetch("/api/leads", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          from: selectedFlight.from,
+                          to: selectedFlight.to,
+                          date: selectedFlight.date,
+                          travelers: "1 Adult",
+                          type: `CONFIRMED BOOKING: ${selectedFlight.airline}`
+                        }),
+                      });
+                      setTimeout(() => {
+                        setLoading(false);
+                        alert("Your sovereign flight has been successfully reserved!");
+                        setSelectedFlight(null);
+                      }, 2000);
+                    }}
+                    disabled={loading}
+                    className="w-full bg-primary text-white py-6 rounded-3xl font-black text-xl shadow-2xl shadow-primary/20 hover:-translate-y-1 transition-all disabled:opacity-70 flex items-center justify-center gap-3"
+                  >
+                    {loading ? <RefreshCcw className="w-6 h-6 animate-spin" /> : <ShieldCheck className="w-6 h-6" />}
+                    {loading ? "Processing..." : "Confirm & Pay Now"}
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
+              <>
+                <div className="text-center mb-16">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -327,7 +388,10 @@ export default function FlightBookingPage() {
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        </>
+      )}
+    </AnimatePresence>
+  </div>
       </section>
 
       {/* Signature Routes */}

@@ -7,8 +7,12 @@ export async function POST(req) {
     await dbConnect();
     const data = await req.json();
     
-    // Server-side deduplication: Check if an identical lead was created recently (last 5 minutes)
-    const type = (data.type || "Flight Search").replace("Flights Search", "Flight Search");
+    // Server-side deduplication and normalization
+    const type = (data.type || "Flight Search")
+      .trim()
+      .replace(/Flights Search/gi, "Flight Search")
+      .replace(/Flight Booking Lead/gi, "Flight Search");
+
     const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
     const existingLead = await Lead.findOne({
       from: data.from,
