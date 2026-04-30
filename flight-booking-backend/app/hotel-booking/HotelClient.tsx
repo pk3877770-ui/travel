@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Search, MapPin, Calendar, Users, Star, Crown, Heart, Clock, ShieldCheck, ArrowRight, Loader2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Script from "next/script";
@@ -86,6 +86,7 @@ export default function HotelBooking() {
   const [isSearching, setIsSearching] = useState(false);
   const [inquiryLoading, setInquiryLoading] = useState<number | null>(null);
   const [inquirySuccess, setInquirySuccess] = useState<number | null>(null);
+  const [selectedHotel, setSelectedHotel] = useState<any>(null);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -119,31 +120,9 @@ export default function HotelBooking() {
     }
   };
 
-  const handleInquiry = async (hotel: any) => {
-    setInquiryLoading(hotel.id);
-    
-    // Capture Hotel Inquiry Lead
-    try {
-      await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          from: "Anywhere",
-          to: hotel.name,
-          date: "Anytime",
-          travelers: "2 Adults",
-          type: `Hotel Inquiry: ${hotel.name} (${hotel.price})`
-        }),
-      });
-    } catch (error) {
-      console.error("Hotel inquiry lead failed:", error);
-    }
-
-    setTimeout(() => {
-      setInquiryLoading(null);
-      setInquirySuccess(hotel.id);
-      setTimeout(() => setInquirySuccess(null), 5000);
-    }, 1200);
+  const handleViewDetails = (hotel: any) => {
+    setSelectedHotel(hotel);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -153,7 +132,116 @@ export default function HotelBooking() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(hotelServiceSchema) }}
       />
-      {/* Hero Section */}
+      
+      <AnimatePresence mode="wait">
+        {selectedHotel ? (
+          <motion.section
+            key="hotel-details"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="pt-32 pb-24 px-6"
+          >
+            <div className="container max-w-7xl mx-auto">
+              <button 
+                onClick={() => setSelectedHotel(null)}
+                className="mb-12 flex items-center gap-3 text-slate-400 hover:text-primary font-black uppercase tracking-widest transition-all group"
+              >
+                <ArrowRight className="w-5 h-5 rotate-180 group-hover:-translate-x-2 transition-transform" /> Back to Collection
+              </button>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                {/* Visuals */}
+                <div className="space-y-8">
+                  <div className="aspect-[4/3] rounded-[3rem] overflow-hidden shadow-2xl">
+                    <img src={selectedHotel.image} alt={selectedHotel.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="aspect-square rounded-3xl overflow-hidden bg-slate-100">
+                      <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=400&q=80" className="w-full h-full object-cover opacity-80" />
+                    </div>
+                    <div className="aspect-square rounded-3xl overflow-hidden bg-slate-100">
+                      <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400&q=80" className="w-full h-full object-cover opacity-80" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div className="space-y-10">
+                  <div>
+                    <span className="bg-accent/10 text-accent px-4 py-1 rounded-full text-xs font-black tracking-widest border border-accent/20 mb-4 inline-block">
+                      {selectedHotel.tags[0]}
+                    </span>
+                    <h2 className="text-5xl md:text-7xl font-black font-outfit mb-4">{selectedHotel.name}</h2>
+                    <p className="text-xl text-slate-500 font-medium flex items-center gap-2">
+                      <MapPin className="w-6 h-6 text-accent" /> {selectedHotel.location}
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-50 dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 space-y-8">
+                    <div className="flex justify-between items-end">
+                      <div>
+                        <p className="text-slate-400 font-bold uppercase text-xs tracking-widest mb-2">Preferred Member Rate</p>
+                        <p className="text-5xl font-black text-primary dark:text-accent font-outfit">{selectedHotel.price}<span className="text-lg font-normal text-slate-400">/night</span></p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-accent font-black text-lg flex items-center gap-2 justify-end">
+                          <Star className="w-6 h-6 fill-accent" /> {selectedHotel.rating}
+                        </p>
+                        <p className="text-slate-400 text-sm font-bold">{selectedHotel.reviews} reviews</p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h4 className="font-black uppercase text-sm tracking-widest">Amenities & Perks</h4>
+                      <div className="grid grid-cols-2 gap-4">
+                        {["24/7 Concierge", "Private Pool", "Spa & Wellness", "Gourmet Dining"].map(perk => (
+                          <div key={perk} className="flex items-center gap-3 text-slate-500 font-medium">
+                            <Check className="w-5 h-5 text-emerald-500" /> {perk}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-primary p-10 rounded-[2.5rem] text-white space-y-8 shadow-2xl">
+                    <h3 className="text-2xl font-bold font-outfit">Request a Reservation</h3>
+                    <form 
+                      onSubmit={async (e) => {
+                        e.preventDefault();
+                        const btn = e.currentTarget.querySelector('button');
+                        if (btn) btn.disabled = true;
+                        
+                        await fetch("/api/leads", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            from: "Anywhere",
+                            to: selectedHotel.name,
+                            date: "TBD",
+                            travelers: "2 Adults",
+                            type: `HOTEL RESERVATION: ${selectedHotel.name}`
+                          }),
+                        });
+                        
+                        alert("Your reservation request for " + selectedHotel.name + " has been sent to our concierge.");
+                        setSelectedHotel(null);
+                      }}
+                      className="space-y-4"
+                    >
+                      <input type="text" placeholder="Full Name" required className="w-full bg-white/10 border border-white/20 p-5 rounded-2xl text-white placeholder:text-white/40 focus:outline-none focus:border-accent" />
+                      <input type="email" placeholder="Email Address" required className="w-full bg-white/10 border border-white/20 p-5 rounded-2xl text-white placeholder:text-white/40 focus:outline-none focus:border-accent" />
+                      <button className="w-full bg-accent hover:bg-accent-hover text-primary py-5 rounded-2xl font-black text-lg transition-all hover:-translate-y-1 shadow-xl">
+                        Request Availability
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.section>
+        ) : (
+          <>
       <section className="relative h-[80vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/40 to-white dark:to-slate-950 z-10" />
@@ -302,8 +390,7 @@ export default function HotelBooking() {
                       </span>
                     </div>
                     <button 
-                      onClick={() => handleInquiry(hotel)}
-                      disabled={inquiryLoading === hotel.id || inquirySuccess === hotel.id}
+                      onClick={() => handleViewDetails(hotel)}
                       className={cn(
                         "px-6 py-3 rounded-2xl font-bold transition-all flex items-center justify-center gap-2 min-w-[140px]",
                         inquirySuccess === hotel.id
@@ -311,13 +398,7 @@ export default function HotelBooking() {
                           : "border-2 border-primary dark:border-accent text-primary dark:text-accent hover:bg-primary hover:text-white dark:hover:bg-accent dark:hover:text-primary"
                       )}
                     >
-                      {inquiryLoading === hotel.id ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : inquirySuccess === hotel.id ? (
-                        <><Check className="w-4 h-4" /> Sent</>
-                      ) : (
-                        "View Details"
-                      )}
+                      View Details
                     </button>
                   </div>
                 </div>
@@ -370,6 +451,9 @@ export default function HotelBooking() {
           </button>
         </div>
       </section>
+          </>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
