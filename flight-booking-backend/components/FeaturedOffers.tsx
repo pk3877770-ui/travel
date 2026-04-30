@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Clock, Calendar, Plane } from "lucide-react";
+import Script from "next/script";
 
 const offers = [
   {
@@ -40,8 +41,32 @@ const offers = [
 
 const FeaturedOffers = () => {
   const router = useRouter();
+
+  const offersSchema = {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    "name": "Featured Travel Offers",
+    "itemListElement": offers.map((offer, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "item": {
+        "@type": "Offer",
+        "name": offer.title,
+        "description": offer.description,
+        "price": offer.price.replace('$', ''),
+        "priceCurrency": "USD",
+        "url": `https://karmana.vercel.app/flight-booking`
+      }
+    }))
+  };
+
   return (
     <section className="py-24 bg-white dark:bg-slate-950">
+      <Script
+        id="offers-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(offersSchema) }}
+      />
       <div className="container max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <motion.span

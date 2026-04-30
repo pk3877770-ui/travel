@@ -5,6 +5,21 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Search, MapPin, Calendar, Users, Star, Crown, Heart, Clock, ShieldCheck, ArrowRight, Loader2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Script from "next/script";
+
+const hotelServiceSchema = {
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "name": "Karmana Hotel Collection",
+  "description": "Exclusive access to the world's most celebrated Five-Star properties and private estates.",
+  "url": "https://karmana.vercel.app/hotel-booking",
+  "priceRange": "$$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Mumbai",
+    "addressCountry": "IN"
+  }
+};
 
 const hotelCollection = [
   {
@@ -133,6 +148,11 @@ export default function HotelBooking() {
 
   return (
     <main className="min-h-screen bg-white dark:bg-slate-950">
+      <Script
+        id="hotel-service-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(hotelServiceSchema) }}
+      />
       {/* Hero Section */}
       <section className="relative h-[80vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">

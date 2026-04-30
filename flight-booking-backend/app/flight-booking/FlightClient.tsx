@@ -5,6 +5,41 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plane, Search, ArrowRight, ShieldCheck, Crown, RefreshCcw, HandCoins, MapPin, Calendar, Users, Globe, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Script from "next/script";
+
+const flightServiceSchema = {
+  "@context": "https://schema.org",
+  "@type": "TravelAgency",
+  "name": "Karmana Flight Booking",
+  "description": "Premium flight booking service with access to exclusive rates and priority routing.",
+  "url": "https://karmana.vercel.app/flight-booking",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "New Delhi",
+    "addressCountry": "IN"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Flight Booking Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Domestic Flight Booking"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "International Flight Booking"
+        }
+      }
+    ]
+  }
+};
 
 const flightDeals = [
   { from: "New Delhi", to: "Goa", basePrice: "4,500", dealPrice: "2,999", type: "Direct Flight", tag: "SAVE 30%", icon: Plane },
@@ -84,6 +119,11 @@ export default function FlightBookingPage() {
 
   return (
     <div className="pt-20">
+      <Script
+        id="flight-service-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(flightServiceSchema) }}
+      />
       {/* Hero Search Area */}
       <section className="relative min-h-[80vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
