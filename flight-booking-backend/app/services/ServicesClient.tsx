@@ -177,7 +177,7 @@ export default function ServicesPage() {
               Request a Consultation
             </button>
             <button 
-              onClick={() => router.push('/holiday-packages')}
+              onClick={() => router.push('/flight-booking')}
               className="bg-transparent border border-white/20 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white/5 transition-all"
             >
               See All Offerings
