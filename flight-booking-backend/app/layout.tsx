@@ -6,6 +6,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Script from "next/script";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -81,6 +82,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <SpeedInsights />
       </body>
     </html>
   );
