@@ -2,7 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Plane, Hotel, Map, Headset, Shield, Car, Check, ArrowRight, Sparkles } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Plane, Hotel, Map, Headset, Shield, Car, Check, ArrowRight, Sparkles, X, RefreshCcw } from "lucide-react";
 
 const services = [
   {
@@ -45,6 +46,41 @@ const services = [
 ];
 
 export default function ServicesPage() {
+  const router = useRouter();
+  const [showConsultForm, setShowConsultForm] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleConsultSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+      type: "Service Consultation"
+    };
+
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: "Services Page",
+          to: "Consultation Request",
+          date: new Date().toLocaleDateString(),
+          travelers: data.name,
+          type: `CONSULTATION: ${data.message}`
+        }),
+      });
+      alert("Your consultation request has been received. Our manager will reach out shortly.");
+      setShowConsultForm(false);
+    } catch (error) {
+      console.error("Failed to send consultation:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="pt-20 bg-white dark:bg-slate-950">
       {/* Hero Section */}
@@ -134,13 +170,48 @@ export default function ServicesPage() {
             Disconnect from the noise and reconnect with the soul of the world through our curated experiences.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <button className="bg-accent text-primary px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl shadow-accent/20">
+            <button 
+              onClick={() => setShowConsultForm(true)}
+              className="bg-accent text-primary px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl shadow-accent/20"
+            >
               Request a Consultation
             </button>
-            <button className="bg-transparent border border-white/20 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white/5 transition-all">
+            <button 
+              onClick={() => router.push('/holiday-packages')}
+              className="bg-transparent border border-white/20 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white/5 transition-all"
+            >
               See All Offerings
             </button>
           </div>
+
+          {/* Consultation Form Modal */}
+          {showConsultForm && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
+              <div className="absolute inset-0 bg-primary/80 backdrop-blur-md" onClick={() => setShowConsultForm(false)} />
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                className="relative w-full max-w-xl bg-white dark:bg-slate-900 rounded-[3rem] p-10 md:p-14 shadow-2xl border border-white/10"
+              >
+                <button onClick={() => setShowConsultForm(false)} className="absolute top-8 right-8 text-slate-400 hover:text-primary">
+                  <X className="w-8 h-8" />
+                </button>
+                <h3 className="text-3xl font-black font-outfit mb-4">Personal Consultation</h3>
+                <p className="text-slate-500 mb-8">Share your vision, and our lifestyle managers will curate the perfect journey for you.</p>
+                <form onSubmit={handleConsultSubmit} className="space-y-6">
+                  <input type="text" name="name" placeholder="Full Name" required className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" />
+                  <input type="email" name="email" placeholder="Email Address" required className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" />
+                  <textarea name="message" placeholder="What are you dreaming of?" required className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium h-32 resize-none" />
+                  <button 
+                    disabled={loading}
+                    className="w-full bg-primary text-white py-5 rounded-2xl font-black text-lg shadow-xl shadow-primary/20 hover:-translate-y-1 transition-all flex items-center justify-center gap-3 disabled:opacity-70"
+                  >
+                    {loading ? <RefreshCcw className="w-6 h-6 animate-spin" /> : "Send Request"}
+                  </button>
+                </form>
+              </motion.div>
+            </div>
+          )}
         </div>
       </section>
     </div>
