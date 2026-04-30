@@ -13,13 +13,13 @@ export async function POST(req) {
       .replace(/Flights Search/gi, "Flight Search")
       .replace(/Flight Booking Lead/gi, "Flight Search");
 
-    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+    const oneMinuteAgo = new Date(Date.now() - 1 * 60 * 1000);
     const existingLead = await Lead.findOne({
       from: data.from,
       to: data.to,
       date: data.date,
       type,
-      createdAt: { $gte: fiveMinutesAgo }
+      createdAt: { $gte: oneMinuteAgo }
     });
 
     if (existingLead) {

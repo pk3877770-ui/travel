@@ -43,15 +43,7 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
         // Fetch from the dedicated 'leads' collection
         let rawLeads = await Lead.find(query).sort({ createdAt: -1 });
 
-        // Deduplicate leads to prevent double-entries
-        const uniqueMap = new Map();
-        rawLeads.forEach(lead => {
-            const key = `${lead.from}-${lead.to}-${lead.date}-${lead.type}`.toLowerCase().replace("flights search", "flight search");
-            if (!uniqueMap.has(key)) {
-                uniqueMap.set(key, lead);
-            }
-        });
-        leads = Array.from(uniqueMap.values());
+        leads = rawLeads;
     }
   } catch (error) {
     console.error("Database connection failed in LeadsAdminPage:", error);
