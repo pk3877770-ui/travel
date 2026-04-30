@@ -73,6 +73,7 @@ export default function FlightBookingPage() {
         to: params.get("to"),
         price: params.get("price"),
         date: params.get("date"),
+        type: params.get("type") || "Flight",
       });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -147,8 +148,12 @@ export default function FlightBookingPage() {
               >
                 <div className="bg-primary p-10 text-white flex justify-between items-center">
                   <div>
-                    <h2 className="text-3xl font-bold font-outfit mb-2">Complete Your Booking</h2>
-                    <p className="text-slate-400">Finalize your sovereign journey with {selectedFlight.airline}</p>
+                    <h2 className="text-3xl font-bold font-outfit mb-2">
+                      {selectedFlight.type === "Holiday Package" ? "Finalize Your Escape" : "Complete Your Booking"}
+                    </h2>
+                    <p className="text-slate-400">
+                      {selectedFlight.type === "Holiday Package" ? `Reserve your signature journey: ${selectedFlight.to}` : `Finalize your sovereign journey with ${selectedFlight.airline}`}
+                    </p>
                   </div>
                   <button 
                     onClick={() => setSelectedFlight(null)}
@@ -199,7 +204,7 @@ export default function FlightBookingPage() {
                           to: selectedFlight.to,
                           date: selectedFlight.date,
                           travelers: "1 Adult",
-                          type: `CONFIRMED BOOKING: ${selectedFlight.airline}`
+                          type: selectedFlight.type === "Holiday Package" ? `PACKAGE CONFIRMED: ${selectedFlight.to}` : `CONFIRMED BOOKING: ${selectedFlight.airline}`
                         }),
                       });
                       setTimeout(() => {

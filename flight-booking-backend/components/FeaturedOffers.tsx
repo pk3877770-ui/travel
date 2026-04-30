@@ -123,7 +123,16 @@ const FeaturedOffers = () => {
                     {offer.foot}
                   </div>
                   <button 
-                    onClick={() => router.push('/flight-booking')}
+                    onClick={() => {
+                      const params = new URLSearchParams();
+                      params.append("book", "true");
+                      params.append("airline", "Karmana Signature");
+                      params.append("from", "Exclusive Route");
+                      params.append("to", offer.title);
+                      params.append("price", offer.price.replace('$', '').replace(',', ''));
+                      params.append("type", "Holiday Package");
+                      router.push(`/flight-booking?${params.toString()}`);
+                    }}
                     className="text-primary dark:text-accent font-bold flex items-center gap-2 hover:gap-3 transition-all"
                   >
                     Book Now <ArrowRight className="w-4 h-4" />
