@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden noise-overlay">
       {/* Background with Cinematic Scale */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-r from-primary-dark via-primary/80 to-transparent z-10" />
@@ -58,20 +58,20 @@ const Hero = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5 }}
-              className="inline-flex items-center gap-2 bg-accent/10 backdrop-blur-md border border-accent/20 px-4 py-2 rounded-full mb-8"
+              className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl border border-white/10 px-5 py-2.5 rounded-full mb-10 shadow-2xl shadow-black/20"
             >
-              <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              <span className="text-accent font-black text-[10px] tracking-[0.3em] uppercase">
+              <div className="w-2 h-2 rounded-full bg-accent animate-pulse shadow-[0_0_10px_#f59e0b]" />
+              <span className="text-white/90 font-black text-[10px] tracking-[0.4em] uppercase">
                 Premium Travel Concierge
               </span>
             </motion.div>
 
-            <h1 className="text-6xl md:text-9xl font-black text-white leading-[0.9] mb-8 tracking-tighter">
+            <h1 className="text-6xl md:text-[8.5rem] font-black text-white leading-[0.85] mb-12 tracking-tighter">
               The Art of <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-orange-400 italic font-light">Sovereign Travel</span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-slate-300 mb-12 leading-relaxed max-w-2xl font-inter font-medium opacity-80">
+            <p className="text-lg md:text-xl text-slate-400 mb-14 leading-relaxed max-w-2xl font-normal opacity-90">
               From private island escapes to bespoke alpine retreats, we curate travel experiences that transcend the ordinary. Your journey to the extraordinary begins here.
             </p>
 
@@ -97,6 +97,19 @@ const Hero = () => {
                 The Experience
               </motion.button>
             </div>
+          </motion.div>
+          
+          {/* Sovereign Partners Ribbon */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 1 }}
+            className="mt-24 pt-12 border-t border-white/5 flex flex-wrap items-center gap-12 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
+          >
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 block w-full mb-4">Elite Alliances</span>
+            {["Emirates", "Four Seasons", "Lufthansa", "Ritz-Carlton", "Singapore Air"].map((brand) => (
+              <span key={brand} className="text-xl font-bold font-outfit text-white whitespace-nowrap">{brand}</span>
+            ))}
           </motion.div>
         </div>
       </div>

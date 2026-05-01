@@ -95,11 +95,11 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
                     <div className="w-10 h-1px bg-accent/50"></div>
                     <span className="text-accent font-black text-[10px] tracking-[0.4em] uppercase">Intelligence Dashboard</span>
                 </div>
-                <h1 className="text-7xl font-black text-white tracking-tighter leading-[0.9] mb-6">
+                <h1 className="text-8xl font-black text-white tracking-tighter leading-[0.8] mb-8">
                     Operational <br/>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-orange-400 to-rose-500">Analytics Panel</span>
                 </h1>
-                <p className="text-slate-400 text-xl max-w-2xl font-medium opacity-60 leading-relaxed">
+                <p className="text-slate-500 text-lg max-w-2xl font-normal opacity-60 leading-relaxed">
                     Real-time oversight of global search intent and sovereign booking inquiries across the Karmana network.
                 </p>
             </header>
@@ -111,7 +111,7 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
                     { label: "System Status", value: "Operational", icon: Globe, color: "text-emerald-500", bg: "bg-emerald-500/10" },
                     { label: "Active Sessions", value: "24", icon: Clock, color: "text-blue-500", bg: "bg-blue-500/10" }
                 ].map((stat, i) => (
-                    <div key={i} className="bg-white/[0.02] border border-white/[0.05] p-10 rounded-[2.5rem] backdrop-blur-2xl group hover:bg-white/[0.04] transition-all">
+                    <div key={i} className="bg-white/[0.02] border border-white/[0.05] p-12 md:p-14 rounded-[3rem] backdrop-blur-2xl group hover:bg-white/[0.04] transition-all">
                         <div className="flex items-center justify-between mb-6">
                             <div className={`p-4 rounded-2xl ${stat.bg} ${stat.color}`}>
                                 <stat.icon className="w-6 h-6" />
@@ -173,7 +173,10 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
                                 {leads.map((lead: any) => (
                                     <tr key={lead._id} className="group hover:bg-white/[0.03] transition-all">
                                         <td className="px-10 py-8 text-xs font-mono text-slate-500">
-                                            {new Date(lead.createdAt).toLocaleString()}
+                                            <div className="flex items-center gap-2">
+                                                <Clock className="w-3 h-3 text-accent" />
+                                                {new Date(lead.createdAt).toLocaleString()}
+                                            </div>
                                         </td>
                                         <td className="px-10 py-8">
                                             <div className="text-white font-black tracking-tight">{lead.name}</div>

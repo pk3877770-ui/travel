@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plane, Hotel, Box, Ship, Search, Calendar, Users, MapPin, Loader2, ArrowRight, Check, Sparkles, TrendingUp } from "lucide-react";
+import { Search, MapPin, Calendar, Users, Loader2, PlaneTakeoff, Sparkles, ArrowRight, Box, Plane, Hotel, Ship, TrendingUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -95,25 +95,34 @@ const SearchSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-[40px] rounded-[3.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.2)] p-10 md:p-14 border border-white/20 dark:border-white/5"
+          className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-[40px] rounded-[3.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] p-10 md:p-14 border border-white/20 dark:border-white/10 noise-overlay relative overflow-hidden"
         >
+          <div className="absolute inset-0 mesh-gradient opacity-5 dark:opacity-20 pointer-events-none" />
+
           {/* Tabs */}
-          <div className="flex gap-2 md:gap-4 mb-12 bg-slate-100/50 dark:bg-white/5 p-2 rounded-3xl w-fit hscroll-hide overflow-x-auto">
+          <div className="relative z-10 flex gap-2 md:gap-4 mb-12 bg-slate-100/50 dark:bg-white/5 p-2 rounded-3xl w-fit hscroll-hide overflow-x-auto border border-slate-200/50 dark:border-white/5">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  "relative px-8 py-4 rounded-2xl flex items-center gap-3 font-bold text-sm transition-all whitespace-nowrap",
+                  "relative px-8 py-4 rounded-2xl flex items-center gap-3 font-bold text-sm transition-all whitespace-nowrap overflow-hidden",
                   activeTab === tab.id
-                    ? "bg-white dark:bg-white/10 text-primary-dark dark:text-white shadow-xl shadow-black/5"
+                    ? "text-primary-dark dark:text-white"
                     : "text-slate-500 hover:text-slate-800 dark:hover:text-white"
                 )}
               >
-                <tab.icon className={cn("w-5 h-5", activeTab === tab.id ? "text-accent" : "text-slate-400")} />
-                {tab.label}
+                {activeTab === tab.id && (
+                  <motion.div
+                    layoutId="active-tab"
+                    className="absolute inset-0 bg-white dark:bg-white/10 shadow-xl shadow-black/5"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                <tab.icon className={cn("relative z-10 w-5 h-5", activeTab === tab.id ? "text-accent" : "text-slate-400")} />
+                <span className="relative z-10">{tab.label}</span>
                 {tab.promo && (
-                  <span className="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-black tracking-tighter">
+                  <span className="relative z-10 bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-black tracking-tighter">
                     {tab.promo}
                   </span>
                 )}
@@ -124,10 +133,10 @@ const SearchSection = () => {
           {/* Form */}
           <form 
             onSubmit={handleSearch}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-11 gap-6 items-end"
+            className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 gap-6 items-end"
           >
             <div className="lg:col-span-3 space-y-3">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2">Departure</label>
+              <label className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] px-2 opacity-60">Departure</label>
               <div className="relative group">
                 <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
                 <input
@@ -181,15 +190,23 @@ const SearchSection = () => {
               </div>
             </div>
 
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-10 mt-8">
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.01, y: -2 }}
+                whileTap={{ scale: 0.99 }}
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-[64px] bg-primary-dark text-white rounded-[2rem] font-black flex items-center justify-center transition-all shadow-2xl shadow-black/10 disabled:opacity-70"
+                className="w-full py-6 bg-gradient-to-r from-accent via-orange-400 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark rounded-[2rem] font-black text-lg uppercase tracking-[0.3em] flex items-center justify-center gap-4 shadow-[0_20px_50px_rgba(245,158,11,0.4)] disabled:opacity-70 group"
               >
-                {isLoading ? <Loader2 className="w-7 h-7 animate-spin" /> : <Search className="w-7 h-7" />}
+                {isLoading ? (
+                  <Loader2 className="w-7 h-7 animate-spin" />
+                ) : (
+                  <>
+                    <Search className="w-6 h-6 group-hover:scale-125 transition-transform" />
+                    <span className="text-glow">Search Sovereign Flights</span>
+                    <Sparkles className="w-5 h-5 animate-pulse" />
+                  </>
+                )}
               </motion.button>
             </div>
           </form>
@@ -232,9 +249,9 @@ const SearchSection = () => {
                 className="mt-16 space-y-10"
               >
                 <div className="flex items-center justify-between">
-                  <h3 className="text-3xl font-black font-outfit">Sovereign Results</h3>
-                  <div className="flex items-center gap-2 bg-accent/10 text-accent px-4 py-2 rounded-full text-xs font-black tracking-widest">
-                    <Sparkles className="w-4 h-4" /> {flights.length} ELITE OPTIONS
+                  <h3 className="text-4xl font-black font-outfit tracking-tighter">Sovereign Results</h3>
+                  <div className="flex items-center gap-2 bg-accent/10 text-accent px-4 py-2 rounded-full text-[10px] font-black tracking-widest uppercase">
+                    <Sparkles className="w-3 h-3" /> {flights.length} Elite Options
                   </div>
                 </div>
 
@@ -245,15 +262,18 @@ const SearchSection = () => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.1 }}
-                      className="group bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 p-8 rounded-[2.5rem] flex flex-col lg:flex-row items-center justify-between gap-10 hover:bg-slate-50 dark:hover:bg-white/[0.08] transition-all hover:-translate-y-1 hover:shadow-2xl"
+                      className="group bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 p-10 md:p-14 rounded-[3.5rem] flex flex-col lg:flex-row items-center justify-between gap-12 hover:bg-slate-50 dark:hover:bg-white/[0.08] transition-all hover:-translate-y-1 hover:shadow-2xl"
                     >
                       <div className="flex items-center gap-8 w-full lg:w-auto">
                         <div className="w-20 h-20 rounded-[1.5rem] bg-slate-50 dark:bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                           <Plane className="w-10 h-10 text-accent -rotate-45" />
                         </div>
-                        <div>
+                        <div className="relative">
                           <div className="font-black text-2xl font-outfit">{flight.airline || "Karmana Air"}</div>
-                          <div className="text-slate-400 text-xs font-black tracking-[0.2em] uppercase">{flight.flightNumber || `KA-${100+idx}`} • {flight.class || "Business"}</div>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-slate-400 text-[10px] font-black tracking-[0.2em] uppercase">{flight.flightNumber || `KA-${100+idx}`} • {flight.class || "Business"}</span>
+                            <span className="bg-accent/10 text-accent text-[8px] font-black px-2 py-0.5 rounded-full border border-accent/20 tracking-widest uppercase">Sovereign Tier</span>
+                          </div>
                         </div>
                       </div>
 
@@ -277,6 +297,22 @@ const SearchSection = () => {
                         <div className="text-center">
                           <div className="text-3xl font-black">{flight.arrivalTime || "12:00"}</div>
                           <div className="text-slate-400 font-black text-[10px] tracking-widest uppercase mt-2">{flight.to}</div>
+                        </div>
+                      </div>
+
+                      {/* Flight Perks Icons */}
+                      <div className="hidden xl:flex items-center gap-4 text-slate-300">
+                        <div className="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
+                          <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center">
+                            <Box className="w-4 h-4" />
+                          </div>
+                          <span className="text-[8px] font-bold uppercase tracking-tighter">Baggage</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
+                          <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center">
+                            <Users className="w-4 h-4" />
+                          </div>
+                          <span className="text-[8px] font-bold uppercase tracking-tighter">Priority</span>
                         </div>
                       </div>
 
@@ -312,4 +348,3 @@ const SearchSection = () => {
 };
 
 export default SearchSection;
-;

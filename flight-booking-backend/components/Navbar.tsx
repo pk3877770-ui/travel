@@ -51,17 +51,24 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-12">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-white/80 hover:text-accent font-medium transition-colors relative group"
+              className="text-white/80 hover:text-accent font-bold text-sm uppercase tracking-widest transition-colors relative group"
             >
               {link.name}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
             </Link>
           ))}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-accent text-primary-dark px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-accent/20"
+          >
+            Concierge
+          </motion.button>
         </nav>
 
         {/* Mobile Toggle */}

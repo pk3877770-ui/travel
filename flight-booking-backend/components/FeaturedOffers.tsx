@@ -61,7 +61,7 @@ const FeaturedOffers = () => {
   };
 
   return (
-    <section className="py-24 bg-white dark:bg-slate-950">
+    <section className="py-32 bg-white dark:bg-[#020617]">
       <Script
         id="offers-schema"
         type="application/ld+json"
@@ -82,7 +82,7 @@ const FeaturedOffers = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold font-outfit mt-4 mb-6"
+            className="text-5xl md:text-7xl font-black font-outfit mt-4 mb-6 tracking-tighter"
           >
             Exclusive Seasonal Offers
           </motion.h2>

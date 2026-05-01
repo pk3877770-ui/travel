@@ -1,3 +1,15 @@
 {
-    "liveServer.settings.port": 5502
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "liveServer.settings.port": 5502,
+  "css.validate": false,
+  "scss.validate": false,
+  "less.validate": false,
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "css.customData": [".vscode/css-data.json"],
+  "files.associations": {
+    "*.css": "css"
+  }
 }

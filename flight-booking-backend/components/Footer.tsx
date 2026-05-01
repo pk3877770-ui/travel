@@ -4,19 +4,20 @@ import { Plane, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Che
 
 const Footer = () => {
   return (
-    <footer className="bg-primary-dark text-white pt-24 pb-12 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+    <footer className="bg-primary-dark text-white pt-24 pb-12 overflow-hidden relative noise-overlay">
+      <div className="absolute inset-0 mesh-gradient opacity-10 pointer-events-none" />
+      <div className="container max-w-7xl mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
           {/* Brand & Info */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
-                <Plane className="w-6 h-6 text-accent" />
+          <div className="space-y-8">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shadow-xl">
+                <Plane className="w-7 h-7 text-accent -rotate-45" />
               </div>
-              <span className="text-2xl font-bold font-outfit">Karmana</span>
+              <span className="text-3xl font-black font-outfit tracking-tighter">KARMANA</span>
             </div>
-            <p className="text-slate-400 leading-relaxed max-w-sm">
-              Experience the ultimate in travel luxury. From seamless flight bookings to bespoke holiday packages, Karmana is your passport to the world's most exquisite destinations.
+            <p className="text-slate-400 leading-relaxed max-w-sm font-medium opacity-80">
+              The world's premier travel concierge. From seamless sovereign flights to bespoke private estates, we craft journeys for the discerning few.
             </p>
             <div className="flex gap-4">
               {[Facebook, Twitter, Instagram, Linkedin].map((Icon, idx) => (
