@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plane, Hotel, Box, Ship, Search, Calendar, Users, MapPin, Loader2, ArrowRight, Check } from "lucide-react";
+import { Plane, Hotel, Box, Ship, Search, Calendar, Users, MapPin, Loader2, ArrowRight, Check, Sparkles, TrendingUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +12,8 @@ const tabs = [
   { id: "bundles", label: "Bundles", icon: Box, promo: "-20%" },
   { id: "cruises", label: "Cruises", icon: Ship },
 ];
+
+const trending = ["Maldives", "Paris", "Dubai", "Swiss Alps", "Kyoto"];
 
 const SearchSection = () => {
   const [activeTab, setActiveTab] = useState("flights");
@@ -30,7 +32,6 @@ const SearchSection = () => {
     const date = formData.get("date")?.toString() || "";
     const travelers = formData.get("travelers")?.toString() || "";
 
-    // Save lead for all types of searches
     try {
       await fetch("/api/leads", {
         method: "POST",
@@ -64,7 +65,6 @@ const SearchSection = () => {
     try {
       const res = await fetch(`/api/search?from=${from}&to=${to}&date=${date}&travelers=${travelers}`);
       const data = await res.json();
-
       if (data.success) {
         setFlights(data.flights);
       }
@@ -88,40 +88,34 @@ const SearchSection = () => {
   };
 
   return (
-    <section id="search-section" className="relative z-30 -mt-32 px-6">
+    <section id="search-section" className="relative z-30 -mt-40 px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] p-8 md:p-12 border border-slate-100 dark:border-slate-800"
+          transition={{ duration: 0.8 }}
+          className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-[40px] rounded-[3.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.2)] p-10 md:p-14 border border-white/20 dark:border-white/5"
         >
           {/* Tabs */}
-          <div className="flex gap-4 md:gap-8 mb-10 border-b border-slate-100 dark:border-slate-800 pb-2 overflow-x-auto hscroll-hide">
+          <div className="flex gap-2 md:gap-4 mb-12 bg-slate-100/50 dark:bg-white/5 p-2 rounded-3xl w-fit hscroll-hide overflow-x-auto">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  "relative pb-4 flex items-center gap-3 font-bold text-lg transition-all whitespace-nowrap",
+                  "relative px-8 py-4 rounded-2xl flex items-center gap-3 font-bold text-sm transition-all whitespace-nowrap",
                   activeTab === tab.id
-                    ? "text-primary dark:text-white"
-                    : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                    ? "bg-white dark:bg-white/10 text-primary-dark dark:text-white shadow-xl shadow-black/5"
+                    : "text-slate-500 hover:text-slate-800 dark:hover:text-white"
                 )}
               >
-                <tab.icon className={cn("w-6 h-6", activeTab === tab.id ? "text-accent" : "text-slate-300")} />
+                <tab.icon className={cn("w-5 h-5", activeTab === tab.id ? "text-accent" : "text-slate-400")} />
                 {tab.label}
                 {tab.promo && (
-                  <span className="bg-emerald-100 text-emerald-600 text-xs px-2 py-1 rounded-lg">
+                  <span className="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-black tracking-tighter">
                     {tab.promo}
                   </span>
-                )}
-                {activeTab === tab.id && (
-                  <motion.div
-                    layoutId="activeTabSearch"
-                    className="absolute bottom-[-1px] left-0 right-0 h-1 bg-accent rounded-full"
-                  />
                 )}
               </button>
             ))}
@@ -130,55 +124,55 @@ const SearchSection = () => {
           {/* Form */}
           <form 
             onSubmit={handleSearch}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-end"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-11 gap-6 items-end"
           >
-            <div className="space-y-2">
-              <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Departure</label>
+            <div className="lg:col-span-3 space-y-3">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2">Departure</label>
               <div className="relative group">
-                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50 group-hover:opacity-100 transition-opacity" />
+                <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
                 <input
                   type="text"
                   name="from"
-                  placeholder="From where?"
+                  placeholder="Where from?"
                   defaultValue="Delhi"
-                  className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium"
+                  className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold text-slate-800 dark:text-white placeholder:text-slate-400"
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Destination</label>
+            <div className="lg:col-span-3 space-y-3">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2">Destination</label>
               <div className="relative group">
-                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50 group-hover:opacity-100 transition-opacity" />
+                <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
                 <input
                   type="text"
                   name="to"
                   placeholder="Where to?"
                   defaultValue="Mumbai"
-                  className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium"
+                  className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold text-slate-800 dark:text-white placeholder:text-slate-400"
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Dates</label>
+            <div className="lg:col-span-2 space-y-3">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2">Departure Date</label>
               <div className="relative group">
-                <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50 group-hover:opacity-100 transition-opacity" />
+                <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
                 <input
                   type="date"
                   name="date"
-                  className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium appearance-none"
+                  className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold dark:text-white appearance-none"
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Travelers</label>
+            <div className="lg:col-span-2 space-y-3">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2">Travelers</label>
               <div className="relative group">
-                <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50 group-hover:opacity-100 transition-opacity" />
+                <Users className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
                 <select 
                   name="travelers"
-                  className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-medium appearance-none cursor-pointer"
+                  className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold dark:text-white appearance-none cursor-pointer"
                 >
                   <option>1 Adult</option>
                   <option>2 Adults</option>
@@ -187,42 +181,63 @@ const SearchSection = () => {
               </div>
             </div>
 
-            <div className="pt-2">
-              <button
+            <div className="lg:col-span-1">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-primary text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-primary-light transition-all shadow-xl shadow-primary/20 hover:-translate-y-1 active:scale-95 disabled:opacity-70"
+                className="w-full h-[64px] bg-primary-dark text-white rounded-[2rem] font-black flex items-center justify-center transition-all shadow-2xl shadow-black/10 disabled:opacity-70"
               >
-                {isLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : <Search className="w-6 h-6" />}
-                {isLoading ? "Searching..." : "Search"}
-              </button>
+                {isLoading ? <Loader2 className="w-7 h-7 animate-spin" /> : <Search className="w-7 h-7" />}
+              </motion.button>
             </div>
           </form>
+
+          {/* Quick Picks */}
+          <div className="mt-8 flex items-center gap-6 overflow-x-auto hscroll-hide pb-2">
+            <span className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">
+              <TrendingUp className="w-4 h-4 text-emerald-500" /> Trending:
+            </span>
+            {trending.map((city) => (
+              <button 
+                key={city}
+                className="text-[11px] font-bold text-slate-500 hover:text-accent transition-colors whitespace-nowrap px-4 py-2 bg-slate-50 dark:bg-white/5 rounded-full border border-slate-100 dark:border-white/5"
+              >
+                {city}
+              </button>
+            ))}
+          </div>
 
           {/* Results Section */}
           <AnimatePresence>
             {hasSearched && flights.length === 0 && !isLoading && (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="mt-12 p-8 text-center bg-slate-50 dark:bg-slate-800/20 rounded-3xl border border-dashed border-slate-200 dark:border-slate-700"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mt-16 p-12 text-center bg-slate-50/50 dark:bg-white/5 rounded-[3rem] border border-dashed border-slate-200 dark:border-white/10"
               >
-                <Box className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2">No flights available</h3>
-                <p className="text-slate-400">We couldn't find any flights matching your search. Try different cities or dates.</p>
+                <div className="w-20 h-20 bg-white dark:bg-slate-800 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+                    <Plane className="w-10 h-10 text-slate-300" />
+                </div>
+                <h3 className="text-2xl font-black mb-3">Sovereign Flights Not Found</h3>
+                <p className="text-slate-500 max-w-sm mx-auto">Try adjusting your dates or destinations to access our elite aviation network.</p>
               </motion.div>
             )}
+            
             {flights.length > 0 && (
               <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="mt-12 pt-12 border-t border-slate-100 dark:border-slate-800"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-16 space-y-10"
               >
-                <div className="flex items-center justify-between mb-8">
-                  <h3 className="text-2xl font-bold font-outfit">Available Flights</h3>
-                  <span className="text-slate-400 font-medium">{flights.length} flights found</span>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-3xl font-black font-outfit">Sovereign Results</h3>
+                  <div className="flex items-center gap-2 bg-accent/10 text-accent px-4 py-2 rounded-full text-xs font-black tracking-widest">
+                    <Sparkles className="w-4 h-4" /> {flights.length} ELITE OPTIONS
+                  </div>
                 </div>
+
                 <div className="grid gap-6">
                   {flights.map((flight, idx) => (
                     <motion.div
@@ -230,64 +245,59 @@ const SearchSection = () => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.1 }}
-                      className="bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-700/50 p-6 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-8 hover:border-accent/30 transition-all hover:shadow-lg group"
+                      className="group bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 p-8 rounded-[2.5rem] flex flex-col lg:flex-row items-center justify-between gap-10 hover:bg-slate-50 dark:hover:bg-white/[0.08] transition-all hover:-translate-y-1 hover:shadow-2xl"
                     >
-                      <div className="flex items-center gap-6 w-full md:w-auto">
-                        <div className="w-14 h-14 rounded-2xl bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
-                          <Plane className="w-8 h-8 text-accent -rotate-45" />
+                      <div className="flex items-center gap-8 w-full lg:w-auto">
+                        <div className="w-20 h-20 rounded-[1.5rem] bg-slate-50 dark:bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <Plane className="w-10 h-10 text-accent -rotate-45" />
                         </div>
                         <div>
-                          <div className="font-bold text-lg">{flight.airline || "Karmana Air"}</div>
-                          <div className="text-slate-400 text-sm font-medium">{flight.flightNumber || "KA-102"}</div>
+                          <div className="font-black text-2xl font-outfit">{flight.airline || "Karmana Air"}</div>
+                          <div className="text-slate-400 text-xs font-black tracking-[0.2em] uppercase">{flight.flightNumber || `KA-${100+idx}`} • {flight.class || "Business"}</div>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-12 flex-1 justify-center">
+                      <div className="flex items-center gap-10 md:gap-20 flex-1 justify-center">
                         <div className="text-center">
-                          <div className="text-2xl font-black">{flight.departureTime || "10:00"}</div>
-                          <div className="text-slate-400 font-bold text-sm tracking-tighter uppercase">{flight.from}</div>
+                          <div className="text-3xl font-black">{flight.departureTime || "10:00"}</div>
+                          <div className="text-slate-400 font-black text-[10px] tracking-widest uppercase mt-2">{flight.from}</div>
                         </div>
-                        <div className="flex flex-col items-center gap-2 flex-1 max-w-[120px]">
-                          <div className="w-full h-[2px] bg-slate-200 dark:bg-slate-700 relative">
-                            <motion.div 
-                              animate={{ left: ["0%", "100%"] }}
-                              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                              className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-accent rounded-full shadow-[0_0_10px_rgba(var(--accent-rgb),0.5)]" 
-                            />
-                          </div>
-                          <div className="text-[10px] items-center font-black text-slate-300 uppercase tracking-widest">Non-stop</div>
+                        
+                        <div className="flex flex-col items-center gap-2 flex-1 max-w-[160px]">
+                            <div className="w-full h-px bg-slate-200 dark:bg-white/10 relative">
+                                <motion.div 
+                                    animate={{ left: ["0%", "100%"] }}
+                                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                                    className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-accent rounded-full shadow-[0_0_10px_rgba(245,158,11,0.5)]" 
+                                />
+                            </div>
+                            <span className="text-[9px] font-black text-slate-300 uppercase tracking-[0.4em]">Non-stop</span>
                         </div>
+
                         <div className="text-center">
-                          <div className="text-2xl font-black">{flight.arrivalTime || "12:00"}</div>
-                          <div className="text-slate-400 font-bold text-sm tracking-tighter uppercase">{flight.to}</div>
+                          <div className="text-3xl font-black">{flight.arrivalTime || "12:00"}</div>
+                          <div className="text-slate-400 font-black text-[10px] tracking-widest uppercase mt-2">{flight.to}</div>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-8 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 pt-6 md:pt-0">
+                      <div className="flex items-center gap-8 w-full lg:w-auto justify-between lg:justify-end border-t lg:border-t-0 pt-8 lg:pt-0">
                         <div className="text-right">
-                          <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Starting from</div>
-                          <div className="text-3xl font-black text-primary dark:text-white">₹{flight.price || "4,499"}</div>
+                          <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Starting from</div>
+                          <div className="text-4xl font-black text-primary-dark dark:text-white">₹{flight.price || "4,499"}</div>
                         </div>
-                        <button 
+                        <motion.button 
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
                           onClick={() => handleBookFlight(flight)}
-                          disabled={isBooking === (flight._id || idx) || bookingSuccess === (flight._id || idx)}
                           className={cn(
-                            "p-4 rounded-2xl font-bold transition-all shadow-lg shadow-accent/20 active:scale-95 disabled:opacity-70 flex items-center justify-center min-w-[64px]",
+                            "w-16 h-16 rounded-[1.5rem] font-bold transition-all shadow-xl flex items-center justify-center",
                             bookingSuccess === (flight._id || idx) 
                               ? "bg-emerald-500 text-white" 
-                              : "bg-accent hover:bg-accent-hover text-primary hover:scale-105"
+                              : "bg-accent text-primary-dark shadow-accent/20"
                           )}
                         >
-                          {isBooking === (flight._id || idx) ? (
-                            <Loader2 className="w-6 h-6 animate-spin" />
-                          ) : bookingSuccess === (flight._id || idx) ? (
-                            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
-                              <Check className="w-6 h-6" />
-                            </motion.div>
-                          ) : (
-                            <ArrowRight className="w-6 h-6" />
-                          )}
-                        </button>
+                          <ArrowRight className="w-7 h-7" />
+                        </motion.button>
                       </div>
                     </motion.div>
                   ))}
@@ -302,3 +312,4 @@ const SearchSection = () => {
 };
 
 export default SearchSection;
+;
