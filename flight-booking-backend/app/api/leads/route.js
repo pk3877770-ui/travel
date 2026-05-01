@@ -34,6 +34,8 @@ export async function POST(req) {
       type
     });
 
+
+    console.log("Lead saved successfully:", lead);
     return NextResponse.json({ success: true, lead });
   } catch (error) {
     console.error("Lead creation failed:", error);

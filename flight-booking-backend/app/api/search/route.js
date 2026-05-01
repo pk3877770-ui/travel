@@ -28,13 +28,16 @@ export async function GET(req) {
         });
 
         if (!existingLead) {
-          await Lead.create({
+          const lead = await Lead.create({
             from,
             to,
             date,
             travelers: travelers || "1",
             type
           });
+          console.log("Recorded flight search lead:", lead);
+        } else {
+          console.log("Duplicate flight lead ignored:", existingLead._id);
         }
       } catch (e) {
         console.error("Failed to record flight lead:", e);

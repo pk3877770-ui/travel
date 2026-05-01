@@ -27,6 +27,8 @@ export async function POST(req) {
       message: data.message
     });
 
+
+    console.log("Contact inquiry saved successfully:", contact);
     return NextResponse.json({ success: true, contact });
   } catch (error) {
     console.error("Contact inquiry creation failed:", error);

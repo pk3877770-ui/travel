@@ -24,10 +24,10 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
     
     // Build query based on filter
     let query = {};
-    if (filter === 'flights') query = { type: { $regex: /Flight/i } };
-    if (filter === 'holidays') query = { type: { $regex: /Holiday/i } };
-    if (filter === 'hotels') query = { type: { $regex: /Hotel/i } };
-    if (filter === 'ticket') query = { type: { $regex: /Ticket/i } };
+    if (filter === 'flights') query = { type: { $regex: /Flight|Aviation|Booking/i } };
+    if (filter === 'holidays') query = { type: { $regex: /Holiday|Bundle|Package|Journey/i } };
+    if (filter === 'hotels') query = { type: { $regex: /Hotel|Residency|Elite/i } };
+    if (filter === 'ticket') query = { type: { $regex: /Ticket|Confirmed/i } };
 
     if (filter === 'contacts') {
         let rawContacts = await Contact.find({}).sort({ createdAt: -1 });

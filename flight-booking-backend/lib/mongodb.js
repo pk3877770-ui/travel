@@ -1,5 +1,11 @@
 // lib/mongodb.js
 import mongoose from 'mongoose';
+import dns from 'dns';
+
+// Set DNS servers to Google's to help resolve Atlas SRV records in some environments
+if (typeof window === 'undefined') {
+  dns.setServers(['8.8.8.8', '8.8.4.4']);
+}
 
 const MONGODB_URI = process.env.MONGODB_URI || '';
 
@@ -34,7 +40,9 @@ async function dbConnect() {
 
   try {
     cached.conn = await cached.promise;
+    console.log("Successfully connected to MongoDB");
   } catch (e) {
+    console.error("MongoDB Connection Error Details:", e);
     cached.promise = null;
     throw e;
   }
