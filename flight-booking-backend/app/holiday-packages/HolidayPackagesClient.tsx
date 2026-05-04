@@ -35,7 +35,7 @@ const signatureJourneys = [
     title: "Northern Alpine Heights",
     price: "₹18,999",
     oldPrice: "₹28,000",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&q=80",
     badge: "ADVENTURE",
     perks: [
       { icon: Car, label: "Luxury SUV" },
