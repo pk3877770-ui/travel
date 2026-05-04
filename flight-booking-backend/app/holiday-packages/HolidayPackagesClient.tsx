@@ -35,7 +35,7 @@ const signatureJourneys = [
     title: "Northern Alpine Heights",
     price: "₹18,999",
     oldPrice: "₹28,000",
-    image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a22?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
     badge: "ADVENTURE",
     perks: [
       { icon: Car, label: "Luxury SUV" },
@@ -116,7 +116,7 @@ export default function HolidayPackages() {
   return (
     <main className="min-h-screen bg-white dark:bg-slate-950 selection:bg-accent/30">
       {/* Hero Section */}
-      <section className="relative h-[85vh] flex items-center overflow-hidden noise-overlay">
+      <section className="relative min-h-[85vh] flex items-center pt-32 pb-20 overflow-hidden noise-overlay">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/40 to-white dark:to-slate-950 z-10" />
           <div className="absolute inset-0 mesh-gradient opacity-20 pointer-events-none" />
@@ -136,7 +136,7 @@ export default function HolidayPackages() {
             <span className="inline-block bg-white/10 backdrop-blur-md text-accent px-6 py-2 rounded-full font-black text-[10px] tracking-[0.4em] mb-6 border border-white/10 shadow-xl">
               CURATED EXPERIENCES
             </span>
-            <h1 className="text-6xl md:text-9xl font-black font-outfit text-white mb-8 leading-tight tracking-tighter">
+            <h1 className="text-6xl md:text-8xl font-black font-outfit text-white mb-8 leading-tight tracking-tighter">
               Journeys of a <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-orange-400 italic font-light">Lifetime</span>
             </h1>
             <p className="text-xl text-slate-300 mb-14 max-w-2xl mx-auto font-inter leading-relaxed opacity-80">
