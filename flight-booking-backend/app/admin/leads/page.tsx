@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation';
 import dbConnect from '@/lib/mongodb';
 import Lead from '@/models/Lead';
 import Contact from '@/models/Contact';
+import Booking from '@/models/Booking';
+import User from '@/models/User';
 import Link from 'next/link';
 import { logoutAction } from '../login/actions';
 import { Search, MapPin, Calendar, Users, Trash2, ShieldCheck, Zap, Globe, Clock } from 'lucide-react';
@@ -25,7 +27,6 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
     if (filter === 'flights') query = { type: { $regex: /Flight|Aviation|Booking/i } };
     if (filter === 'holidays') query = { type: { $regex: /Holiday|Bundle|Package|Journey/i } };
     if (filter === 'hotels') query = { type: { $regex: /Hotel|Residency|Elite/i } };
-    if (filter === 'ticket') query = { type: { $regex: /Ticket|Confirmed/i } };
 
     if (filter === 'contacts') {
         let rawContacts = await Contact.find({}).sort({ createdAt: -1 });
@@ -37,6 +38,8 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
             }
         });
         leads = Array.from(uniqueContacts.values());
+    } else if (filter === 'ticket') {
+        leads = await Booking.find({}).populate('user').sort({ createdAt: -1 });
     } else {
         leads = await Lead.find(query).sort({ createdAt: -1 });
     }
@@ -189,6 +192,48 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
                                         </td>
                                         <td className="px-10 py-8 max-w-xs">
                                             <div className="text-slate-400 text-xs leading-relaxed line-clamp-1 group-hover:line-clamp-none transition-all cursor-help">{lead.message}</div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : filter === 'ticket' ? (
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-white/[0.02]">
+                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Reference</th>
+                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Route</th>
+                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Passenger Details</th>
+                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Amount</th>
+                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-white/[0.02]">
+                                {leads.map((booking: any) => (
+                                    <tr key={booking._id} className="group hover:bg-white/[0.03] transition-all">
+                                        <td className="px-10 py-8">
+                                            <div className="text-white font-mono font-bold tracking-tight">{booking.bookingReference}</div>
+                                            <div className="text-[10px] text-slate-500 mt-1">{new Date(booking.createdAt).toLocaleDateString()}</div>
+                                        </td>
+                                        <td className="px-10 py-8">
+                                            <div className="flex items-center gap-3">
+                                                <div className="text-white font-black uppercase text-sm">{booking.flight.from}</div>
+                                                <div className="w-6 h-px bg-white/20"></div>
+                                                <div className="text-white font-black uppercase text-sm">{booking.flight.to}</div>
+                                            </div>
+                                            <div className="text-xs text-accent mt-1">{booking.flight.airline}</div>
+                                        </td>
+                                        <td className="px-10 py-8">
+                                            <div className="text-white font-bold">{booking.passengerDetails?.name || booking.user?.name || "Unknown"}</div>
+                                            <div className="text-xs text-slate-400 mt-1">{booking.passengerDetails?.passport || "N/A"}</div>
+                                        </td>
+                                        <td className="px-10 py-8">
+                                            <div className="text-white font-black text-lg">₹{booking.totalAmount}</div>
+                                        </td>
+                                        <td className="px-10 py-8">
+                                            <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-black uppercase tracking-widest border border-emerald-500/20">
+                                                {booking.status}
+                                            </span>
                                         </td>
                                     </tr>
                                 ))}

@@ -62,6 +62,59 @@ export default function FlightBookingPage() {
   const [bookingSuccess, setBookingSuccess] = React.useState<string | null>(null);
   const [hasSearched, setHasSearched] = React.useState(false);
   const [selectedFlight, setSelectedFlight] = React.useState<any>(null);
+  const [passenger, setPassenger] = React.useState({ name: "", email: "", passport: "" });
+  const [showPaymentModal, setShowPaymentModal] = React.useState(false);
+  const [paymentStatus, setPaymentStatus] = React.useState<"idle" | "processing" | "success">("idle");
+  const [paymentGateway, setPaymentGateway] = React.useState<"razorpay" | "stripe">("razorpay");
+  
+  // Filters state
+  const [filterAirline, setFilterAirline] = React.useState<string>("All");
+  const [filterClass, setFilterClass] = React.useState<string>("All");
+  const [filterMaxPrice, setFilterMaxPrice] = React.useState<number>(100000);
+  const [filterTime, setFilterTime] = React.useState<string>("All");
+
+  // Derive unique airlines and classes from current search results
+  const availableAirlines = React.useMemo(() => {
+    const airlines = flights.map(f => f.airline || "Karmana Air");
+    return ["All", ...Array.from(new Set(airlines))];
+  }, [flights]);
+
+  const availableClasses = React.useMemo(() => {
+    const classes = flights.map(f => f.class || "Business");
+    return ["All", ...Array.from(new Set(classes))];
+  }, [flights]);
+
+  const filteredFlights = React.useMemo(() => {
+    return flights.filter(f => {
+      const flightAirline = f.airline || "Karmana Air";
+      const flightClass = f.class || "Business";
+      const flightPrice = f.price || 4499;
+
+      if (filterAirline !== "All" && flightAirline !== filterAirline) return false;
+      if (filterClass !== "All" && flightClass !== filterClass) return false;
+      if (flightPrice > filterMaxPrice) return false;
+      
+      if (filterTime !== "All") {
+        const timeStr = f.departureTime || "10:00";
+        let hours = 10;
+        if (timeStr.includes("AM") || timeStr.includes("PM")) {
+          const [t, modifier] = timeStr.split(" ");
+          let [h, m] = t.split(":");
+          if (h === "12") h = "00";
+          if (modifier === "PM") h = (parseInt(h, 10) + 12).toString();
+          hours = parseInt(h, 10);
+        } else {
+          hours = parseInt(timeStr.split(":")[0], 10);
+        }
+        
+        if (filterTime === "Morning" && (hours < 5 || hours >= 12)) return false;
+        if (filterTime === "Afternoon" && (hours < 12 || hours >= 18)) return false;
+        if (filterTime === "Evening" && (hours >= 5 && hours < 18)) return false;
+      }
+      
+      return true;
+    });
+  }, [flights, filterAirline, filterClass, filterMaxPrice, filterTime]);
 
   React.useEffect(() => {
     // Handle incoming booking from homepage
@@ -97,6 +150,7 @@ export default function FlightBookingPage() {
     setLoading(true);
     setHasSearched(true);
     setFlights([]);
+    if (data.cabin) setFilterClass(data.cabin);
 
     try {
       const res = await fetch(`/api/search?from=${data.from}&to=${data.to}&date=${data.departure}&travelers=1`);
@@ -115,7 +169,56 @@ export default function FlightBookingPage() {
 
   const handleBookFlight = (flight: any) => {
     setSelectedFlight(flight);
+    setShowPaymentModal(false);
+    setPaymentStatus("idle");
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const processPaymentAndBook = async () => {
+    setPaymentStatus("processing");
+    
+    // Simulate secure payment processing gateway delay
+    await new Promise(resolve => setTimeout(resolve, 2500));
+
+    try {
+      const res = await fetch("/api/user/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          flight: {
+            from: selectedFlight.from,
+            to: selectedFlight.to,
+            date: selectedFlight.date || new Date().toISOString(),
+            airline: selectedFlight.airline || "Karmana Air",
+            price: selectedFlight.price,
+            departureTime: selectedFlight.departureTime,
+            arrivalTime: selectedFlight.arrivalTime
+          },
+          travelers: 1,
+          passengerDetails: passenger
+        }),
+      });
+      
+      if (res.status === 401) {
+        alert("Please sign in to complete your booking.");
+        router.push("/auth");
+        return;
+      }
+      
+      if (!res.ok) throw new Error("Booking failed");
+
+      const responseData = await res.json();
+      
+      setPaymentStatus("success");
+      setBookingSuccess(selectedFlight._id || "success");
+      setTimeout(() => {
+        router.push(`/payment-success?ref=${responseData.booking.bookingReference}&from=${selectedFlight.from}&to=${selectedFlight.to}`);
+      }, 1500);
+    } catch (error) {
+      alert("Payment failed. Please try again.");
+      setPaymentStatus("idle");
+      setShowPaymentModal(false);
+    }
   };
 
   return (
@@ -168,9 +271,27 @@ export default function FlightBookingPage() {
                     <div className="space-y-6">
                       <h3 className="text-lg font-black text-accent uppercase tracking-widest">Passenger Details</h3>
                       <div className="space-y-4">
-                        <input type="text" placeholder="Full Name" className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" />
-                        <input type="email" placeholder="Email Address" className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" />
-                        <input type="tel" placeholder="Passport Number" className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" />
+                        <input 
+                          type="text" 
+                          placeholder="Full Name" 
+                          value={passenger.name}
+                          onChange={(e) => setPassenger({...passenger, name: e.target.value})}
+                          className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" 
+                        />
+                        <input 
+                          type="email" 
+                          placeholder="Email Address" 
+                          value={passenger.email}
+                          onChange={(e) => setPassenger({...passenger, email: e.target.value})}
+                          className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" 
+                        />
+                        <input 
+                          type="text" 
+                          placeholder="Passport Number" 
+                          value={passenger.passport}
+                          onChange={(e) => setPassenger({...passenger, passport: e.target.value})}
+                          className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" 
+                        />
                       </div>
                     </div>
                     <div className="space-y-6">
@@ -193,33 +314,142 @@ export default function FlightBookingPage() {
                   </div>
                   
                   <button 
-                    onClick={async () => {
-                      setLoading(true);
-                      // Capture Lead
-                      await fetch("/api/leads", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                          from: selectedFlight.from,
-                          to: selectedFlight.to,
-                          date: selectedFlight.date,
-                          travelers: "1 Adult",
-                          type: selectedFlight.type === "Holiday Package" ? `PACKAGE CONFIRMED: ${selectedFlight.to}` : `CONFIRMED BOOKING: ${selectedFlight.airline}`
-                        }),
-                      });
-                      setTimeout(() => {
-                        setLoading(false);
-                        alert("Your sovereign flight has been successfully reserved!");
-                        setSelectedFlight(null);
-                      }, 2000);
+                    onClick={() => {
+                      if (!passenger.name || !passenger.email || !passenger.passport) {
+                        alert("Please fill in all passenger details before confirming your booking.");
+                        return;
+                      }
+                      setShowPaymentModal(true);
                     }}
                     disabled={loading}
                     className="w-full bg-primary text-white py-6 rounded-3xl font-black text-xl shadow-2xl shadow-primary/20 hover:-translate-y-1 transition-all disabled:opacity-70 flex items-center justify-center gap-3"
                   >
-                    {loading ? <RefreshCcw className="w-6 h-6 animate-spin" /> : <ShieldCheck className="w-6 h-6" />}
-                    {loading ? "Processing..." : "Confirm & Pay Now"}
+                    <ShieldCheck className="w-6 h-6" />
+                    Proceed to Secure Payment
                   </button>
                 </div>
+
+                {/* Payment Gateway Modal */}
+                <AnimatePresence>
+                  {showPaymentModal && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary-dark/80 backdrop-blur-sm"
+                    >
+                      <motion.div
+                        initial={{ scale: 0.9, y: 20 }}
+                        animate={{ scale: 1, y: 0 }}
+                        exit={{ scale: 0.9, y: 20 }}
+                        className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 md:p-12 w-full max-w-md shadow-2xl border border-slate-200 dark:border-slate-800 relative"
+                      >
+                        {paymentStatus === "idle" && (
+                          <>
+                            <button 
+                              onClick={() => setShowPaymentModal(false)}
+                              className="absolute top-6 right-6 text-slate-400 hover:text-white transition-colors"
+                            >
+                              <ArrowRight className="w-6 h-6 rotate-180" />
+                            </button>
+                            <div className="mb-8">
+                              <h3 className="text-2xl font-black font-outfit text-primary dark:text-white mb-2">Secure Checkout</h3>
+                              <p className="text-slate-500 text-sm">Select your preferred payment gateway</p>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 gap-4 mb-8">
+                              <button 
+                                onClick={() => setPaymentGateway("razorpay")}
+                                className={cn(
+                                  "p-4 rounded-2xl border-2 text-left transition-all",
+                                  paymentGateway === "razorpay" 
+                                    ? "border-blue-500 bg-blue-500/10" 
+                                    : "border-slate-200 dark:border-slate-800 hover:border-blue-500/50"
+                                )}
+                              >
+                                <h4 className="font-bold text-white mb-1">Razorpay</h4>
+                                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-black">India Friendly</p>
+                                <p className="text-xs text-slate-500 mt-2">UPI, RuPay, NetBanking</p>
+                              </button>
+                              <button 
+                                onClick={() => setPaymentGateway("stripe")}
+                                className={cn(
+                                  "p-4 rounded-2xl border-2 text-left transition-all",
+                                  paymentGateway === "stripe" 
+                                    ? "border-indigo-500 bg-indigo-500/10" 
+                                    : "border-slate-200 dark:border-slate-800 hover:border-indigo-500/50"
+                                )}
+                              >
+                                <h4 className="font-bold text-white mb-1">Stripe</h4>
+                                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-black">Global Pay</p>
+                                <p className="text-xs text-slate-500 mt-2">Intl Cards, Apple Pay</p>
+                              </button>
+                            </div>
+
+                            {paymentGateway === "stripe" ? (
+                              <div className="space-y-4 mb-8">
+                                <input type="text" placeholder="Card Number" defaultValue="4242 4242 4242 4242" className="w-full bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-indigo-500 font-mono text-sm tracking-widest" />
+                                <div className="grid grid-cols-2 gap-4">
+                                  <input type="text" placeholder="MM/YY" defaultValue="12/28" className="w-full bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-indigo-500 font-mono text-sm" />
+                                  <input type="text" placeholder="CVC" defaultValue="123" className="w-full bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-indigo-500 font-mono text-sm" />
+                                </div>
+                                <input type="text" placeholder="Name on Card" defaultValue={passenger.name || "CARDHOLDER"} className="w-full bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-indigo-500 font-medium uppercase text-sm" />
+                              </div>
+                            ) : (
+                              <div className="space-y-4 mb-8">
+                                <div className="bg-slate-50 dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 text-center">
+                                  <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <ShieldCheck className="w-8 h-8 text-blue-500" />
+                                  </div>
+                                  <p className="text-white font-bold mb-1">Razorpay Secure Interface</p>
+                                  <p className="text-sm text-slate-400">You will be redirected to Razorpay to complete your UPI or NetBanking transaction.</p>
+                                </div>
+                              </div>
+                            )}
+
+                            <div className="flex justify-between items-center mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
+                              <span className="text-slate-500 font-bold">Total Due</span>
+                              <span className="text-3xl font-black text-primary dark:text-white">₹{selectedFlight.price}</span>
+                            </div>
+
+                            <button 
+                              onClick={processPaymentAndBook}
+                              className={cn(
+                                "w-full text-primary-dark py-5 rounded-2xl font-black text-lg shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2",
+                                paymentGateway === "razorpay" ? "bg-blue-500 shadow-blue-500/20 text-white" : "bg-indigo-500 shadow-indigo-500/20 text-white"
+                              )}
+                            >
+                              <ShieldCheck className="w-6 h-6" />
+                              Pay ₹{selectedFlight.price} with {paymentGateway === "razorpay" ? "Razorpay" : "Stripe"}
+                            </button>
+                          </>
+                        )}
+
+                        {paymentStatus === "processing" && (
+                          <div className="py-12 text-center flex flex-col items-center">
+                            <RefreshCcw className="w-16 h-16 text-accent animate-spin mb-6" />
+                            <h3 className="text-2xl font-black text-white mb-2">Processing Payment</h3>
+                            <p className="text-slate-400">Please do not close this window...</p>
+                          </div>
+                        )}
+
+                        {paymentStatus === "success" && (
+                          <motion.div 
+                            initial={{ scale: 0.8 }}
+                            animate={{ scale: 1 }}
+                            className="py-12 text-center flex flex-col items-center"
+                          >
+                            <div className="w-20 h-20 bg-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center mb-6">
+                              <Check className="w-10 h-10" />
+                            </div>
+                            <h3 className="text-2xl font-black text-white mb-2">Payment Successful!</h3>
+                            <p className="text-slate-400">Your sovereign flight is confirmed.</p>
+                          </motion.div>
+                        )}
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             ) : (
               <>
@@ -350,15 +580,89 @@ export default function FlightBookingPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="mt-12 space-y-6"
               >
-                <div className="flex items-center justify-between px-6 mb-8">
+                <div className="flex flex-col md:flex-row items-center justify-between px-6 mb-8 gap-4">
                   <h3 className="text-2xl font-bold text-white font-outfit">Available Sovereign Flights</h3>
                   <span className="bg-accent/10 text-accent px-4 py-1 rounded-full text-xs font-black tracking-widest border border-accent/20">
-                    {flights.length} ELITE OPTIONS FOUND
+                    {filteredFlights.length} ELITE OPTIONS FOUND
                   </span>
                 </div>
 
+                {/* Filters Section */}
+                <div className="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 mb-8 mx-6 flex flex-col md:flex-row gap-6">
+                  <div className="flex-1 space-y-2">
+                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Airline</label>
+                    <select
+                      value={filterAirline}
+                      onChange={(e) => setFilterAirline(e.target.value)}
+                      className="w-full bg-slate-900 border border-slate-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-accent"
+                    >
+                      {availableAirlines.map(airline => (
+                        <option key={airline} value={airline}>{airline}</option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div className="flex-1 space-y-2">
+                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Cabin Class</label>
+                    <select
+                      value={filterClass}
+                      onChange={(e) => setFilterClass(e.target.value)}
+                      className="w-full bg-slate-900 border border-slate-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-accent"
+                    >
+                      {availableClasses.map(c => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="flex-1 space-y-2">
+                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Departure</label>
+                    <select
+                      value={filterTime}
+                      onChange={(e) => setFilterTime(e.target.value)}
+                      className="w-full bg-slate-900 border border-slate-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-accent"
+                    >
+                      <option value="All">Any Time</option>
+                      <option value="Morning">Morning (5AM - 12PM)</option>
+                      <option value="Afternoon">Afternoon (12PM - 6PM)</option>
+                      <option value="Evening">Evening (6PM+)</option>
+                    </select>
+                  </div>
+
+                  <div className="flex-1 space-y-2">
+                    <div className="flex justify-between items-end">
+                      <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Max Price</label>
+                      <span className="text-sm font-bold text-accent">₹{filterMaxPrice}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1000"
+                      max="100000"
+                      step="1000"
+                      value={filterMaxPrice}
+                      onChange={(e) => setFilterMaxPrice(Number(e.target.value))}
+                      className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-accent"
+                    />
+                  </div>
+                </div>
+
                 <div className="grid gap-6">
-                  {flights.map((flight, idx) => (
+                  {filteredFlights.length === 0 ? (
+                    <div className="text-center py-12">
+                      <p className="text-slate-400">No flights match your selected filters.</p>
+                      <button 
+                        onClick={() => {
+                          setFilterAirline("All");
+                          setFilterClass("All");
+                          setFilterMaxPrice(100000);
+                          setFilterTime("All");
+                        }}
+                        className="mt-4 text-accent font-bold hover:underline"
+                      >
+                        Reset Filters
+                      </button>
+                    </div>
+                  ) : filteredFlights.map((flight, idx) => (
                     <motion.div
                       key={flight._id || idx}
                       initial={{ opacity: 0, x: -20 }}

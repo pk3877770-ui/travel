@@ -2,16 +2,44 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Plane, Menu, X } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Plane, Menu, X, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const isHome = pathname === "/";
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("/api/auth/me");
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data.user);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user", error);
+      }
+    };
+    fetchUser();
+  }, [pathname]); // Refetch when pathname changes, so login/logout updates nav
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      setUser(null);
+      router.push("/");
+      router.refresh();
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,6 +90,33 @@ const Navbar = () => {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
             </Link>
           ))}
+          {user ? (
+            <div className="flex items-center gap-4">
+              <Link href="/profile" className="text-white/80 hover:text-accent font-bold text-sm uppercase tracking-widest transition-colors">
+                My Bookings
+              </Link>
+              <Link href="/profile" className="text-white font-medium text-sm flex items-center gap-2 hover:text-accent transition-colors ml-4 border-l border-white/20 pl-4">
+                <User className="w-4 h-4 text-accent" />
+                {user.name}
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-white/60 hover:text-red-400 font-bold text-sm uppercase tracking-widest transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link href="/auth">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="text-white/80 hover:text-white font-bold text-sm uppercase tracking-widest transition-colors relative group"
+              >
+                Sign In
+              </motion.button>
+            </Link>
+          )}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -99,6 +154,38 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            {user ? (
+              <div className="mt-4 border-t border-white/10 pt-4 flex flex-col gap-4">
+                <Link
+                  href="/profile"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-xl text-white/90 hover:text-accent flex items-center justify-between group"
+                >
+                  My Bookings
+                </Link>
+                <span className="text-xl text-white flex items-center gap-2">
+                  <User className="w-5 h-5 text-accent" />
+                  Hi, {user.name}
+                </span>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="text-xl text-red-400/80 hover:text-red-400 text-left w-full transition-colors"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/auth"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-xl text-white/90 hover:text-accent flex items-center justify-between group mt-4 border-t border-white/10 pt-4"
+              >
+                Sign In / Sign Up
+              </Link>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
