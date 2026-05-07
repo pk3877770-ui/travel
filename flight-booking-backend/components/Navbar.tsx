@@ -62,9 +62,6 @@ const Navbar = () => {
     { name: "Services", href: "/services" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
-    { name: "Auth", href: "/auth" },
-    { name: "Profile", href: "/profile" },
-    { name: "Booking", href: "/booking" },
   ];
 
   return (
@@ -76,9 +73,9 @@ const Navbar = () => {
           : "bg-transparent"
       )}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-105">
+        <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-105 flex-shrink-0">
           <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
             <Plane className="w-6 h-6 text-accent" />
           </div>
@@ -88,51 +85,58 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-12">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="text-white/80 hover:text-accent font-bold text-sm uppercase tracking-widest transition-colors relative group"
+        <nav className="hidden lg:flex items-center justify-end flex-1 gap-8 xl:gap-12">
+          <div className="flex items-center gap-6 xl:gap-10">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="text-white/80 hover:text-accent font-bold text-[11px] xl:text-xs uppercase tracking-widest transition-colors relative group whitespace-nowrap"
+              >
+                {link.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
+              </Link>
+            ))}
+          </div>
+          
+          <div className="flex items-center gap-4 flex-shrink-0">
+            {user ? (
+              <div className="flex items-center gap-4 border-l border-white/10 pl-6">
+                <Link href="/profile" className="text-white/80 hover:text-accent font-bold text-[10px] uppercase tracking-widest transition-colors whitespace-nowrap">
+                  My Bookings
+                </Link>
+                <Link href="/profile" className="text-white font-medium text-xs flex items-center gap-2 hover:text-accent transition-colors whitespace-nowrap">
+                  <User className="w-4 h-4 text-accent" />
+                  {user.name}
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-white/60 hover:text-red-400 font-bold text-[10px] uppercase tracking-widest transition-colors"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-4 border-l border-white/10 pl-6">
+                <Link href="/auth">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="text-white/90 hover:text-white font-black text-[10px] uppercase tracking-[0.2em] transition-all px-5 py-2.5 rounded-xl border border-white/10 hover:border-accent/50 hover:bg-white/5 backdrop-blur-sm whitespace-nowrap"
+                  >
+                    Sign In
+                  </motion.button>
+                </Link>
+              </div>
+            )}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-accent text-primary-dark px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-accent/20 whitespace-nowrap"
             >
-              {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
-            </Link>
-          ))}
-          {user ? (
-            <div className="flex items-center gap-4">
-              <Link href="/profile" className="text-white/80 hover:text-accent font-bold text-sm uppercase tracking-widest transition-colors">
-                My Bookings
-              </Link>
-              <Link href="/profile" className="text-white font-medium text-sm flex items-center gap-2 hover:text-accent transition-colors ml-4 border-l border-white/20 pl-4">
-                <User className="w-4 h-4 text-accent" />
-                {user.name}
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="text-white/60 hover:text-red-400 font-bold text-sm uppercase tracking-widest transition-colors"
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <Link href="/auth">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="text-white/90 hover:text-white font-black text-[10px] uppercase tracking-[0.2em] transition-all px-5 py-2.5 rounded-xl border border-white/10 hover:border-accent/50 hover:bg-white/5 backdrop-blur-sm"
-              >
-                Sign In
-              </motion.button>
-            </Link>
-          )}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-accent text-primary-dark px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-accent/20"
-          >
-            Concierge
-          </motion.button>
+              Concierge
+            </motion.button>
+          </div>
         </nav>
 
         {/* Mobile Toggle */}
