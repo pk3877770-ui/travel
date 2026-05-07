@@ -111,7 +111,7 @@ const Navbar = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="text-white/80 hover:text-white font-bold text-sm uppercase tracking-widest transition-colors relative group"
+                className="text-white/90 hover:text-white font-black text-[10px] uppercase tracking-[0.2em] transition-all px-5 py-2.5 rounded-xl border border-white/10 hover:border-accent/50 hover:bg-white/5 backdrop-blur-sm"
               >
                 Sign In
               </motion.button>
