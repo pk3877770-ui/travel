@@ -83,12 +83,12 @@ const Navbar = () => {
           </div>
 
           {/* Section 2: Desktop Links - Center Aligned */}
-          <div className="hidden lg:flex items-center justify-center gap-6 xl:gap-10 px-8">
+          <div className="hidden lg:flex flex-1 items-center justify-center gap-10 xl:gap-14 px-8">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-slate-300 hover:text-accent font-black text-[10px] uppercase tracking-[0.2em] transition-all relative group whitespace-nowrap"
+                className="text-slate-200 hover:text-accent font-black text-[12px] uppercase tracking-[0.25em] transition-all relative group whitespace-nowrap"
               >
                 {link.name}
                 <span className="absolute -bottom-2 left-0 w-0 h-px bg-accent transition-all group-hover:w-full" />
@@ -97,31 +97,27 @@ const Navbar = () => {
           </div>
 
           {/* Section 3: Actions - Right Aligned */}
-          <div className="flex items-center gap-4 flex-shrink-0">
-            <div className="hidden xl:flex items-center">
+          <div className="flex items-center gap-6 flex-shrink-0">
+            <div className="hidden sm:flex items-center">
               {user ? (
-                <Link href="/profile" className="flex items-center gap-3 bg-white/5 border border-white/10 px-5 py-2.5 rounded-2xl hover:bg-white/10 transition-all">
-                  <div className="w-7 h-7 rounded-full bg-accent/20 flex items-center justify-center">
+                <Link href="/profile" className="flex items-center gap-3 bg-white/5 border border-white/10 px-6 py-3 rounded-2xl hover:bg-white/10 transition-all">
+                  <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
                     <User className="w-4 h-4 text-accent" />
                   </div>
-                  <span className="text-white font-black text-[10px] uppercase tracking-widest">{user.name.split(' ')[0]}</span>
+                  <span className="text-white font-black text-[11px] uppercase tracking-widest">{user.name.split(' ')[0]}</span>
                 </Link>
               ) : (
                 <Link href="/auth">
-                  <button className="text-white font-black text-[9px] uppercase tracking-[0.2em] hover:text-accent transition-colors px-4">
+                  <button className="text-white font-black text-[11px] uppercase tracking-[0.2em] hover:text-accent transition-colors px-6 py-2 rounded-xl hover:bg-white/5">
                     Sign In
                   </button>
                 </Link>
               )}
             </div>
-            
-            <button className="bg-accent hover:bg-orange-400 text-primary-dark px-8 py-3.5 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl shadow-accent/20 transition-all hover:-translate-y-1">
-              Concierge
-            </button>
 
             {/* Mobile Toggle */}
             <button 
-              className="lg:hidden w-11 h-11 flex items-center justify-center bg-white/5 rounded-xl border border-white/10 text-white"
+              className="lg:hidden w-12 h-12 flex items-center justify-center bg-white/5 rounded-2xl border border-white/10 text-white"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X /> : <Menu />}
@@ -129,6 +125,7 @@ const Navbar = () => {
           </div>
         </nav>
       </div>
+
 
 
       {/* Mobile Menu Overlay */}
