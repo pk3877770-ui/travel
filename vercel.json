@@ -1,6 +1,0 @@
-{
-  "framework": "nextjs",
-  "buildCommand": "npm run build --prefix flight-booking-backend",
-  "outputDirectory": "flight-booking-backend/.next",
-  "installCommand": "npm install --prefix flight-booking-backend"
-}

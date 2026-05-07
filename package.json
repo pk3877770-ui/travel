@@ -1,12 +1,5 @@
 {
-  "name": "travel-monorepo",
-  "private": true,
-  "scripts": {
-    "dev": "npm run dev --prefix flight-booking-backend",
-    "build": "npm run build --prefix flight-booking-backend",
-    "start": "npm run start --prefix flight-booking-backend"
-  },
   "dependencies": {
-    "next": "16.2.3"
+    "@vercel/speed-insights": "^2.0.0"
   }
 }
