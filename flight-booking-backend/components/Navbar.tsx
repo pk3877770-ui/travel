@@ -99,43 +99,38 @@ const Navbar = () => {
             ))}
           </div>
           
-          <div className="flex items-center gap-4 flex-shrink-0">
+          <div className="flex items-center gap-4 flex-shrink-0 ml-auto">
             {user ? (
-              <div className="flex items-center gap-4 border-l border-white/10 pl-6">
-                <Link href="/profile" className="text-white/80 hover:text-accent font-bold text-[10px] uppercase tracking-widest transition-colors whitespace-nowrap">
+              <div className="flex items-center gap-4">
+                <Link href="/profile" className="text-white/80 hover:text-accent font-bold text-[10px] uppercase tracking-widest whitespace-nowrap">
                   My Bookings
                 </Link>
-                <Link href="/profile" className="text-white font-medium text-xs flex items-center gap-2 hover:text-accent transition-colors whitespace-nowrap">
+                <Link href="/profile" className="text-white font-medium text-xs flex items-center gap-2 hover:text-accent whitespace-nowrap">
                   <User className="w-4 h-4 text-accent" />
-                  {user.name}
+                  {user.name || "Account"}
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-white/60 hover:text-red-400 font-bold text-[10px] uppercase tracking-widest transition-colors"
+                  className="text-white/60 hover:text-red-400 font-bold text-[10px] uppercase tracking-widest"
                 >
                   Logout
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-4 border-l border-white/10 pl-6">
-                <Link href="/auth">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="text-white/90 hover:text-white font-black text-[10px] uppercase tracking-[0.2em] transition-all px-5 py-2.5 rounded-xl border border-white/10 hover:border-accent/50 hover:bg-white/5 backdrop-blur-sm whitespace-nowrap"
-                  >
-                    Sign In
-                  </motion.button>
-                </Link>
-              </div>
+              <Link href="/auth">
+                <button
+                  className="text-white/90 hover:text-white font-black text-[10px] uppercase tracking-[0.2em] transition-all px-5 py-2.5 rounded-xl border border-white/10 hover:border-accent/50 hover:bg-white/5 backdrop-blur-sm whitespace-nowrap"
+                >
+                  Sign In
+                </button>
+              </Link>
             )}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            
+            <button
               className="bg-accent text-primary-dark px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-accent/20 whitespace-nowrap"
             >
               Concierge
-            </motion.button>
+            </button>
           </div>
         </nav>
 
