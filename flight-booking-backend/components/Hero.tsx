@@ -1,118 +1,107 @@
 "use client";
 
 import React from "react";
-import { Compass, Play, Sparkles } from "lucide-react";
+import { Compass, Play, Sparkles, Crown } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden noise-overlay">
-      {/* Background with Cinematic Scale */}
+    <section className="relative min-h-[90vh] flex items-center pt-32 pb-20 overflow-hidden mesh-gradient">
+      {/* Cinematic Background Layer */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-dark via-primary/80 to-transparent z-10" />
-        <motion.img
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 10, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
-          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80"
-          alt="Luxury Flight"
-          className="w-full h-full object-cover"
-        />
-      </div>
-
-      {/* Floating Sparkles for Atmosphere */}
-      <div className="absolute inset-0 z-10 pointer-events-none">
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ 
-              opacity: [0, 1, 0], 
-              y: -100,
-              x: Math.random() * 100 - 50 
-            }}
-            transition={{ 
-              duration: 4 + Math.random() * 4, 
-              repeat: Infinity, 
-              delay: Math.random() * 5 
-            }}
-            className="absolute text-accent/30"
-            style={{ 
-              left: `${Math.random() * 100}%`, 
-              top: `${Math.random() * 100}%` 
-            }}
-          >
-            <Sparkles className="w-4 h-4" />
-          </motion.div>
-        ))}
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/40 via-primary-dark/80 to-primary-dark z-10" />
+        <motion.div
+          initial={{ scale: 1.2, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.6 }}
+          transition={{ duration: 2 }}
+          className="absolute inset-0"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=1600&q=80"
+            alt="Luxury Aviation"
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
       </div>
 
       <div className="container max-w-7xl mx-auto px-6 relative z-20">
-        <div className="max-w-4xl">
+        <div className="max-w-5xl">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 1, ease: "circOut" }}
           >
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-              className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl border border-white/10 px-5 py-2.5 rounded-full mb-10 shadow-2xl shadow-black/20"
-            >
-              <div className="w-2 h-2 rounded-full bg-accent animate-pulse shadow-[0_0_10px_#f59e0b]" />
-              <span className="text-white/90 font-black text-[10px] tracking-[0.4em] uppercase">
-                Premium Travel Concierge
+            <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-3xl border border-white/10 px-6 py-3 rounded-2xl mb-12 shadow-2xl">
+              <Sparkles className="w-5 h-5 text-accent animate-pulse" />
+              <span className="text-white font-black text-[10px] tracking-[0.5em] uppercase">
+                The Sovereign Standard
               </span>
-            </motion.div>
+            </div>
 
-            <h1 className="text-6xl md:text-[8.5rem] font-black text-white leading-[0.85] mb-12 tracking-tighter">
-              The Art of <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-orange-400 italic font-light">Sovereign Travel</span>
+            <h1 className="text-7xl md:text-[9.5rem] font-black text-white leading-[0.8] mb-12 tracking-tighter">
+              Sovereign <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-orange-400 to-rose-500 italic font-light pr-4">
+                Excellence
+              </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-slate-400 mb-14 leading-relaxed max-w-2xl font-normal opacity-90">
-              From private island escapes to bespoke alpine retreats, we curate travel experiences that transcend the ordinary. Your journey to the extraordinary begins here.
+            <p className="text-xl md:text-2xl text-slate-300 mb-16 leading-relaxed max-w-3xl font-medium opacity-80">
+              Beyond standard travel. We engineer bespoke aviation experiences and private itineraries for the world's most discerning voyagers.
             </p>
 
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap gap-8">
               <motion.button 
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => document.getElementById('search-section')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-accent hover:bg-accent-hover text-primary-dark px-12 py-6 rounded-2xl font-black text-sm uppercase tracking-widest flex items-center gap-4 transition-all shadow-[0_20px_50px_rgba(245,158,11,0.3)] group"
+                className="bg-accent text-primary-dark px-14 py-7 rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] flex items-center gap-4 transition-all shadow-[0_30px_60px_-15px_rgba(245,158,11,0.5)] group"
               >
-                <Compass className="w-6 h-6 group-hover:rotate-45 transition-transform duration-500" />
-                Explore Destinations
+                <Compass className="w-6 h-6 group-hover:rotate-180 transition-transform duration-700" />
+                Initialize Search
               </motion.button>
               
               <motion.button 
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white/5 hover:bg-white/10 backdrop-blur-xl border border-white/10 text-white px-12 py-6 rounded-2xl font-black text-sm uppercase tracking-widest flex items-center gap-4 transition-all"
+                className="bg-white/5 backdrop-blur-3xl border border-white/10 text-white px-14 py-7 rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] flex items-center gap-4 transition-all hover:bg-white/10"
               >
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                  <Play className="w-5 h-5 fill-white" />
+                <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
+                  <Play className="w-6 h-6 fill-accent text-accent" />
                 </div>
                 The Experience
               </motion.button>
             </div>
           </motion.div>
-          
-          {/* Sovereign Partners Ribbon */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 1 }}
-            className="mt-24 pt-12 border-t border-white/5 flex flex-wrap items-center gap-12 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
-          >
-            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 block w-full mb-4">Elite Alliances</span>
-            {["Emirates", "Four Seasons", "Lufthansa", "Ritz-Carlton", "Singapore Air"].map((brand) => (
-              <span key={brand} className="text-xl font-bold font-outfit text-white whitespace-nowrap">{brand}</span>
-            ))}
-          </motion.div>
         </div>
       </div>
+
+      {/* Floating UI Elements */}
+      <div className="absolute bottom-20 right-20 hidden xl:block z-30">
+        <motion.div 
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 4, repeat: Infinity }}
+          className="bg-white/5 backdrop-blur-2xl border border-white/10 p-8 rounded-[3rem] shadow-2xl"
+        >
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 bg-accent/20 rounded-2xl flex items-center justify-center">
+              <Crown className="w-6 h-6 text-accent" />
+            </div>
+            <div>
+              <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Active Leads</div>
+              <div className="text-2xl font-black text-white">4,290+</div>
+            </div>
+          </div>
+          <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+            <motion.div 
+              initial={{ width: "0%" }}
+              animate={{ width: "85%" }}
+              transition={{ duration: 2, delay: 1 }}
+              className="h-full bg-accent"
+            />
+          </div>
+        </motion.div>
+      </div>
+
 
       {/* Subtle Bottom Glow */}
       <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-background via-background/50 to-transparent z-10" />

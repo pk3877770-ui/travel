@@ -45,16 +45,6 @@ const Navbar = () => {
     }
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  if (!isMounted) return null;
-
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Packages", href: "/holiday-packages" },
@@ -64,133 +54,132 @@ const Navbar = () => {
     { name: "Contact", href: "/contact" },
   ];
 
+  if (!isMounted) return null;
+
   return (
-    <header
+    <header 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4",
-        (isScrolled || !isHome) 
-          ? "bg-primary/95 backdrop-blur-md py-3 shadow-xl border-b border-white/5" 
-          : "bg-transparent"
+        "fixed top-0 left-0 right-0 z-[100] transition-all duration-500",
+        isScrolled ? "py-4" : "py-8"
       )}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
-        {/* Brand */}
-        <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-105 flex-shrink-0">
-          <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
-            <Plane className="w-6 h-6 text-accent" />
-          </div>
-          <span className="text-2xl font-bold tracking-tight text-white font-outfit">
-            Karmana
-          </span>
-        </Link>
+      <div className="container max-w-7xl mx-auto px-6">
+        <nav className={cn(
+          "relative flex items-center justify-between transition-all duration-500 rounded-[2.5rem] px-10 py-5",
+          isScrolled 
+            ? "bg-slate-900/80 backdrop-blur-2xl border border-white/10 shadow-2xl" 
+            : "bg-transparent"
+        )}>
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-4 group">
+            <div className="w-12 h-12 rounded-2xl bg-accent flex items-center justify-center shadow-2xl shadow-accent/20 transition-transform group-hover:rotate-12">
+              <Plane className="w-7 h-7 text-primary-dark -rotate-45" />
+            </div>
+            <span className="text-3xl font-black tracking-tighter text-white font-outfit uppercase">
+              Karmana
+            </span>
+          </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center justify-end flex-1 gap-6 xl:gap-10">
-          <div className="flex items-center gap-6 xl:gap-8">
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex items-center gap-12">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-white/80 hover:text-accent font-bold text-[11px] xl:text-xs uppercase tracking-widest transition-colors relative group whitespace-nowrap"
+                className="text-slate-300 hover:text-accent font-black text-[11px] uppercase tracking-[0.3em] transition-all relative group"
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
+                <span className="absolute -bottom-2 left-0 w-0 h-px bg-accent transition-all group-hover:w-full" />
               </Link>
             ))}
-            
-            {/* Fail-safe Auth Section inside the same loop/div */}
-            {user ? (
-              <>
-                <Link href="/profile" className="text-white/80 hover:text-accent font-bold text-[10px] uppercase tracking-widest whitespace-nowrap ml-4">
-                  My Bookings
+          </div>
+
+          {/* Actions */}
+          <div className="flex items-center gap-6">
+            <div className="hidden sm:flex items-center">
+              {user ? (
+                <Link href="/profile" className="flex items-center gap-3 bg-white/5 border border-white/10 px-6 py-3 rounded-2xl hover:bg-white/10 transition-all">
+                  <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
+                    <User className="w-4 h-4 text-accent" />
+                  </div>
+                  <span className="text-white font-black text-[10px] uppercase tracking-widest">{user.name.split(' ')[0]}</span>
                 </Link>
-                <Link href="/profile" className="text-white font-medium text-xs flex items-center gap-2 hover:text-accent whitespace-nowrap border-l border-white/10 pl-4">
-                  <User className="w-4 h-4 text-accent" />
-                  {user.name || "Account"}
+              ) : (
+                <Link href="/auth">
+                  <button className="text-white font-black text-[10px] uppercase tracking-[0.3em] hover:text-accent transition-colors">
+                    Sovereign Sign In
+                  </button>
                 </Link>
-                <button onClick={handleLogout} className="text-white/60 hover:text-red-400 font-bold text-[10px] uppercase tracking-widest">
-                  Logout
-                </button>
-              </>
-            ) : (
-              <Link href="/auth" className="ml-4">
-                <button className="text-white/90 hover:text-white font-black text-[10px] uppercase tracking-[0.2em] transition-all px-5 py-2.5 rounded-xl border border-white/10 hover:border-accent/50 hover:bg-white/5 backdrop-blur-sm whitespace-nowrap">
-                  Sign In
-                </button>
-              </Link>
-            )}
+              )}
+            </div>
             
-            <button className="bg-accent text-primary-dark px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-accent/20 whitespace-nowrap">
+            <button className="bg-accent hover:bg-orange-400 text-primary-dark px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] shadow-2xl shadow-accent/20 transition-all hover:-translate-y-1">
               Concierge
+            </button>
+
+            {/* Mobile Toggle */}
+            <button 
+              className="lg:hidden w-12 h-12 flex items-center justify-center bg-white/5 rounded-2xl border border-white/10 text-white"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X /> : <Menu />}
             </button>
           </div>
         </nav>
-
-        {/* Mobile Toggle */}
-        <button
-          className="lg:hidden text-white p-2"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
-        </button>
       </div>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-primary-dark/95 backdrop-blur-xl border-t border-white/10 p-6 flex flex-col gap-6 lg:hidden"
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            className="fixed inset-0 z-[110] bg-primary-dark flex flex-col p-12 lg:hidden"
           >
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-xl text-white/90 hover:text-accent flex items-center justify-between group"
-              >
-                {link.name}
-              </Link>
-            ))}
-            {user ? (
-              <div className="mt-4 border-t border-white/10 pt-4 flex flex-col gap-4">
+            <div className="flex justify-between items-center mb-20">
+              <span className="text-3xl font-black text-white font-outfit uppercase tracking-tighter">Menu</span>
+              <button onClick={() => setIsMobileMenuOpen(false)} className="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center text-white">
+                <X className="w-8 h-8" />
+              </button>
+            </div>
+            <div className="flex flex-col gap-10">
+              {navLinks.map((link) => (
                 <Link
-                  href="/profile"
+                  key={link.name}
+                  href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-xl text-white/90 hover:text-accent flex items-center justify-between group"
+                  className="text-4xl font-black text-white hover:text-accent transition-colors font-outfit"
                 >
-                  My Bookings
+                  {link.name}
                 </Link>
-                <span className="text-xl text-white flex items-center gap-2">
-                  <User className="w-5 h-5 text-accent" />
-                  Hi, {user.name}
-                </span>
+              ))}
+              {user ? (
                 <button
                   onClick={() => {
                     handleLogout();
                     setIsMobileMenuOpen(false);
                   }}
-                  className="text-xl text-red-400/80 hover:text-red-400 text-left w-full transition-colors"
+                  className="text-2xl font-black text-red-400 uppercase tracking-widest pt-10 border-t border-white/10 text-left"
                 >
                   Logout
                 </button>
-              </div>
-            ) : (
-              <Link
-                href="/auth"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-xl text-white/90 hover:text-accent flex items-center justify-between group mt-4 border-t border-white/10 pt-4"
-              >
-                Sign In / Sign Up
-              </Link>
-            )}
+              ) : (
+                <Link 
+                  href="/auth" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-2xl font-black text-accent uppercase tracking-widest pt-10 border-t border-white/10"
+                >
+                  Sign In
+                </Link>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
     </header>
   );
 };
+
 
 export default Navbar;
