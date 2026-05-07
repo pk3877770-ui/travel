@@ -14,8 +14,10 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     const fetchUser = async () => {
       try {
         const res = await fetch("/api/auth/me");
@@ -28,7 +30,10 @@ const Navbar = () => {
       }
     };
     fetchUser();
-  }, [pathname]); // Refetch when pathname changes, so login/logout updates nav
+  }, [pathname]);
+
+  if (!isMounted) return null;
+  // Refetch when pathname changes, so login/logout updates nav
 
   const handleLogout = async () => {
     try {

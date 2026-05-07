@@ -40,6 +40,8 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
         leads = Array.from(uniqueContacts.values());
     } else if (filter === 'ticket') {
         leads = await Booking.find({}).populate('user').sort({ createdAt: -1 });
+    } else if (filter === 'users') {
+        leads = await User.find({}).sort({ createdAt: -1 });
     } else {
         leads = await Lead.find(query).sort({ createdAt: -1 });
     }
@@ -135,7 +137,8 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
                     { id: "holidays", label: "Bundles" },
                     { id: "hotels", label: "Elite Stays" },
                     { id: "contacts", label: "Direct Comms" },
-                    { id: "ticket", label: "Bookings" }
+                    { id: "ticket", label: "Bookings" },
+                    { id: "users", label: "Registered Users" }
                 ].map((t) => (
                     <Link 
                         key={t.id}
@@ -234,6 +237,55 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
                                             <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-black uppercase tracking-widest border border-emerald-500/20">
                                                 {booking.status}
                                             </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : filter === 'users' ? (
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-white/[0.02]">
+                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">User Entity</th>
+                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Email Address</th>
+                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Role</th>
+                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Last Active</th>
+                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Member Since</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-white/[0.02]">
+                                {leads.map((u: any) => (
+                                    <tr key={u._id} className="group hover:bg-white/[0.03] transition-all">
+                                        <td className="px-10 py-8">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-accent font-black text-xs">
+                                                    {u.name.charAt(0)}
+                                                </div>
+                                                <div className="text-white font-black tracking-tight">{u.name}</div>
+                                            </div>
+                                        </td>
+                                        <td className="px-10 py-8">
+                                            <div className="text-slate-400 font-mono text-xs">{u.email}</div>
+                                        </td>
+                                        <td className="px-10 py-8">
+                                            <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${
+                                                u.role === 'admin' 
+                                                ? 'bg-rose-500/10 text-rose-500 border-rose-500/20' 
+                                                : 'bg-accent/10 text-accent border-accent/20'
+                                            }`}>
+                                                {u.role}
+                                            </span>
+                                        </td>
+                                        <td className="px-10 py-8 text-xs text-slate-400">
+                                            {u.lastLogin ? (
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse"></div>
+                                                    {new Date(u.lastLogin).toLocaleString()}
+                                                </div>
+                                            ) : "Never"}
+                                        </td>
+                                        <td className="px-10 py-8 text-xs text-slate-500">
+                                            {new Date(u.createdAt).toLocaleDateString()}
                                         </td>
                                     </tr>
                                 ))}
