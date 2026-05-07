@@ -60,23 +60,23 @@ const Navbar = () => {
     <header 
       className={cn(
         "fixed top-0 left-0 right-0 z-[100] transition-all duration-500",
-        isScrolled ? "py-4 px-4 md:px-10" : "py-8 px-4 md:px-10"
+        isScrolled ? "py-3 px-3 md:py-4 md:px-10" : "py-6 px-4 md:py-8 md:px-10"
       )}
     >
       <div className="max-w-[1440px] mx-auto">
         <nav className={cn(
-          "flex items-center justify-between transition-all duration-500 rounded-[2.5rem] px-8 py-4 border border-white/5 shadow-2xl",
+          "flex items-center justify-between transition-all duration-500 rounded-[2rem] md:rounded-[2.5rem] px-5 md:px-8 py-3 md:py-4 border border-white/5 shadow-2xl",
           isScrolled 
             ? "bg-slate-900/95 backdrop-blur-3xl" 
             : "bg-primary-dark/40 backdrop-blur-xl"
         )}>
           {/* Section 1: Logo */}
-          <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center shadow-2xl shadow-accent/20 transition-transform group-hover:rotate-12">
-                <Plane className="w-6 h-6 text-primary-dark -rotate-45" />
+          <div className="flex-shrink-0 relative z-[120]">
+            <Link href="/" className="flex items-center gap-2 md:gap-3 group">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-accent flex items-center justify-center shadow-2xl shadow-accent/20 transition-transform group-hover:rotate-12">
+                <Plane className="w-5 h-5 md:w-6 md:h-6 text-primary-dark -rotate-45" />
               </div>
-              <span className="text-2xl font-black tracking-tighter text-white font-outfit uppercase">
+              <span className="text-xl md:text-2xl font-black tracking-tighter text-white font-outfit uppercase">
                 Karmana
               </span>
             </Link>
@@ -97,7 +97,7 @@ const Navbar = () => {
           </div>
 
           {/* Section 3: Actions - Right Aligned */}
-          <div className="flex items-center gap-6 flex-shrink-0">
+          <div className="flex items-center gap-4 md:gap-6 flex-shrink-0 relative z-[120]">
             <div className="hidden sm:flex items-center">
               {user ? (
                 <Link href="/profile" className="flex items-center gap-3 bg-white/5 border border-white/10 px-6 py-3 rounded-2xl hover:bg-white/10 transition-all">
@@ -117,16 +117,14 @@ const Navbar = () => {
 
             {/* Mobile Toggle */}
             <button 
-              className="lg:hidden w-12 h-12 flex items-center justify-center bg-white/5 rounded-2xl border border-white/10 text-white"
+              className="lg:hidden w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white/5 rounded-xl md:rounded-2xl border border-white/10 text-white"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X /> : <Menu />}
+              {isMobileMenuOpen ? <X className="w-5 h-5 md:w-6 md:h-6" /> : <Menu className="w-5 h-5 md:w-6 md:h-6" />}
             </button>
           </div>
         </nav>
       </div>
-
-
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
@@ -135,44 +133,59 @@ const Navbar = () => {
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
-            className="fixed inset-0 z-[110] bg-primary-dark flex flex-col p-12 lg:hidden"
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="fixed inset-0 z-[110] bg-slate-950 flex flex-col p-8 md:p-12 lg:hidden"
           >
-            <div className="flex justify-between items-center mb-20">
-              <span className="text-3xl font-black text-white font-outfit uppercase tracking-tighter">Menu</span>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center text-white">
-                <X className="w-8 h-8" />
-              </button>
-            </div>
-            <div className="flex flex-col gap-10">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-4xl font-black text-white hover:text-accent transition-colors font-outfit"
-                >
-                  {link.name}
-                </Link>
-              ))}
-              {user ? (
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="text-2xl font-black text-red-400 uppercase tracking-widest pt-10 border-t border-white/10 text-left"
-                >
-                  Logout
-                </button>
-              ) : (
-                <Link 
-                  href="/auth" 
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-2xl font-black text-accent uppercase tracking-widest pt-10 border-t border-white/10"
-                >
-                  Sign In
-                </Link>
-              )}
+            <div className="mt-20 flex flex-col h-full">
+              <div className="space-y-6 md:space-y-8">
+                {navLinks.map((link, idx) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 + idx * 0.05 }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="text-4xl md:text-5xl font-black text-white hover:text-accent transition-colors font-outfit tracking-tighter"
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+              
+              <div className="mt-auto pt-10 border-t border-white/10">
+                {user ? (
+                  <div className="flex flex-col gap-6">
+                    <Link 
+                      href="/profile"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center gap-4 text-2xl font-black text-white"
+                    >
+                      <User className="text-accent" /> My Profile
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="text-2xl font-black text-rose-500 uppercase tracking-widest text-left"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <Link 
+                    href="/auth" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-full py-6 bg-accent text-primary-dark rounded-[1.5rem] font-black text-2xl uppercase tracking-widest text-center"
+                  >
+                    Sign In
+                  </Link>
+                )}
+              </div>
             </div>
           </motion.div>
         )}
@@ -180,6 +193,5 @@ const Navbar = () => {
     </header>
   );
 };
-
 
 export default Navbar;

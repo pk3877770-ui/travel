@@ -100,13 +100,13 @@ const SearchSection = () => {
           <div className="absolute inset-0 mesh-gradient opacity-5 dark:opacity-20 pointer-events-none" />
 
           {/* Tabs */}
-          <div className="relative z-10 flex gap-2 md:gap-4 mb-12 bg-slate-100/50 dark:bg-white/5 p-2 rounded-3xl w-fit hscroll-hide overflow-x-auto border border-slate-200/50 dark:border-white/5">
+          <div className="relative z-10 flex gap-2 md:gap-4 mb-8 md:mb-12 bg-slate-100/50 dark:bg-white/5 p-1.5 md:p-2 rounded-2xl md:rounded-3xl w-full sm:w-fit hscroll-hide overflow-x-auto border border-slate-200/50 dark:border-white/5 no-scrollbar">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  "relative px-8 py-4 rounded-2xl flex items-center gap-3 font-bold text-sm transition-all whitespace-nowrap overflow-hidden",
+                  "relative px-4 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl flex items-center gap-2 md:gap-3 font-bold text-[10px] md:text-sm transition-all whitespace-nowrap overflow-hidden flex-shrink-0",
                   activeTab === tab.id
                     ? "text-primary-dark dark:text-white"
                     : "text-slate-500 hover:text-slate-800 dark:hover:text-white"
@@ -119,16 +119,17 @@ const SearchSection = () => {
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
-                <tab.icon className={cn("relative z-10 w-5 h-5", activeTab === tab.id ? "text-accent" : "text-slate-400")} />
+                <tab.icon className={cn("relative z-10 w-4 h-4 md:w-5 md:h-5", activeTab === tab.id ? "text-accent" : "text-slate-400")} />
                 <span className="relative z-10">{tab.label}</span>
                 {tab.promo && (
-                  <span className="relative z-10 bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-black tracking-tighter">
+                  <span className="relative z-10 bg-emerald-500 text-white text-[8px] md:text-[10px] px-1.5 md:px-2 py-0.5 rounded-full font-black tracking-tighter">
                     {tab.promo}
                   </span>
                 )}
               </button>
             ))}
           </div>
+
 
           {/* Form */}
           <form 

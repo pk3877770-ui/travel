@@ -6,8 +6,8 @@ const Footer = () => {
   return (
     <footer className="bg-primary-dark text-white pt-24 pb-12 overflow-hidden relative noise-overlay">
       <div className="absolute inset-0 mesh-gradient opacity-10 pointer-events-none" />
-      <div className="container max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+      <div className="w-full max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
           {/* Brand & Info */}
           <div className="space-y-8">
             <div className="flex items-center gap-4">

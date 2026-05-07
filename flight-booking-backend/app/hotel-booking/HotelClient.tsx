@@ -139,9 +139,9 @@ export default function HotelBooking() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="pt-32 pb-24 px-6 noise-overlay"
+            className="pt-32 pb-24 px-6 md:px-12 noise-overlay"
           >
-            <div className="container max-w-7xl mx-auto">
+            <div className="w-full max-w-[1440px] mx-auto">
               <button 
                 onClick={() => setSelectedHotel(null)}
                 className="mb-12 flex items-center gap-3 text-slate-400 hover:text-accent font-black uppercase tracking-[0.2em] text-[10px] transition-all group"
@@ -243,7 +243,7 @@ export default function HotelBooking() {
           </motion.section>
         ) : (
           <>
-      <section className="relative h-[80vh] flex items-center overflow-hidden noise-overlay">
+      <section className="relative min-h-[85vh] flex items-center pt-44 pb-20 overflow-hidden noise-overlay">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/40 to-white dark:to-slate-950 z-10" />
           <div className="absolute inset-0 mesh-gradient opacity-20 pointer-events-none" />
@@ -260,64 +260,64 @@ export default function HotelBooking() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="inline-block bg-white/10 backdrop-blur-md text-accent px-6 py-2 rounded-full font-black text-[10px] tracking-[0.4em] mb-6 border border-white/10 shadow-xl">
+            <span className="inline-block bg-white/10 backdrop-blur-md text-accent px-6 py-2 rounded-full font-black text-[12px] tracking-[0.4em] mb-8 border border-white/10 shadow-xl">
               LUXURY RESIDENCIES
             </span>
-            <h1 className="text-6xl md:text-9xl font-black font-outfit text-white mb-8 leading-tight tracking-tighter">
+            <h1 className="text-6xl md:text-9xl font-black font-outfit text-white mb-10 leading-tight tracking-tighter">
               Your Sanctuary of <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-orange-400 italic font-light">Grace</span>
             </h1>
-            <p className="text-xl text-slate-300 mb-14 max-w-2xl mx-auto font-inter leading-relaxed opacity-80">
+            <p className="text-xl text-slate-300 mb-16 max-w-2xl mx-auto font-inter leading-relaxed opacity-80">
               Preferred access to the world's most celebrated Five-Star properties and private estates.
             </p>
 
             {/* Specialized Hotel Search */}
-            <div className="max-w-5xl mx-auto bg-white/80 dark:bg-slate-900/40 backdrop-blur-[40px] rounded-[3.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] p-8 md:p-12 text-left border border-white/20 dark:border-white/10 noise-overlay">
-              <form onSubmit={handleSearch} className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-end">
-                <div className="lg:col-span-4 space-y-3">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2 opacity-60">Destination or Property</label>
+            <div className="max-w-6xl mx-auto bg-white/80 dark:bg-slate-900/60 backdrop-blur-[40px] rounded-[3.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] p-10 md:p-14 text-left border border-white/20 dark:border-white/10 noise-overlay">
+              <form onSubmit={handleSearch} className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-end">
+                <div className="lg:col-span-4 space-y-4">
+                  <label className="text-[12px] font-black text-slate-400 uppercase tracking-[0.3em] px-4 opacity-80">Destination or Property</label>
                   <div className="relative group">
-                    <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
+                    <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                     <input
                       type="text"
                       name="destination"
                       placeholder="e.g. Kyoto, Maldives, St. Regis..."
                       defaultValue="Goa, India"
-                      className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold dark:text-white"
+                      className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-6 pl-16 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-lg dark:text-white placeholder:text-slate-500"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-3">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2 opacity-60">Check-in</label>
+                <div className="space-y-4">
+                  <label className="text-[12px] font-black text-slate-400 uppercase tracking-[0.3em] px-4 opacity-80">Check-in</label>
                   <div className="relative group">
-                    <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
+                    <Calendar className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                     <input
                       type="date"
                       name="checkin"
-                      className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold dark:text-white appearance-none"
+                      className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-6 pl-16 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-lg dark:text-white appearance-none"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-3">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2 opacity-60">Check-out</label>
+                <div className="space-y-4">
+                  <label className="text-[12px] font-black text-slate-400 uppercase tracking-[0.3em] px-4 opacity-80">Check-out</label>
                   <div className="relative group">
-                    <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
+                    <Calendar className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                     <input
                       type="date"
                       name="checkout"
-                      className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold dark:text-white appearance-none"
+                      className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-6 pl-16 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-lg dark:text-white appearance-none"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-3">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2 opacity-60">Travelers</label>
+                <div className="space-y-4">
+                  <label className="text-[12px] font-black text-slate-400 uppercase tracking-[0.3em] px-4 opacity-80">Travelers</label>
                   <div className="relative group">
-                    <Users className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
+                    <Users className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                     <select 
                       name="travelers"
-                      className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold dark:text-white appearance-none cursor-pointer"
+                      className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-6 pl-16 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-lg dark:text-white appearance-none cursor-pointer"
                     >
                       <option>2 Adults, 0 Children</option>
                       <option>1 Adult</option>
@@ -326,14 +326,14 @@ export default function HotelBooking() {
                   </div>
                 </div>
 
-                <div className="pt-2">
+                <div className="pt-4 lg:col-span-4">
                   <button
                     type="submit"
                     disabled={isSearching}
-                    className="w-full bg-gradient-to-r from-accent to-orange-500 text-primary-dark py-6 rounded-[2rem] font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-accent-hover transition-all shadow-xl shadow-accent/20 hover:-translate-y-1 active:scale-95 disabled:opacity-70 group"
+                    className="w-full bg-gradient-to-r from-accent via-orange-500 to-accent text-primary-dark py-8 rounded-[2.5rem] font-black text-xl uppercase tracking-[0.4em] flex items-center justify-center gap-4 hover:bg-right transition-all duration-500 shadow-2xl shadow-accent/40 active:scale-[0.98] disabled:opacity-70 group"
                   >
-                    {isSearching ? <Loader2 className="w-6 h-6 animate-spin" /> : <Search className="w-6 h-6 group-hover:scale-125 transition-transform" />}
-                    <span className="text-glow">{isSearching ? "Finding..." : "Find Stays"}</span>
+                    {isSearching ? <Loader2 className="w-8 h-8 animate-spin" /> : <Search className="w-8 h-8 group-hover:scale-125 transition-transform" />}
+                    <span className="text-glow">{isSearching ? "Finding Sancturies..." : "Find Stays"}</span>
                   </button>
                 </div>
               </form>
@@ -341,6 +341,7 @@ export default function HotelBooking() {
           </motion.div>
         </div>
       </section>
+
 
       {/* Signature Hotel Collection */}
       <section className="py-24">
