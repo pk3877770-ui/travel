@@ -32,7 +32,6 @@ const Navbar = () => {
     fetchUser();
   }, [pathname]);
 
-  if (!isMounted) return null;
   // Refetch when pathname changes, so login/logout updates nav
 
   const handleLogout = async () => {
@@ -53,6 +52,8 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (!isMounted) return null;
 
   const navLinks = [
     { name: "Home", href: "/" },
