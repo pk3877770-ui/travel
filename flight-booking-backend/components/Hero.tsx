@@ -40,7 +40,7 @@ const Hero = () => {
 
             <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black text-white leading-[1] md:leading-[0.75] mb-8 md:mb-14 tracking-tighter">
               Sovereign <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-orange-400 to-rose-500 italic font-light pr-6">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-orange-400 to-rose-500 italic font-medium pr-6">
                 Excellence
               </span>
             </h1>
@@ -54,19 +54,19 @@ const Hero = () => {
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => document.getElementById('search-section')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-accent text-primary-dark px-10 md:px-16 py-6 md:py-8 rounded-[2rem] md:rounded-[2.5rem] font-black text-xs md:text-sm uppercase tracking-[0.25em] flex items-center justify-center gap-4 transition-all shadow-[0_30px_70px_-10px_rgba(245,158,11,0.6)] group w-full sm:w-auto"
+                className="bg-accent text-primary-dark px-10 md:px-16 py-6 md:py-8 rounded-[2rem] md:rounded-[2.5rem] font-black text-sm md:text-base uppercase tracking-[0.25em] flex items-center justify-center gap-4 transition-all shadow-[0_30px_70px_-10px_rgba(245,158,11,0.6)] group w-full sm:w-auto"
               >
-                <Compass className="w-6 h-6 md:w-7 md:h-7 group-hover:rotate-180 transition-transform duration-700" />
+                <Compass className="w-6 h-6 md:w-8 md:h-8 group-hover:rotate-180 transition-transform duration-700" />
                 Initialize Search
               </motion.button>
               
               <motion.button 
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white/5 backdrop-blur-3xl border border-white/10 text-white px-10 md:px-16 py-6 md:py-8 rounded-[2rem] md:rounded-[2.5rem] font-black text-xs md:text-sm uppercase tracking-[0.25em] flex items-center justify-center gap-4 transition-all hover:bg-white/10 w-full sm:w-auto"
+                className="bg-white/5 backdrop-blur-3xl border border-white/10 text-white px-10 md:px-16 py-6 md:py-8 rounded-[2rem] md:rounded-[2.5rem] font-black text-sm md:text-base uppercase tracking-[0.25em] flex items-center justify-center gap-4 transition-all hover:bg-white/10 w-full sm:w-auto"
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-accent/20 flex items-center justify-center">
-                  <Play className="w-5 h-5 md:w-6 md:h-6 fill-accent text-accent" />
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-accent/20 flex items-center justify-center">
+                  <Play className="w-6 h-6 md:w-7 md:h-7 fill-accent text-accent" />
                 </div>
                 The Experience
               </motion.button>
@@ -87,8 +87,8 @@ const Hero = () => {
               <Crown className="w-7 h-7 text-accent" />
             </div>
             <div>
-              <div className="text-[11px] font-black text-slate-500 uppercase tracking-widest">Active Leads</div>
-              <div className="text-3xl font-black text-white tracking-tighter">4,290+</div>
+              <div className="text-[13px] font-black text-slate-500 uppercase tracking-widest">Active Leads</div>
+              <div className="text-4xl font-black text-white tracking-tighter">4,290+</div>
             </div>
           </div>
           <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">

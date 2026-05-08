@@ -136,8 +136,11 @@ export default function HolidayPackages() {
             <span className="inline-block bg-white/10 backdrop-blur-md text-accent px-6 py-2 rounded-full font-black text-[10px] tracking-[0.4em] mb-6 border border-white/10 shadow-xl">
               CURATED EXPERIENCES
             </span>
-            <h1 className="text-6xl md:text-8xl font-black font-outfit text-white mb-8 leading-tight tracking-tighter">
-              Journeys of a <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-orange-400 italic font-light">Lifetime</span>
+            <h1 className="text-6xl md:text-9xl font-black font-outfit text-white mb-8 leading-[0.85] tracking-tighter">
+              Journeys of a <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-orange-400 to-orange-600 italic font-medium pr-4">
+                Lifetime
+              </span>
             </h1>
             <p className="text-xl text-slate-300 mb-14 max-w-2xl mx-auto font-inter leading-relaxed opacity-80">
               Skip-the-ordinary with all-inclusive signatures encompassing flights, elite hotels, and private transfers.
@@ -146,11 +149,11 @@ export default function HolidayPackages() {
             {/* Specialized Package Search */}
             <div className="max-w-5xl mx-auto bg-white/80 dark:bg-slate-900/40 backdrop-blur-[40px] rounded-[3.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] p-8 md:p-12 text-left border border-white/20 dark:border-white/10 noise-overlay">
                <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
-                  <div className="lg:col-span-2 space-y-3">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2 opacity-60">Destination</label>
+                  <div className="lg:col-span-2 space-y-4">
+                    <label className="text-[13px] font-black text-slate-400 uppercase tracking-[0.2em] px-4 opacity-80">Destination</label>
                     <div className="relative group">
-                      <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
-                      <select name="destination" className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold dark:text-white appearance-none cursor-pointer">
+                      <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
+                      <select name="destination" className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-6 pl-16 pr-8 rounded-[2.5rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-xl dark:text-white appearance-none cursor-pointer">
                         <option>Maldives Over-water Experience</option>
                         <option>Kerala Backwaters & Luxury</option>
                         <option>Manali Swiss-Chalet Adventure</option>
@@ -160,11 +163,11 @@ export default function HolidayPackages() {
                     </div>
                   </div>
 
-                  <div className="space-y-3">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2 opacity-60">Duration</label>
+                  <div className="space-y-4">
+                    <label className="text-[13px] font-black text-slate-400 uppercase tracking-[0.2em] px-4 opacity-80">Duration</label>
                     <div className="relative group">
-                      <Clock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
-                      <select name="duration" className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold dark:text-white appearance-none cursor-pointer">
+                      <Clock className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
+                      <select name="duration" className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-6 pl-16 pr-8 rounded-[2.5rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-xl dark:text-white appearance-none cursor-pointer">
                         <option>4-5 Nights</option>
                         <option>6-8 Nights</option>
                         <option>10-14 Nights</option>
@@ -176,10 +179,10 @@ export default function HolidayPackages() {
                     <button
                       type="submit"
                       disabled={isSearching}
-                      className="w-full bg-gradient-to-r from-accent to-orange-500 text-primary-dark py-6 rounded-[2rem] font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-accent-hover transition-all shadow-xl shadow-accent/20 hover:-translate-y-1 active:scale-95 disabled:opacity-70 group"
+                      className="w-full bg-gradient-to-r from-accent via-orange-500 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark py-7 rounded-[2.5rem] font-black text-lg uppercase tracking-widest flex items-center justify-center gap-4 hover:bg-accent-hover transition-all shadow-xl shadow-accent/20 hover:-translate-y-1 active:scale-95 disabled:opacity-70 group"
                     >
-                      {isSearching ? <Loader2 className="w-6 h-6 animate-spin" /> : <Compass className="w-6 h-6 group-hover:rotate-45 transition-transform" />}
-                      <span className="text-glow">{isSearching ? "Exploring..." : "Explore"}</span>
+                      {isSearching ? <Loader2 className="w-7 h-7 animate-spin" /> : <Compass className="w-7 h-7 group-hover:rotate-45 transition-transform" />}
+                      <span className="text-glow">{isSearching ? "Exploring..." : "Explore Packages"}</span>
                     </button>
                   </div>
                </form>
