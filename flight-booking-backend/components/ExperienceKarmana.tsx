@@ -68,20 +68,20 @@ const ExperienceKarmana = () => {
                 alt="Luxury Travel Experience"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute bottom-8 left-8 right-8 bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl flex items-center gap-6 border border-white/50">
-                <div className="flex -space-x-4">
+              <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 bg-white/90 backdrop-blur-md p-4 md:p-8 rounded-2xl md:rounded-3xl shadow-2xl flex items-center gap-4 md:gap-6 border border-white/50">
+                <div className="flex -space-x-3 md:-space-x-4">
                   {[1, 2, 3].map((i) => (
                     <img
                       key={i}
                       src={`https://i.pravatar.cc/100?img=${i + 10}`}
-                      className="w-12 h-12 rounded-full border-4 border-white object-cover"
+                      className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 md:border-4 border-white object-cover"
                       alt="Reviewer"
                     />
                   ))}
                 </div>
                 <div>
-                  <p className="font-black text-primary">Join 50k+ Happy Travelers</p>
-                  <p className="text-sm text-slate-500">Elite experiences provided globally</p>
+                  <p className="font-black text-primary text-[10px] md:text-base leading-tight">Join 50k+ Happy Travelers</p>
+                  <p className="text-[8px] md:text-sm text-slate-500">Elite experiences provided globally</p>
                 </div>
               </div>
             </div>

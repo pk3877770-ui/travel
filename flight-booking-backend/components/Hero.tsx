@@ -38,7 +38,7 @@ const Hero = () => {
               </span>
             </div>
 
-            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black text-white leading-[1] md:leading-[0.75] mb-8 md:mb-14 tracking-tighter">
+            <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black text-white leading-[1] md:leading-[0.75] mb-8 md:mb-14 tracking-tighter">
               Sovereign <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-orange-400 to-rose-500 italic font-medium pr-6">
                 Excellence

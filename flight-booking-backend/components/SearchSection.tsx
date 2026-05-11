@@ -88,14 +88,14 @@ const SearchSection = () => {
   };
 
   return (
-    <section id="search-section" className="relative z-30 -mt-40 px-6">
+    <section id="search-section" className="relative z-30 -mt-20 md:-mt-40 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-[40px] rounded-[3.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] p-10 md:p-14 border border-white/20 dark:border-white/10 noise-overlay relative overflow-hidden"
+          className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-[40px] rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] p-6 md:p-14 border border-white/20 dark:border-white/10 noise-overlay relative overflow-hidden"
         >
           <div className="absolute inset-0 mesh-gradient opacity-5 dark:opacity-20 pointer-events-none" />
 
@@ -136,53 +136,53 @@ const SearchSection = () => {
             onSubmit={handleSearch}
             className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 gap-6 items-end"
           >
-            <div className="lg:col-span-3 space-y-5">
-              <label className="text-[14px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-90">Departure</label>
+            <div className="lg:col-span-3 space-y-4">
+              <label className="text-[12px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-80">Departure</label>
               <div className="relative group">
-                <MapPin className="absolute left-8 top-1/2 -translate-y-1/2 w-8 h-8 text-accent" />
+                <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                 <input
                   type="text"
                   name="from"
                   placeholder="Where from?"
                   defaultValue="Delhi"
-                  className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-7 pl-20 pr-8 rounded-[2.5rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-2xl text-slate-800 dark:text-white placeholder:text-slate-500"
+                  className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-6 pl-16 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-lg text-slate-800 dark:text-white placeholder:text-slate-500"
                 />
               </div>
             </div>
 
-            <div className="lg:col-span-3 space-y-5">
-              <label className="text-[14px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-90">Destination</label>
+            <div className="lg:col-span-3 space-y-4">
+              <label className="text-[12px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-80">Destination</label>
               <div className="relative group">
-                <MapPin className="absolute left-8 top-1/2 -translate-y-1/2 w-8 h-8 text-accent" />
+                <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                 <input
                   type="text"
                   name="to"
                   placeholder="Where to?"
                   defaultValue="Mumbai"
-                  className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-7 pl-20 pr-8 rounded-[2.5rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-2xl text-slate-800 dark:text-white placeholder:text-slate-500"
+                  className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-6 pl-16 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-lg text-slate-800 dark:text-white placeholder:text-slate-500"
                 />
               </div>
             </div>
 
-            <div className="lg:col-span-2 space-y-5">
-              <label className="text-[14px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-90">Departure Date</label>
+            <div className="lg:col-span-2 space-y-4">
+              <label className="text-[12px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-80">Departure Date</label>
               <div className="relative group">
-                <Calendar className="absolute left-8 top-1/2 -translate-y-1/2 w-8 h-8 text-accent" />
+                <Calendar className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                 <input
                   type="date"
                   name="date"
-                  className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-7 pl-20 pr-8 rounded-[2.5rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-2xl dark:text-white appearance-none"
+                  className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-6 pl-16 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-lg dark:text-white appearance-none"
                 />
               </div>
             </div>
 
-            <div className="lg:col-span-2 space-y-5">
-              <label className="text-[14px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-90">Travelers</label>
+            <div className="lg:col-span-2 space-y-4">
+              <label className="text-[12px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-80">Travelers</label>
               <div className="relative group">
-                <Users className="absolute left-8 top-1/2 -translate-y-1/2 w-8 h-8 text-accent" />
+                <Users className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                 <select 
                   name="travelers"
-                  className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-7 pl-20 pr-8 rounded-[2.5rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-2xl dark:text-white appearance-none cursor-pointer"
+                  className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-6 pl-16 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-lg dark:text-white appearance-none cursor-pointer"
                 >
                   <option>1 Adult</option>
                   <option>2 Adults</option>
@@ -191,21 +191,21 @@ const SearchSection = () => {
               </div>
             </div>
 
-            <div className="lg:col-span-10 mt-10">
+            <div className="lg:col-span-10 mt-6 md:mt-10">
               <motion.button
                 whileHover={{ scale: 1.01, y: -2 }}
                 whileTap={{ scale: 0.99 }}
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-10 bg-gradient-to-r from-accent via-orange-400 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark rounded-[3rem] font-black text-2xl uppercase tracking-[0.4em] flex items-center justify-center gap-8 shadow-[0_30px_60px_rgba(245,158,11,0.5)] disabled:opacity-70 group"
+                className="w-full py-6 md:py-8 bg-gradient-to-r from-accent via-orange-400 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark rounded-[1.5rem] md:rounded-[2.5rem] font-black text-lg md:text-xl uppercase tracking-[0.4em] flex items-center justify-center gap-4 md:gap-6 shadow-[0_30px_60px_rgba(245,158,11,0.5)] disabled:opacity-70 group"
               >
                 {isLoading ? (
-                  <Loader2 className="w-10 h-10 animate-spin" />
+                  <Loader2 className="w-8 h-8 animate-spin" />
                 ) : (
                   <>
-                    <Search className="w-9 h-9 group-hover:scale-125 transition-transform" />
+                    <Search className="w-6 h-6 md:w-7 md:h-7 group-hover:scale-125 transition-transform" />
                     <span className="text-glow">Search Sovereign Flights</span>
-                    <Sparkles className="w-8 h-8 animate-pulse" />
+                    <Sparkles className="w-5 h-5 md:w-6 md:h-6 animate-pulse" />
                   </>
                 )}
               </motion.button>
@@ -214,14 +214,14 @@ const SearchSection = () => {
 
 
           {/* Quick Picks */}
-          <div className="mt-10 flex items-center gap-8 overflow-x-auto hscroll-hide pb-2">
-            <span className="flex items-center gap-3 text-[12px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">
-              <TrendingUp className="w-5 h-5 text-emerald-500" /> Trending:
+          <div className="mt-8 md:mt-12 flex items-center gap-6 md:gap-10 overflow-x-auto hscroll-hide pb-2">
+            <span className="flex items-center gap-3 md:gap-4 text-sm md:text-lg font-black text-slate-400 uppercase tracking-[0.2em] whitespace-nowrap">
+              <TrendingUp className="w-5 h-5 md:w-7 md:h-7 text-emerald-500" /> Trending:
             </span>
             {trending.map((city) => (
               <button 
                 key={city}
-                className="text-[14px] font-bold text-slate-500 hover:text-accent transition-colors whitespace-nowrap px-6 py-3 bg-slate-50 dark:bg-white/5 rounded-full border border-slate-100 dark:border-white/5"
+                className="text-sm md:text-xl font-black text-slate-500 hover:text-accent transition-all whitespace-nowrap px-6 md:px-8 py-3 md:py-4 bg-white/5 hover:bg-white/10 rounded-xl md:rounded-2xl border border-white/10 hover:scale-105"
               >
                 {city}
               </button>
@@ -264,7 +264,7 @@ const SearchSection = () => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.1 }}
-                      className="group bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 p-10 md:p-14 rounded-[3.5rem] flex flex-col lg:flex-row items-center justify-between gap-12 hover:bg-slate-50 dark:hover:bg-white/[0.08] transition-all hover:-translate-y-1 hover:shadow-2xl"
+                      className="group bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 p-6 md:p-14 rounded-[2.5rem] md:rounded-[3.5rem] flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-12 hover:bg-slate-50 dark:hover:bg-white/[0.08] transition-all hover:-translate-y-1 hover:shadow-2xl"
                     >
                       <div className="flex items-center gap-8 w-full lg:w-auto">
                         <div className="w-20 h-20 rounded-[1.5rem] bg-slate-50 dark:bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">

@@ -52,7 +52,7 @@ const ContactClient = () => {
             <span className="inline-block bg-accent text-primary px-4 py-1.5 mb-6 rounded-full font-bold text-sm">
               ALWAYS AVAILABLE
             </span>
-            <h1 className="text-4xl md:text-6xl font-black text-white font-outfit leading-tight mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white font-outfit leading-tight mb-4">
               Connect with the <span className="text-accent underline decoration-accent/30">Elite</span>
             </h1>
           </div>
@@ -64,7 +64,7 @@ const ContactClient = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Contact Form */}
-            <div className="bg-slate-50 border border-slate-200 rounded-[2rem] p-8 md:p-12 shadow-sm">
+            <div className="bg-slate-50 border border-slate-200 rounded-[2rem] p-6 md:p-12 shadow-sm">
               <h2 className="text-3xl md:text-4xl font-bold font-outfit text-primary mb-6">Send an Inquiry</h2>
               <p className="text-slate-500 mb-10 leading-relaxed">
                 Provide your details and a brief description of your travel requirements. A personal concierge will contact you within the hour.

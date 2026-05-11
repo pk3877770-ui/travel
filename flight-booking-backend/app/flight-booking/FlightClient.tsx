@@ -249,7 +249,7 @@ export default function FlightBookingPage() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100 dark:border-slate-800"
               >
-                <div className="bg-primary p-10 text-white flex justify-between items-center">
+                <div className="bg-primary p-6 md:p-10 text-white flex justify-between items-center">
                   <div>
                     <h2 className="text-3xl font-bold font-outfit mb-2">
                       {selectedFlight.type === "Holiday Package" ? "Finalize Your Escape" : "Complete Your Booking"}
@@ -266,7 +266,7 @@ export default function FlightBookingPage() {
                   </button>
                 </div>
                 
-                <div className="p-10 md:p-14">
+                <div className="p-6 md:p-14">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
                     <div className="space-y-6">
                       <h3 className="text-lg font-black text-accent uppercase tracking-widest">Passenger Details</h3>
@@ -342,7 +342,7 @@ export default function FlightBookingPage() {
                         initial={{ scale: 0.9, y: 20 }}
                         animate={{ scale: 1, y: 0 }}
                         exit={{ scale: 0.9, y: 20 }}
-                        className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 md:p-12 w-full max-w-md shadow-2xl border border-slate-200 dark:border-slate-800 relative"
+                        className="bg-white dark:bg-slate-900 rounded-[2rem] p-6 md:p-12 w-full max-w-md shadow-2xl border border-slate-200 dark:border-slate-800 relative"
                       >
                         {paymentStatus === "idle" && (
                           <>
@@ -461,7 +461,7 @@ export default function FlightBookingPage() {
               <span className="inline-block bg-accent/20 text-accent px-6 py-2 rounded-full font-black text-sm tracking-[0.2em] mb-6 border border-accent/20">
                 ELEVATED AVIATION
               </span>
-              <h1 className="text-5xl md:text-8xl font-black font-outfit text-white mb-6">
+              <h1 className="text-3xl sm:text-5xl md:text-8xl font-black font-outfit text-white mb-6">
                 Sovereign <span className="text-accent">Skies</span> Await
               </h1>
               <p className="text-xl text-slate-300 max-w-2xl mx-auto font-inter">
@@ -475,7 +475,7 @@ export default function FlightBookingPage() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white dark:bg-slate-900 rounded-[3rem] shadow-2xl p-10 md:p-14 border border-slate-100 dark:border-slate-800"
+            className="bg-white dark:bg-slate-900 rounded-[2.5rem] md:rounded-[3rem] shadow-2xl p-6 md:p-14 border border-slate-100 dark:border-slate-800"
           >
             <form onSubmit={handleSearch} className="space-y-10">
               <div className="grid grid-cols-1 lg:grid-cols-7 gap-6 items-end">

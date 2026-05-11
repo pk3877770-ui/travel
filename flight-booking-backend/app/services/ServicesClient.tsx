@@ -104,7 +104,7 @@ export default function ServicesPage() {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-black font-outfit text-white mb-6"
+            className="text-4xl sm:text-5xl md:text-7xl font-black font-outfit text-white mb-6"
           >
             Bespoke <span className="text-accent underline decoration-4 underline-offset-8">Travel</span> Solutions
           </motion.h1>
@@ -124,7 +124,7 @@ export default function ServicesPage() {
               <motion.div
                 key={idx}
                 whileHover={{ y: -10 }}
-                className={`p-10 rounded-[3rem] ${service.highlight ? 'bg-primary text-white border-2 border-accent/20' : 'bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800'} transition-all hover:shadow-2xl group relative overflow-hidden`}
+                className={`p-6 md:p-10 rounded-[2.5rem] md:rounded-[3rem] ${service.highlight ? 'bg-primary text-white border-2 border-accent/20' : 'bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800'} transition-all hover:shadow-2xl group relative overflow-hidden`}
               >
                 {service.highlight && (
                     <div className="absolute top-8 right-8">
@@ -191,7 +191,7 @@ export default function ServicesPage() {
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                className="relative w-full max-w-xl bg-white dark:bg-slate-900 rounded-[3rem] p-10 md:p-14 shadow-2xl border border-white/10"
+                className="relative w-full max-w-xl bg-white dark:bg-slate-900 rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-14 shadow-2xl border border-white/10"
               >
                 <button onClick={() => setShowConsultForm(false)} className="absolute top-8 right-8 text-slate-400 hover:text-primary">
                   <X className="w-8 h-8" />

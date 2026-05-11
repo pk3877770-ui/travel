@@ -52,7 +52,7 @@ export default function AboutPage() {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-black font-outfit text-white mb-6"
+            className="text-4xl sm:text-5xl md:text-7xl font-black font-outfit text-white mb-6"
           >
             Our Story, Your <span className="text-accent">Journey</span>
           </motion.h1>
@@ -179,7 +179,7 @@ export default function AboutPage() {
               <motion.div
                 key={idx}
                 whileHover={{ y: -10 }}
-                className="bg-slate-50 dark:bg-slate-900 rounded-[3rem] p-10 text-center border border-slate-100 dark:border-slate-800 hover:shadow-2xl transition-all"
+                className="bg-slate-50 dark:bg-slate-900 rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-10 text-center border border-slate-100 dark:border-slate-800 hover:shadow-2xl transition-all"
               >
                 <div className="relative w-40 h-40 mx-auto mb-8">
                   <div className="absolute inset-0 bg-accent rounded-full blur-[20px] opacity-20" />
