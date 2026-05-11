@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-40 md:pt-52 pb-20 md:pb-32 overflow-hidden mesh-gradient">
+    <section className="relative min-h-screen flex items-center pt-40 md:pt-52 pb-40 md:pb-56 overflow-hidden mesh-gradient">
       {/* Cinematic Background Layer */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/60 via-primary-dark/80 to-primary-dark z-10" />

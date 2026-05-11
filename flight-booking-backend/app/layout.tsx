@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import SessionProvider from "@/components/SessionProvider";
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -70,22 +71,24 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${outfit.variable} antialiased selection:bg-accent/30`}
       >
-        <Navbar />
-        <Script
-          id="organization-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-        />
-        <Script
-          id="website-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-        />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
-        <SpeedInsights />
+        <SessionProvider>
+          <Navbar />
+          <Script
+            id="organization-schema"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          />
+          <Script
+            id="website-schema"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+          />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
+          <SpeedInsights />
+        </SessionProvider>
       </body>
     </html>
   );

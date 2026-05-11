@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Plane, Menu, X, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSession, signOut as nextAuthSignOut } from "next-auth/react";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -15,6 +16,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     setIsMounted(true);
