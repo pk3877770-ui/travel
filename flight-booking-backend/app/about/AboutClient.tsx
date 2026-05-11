@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { Plane, Tags, Headset, ShieldCheck, Zap, Smartphone, Receipt, Crown, Rocket, Globe, Globe2, Users } from "lucide-react";
 
 const stats = [
@@ -13,10 +14,10 @@ const stats = [
 ];
 
 const timeline = [
-  { year: "2020", title: "Founded in Mumbai", desc: "Born from the frustration of expensive flight tickets, Karmana started with a mission to make air travel accessible to everyone." },
-  { year: "2021", title: "Mobile App Launch", desc: "Our award-winning mobile app revolutionized how Indians book flights, reaching 1M downloads in first year." },
-  { year: "2023", title: "10M Bookings Milestone", desc: "Crossed 10 million bookings, expanded to international routes, partnered with world's top airlines." },
-  { year: "2025", title: "Global Expansion", desc: "Full international rollout with AI-powered recommendations and hotel bundles in 100+ countries." },
+  { year: "2020", title: "Inception of Sovereign Travel", desc: "Karmana was established in Mumbai with a singular focus: to redefine global travel through the lens of elite concierge service and unparalleled accessibility." },
+  { year: "2021", title: "Digital Concierge Launch", desc: "Our revolutionary mobile platform launched, bringing real-time luxury aviation and hotel management to the fingertips of the modern voyager." },
+  { year: "2023", title: "Expanding Global Horizons", desc: "Achieved the milestone of 10 million bookings while establishing a private network of five-star properties and exclusive aviation routes across seven continents." },
+  { year: "2025", title: "AI-Powered Luxury", desc: "Integrated advanced predictive analytics to offer hyper-personalized itineraries, ensuring every Karmana journey is as unique as the guest embarking upon it." },
 ];
 
 const features = [
@@ -49,6 +50,7 @@ export default function AboutPage() {
           />
         </div>
         <div className="container max-w-4xl mx-auto px-6 relative z-20 text-center">
+          <Breadcrumbs items={[{ name: "About", href: "/about" }]} />
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -209,11 +211,11 @@ export default function AboutPage() {
             Find the best flights at unbeatable prices. Book now and save!
           </p>
           <button 
-            onClick={() => router.push('/flight-booking')}
+            onClick={() => router.push('/flights')}
             className="bg-primary text-white hover:bg-black px-12 py-6 rounded-2xl font-black text-xl transition-all hover:-translate-y-1 shadow-2xl flex items-center gap-3 mx-auto"
           >
             <Plane className="w-8 h-8" />
-            Find My Flight Now
+            Discover Your Next Route
           </button>
         </div>
       </section>

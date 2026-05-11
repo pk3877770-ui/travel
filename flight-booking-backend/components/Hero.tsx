@@ -18,7 +18,8 @@ const Hero = () => {
         >
           <img
             src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=1600&q=80"
-            alt="Luxury Aviation"
+            alt="Karmana Luxury Private Jet Aviation - Sovereign Excellence Travel"
+            loading="eager"
             className="w-full h-full object-cover"
           />
         </motion.div>

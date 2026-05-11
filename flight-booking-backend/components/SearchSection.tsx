@@ -53,7 +53,7 @@ const SearchSection = () => {
       formData.forEach((value, key) => {
         if (value) params.append(key, value.toString());
       });
-      const destination = activeTab === "hotels" ? "/hotel-booking" : "/flight-booking";
+      const destination = activeTab === "hotels" ? "/hotels" : "/flights";
       router.push(`${destination}?${params.toString()}`);
       return;
     }
@@ -84,7 +84,7 @@ const SearchSection = () => {
     params.append("price", flight.price || "4499");
     params.append("date", flight.date || "");
     
-    router.push(`/flight-booking?${params.toString()}`);
+    router.push(`/flights?${params.toString()}`);
   };
 
   return (

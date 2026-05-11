@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { MapPin, Clock, Calendar, Search, Compass, Ship, Plane, Utensils, Snowflake, Car, ArrowRight, Loader2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +13,7 @@ const signatureJourneys = [
     price: "₹22,999",
     oldPrice: "₹35,000",
     image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&q=80",
+    alt: "Azure Goa Heritage - Luxury Cultural Signature Journey by Karmana",
     badge: "SIGNATURE",
     perks: [
       { icon: Plane, label: "Airfare" },
@@ -24,6 +26,7 @@ const signatureJourneys = [
     price: "₹39,999",
     oldPrice: "₹55,000",
     image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80",
+    alt: "Whispering Palms Kerala - Romantic Backwater Signature Journey by Karmana",
     badge: "ROMANTIC",
     perks: [
       { icon: Ship, label: "Private Boat" },
@@ -122,12 +125,14 @@ export default function HolidayPackages() {
           <div className="absolute inset-0 mesh-gradient opacity-20 pointer-events-none" />
           <img
             src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80"
-            alt="Holiday Hero"
+            alt="Karmana Curated Holiday Packages and Signature Journeys of a Lifetime"
+            loading="eager"
             className="w-full h-full object-cover"
           />
         </div>
 
         <div className="container max-w-7xl mx-auto px-6 relative z-20 text-center">
+          <Breadcrumbs items={[{ name: "Holiday Packages", href: "/holiday-packages" }]} />
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

@@ -32,21 +32,22 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Travel Services */}
           <div>
-            <h4 className="text-xl font-bold font-outfit mb-8">Explore</h4>
+            <h4 className="text-xl font-bold font-outfit mb-8">Travel Services</h4>
             <ul className="space-y-4">
               {[
-                { name: "Home", href: "/" },
-                { name: "Holiday Packages", href: "/holiday-packages" },
-                { name: "Hotel Booking", href: "/hotel-booking" },
-                { name: "Flight Booking", href: "/flight-booking" },
-                { name: "About Karmana", href: "/about" },
+                { name: "Sovereign Flights", href: "/flights" },
+                { name: "Luxury Hotels", href: "/hotels" },
+                { name: "Holiday Itineraries", href: "/holiday-packages" },
+                { name: "Bespoke Services", href: "/services" },
+                { name: "About the Brand", href: "/about" },
+                { name: "Contact Concierge", href: "/contact" },
               ].map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-slate-400 hover:text-accent flex items-center gap-2 transition-colors group"
+                    className="text-slate-400 hover:text-accent flex items-center gap-2 transition-colors group font-medium"
                   >
                     <ChevronRight className="w-4 h-4 text-accent transition-transform group-hover:translate-x-1" />
                     {item.name}
@@ -56,21 +57,21 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Support */}
+          {/* Guest Support */}
           <div>
-            <h4 className="text-xl font-bold font-outfit mb-8">Support</h4>
+            <h4 className="text-xl font-bold font-outfit mb-8">Guest Support</h4>
             <ul className="space-y-4">
               {[
-                { name: "Help Center", href: "/help-center" },
-                { name: "Ticket Inquiry", href: "/ticket-inquiry" },
-                { name: "Privacy Policy", href: "/privacy" },
-                { name: "Refund Policy", href: "/refund" },
-                { name: "Terms of Service", href: "/terms" },
+                { name: "Member Help Center", href: "/help-center" },
+                { name: "Flight Status & PNR", href: "/ticket-inquiry" },
+                { name: "Refund & Cancellation", href: "/refund" },
+                { name: "Terms & Conditions", href: "/terms" },
+                { name: "Privacy & Data", href: "/privacy" },
               ].map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-slate-400 hover:text-accent flex items-center gap-2 transition-colors group"
+                    className="text-slate-400 hover:text-accent flex items-center gap-2 transition-colors group font-medium"
                   >
                     <ChevronRight className="w-4 h-4 text-accent transition-transform group-hover:translate-x-1" />
                     {item.name}

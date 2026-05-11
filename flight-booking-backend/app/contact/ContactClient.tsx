@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { Mail, Phone, MapPin, Send, Headset, Landmark, Loader2 } from "lucide-react";
 
 const ContactClient = () => {
@@ -48,6 +49,7 @@ const ContactClient = () => {
         />
         
         <div className="container relative z-20 text-center px-6">
+          <Breadcrumbs items={[{ name: "Contact", href: "/contact" }]} />
           <div className="animate-fade-in-up">
             <span className="inline-block bg-accent text-primary px-4 py-1.5 mb-6 rounded-full font-bold text-sm">
               ALWAYS AVAILABLE

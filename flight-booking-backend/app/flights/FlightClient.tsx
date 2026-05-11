@@ -3,8 +3,9 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plane, Search, ArrowRight, ShieldCheck, Crown, RefreshCcw, HandCoins, MapPin, Calendar, Users, Globe, Check } from "lucide-react";
+import { Plane, Search, ArrowRight, ShieldCheck, Crown, RefreshCcw, HandCoins, MapPin, Calendar, Users, Globe, Check, Hotel, Map } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Script from "next/script";
 
 const flightServiceSchema = {
@@ -12,7 +13,7 @@ const flightServiceSchema = {
   "@type": "TravelAgency",
   "name": "Karmana Flight Booking",
   "description": "Premium flight booking service with access to exclusive rates and priority routing.",
-  "url": "https://karmana.vercel.app/flight-booking",
+  "url": "https://karmana.vercel.app/flights",
   "priceRange": "$$",
   "address": {
     "@type": "PostalAddress",
@@ -164,7 +165,7 @@ export default function FlightBookingPage() {
       setLoading(false);
     }
 
-    router.push(`/flight-booking?${params.toString()}`, { scroll: false });
+    router.push(`/flights?${params.toString()}`, { scroll: false });
   };
 
   const handleBookFlight = (flight: any) => {
@@ -234,12 +235,14 @@ export default function FlightBookingPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/50 to-background z-10" />
           <img
             src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80"
-            alt="Aviation Background"
+            alt="Karmana Luxury Aviation - Sovereign Skies International Flight Search"
+            loading="eager"
             className="w-full h-full object-cover"
           />
         </div>
 
         <div className="container max-w-7xl mx-auto px-6 relative z-20">
+          <Breadcrumbs items={[{ name: "Flights", href: "/flights" }]} />
           <AnimatePresence mode="wait">
             {selectedFlight ? (
               <motion.div
@@ -788,6 +791,49 @@ export default function FlightBookingPage() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Complementary Services Section */}
+      <section className="py-24 bg-slate-50 dark:bg-slate-900 overflow-hidden relative">
+        <div className="absolute inset-0 mesh-gradient opacity-5 pointer-events-none" />
+        <div className="container max-w-7xl mx-auto px-6 relative z-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-10">
+            <div className="max-w-xl">
+              <span className="text-accent font-black tracking-[0.3em] text-sm uppercase">Complete Your Journey</span>
+              <h2 className="text-4xl md:text-5xl font-black font-outfit mt-4 mb-6 leading-tight">
+                Luxury Stays & <span className="text-accent">Curated</span> Escapes
+              </h2>
+              <p className="text-slate-500 dark:text-slate-400 text-lg mb-10 leading-relaxed">
+                A sovereign flight is only the beginning. Experience the world's most celebrated five-star properties and bespoke holiday itineraries curated by our global concierge.
+              </p>
+              <div className="flex flex-wrap gap-6">
+                <button 
+                  onClick={() => router.push('/hotels')}
+                  className="bg-primary text-white px-10 py-5 rounded-2xl font-black text-lg shadow-xl hover:-translate-y-1 transition-all flex items-center gap-3"
+                >
+                  <Hotel className="w-6 h-6" /> Explore Luxury Hotels
+                </button>
+                <button 
+                  onClick={() => router.push('/holiday-packages')}
+                  className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-10 py-5 rounded-2xl font-black text-lg shadow-xl hover:-translate-y-1 transition-all flex items-center gap-3"
+                >
+                  <Map className="w-6 h-6 text-accent" /> Holiday Packages
+                </button>
+              </div>
+            </div>
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-accent/20 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative aspect-square w-full max-w-[450px] rounded-[3rem] overflow-hidden shadow-2xl premium-border">
+                <img 
+                  src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80" 
+                  alt="Karmana Luxury Hotel Collection - Complementary Guest Accommodations" 
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

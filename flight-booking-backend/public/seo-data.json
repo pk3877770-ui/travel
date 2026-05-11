@@ -26,21 +26,21 @@
         "publisher": "https://flight-booking-backend-gold.vercel.app",
         "robots": "index, follow"
     },
-    "/flight-booking": {
+    "/flights": {
         "title": "Book Flights | Karmana Luxury Travel",
         "description": "Search and book premium flights worldwide with Karmana. Enjoy exclusive deals on business and first-class airfare.",
         "keywords": "book flights, luxury flights, business class, first class, flight booking",
-        "canonical": "https://flight-booking-backend-gold.vercel.app/flight-booking",
-        "og_url": "https://flight-booking-backend-gold.vercel.app/flight-booking",
+        "canonical": "https://flight-booking-backend-gold.vercel.app/flights",
+        "og_url": "https://flight-booking-backend-gold.vercel.app/flights",
         "publisher": "https://flight-booking-backend-gold.vercel.app",
         "robots": "index, follow"
     },
-    "/hotel-booking": {
+    "/hotels": {
         "title": "Luxury Hotel Booking | Five-Star Stays | Karmana",
         "description": "Discover and book luxury hotels and resorts worldwide. Exclusive rates on 5-star properties curated by Karmana.",
         "keywords": "book hotels, luxury hotels, resort booking, 5 star hotels",
-        "canonical": "https://flight-booking-backend-gold.vercel.app/hotel-booking",
-        "og_url": "https://flight-booking-backend-gold.vercel.app/hotel-booking",
+        "canonical": "https://flight-booking-backend-gold.vercel.app/hotels",
+        "og_url": "https://flight-booking-backend-gold.vercel.app/hotels",
         "publisher": "https://flight-booking-backend-gold.vercel.app",
         "robots": "index, follow"
     },

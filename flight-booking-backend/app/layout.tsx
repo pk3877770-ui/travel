@@ -35,7 +35,7 @@ const websiteSchema = {
   "url": "https://karmana.vercel.app",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://karmana.vercel.app/flight-booking?from={search_term_string}",
+    "target": "https://karmana.vercel.app/flights?from={search_term_string}",
     "query-input": "required name=search_term_string"
   }
 };
@@ -54,7 +54,10 @@ import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
  
  export async function generateMetadata(): Promise<Metadata> {
    const seo = await getSEOMetadata("/"); // Use Home SEO as baseline
-   return mapSEOToMetadata(seo);
+   return {
+     ...mapSEOToMetadata(seo),
+     metadataBase: new URL("https://karmana.vercel.app"),
+   };
  }
 
 export default function RootLayout({

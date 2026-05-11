@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /_next/
+Disallow: /static/
+
+Sitemap: https://karmana.vercel.app/sitemap.xml

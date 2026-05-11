@@ -3,8 +3,9 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Calendar, Users, Star, Crown, Heart, Clock, ShieldCheck, ArrowRight, Loader2, Check } from "lucide-react";
+import { Search, MapPin, Calendar, Users, Star, Crown, Heart, Clock, ShieldCheck, ArrowRight, Loader2, Check, Plane, Map } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Script from "next/script";
 
 const hotelServiceSchema = {
@@ -12,7 +13,7 @@ const hotelServiceSchema = {
   "@type": "LodgingBusiness",
   "name": "Karmana Hotel Collection",
   "description": "Exclusive access to the world's most celebrated Five-Star properties and private estates.",
-  "url": "https://karmana.vercel.app/hotel-booking",
+  "url": "https://karmana.vercel.app/hotels",
   "priceRange": "$$$",
   "address": {
     "@type": "PostalAddress",
@@ -31,6 +32,7 @@ const hotelCollection = [
     price: "₹2,999",
     oldPrice: "₹4,500",
     image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+    alt: "Azure Sands Resort - Luxury Beachfront Property by Karmana",
     tags: ["TOP RATED", "Beachfront"],
   },
   {
@@ -42,6 +44,7 @@ const hotelCollection = [
     price: "₹8,999",
     oldPrice: "₹12,000",
     image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&h=400&fit=crop",
+    alt: "The Majestic Palace - Sea View Luxury Estate by Karmana",
     tags: ["LEGENDARY", "Sea View"],
   },
   {
@@ -249,12 +252,14 @@ export default function HotelBooking() {
           <div className="absolute inset-0 mesh-gradient opacity-20 pointer-events-none" />
           <img
             src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80"
-            alt="Hotel Hero"
+            alt="Karmana Luxury Hotel Sanctuary and Private Estate Reservations"
+            loading="eager"
             className="w-full h-full object-cover"
           />
         </div>
 
         <div className="container max-w-7xl mx-auto px-6 relative z-20 text-center">
+          <Breadcrumbs items={[{ name: "Hotels", href: "/hotels" }]} />
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -441,6 +446,48 @@ export default function HotelBooking() {
                 </p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Sovereign Skies Section */}
+      <section className="py-24 bg-white dark:bg-slate-950 overflow-hidden relative">
+        <div className="absolute inset-0 mesh-gradient opacity-10 pointer-events-none" />
+        <div className="container max-w-7xl mx-auto px-6 relative z-10">
+          <div className="flex flex-col lg:flex-row-reverse items-center justify-between gap-16">
+            <div className="max-w-xl">
+              <span className="text-accent font-black tracking-[0.3em] text-sm uppercase">Arrive in Style</span>
+              <h2 className="text-4xl md:text-5xl font-black font-outfit mt-4 mb-6 leading-tight">
+                Sovereign <span className="text-accent">Skies</span> Await
+              </h2>
+              <p className="text-slate-500 dark:text-slate-400 text-lg mb-10 leading-relaxed">
+                Your luxury stay deserves an equally exquisite arrival. Access unpublished private rates and priority routing across 500+ global airlines with Karmana's aviation desk.
+              </p>
+              <div className="flex flex-wrap gap-6">
+                <button 
+                  onClick={() => router.push('/flights')}
+                  className="bg-primary text-white px-10 py-5 rounded-2xl font-black text-lg shadow-xl hover:-translate-y-1 transition-all flex items-center gap-3"
+                >
+                  <Plane className="w-6 h-6 text-accent" /> Book Elite Flights
+                </button>
+                <button 
+                  onClick={() => router.push('/holiday-packages')}
+                  className="bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 px-10 py-5 rounded-2xl font-black text-lg shadow-xl hover:-translate-y-1 transition-all flex items-center gap-3"
+                >
+                  <Map className="w-6 h-6" /> Curated Packages
+                </button>
+              </div>
+            </div>
+            <div className="relative group w-full max-w-2xl">
+              <div className="absolute -inset-4 bg-accent/20 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative aspect-video rounded-[3rem] overflow-hidden shadow-2xl premium-border">
+                <img 
+                  src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=1000&q=80" 
+                  alt="Private Jet Interior" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

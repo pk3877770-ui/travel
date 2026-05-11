@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { Plane, Hotel, Map, Headset, Shield, Car, Check, ArrowRight, Sparkles, X, RefreshCcw } from "lucide-react";
 
 const services = [
@@ -94,6 +95,7 @@ export default function ServicesPage() {
           />
         </div>
         <div className="container max-w-4xl mx-auto px-6 relative z-20 text-center">
+          <Breadcrumbs items={[{ name: "Services", href: "/services" }]} />
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -177,7 +179,7 @@ export default function ServicesPage() {
               Request a Consultation
             </button>
             <button 
-              onClick={() => router.push('/flight-booking')}
+              onClick={() => router.push('/flights')}
               className="bg-transparent border border-white/20 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white/5 transition-all"
             >
               See All Offerings

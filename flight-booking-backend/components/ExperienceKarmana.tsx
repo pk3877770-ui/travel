@@ -34,10 +34,10 @@ const ExperienceKarmana = () => {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-4xl md:text-6xl font-black font-outfit mb-8 leading-tight">
-              Redefining the Art of Travel
+              The Architecture of <span className="text-accent">Sovereign</span> Travel
             </h2>
-            <p className="text-xl text-slate-500 mb-12 leading-relaxed">
-              We provide a seamless orchestration of travel services, ensuring every detail of your journey is handled with absolute precision and care.
+            <p className="text-xl text-slate-500 mb-12 leading-relaxed font-medium">
+              We curate more than just destinations; we engineer the absolute orchestration of elite global logistics. From private aviation corridors to bespoke estate residencies, every Karmana journey is a masterpiece of precision, discretion, and unparalleled luxury.
             </p>
 
             <div className="space-y-10">
@@ -65,7 +65,8 @@ const ExperienceKarmana = () => {
             <div className="rounded-[3rem] overflow-hidden shadow-2xl relative">
               <img
                 src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80"
-                alt="Luxury Travel Experience"
+                alt="Karmana Luxury Travel Orchestration and Bespoke Experiences"
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
               <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 bg-white/90 backdrop-blur-md p-4 md:p-8 rounded-2xl md:rounded-3xl shadow-2xl flex items-center gap-4 md:gap-6 border border-white/50">

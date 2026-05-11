@@ -55,7 +55,7 @@ const FeaturedOffers = () => {
         "description": offer.description,
         "price": offer.price.replace('$', ''),
         "priceCurrency": "USD",
-        "url": `https://karmana.vercel.app/flight-booking`
+        "url": `https://karmana.vercel.app/flights`
       }
     }))
   };
@@ -105,7 +105,8 @@ const FeaturedOffers = () => {
                 </div>
                 <img
                   src={offer.image}
-                  alt={offer.title}
+                  alt={`Karmana Exclusive Travel Deal: ${offer.title} - ${offer.description}`}
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
@@ -131,11 +132,11 @@ const FeaturedOffers = () => {
                       params.append("to", offer.title);
                       params.append("price", offer.price.replace('$', '').replace(',', ''));
                       params.append("type", "Holiday Package");
-                      router.push(`/flight-booking?${params.toString()}`);
+                      router.push(`/flights?${params.toString()}`);
                     }}
                     className="text-primary dark:text-accent font-bold flex items-center gap-2 hover:gap-3 transition-all"
                   >
-                    Book Now <ArrowRight className="w-4 h-4" />
+                    Reserve This Offer <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>

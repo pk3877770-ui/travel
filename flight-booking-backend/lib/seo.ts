@@ -61,9 +61,9 @@ export function getDefaultSEO(routePath: string): SEOData {
     title: "Karmana | Luxury Travel Redefined",
     description: "Experience the art of travel with Karmana's premium concierge services.",
     keywords: "luxury travel, concierge, flights, hotels",
-    canonical: "https://flight-booking-backend-gold.vercel.app" + routePath,
-    og_url: "https://flight-booking-backend-gold.vercel.app" + routePath,
-    publisher: "https://flight-booking-backend-gold.vercel.app",
+    canonical: "https://karmana.vercel.app" + routePath,
+    og_url: "https://karmana.vercel.app" + routePath,
+    publisher: "https://karmana.vercel.app",
     robots: "index, follow"
   };
 }

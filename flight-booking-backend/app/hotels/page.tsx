@@ -1,14 +1,14 @@
 import { Metadata } from 'next';
 import { getSEOMetadata, mapSEOToMetadata } from '@/lib/seo';
-import FlightClient from './FlightClient';
+import HotelClient from './HotelClient';
 
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seo = await getSEOMetadata('/flight-booking');
+  const seo = await getSEOMetadata('/hotels');
   return mapSEOToMetadata(seo);
 }
 
 export default function Page() {
-  return <FlightClient />;
+  return <HotelClient />;
 }
