@@ -115,7 +115,7 @@ export default function ProfilePage() {
               <div className="space-y-4 pt-6 border-t border-white/10">
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-white/40">Member Status</span>
-                  <span className="text-accent font-semibold px-3 py-1 bg-accent/10 rounded-full uppercase tracking-wider text-xs">Premium</span>
+                  <span className="text-accent font-semibold px-3 py-1 bg-accent/10 rounded-full uppercase tracking-wider text-sm">Premium</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-white/40">Total Trips</span>
@@ -157,7 +157,7 @@ export default function ProfilePage() {
                 >
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b border-white/5 pb-6">
                     <div>
-                      <span className="inline-block px-3 py-1 bg-green-500/10 text-green-400 border border-green-500/20 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+                      <span className="inline-block px-3 py-1 bg-green-500/10 text-green-400 border border-green-500/20 rounded-full text-sm font-bold uppercase tracking-wider mb-2">
                         {booking.status}
                       </span>
                       <p className="text-white/40 text-sm flex items-center gap-2">
@@ -184,7 +184,7 @@ export default function ProfilePage() {
                         <Plane className="w-6 h-6 text-accent shrink-0" />
                         <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-white/20 to-accent/50" />
                       </div>
-                      <p className="text-white/40 text-xs mt-2 text-center uppercase tracking-widest">{booking.flight.airline}</p>
+                      <p className="text-white/40 text-sm mt-2 text-center uppercase tracking-widest">{booking.flight.airline}</p>
                     </div>
 
                     <div className="flex-1 text-center md:text-right">
@@ -205,7 +205,7 @@ export default function ProfilePage() {
                         <User className="w-4 h-4 text-accent" />
                         {booking.travelers} Traveler(s)
                         {booking.passengerDetails && (
-                          <span className="ml-2 px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-xs text-white/80 hidden md:inline-block">
+                          <span className="ml-2 px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-sm text-white/80 hidden md:inline-block">
                             {booking.passengerDetails.name} ({booking.passengerDetails.passport})
                           </span>
                         )}
@@ -214,7 +214,7 @@ export default function ProfilePage() {
                     <div className="flex gap-4 w-full md:w-auto">
                       <button 
                         onClick={() => setExpandedBookingId(expandedBookingId === booking._id ? null : booking._id)}
-                        className="flex-1 md:flex-none px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white text-xs font-bold uppercase tracking-widest transition-all"
+                        className="flex-1 md:flex-none px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white text-sm font-bold uppercase tracking-widest transition-all"
                       >
                         {expandedBookingId === booking._id ? "Hide Details" : "View Details"}
                       </button>
@@ -222,7 +222,7 @@ export default function ProfilePage() {
                         <button 
                           onClick={() => handleCancelBooking(booking._id)}
                           disabled={isCancelling === booking._id}
-                          className="flex-1 md:flex-none px-4 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 rounded-lg text-xs font-bold uppercase tracking-widest transition-all disabled:opacity-50"
+                          className="flex-1 md:flex-none px-4 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 rounded-lg text-sm font-bold uppercase tracking-widest transition-all disabled:opacity-50"
                         >
                           {isCancelling === booking._id ? "Wait..." : "Cancel"}
                         </button>
@@ -237,7 +237,7 @@ export default function ProfilePage() {
                       className="mt-6 pt-6 border-t border-white/5 grid grid-cols-1 md:grid-cols-2 gap-8"
                     >
                       <div>
-                        <h5 className="text-white font-bold mb-4 uppercase tracking-widest text-xs text-accent">Passenger Information</h5>
+                        <h5 className="text-white font-bold mb-4 uppercase tracking-widest text-sm text-accent">Passenger Information</h5>
                         {booking.passengerDetails ? (
                           <div className="space-y-2 text-sm text-white/60">
                             <p><span className="text-white/40">Name:</span> <span className="text-white">{booking.passengerDetails.name}</span></p>
@@ -249,7 +249,7 @@ export default function ProfilePage() {
                         )}
                       </div>
                       <div>
-                        <h5 className="text-white font-bold mb-4 uppercase tracking-widest text-xs text-accent">Payment Summary</h5>
+                        <h5 className="text-white font-bold mb-4 uppercase tracking-widest text-sm text-accent">Payment Summary</h5>
                         <div className="space-y-2 text-sm text-white/60">
                           <div className="flex justify-between"><span className="text-white/40">Base Fare ({booking.travelers}x)</span> <span className="text-white">₹{booking.flight.price * booking.travelers}</span></div>
                           <div className="flex justify-between"><span className="text-white/40">Taxes & Fees</span> <span className="text-white">Included</span></div>

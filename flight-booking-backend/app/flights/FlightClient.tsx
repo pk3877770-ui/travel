@@ -272,7 +272,7 @@ export default function FlightBookingPage() {
                 <div className="p-6 md:p-14">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
                     <div className="space-y-6">
-                      <h3 className="text-lg font-black text-accent uppercase tracking-widest">Passenger Details</h3>
+                      <h3 className="text-2xl font-black text-accent uppercase tracking-widest">Passenger Details</h3>
                       <div className="space-y-4">
                         <input 
                           type="text" 
@@ -298,7 +298,7 @@ export default function FlightBookingPage() {
                       </div>
                     </div>
                     <div className="space-y-6">
-                      <h3 className="text-lg font-black text-accent uppercase tracking-widest">Flight Summary</h3>
+                      <h3 className="text-2xl font-black text-accent uppercase tracking-widest">Flight Summary</h3>
                       <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800">
                         <div className="flex justify-between items-center mb-6">
                           <span className="text-slate-400 font-bold">Route</span>
@@ -483,7 +483,7 @@ export default function FlightBookingPage() {
             <form onSubmit={handleSearch} className="space-y-10">
               <div className="grid grid-cols-1 lg:grid-cols-7 gap-6 items-end">
                 <div className="lg:col-span-3 space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Leaving From</label>
+                  <label className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">Leaving From</label>
                   <div className="relative group">
                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
                     <input
@@ -503,7 +503,7 @@ export default function FlightBookingPage() {
                 </div>
 
                 <div className="lg:col-span-3 space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Going To</label>
+                  <label className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">Going To</label>
                   <div className="relative group">
                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
                     <input
@@ -518,7 +518,7 @@ export default function FlightBookingPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
                 <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Cabin Class</label>
+                  <label className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">Cabin Class</label>
                   <select 
                     name="cabin"
                     className="w-full bg-slate-50 dark:bg-slate-800 px-6 py-4 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent transition-all font-medium cursor-pointer"
@@ -530,7 +530,7 @@ export default function FlightBookingPage() {
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Departure</label>
+                  <label className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">Departure</label>
                   <div className="relative">
                     <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                     <input 
@@ -541,7 +541,7 @@ export default function FlightBookingPage() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Return</label>
+                  <label className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">Return</label>
                   <div className="relative">
                     <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                     <input 
@@ -593,7 +593,7 @@ export default function FlightBookingPage() {
                 {/* Filters Section */}
                 <div className="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 mb-8 mx-6 flex flex-col md:flex-row gap-6">
                   <div className="flex-1 space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Airline</label>
+                    <label className="text-sm font-black text-slate-400 uppercase tracking-widest">Airline</label>
                     <select
                       value={filterAirline}
                       onChange={(e) => setFilterAirline(e.target.value)}
@@ -606,7 +606,7 @@ export default function FlightBookingPage() {
                   </div>
                   
                   <div className="flex-1 space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Cabin Class</label>
+                    <label className="text-sm font-black text-slate-400 uppercase tracking-widest">Cabin Class</label>
                     <select
                       value={filterClass}
                       onChange={(e) => setFilterClass(e.target.value)}
@@ -619,7 +619,7 @@ export default function FlightBookingPage() {
                   </div>
 
                   <div className="flex-1 space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Departure</label>
+                    <label className="text-sm font-black text-slate-400 uppercase tracking-widest">Departure</label>
                     <select
                       value={filterTime}
                       onChange={(e) => setFilterTime(e.target.value)}
@@ -634,7 +634,7 @@ export default function FlightBookingPage() {
 
                   <div className="flex-1 space-y-2">
                     <div className="flex justify-between items-end">
-                      <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Max Price</label>
+                      <label className="text-sm font-black text-slate-400 uppercase tracking-widest">Max Price</label>
                       <span className="text-sm font-bold text-accent">₹{filterMaxPrice}</span>
                     </div>
                     <input

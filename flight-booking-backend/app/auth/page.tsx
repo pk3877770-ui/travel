@@ -107,7 +107,7 @@ export default function AuthPage() {
             <div className="flex bg-white/5 backdrop-blur-md rounded-2xl p-1.5 mb-10 border border-white/10 shadow-inner">
               <button
                 onClick={() => setIsLogin(true)}
-                className={`flex-1 py-3 text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${
+                className={`flex-1 py-3 text-sm font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${
                   isLogin
                     ? "bg-accent text-primary-dark shadow-lg shadow-accent/20"
                     : "text-white/40 hover:text-white"
@@ -117,7 +117,7 @@ export default function AuthPage() {
               </button>
               <button
                 onClick={toggleMode}
-                className={`flex-1 py-3 text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${
+                className={`flex-1 py-3 text-sm font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${
                   !isLogin
                     ? "bg-accent text-primary-dark shadow-lg shadow-accent/20"
                     : "text-white/40 hover:text-white"
@@ -131,7 +131,7 @@ export default function AuthPage() {
               <motion.div 
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
-                className="bg-red-500/10 border border-red-500/30 text-red-400 rounded-2xl p-4 mb-8 text-xs font-bold text-center flex items-center justify-center gap-2"
+                className="bg-red-500/10 border border-red-500/30 text-red-400 rounded-2xl p-4 mb-8 text-sm font-bold text-center flex items-center justify-center gap-2"
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
                 {error}
@@ -207,7 +207,7 @@ export default function AuthPage() {
                 <div className="flex items-center justify-end px-1">
                   <a
                     href="#"
-                    className="text-[10px] font-black uppercase tracking-widest text-accent hover:text-accent-hover transition-colors"
+                    className="text-xs font-black uppercase tracking-widest text-accent hover:text-accent-hover transition-colors"
                   >
                     Forgot Credentials?
                   </a>
@@ -219,7 +219,7 @@ export default function AuthPage() {
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-3 bg-accent text-primary-dark font-black py-5 px-8 rounded-2xl shadow-xl shadow-accent/10 hover:shadow-accent/30 transition-all uppercase tracking-[0.2em] text-xs mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-3 bg-accent text-primary-dark font-black py-5 px-8 rounded-2xl shadow-xl shadow-accent/10 hover:shadow-accent/30 transition-all uppercase tracking-[0.2em] text-sm mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <div className="w-5 h-5 border-2 border-primary-dark/30 border-t-primary-dark rounded-full animate-spin" />
@@ -245,7 +245,7 @@ export default function AuthPage() {
               </div>
 
               <div className="mt-8 grid grid-cols-2 gap-4">
-                <button className="flex items-center justify-center gap-3 w-full py-4 px-4 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all font-bold text-xs uppercase tracking-widest group">
+                <button className="flex items-center justify-center gap-3 w-full py-4 px-4 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all font-bold text-sm uppercase tracking-widest group">
                   <svg className="w-4 h-4 transition-transform group-hover:scale-110" viewBox="0 0 24 24">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -254,7 +254,7 @@ export default function AuthPage() {
                   </svg>
                   Google
                 </button>
-                <button className="flex items-center justify-center gap-3 w-full py-4 px-4 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all font-bold text-xs uppercase tracking-widest group">
+                <button className="flex items-center justify-center gap-3 w-full py-4 px-4 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all font-bold text-sm uppercase tracking-widest group">
                   <svg className="w-4 h-4 text-white transition-transform group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z" />
                   </svg>

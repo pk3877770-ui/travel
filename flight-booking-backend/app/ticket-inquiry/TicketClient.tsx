@@ -104,7 +104,7 @@ export default function TicketInquiry() {
             <form onSubmit={handleSearch} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">PNR Number</label>
+                  <label className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">PNR Number</label>
                   <div className="relative">
                     <Ticket className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50" />
                     <input
@@ -119,7 +119,7 @@ export default function TicketInquiry() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Registered Mobile</label>
+                  <label className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">Registered Mobile</label>
                   <div className="relative">
                     <Smartphone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50" />
                     <input
@@ -136,7 +136,7 @@ export default function TicketInquiry() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-black text-slate-400 uppercase tracking-widest px-1">Airlines Partnership</label>
+                <label className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">Airlines Partnership</label>
                 <div className="relative">
                   <Plane className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50" />
                   <select

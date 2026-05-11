@@ -100,7 +100,7 @@ const SearchSection = () => {
           <div className="absolute inset-0 mesh-gradient opacity-5 dark:opacity-20 pointer-events-none" />
 
           {/* Tabs */}
-          <div className="relative z-10 flex gap-2 md:gap-4 mb-8 md:mb-12 bg-slate-100/50 dark:bg-white/5 p-1.5 md:p-2 rounded-2xl md:rounded-3xl w-full sm:w-fit hscroll-hide overflow-x-auto border border-slate-200/50 dark:border-white/5 no-scrollbar">
+          <div className="relative z-10 flex gap-2 md:gap-4 mb-10 md:mb-14 bg-slate-100/50 dark:bg-white/5 p-1.5 md:p-2 rounded-2xl md:rounded-3xl w-full sm:w-fit hscroll-hide overflow-x-auto border border-slate-200/50 dark:border-white/5 no-scrollbar">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -134,10 +134,10 @@ const SearchSection = () => {
           {/* Form */}
           <form 
             onSubmit={handleSearch}
-            className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 gap-6 items-end"
+            className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 gap-6"
           >
             <div className="lg:col-span-3 space-y-4">
-              <label className="text-[12px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-80">Departure</label>
+              <label className="text-sm font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-80">Departure</label>
               <div className="relative group">
                 <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                 <input
@@ -151,7 +151,7 @@ const SearchSection = () => {
             </div>
 
             <div className="lg:col-span-3 space-y-4">
-              <label className="text-[12px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-80">Destination</label>
+              <label className="text-sm font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-80">Destination</label>
               <div className="relative group">
                 <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                 <input
@@ -165,7 +165,7 @@ const SearchSection = () => {
             </div>
 
             <div className="lg:col-span-2 space-y-4">
-              <label className="text-[12px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-80">Departure Date</label>
+              <label className="text-sm font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-80">Departure Date</label>
               <div className="relative group">
                 <Calendar className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                 <input
@@ -177,7 +177,7 @@ const SearchSection = () => {
             </div>
 
             <div className="lg:col-span-2 space-y-4">
-              <label className="text-[12px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-80">Travelers</label>
+              <label className="text-sm font-black text-slate-300 uppercase tracking-[0.2em] px-4 opacity-80">Travelers</label>
               <div className="relative group">
                 <Users className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                 <select 

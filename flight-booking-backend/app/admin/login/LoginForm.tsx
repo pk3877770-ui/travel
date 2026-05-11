@@ -15,7 +15,7 @@ export default function LoginForm() {
       
       <div className="space-y-5">
           <div>
-            <label className="block text-slate-400 font-bold text-[10px] uppercase tracking-widest mb-2 ml-1" htmlFor="username">Administrative ID</label>
+            <label className="block text-slate-400 font-bold text-sm uppercase tracking-widest mb-2 ml-1" htmlFor="username">Administrative ID</label>
             <input 
               className="w-full bg-white/5 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-amber-500/50 focus:bg-white/10 focus:ring-1 focus:ring-amber-500/50 text-white transition-all placeholder:text-slate-600 font-medium" 
               type="text" 
@@ -26,7 +26,7 @@ export default function LoginForm() {
             />
           </div>
           <div>
-            <label className="block text-slate-400 font-bold text-[10px] uppercase tracking-widest mb-2 ml-1" htmlFor="password">Security Passport</label>
+            <label className="block text-slate-400 font-bold text-sm uppercase tracking-widest mb-2 ml-1" htmlFor="password">Security Passport</label>
             <input 
               className="w-full bg-white/5 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-amber-500/50 focus:bg-white/10 focus:ring-1 focus:ring-amber-500/50 text-white transition-all placeholder:text-slate-600 font-medium tracking-widest" 
               type="password" 

@@ -58,7 +58,7 @@ export default function SeoForm({ currentPage, currentMetadata, isLocalJson }: {
                 
                 <div className="flex flex-col gap-4 md:col-span-2 group">
                     <div className="flex items-center justify-between px-1">
-                        <label className="font-black text-[11px] text-slate-500 uppercase tracking-[0.2em] group-focus-within:text-amber-500 transition-colors">Route Signature (Title)</label>
+                        <label className="font-black text-sm text-slate-500 uppercase tracking-[0.2em] group-focus-within:text-amber-500 transition-colors">Route Signature (Title)</label>
                         <span className="text-[10px] text-slate-600 font-mono italic">SEO_CORE_VALUE</span>
                     </div>
                     <input type="text" name="title" defaultValue={currentMetadata?.title || ''} placeholder="Karmana | Luxury Excellence..." required
@@ -70,7 +70,7 @@ export default function SeoForm({ currentPage, currentMetadata, isLocalJson }: {
                 </div>
 
                 <div className="flex flex-col gap-4 md:col-span-2 group">
-                    <label className="font-black text-[11px] text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Matrix Description</label>
+                    <label className="font-black text-sm text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Matrix Description</label>
                     <textarea name="description" defaultValue={currentMetadata?.description || ''} placeholder="Describe the soul of this route..." required
                                className="bg-black/20 border border-white/[0.05] p-6 rounded-2xl text-white text-lg min-h-[200px] resize-none focus:outline-none focus:border-amber-500/40 focus:bg-black/40 focus:ring-4 focus:ring-amber-500/5 transition-all font-medium leading-relaxed placeholder:text-slate-800"></textarea>
                     <div className="flex items-center gap-2 px-1">
@@ -81,31 +81,31 @@ export default function SeoForm({ currentPage, currentMetadata, isLocalJson }: {
 
                 {/* Technical Inputs Grid */}
                 <div className="flex flex-col gap-4 group">
-                    <label className="font-black text-[11px] text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Taxonomy Keywords</label>
+                    <label className="font-black text-sm text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Taxonomy Keywords</label>
                     <input type="text" name="keywords" defaultValue={currentMetadata?.keywords || ''} placeholder="luxury, bespoke, global..." 
                            className="bg-black/20 border border-white/[0.05] p-6 rounded-2xl text-white text-sm focus:outline-none focus:border-amber-500/40 focus:bg-black/40 transition-all font-medium placeholder:text-slate-800"/>
                 </div>
 
                 <div className="flex flex-col gap-4 group">
-                    <label className="font-black text-[11px] text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Crawler Directives</label>
+                    <label className="font-black text-sm text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Crawler Directives</label>
                     <input type="text" name="robots" defaultValue={currentMetadata?.robots || 'index, follow'} placeholder="index, follow" 
                            className="bg-black/20 border border-white/[0.05] p-6 rounded-2xl text-white text-sm focus:outline-none focus:border-amber-500/40 focus:bg-black/40 transition-all font-medium placeholder:text-slate-800"/>
                 </div>
 
                 <div className="flex flex-col gap-4 group">
-                    <label className="font-black text-[11px] text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Authority Canonical</label>
+                    <label className="font-black text-sm text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Authority Canonical</label>
                     <input type="url" name="canonical" defaultValue={currentMetadata?.canonical || ''} placeholder="https://karmana.com/..." 
                            className="bg-black/20 border border-white/[0.05] p-6 rounded-2xl text-white text-sm focus:outline-none focus:border-amber-500/40 focus:bg-black/40 transition-all font-medium placeholder:text-slate-800"/>
                 </div>
 
                 <div className="flex flex-col gap-4 group">
-                    <label className="font-black text-[11px] text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Graph Endpoints (OG Url)</label>
+                    <label className="font-black text-sm text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Graph Endpoints (OG Url)</label>
                     <input type="url" name="og_url" defaultValue={currentMetadata?.og_url || ''} placeholder="https://karmana.social/..." 
                            className="bg-black/20 border border-white/[0.05] p-6 rounded-2xl text-white text-sm focus:outline-none focus:border-amber-500/40 focus:bg-black/40 transition-all font-medium placeholder:text-slate-800"/>
                 </div>
 
                 <div className="flex flex-col gap-4 md:col-span-2 group">
-                    <label className="font-black text-[11px] text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Entity Publisher</label>
+                    <label className="font-black text-sm text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Entity Publisher</label>
                     <input type="url" name="publisher" defaultValue={currentMetadata?.publisher || ''} placeholder="https://plus.google.com/..." 
                            className="bg-black/20 border border-white/[0.05] p-6 rounded-2xl text-white text-sm focus:outline-none focus:border-amber-500/40 focus:bg-black/40 transition-all font-medium placeholder:text-slate-800"/>
                 </div>

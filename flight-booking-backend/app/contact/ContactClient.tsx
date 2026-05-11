@@ -75,7 +75,7 @@ const ContactClient = () => {
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Full Name</label>
+                    <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">Full Name</label>
                     <input 
                       type="text" 
                       name="name"
@@ -85,7 +85,7 @@ const ContactClient = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Email Address</label>
+                    <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">Email Address</label>
                     <input 
                       type="email" 
                       name="email"
@@ -96,7 +96,7 @@ const ContactClient = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Subject</label>
+                  <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">Subject</label>
                   <select name="subject" className="w-full bg-white text-slate-900 border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all appearance-none cursor-pointer">
                     <option>Bespoke Journey Consultation</option>
                     <option>Boutique Hotel Inquiry</option>
@@ -106,7 +106,7 @@ const ContactClient = () => {
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Detailed Message</label>
+                  <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">Detailed Message</label>
                   <textarea 
                     name="message"
                     className="w-full bg-white text-slate-900 placeholder:text-slate-400 border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all min-h-[180px] resize-none" 
