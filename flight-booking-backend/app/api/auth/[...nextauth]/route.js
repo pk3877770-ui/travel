@@ -5,6 +5,7 @@ import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import bcrypt from "bcryptjs";
 
 const handler = NextAuth({
   providers: [
@@ -31,7 +32,7 @@ const handler = NextAuth({
           throw new Error("No user found with this email");
         }
         
-        const isMatch = await user.matchPassword(credentials.password);
+        const isMatch = await bcrypt.compare(credentials.password, user.password);
         
         if (!isMatch) {
           throw new Error("Invalid password");
