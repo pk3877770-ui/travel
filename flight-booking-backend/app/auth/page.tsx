@@ -29,19 +29,39 @@ export default function AuthPage() {
     setError("");
 
     try {
-      const endpoint = isLogin ? "/api/auth/login" : "/api/auth/register";
-      const payload = isLogin ? { email, password } : { name, email, password };
+      if (isLogin) {
+        const result = await signIn("credentials", {
+          redirect: false,
+          email,
+          password,
+        });
 
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+        if (result?.error) {
+          throw new Error(result.error);
+        }
+      } else {
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password }),
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.message || "Authentication failed. Please try again.");
+        if (!res.ok) {
+          throw new Error(data.message || "Registration failed. Please try again.");
+        }
+
+        // Auto login after successful registration
+        const result = await signIn("credentials", {
+          redirect: false,
+          email,
+          password,
+        });
+
+        if (result?.error) {
+          throw new Error(result.error);
+        }
       }
 
       // Success

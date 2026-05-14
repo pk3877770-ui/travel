@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
 import jwt from "jsonwebtoken";
@@ -10,6 +11,44 @@ const handler = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials) {
+        await dbConnect();
+        
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Please enter an email and password");
+        }
+        
+        const user = await User.findOne({ email: credentials.email }).select("+password");
+        
+        if (!user) {
+          throw new Error("No user found with this email");
+        }
+        
+        const isMatch = await user.matchPassword(credentials.password);
+        
+        if (!isMatch) {
+          throw new Error("Invalid password");
+        }
+        
+        // Update last login
+        user.lastLogin = new Date();
+        await user.save();
+        
+        return {
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          mongoId: user._id.toString()
+        };
+      }
     }),
   ],
   callbacks: {
