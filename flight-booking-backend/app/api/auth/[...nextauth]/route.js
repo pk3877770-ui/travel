@@ -39,8 +39,7 @@ const handler = NextAuth({
         }
         
         // Update last login
-        user.lastLogin = new Date();
-        await user.save();
+        await User.updateOne({ _id: user._id }, { $set: { lastLogin: new Date() } });
         
         return {
           id: user._id.toString(),
@@ -71,8 +70,7 @@ const handler = NextAuth({
             });
           } else {
             // Update last login
-            existingUser.lastLogin = new Date();
-            await existingUser.save();
+            await User.updateOne({ _id: existingUser._id }, { $set: { lastLogin: new Date() } });
           }
 
           // Attach the MongoDB user ID to the user object

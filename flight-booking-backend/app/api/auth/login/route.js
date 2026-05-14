@@ -35,8 +35,7 @@ export async function POST(req) {
     }
 
     // Update last login
-    user.lastLogin = new Date();
-    await user.save();
+    await User.updateOne({ _id: user._id }, { $set: { lastLogin: new Date() } });
 
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || "default_secret_key", {
       expiresIn: "30d",
