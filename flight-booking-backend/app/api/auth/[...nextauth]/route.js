@@ -105,17 +105,7 @@ const handler = NextAuth({
   },
   session: {
     strategy: "jwt",
-  },
-  cookies: {
-    sessionToken: {
-      name: process.env.NODE_ENV === "production" ? "__Secure-next-auth.session-token" : "next-auth.session-token",
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
+    maxAge: 60 * 60, // 1 hour - effectively prevents long-term persistent sessions
   },
   secret: process.env.NEXTAUTH_SECRET || process.env.JWT_SECRET || "default_secret_key",
 });
