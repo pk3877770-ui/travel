@@ -17,6 +17,9 @@ const Navbar = () => {
   const [user, setUser] = useState<any>(null);
   const [isMounted, setIsMounted] = useState(false);
   const { data: session } = useSession();
+  
+  // Use either custom auth or NextAuth
+  const currentUser = user || session?.user;
 
   useEffect(() => {
     setIsMounted(true);
@@ -31,14 +34,30 @@ const Navbar = () => {
         console.error("Failed to fetch user", error);
       }
     };
-    fetchUser();
-  }, [pathname]);
+    
+    // Only fetch custom user if we don't have a NextAuth session
+    if (!session) {
+      fetchUser();
+    }
+  }, [pathname, session]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Refetch when pathname changes, so login/logout updates nav
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/auth/logout", { method: "POST" });
+      if (session) {
+        await nextAuthSignOut({ redirect: false });
+      } else {
+        await fetch("/api/auth/logout", { method: "POST" });
+      }
       setUser(null);
       router.push("/");
       router.refresh();
@@ -101,18 +120,21 @@ const Navbar = () => {
           {/* Section 3: Actions - Right Aligned */}
           <div className="flex items-center gap-4 md:gap-6 flex-shrink-0 relative z-[120]">
             <div className="hidden sm:flex items-center">
-              {user ? (
+              {currentUser ? (
                 <Link href="/profile" className="flex items-center gap-3 bg-white/5 border border-white/10 px-6 py-3 rounded-2xl hover:bg-white/10 transition-all">
                   <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
                     <User className="w-4 h-4 text-accent" />
                   </div>
-                  <span className="text-white font-black text-[11px] uppercase tracking-widest">{user.name.split(' ')[0]}</span>
+                  <span className="text-white font-black text-[11px] uppercase tracking-widest">
+                    {currentUser.name ? currentUser.name.split(' ')[0] : 'User'}
+                  </span>
                 </Link>
               ) : (
-                <Link href="/auth">
-                  <button className="text-white font-black text-[11px] uppercase tracking-[0.2em] hover:text-accent transition-colors px-6 py-2 rounded-xl hover:bg-white/5">
-                    Sign In
-                  </button>
+                <Link 
+                  href="/auth"
+                  className="flex items-center justify-center text-white font-black text-[11px] uppercase tracking-[0.2em] hover:text-accent transition-colors px-6 py-2 rounded-xl hover:bg-white/5"
+                >
+                  Sign In
                 </Link>
               )}
             </div>
@@ -159,7 +181,7 @@ const Navbar = () => {
               </div>
               
               <div className="mt-auto pt-10 border-t border-white/10">
-                {user ? (
+                {currentUser ? (
                   <div className="flex flex-col gap-6">
                     <Link 
                       href="/profile"

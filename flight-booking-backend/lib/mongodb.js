@@ -39,7 +39,7 @@ async function dbConnect() {
     // Reset so next request retries the connection
     cached.promise = null;
     cached.conn = null;
-    console.error('❌ MongoDB connection failed:', e.message);
+    console.warn('❌ MongoDB connection failed:', e.message);
     throw e;
   }
 
