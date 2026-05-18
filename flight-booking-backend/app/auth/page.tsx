@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Lock, User, Eye, EyeOff, ArrowRight, ArrowLeft, Plane, Loader2 } from "lucide-react";
+import { Mail, Lock, User, Eye, EyeOff, ArrowRight, ArrowLeft, Plane, Loader2, Apple, Facebook } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
@@ -17,6 +17,8 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [appleLoading, setAppleLoading] = useState(false);
+  const [facebookLoading, setFacebookLoading] = useState(false);
 
   const toggleMode = () => {
     setIsLogin(!isLogin);
@@ -40,6 +42,12 @@ export default function AuthPage() {
           throw new Error(result.error);
         }
       } else {
+        // Password strength validation
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+          throw new Error("Password must be at least 8 characters long and include uppercase letters, numbers, and special characters.");
+        }
+
         const res = await fetch("/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -225,13 +233,38 @@ export default function AuthPage() {
                 </button>
               </div>
 
+              {!isLogin && password && (
+                <div className="px-1 text-xs space-y-1 mt-2 mb-4">
+                  <p className={password.length >= 8 ? "text-emerald-500 flex items-center gap-2" : "text-white/30 flex items-center gap-2"}>
+                    <span className={`w-1 h-1 rounded-full ${password.length >= 8 ? "bg-emerald-500" : "bg-white/30"}`} />
+                    8+ characters
+                  </p>
+                  <p className={/[A-Z]/.test(password) ? "text-emerald-500 flex items-center gap-2" : "text-white/30 flex items-center gap-2"}>
+                    <span className={`w-1 h-1 rounded-full ${/[A-Z]/.test(password) ? "bg-emerald-500" : "bg-white/30"}`} />
+                    Uppercase letter
+                  </p>
+                  <p className={/\d/.test(password) ? "text-emerald-500 flex items-center gap-2" : "text-white/30 flex items-center gap-2"}>
+                    <span className={`w-1 h-1 rounded-full ${/\d/.test(password) ? "bg-emerald-500" : "bg-white/30"}`} />
+                    Number
+                  </p>
+                  <p className={/[@$!%*?&]/.test(password) ? "text-emerald-500 flex items-center gap-2" : "text-white/30 flex items-center gap-2"}>
+                    <span className={`w-1 h-1 rounded-full ${/[@$!%*?&]/.test(password) ? "bg-emerald-500" : "bg-white/30"}`} />
+                    Special character (@$!%*?&)
+                  </p>
+                </div>
+              )}
+
               {isLogin && (
-                <div className="flex items-center justify-end px-1">
+                <div className="flex items-center justify-between px-1">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" className="accent-accent w-4 h-4 rounded border-white/10 bg-white/5" />
+                    <span className="text-xs font-bold text-white/50 uppercase tracking-widest">Remember Me</span>
+                  </label>
                   <a
                     href="#"
                     className="text-xs font-black uppercase tracking-widest text-accent hover:text-accent-hover transition-colors"
                   >
-                    Forgot Credentials?
+                    Forgot Password?
                   </a>
                 </div>
               )}
@@ -244,7 +277,10 @@ export default function AuthPage() {
                 className="w-full flex items-center justify-center gap-3 bg-accent text-primary-dark font-black py-5 px-8 rounded-2xl shadow-xl shadow-accent/10 hover:shadow-accent/30 transition-all uppercase tracking-[0.2em] text-sm mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
-                  <div className="w-5 h-5 border-2 border-primary-dark/30 border-t-primary-dark rounded-full animate-spin" />
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Processing...</span>
+                  </div>
                 ) : (
                   <>
                     {isLogin ? "Access Account" : "Confirm Identity"}
@@ -252,6 +288,26 @@ export default function AuthPage() {
                   </>
                 )}
               </motion.button>
+
+              {isLogin && (
+                <p className="text-center text-sm text-white/50 mt-6">
+                  Don't have an account?{" "}
+                  <button
+                    type="button"
+                    onClick={toggleMode}
+                    className="text-accent font-bold hover:underline"
+                  >
+                    Create Account
+                  </button>
+                </p>
+              )}
+
+              <div className="text-center text-xs text-white/30 mt-6">
+                By continuing, you agree to our{" "}
+                <Link href="/terms" className="text-white/50 hover:text-white underline">Terms of Service</Link>{" "}
+                and{" "}
+                <Link href="/privacy" className="text-white/50 hover:text-white underline">Privacy Policy</Link>.
+              </div>
             </form>
 
             <div className="mt-10">
@@ -266,14 +322,15 @@ export default function AuthPage() {
                 </div>
               </div>
 
-              <div className="mt-8 grid grid-cols-2 gap-4">
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {/* Google */}
                 <button 
                   onClick={() => {
                     setGoogleLoading(true);
                     signIn("google", { callbackUrl: "/" });
                   }}
-                  disabled={googleLoading}
-                  className="flex items-center justify-center gap-3 w-full py-4 px-4 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all font-bold text-sm uppercase tracking-widest group disabled:opacity-50"
+                  disabled={googleLoading || appleLoading || facebookLoading}
+                  className="flex items-center justify-center gap-2 w-full py-4 px-4 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all font-bold text-xs uppercase tracking-widest group disabled:opacity-50"
                 >
                   {googleLoading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -285,13 +342,41 @@ export default function AuthPage() {
                       <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                     </svg>
                   )}
-                  {googleLoading ? "Connecting..." : "Google"}
+                  Google
                 </button>
-                <button className="flex items-center justify-center gap-3 w-full py-4 px-4 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all font-bold text-sm uppercase tracking-widest group">
-                  <svg className="w-4 h-4 text-white transition-transform group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z" />
-                  </svg>
+
+                {/* Apple */}
+                <button 
+                  onClick={() => {
+                    setAppleLoading(true);
+                    signIn("apple", { callbackUrl: "/" });
+                  }}
+                  disabled={googleLoading || appleLoading || facebookLoading}
+                  className="flex items-center justify-center gap-2 w-full py-4 px-4 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all font-bold text-xs uppercase tracking-widest group disabled:opacity-50"
+                >
+                  {appleLoading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Apple className="w-4 h-4 text-white transition-transform group-hover:scale-110" />
+                  )}
                   Apple
+                </button>
+
+                {/* Facebook */}
+                <button 
+                  onClick={() => {
+                    setFacebookLoading(true);
+                    signIn("facebook", { callbackUrl: "/" });
+                  }}
+                  disabled={googleLoading || appleLoading || facebookLoading}
+                  className="flex items-center justify-center gap-2 w-full py-4 px-4 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all font-bold text-xs uppercase tracking-widest group disabled:opacity-50"
+                >
+                  {facebookLoading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Facebook className="w-4 h-4 text-white transition-transform group-hover:scale-110" />
+                  )}
+                  Facebook
                 </button>
               </div>
             </div>
