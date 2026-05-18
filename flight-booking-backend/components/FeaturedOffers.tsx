@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Clock, Calendar, Plane } from "lucide-react";
 import Script from "next/script";
@@ -123,21 +124,12 @@ const FeaturedOffers = () => {
                     <offer.icon className="w-4 h-4" />
                     {offer.foot}
                   </div>
-                  <button 
-                    onClick={() => {
-                      const params = new URLSearchParams();
-                      params.append("book", "true");
-                      params.append("airline", "Karmana Signature");
-                      params.append("from", "Exclusive Route");
-                      params.append("to", offer.title);
-                      params.append("price", offer.price.replace('$', '').replace(',', ''));
-                      params.append("type", "Holiday Package");
-                      router.push(`/flights?${params.toString()}`);
-                    }}
+                  <Link 
+                    href={`/flights?book=true&airline=Karmana+Signature&from=Exclusive+Route&to=${encodeURIComponent(offer.title)}&price=${offer.price.replace('$', '').replace(',', '')}&type=Holiday+Package`}
                     className="text-primary dark:text-accent font-bold flex items-center gap-2 hover:gap-3 transition-all"
                   >
                     Reserve This Offer <ArrowRight className="w-4 h-4" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </motion.div>

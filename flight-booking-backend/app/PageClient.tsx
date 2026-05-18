@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import Hero from "@/components/Hero";
 import SearchSection from "@/components/SearchSection";
 import FeaturedOffers from "@/components/FeaturedOffers";
@@ -132,6 +133,55 @@ export default function Home() {
                 </div>
               </div>
             </motion.div>
+          </div>
+        </section>
+
+        {/* SEO Internal Linking / Link Juice Section */}
+        <section className="py-16 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+          <div className="container max-w-7xl mx-auto px-6">
+            <h2 className="text-xl font-bold mb-8 text-slate-800 dark:text-slate-200 font-outfit">Explore Karmana Destinations & Services</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+              <div>
+                <h3 className="font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-xs">Luxury Flights</h3>
+                <ul className="space-y-3">
+                  <li><Link href="/flights?to=Dubai" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">First Class to Dubai</Link></li>
+                  <li><Link href="/flights?to=London" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Business Class to London</Link></li>
+                  <li><Link href="/flights?to=Paris" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Private Jet to Paris</Link></li>
+                  <li><Link href="/flights?to=New+York" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Premium Flights to New York</Link></li>
+                  <li><Link href="/flights?type=charter" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Private Charter Services</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-xs">Exclusive Hotels</h3>
+                <ul className="space-y-3">
+                  <li><Link href="/hotels?location=Maldives" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Luxury Resorts in Maldives</Link></li>
+                  <li><Link href="/hotels?location=Santorini" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Boutique Hotels Santorini</Link></li>
+                  <li><Link href="/hotels?location=Bali" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Private Villas in Bali</Link></li>
+                  <li><Link href="/hotels?location=Monaco" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">5-Star Stays in Monaco</Link></li>
+                  <li><Link href="/hotels" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">All Premium Accommodations</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-xs">Holiday Packages</h3>
+                <ul className="space-y-3">
+                  <li><Link href="/holiday-packages?theme=honeymoon" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Luxury Honeymoon Packages</Link></li>
+                  <li><Link href="/holiday-packages?theme=safari" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">African Safari Itineraries</Link></li>
+                  <li><Link href="/holiday-packages?theme=culture" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">European Cultural Tours</Link></li>
+                  <li><Link href="/holiday-packages?theme=wellness" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Wellness & Spa Retreats</Link></li>
+                  <li><Link href="/holiday-packages" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Bespoke Holiday Planning</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-xs">Concierge & Info</h3>
+                <ul className="space-y-3">
+                  <li><Link href="/services" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Our Premium Services</Link></li>
+                  <li><Link href="/about" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">About Karmana Brand</Link></li>
+                  <li><Link href="/help-center" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Travel Help Center</Link></li>
+                  <li><Link href="/ticket-inquiry" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Flight Status & Inquiry</Link></li>
+                  <li><Link href="/contact" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Contact Our Concierge</Link></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
       </div>
