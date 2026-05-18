@@ -63,7 +63,7 @@ export default function FlightBookingPage() {
   const [bookingSuccess, setBookingSuccess] = React.useState<string | null>(null);
   const [hasSearched, setHasSearched] = React.useState(false);
   const [selectedFlight, setSelectedFlight] = React.useState<any>(null);
-  const [passenger, setPassenger] = React.useState({ name: "", email: "", passport: "" });
+  const [passenger, setPassenger] = React.useState({ name: "", email: "", passport: "", dob: "", returnDate: "", phone: "", bookingDate: "", countryCode: "+91" });
   const [showPaymentModal, setShowPaymentModal] = React.useState(false);
   const [paymentStatus, setPaymentStatus] = React.useState<"idle" | "processing" | "success">("idle");
   const [paymentGateway, setPaymentGateway] = React.useState<"razorpay" | "stripe">("razorpay");
@@ -292,9 +292,61 @@ export default function FlightBookingPage() {
                           type="text" 
                           placeholder="Passport Number" 
                           value={passenger.passport}
-                          onChange={(e) => setPassenger({...passenger, passport: e.target.value})}
+                          onChange={(e) => setPassenger({...passenger, passport: e.target.value.toUpperCase()})}
+                          maxLength={9}
                           className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" 
                         />
+                        <div className="flex gap-2">
+                          <select 
+                            value={passenger.countryCode}
+                            onChange={(e) => setPassenger({...passenger, countryCode: e.target.value})}
+                            className="bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium text-slate-500"
+                          >
+                            <option value="+91">🇮🇳 +91</option>
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                            <option value="+971">🇦🇪 +971</option>
+                            <option value="+61">🇦🇺 +61</option>
+                            <option value="+81">🇯🇵 +81</option>
+                            <option value="+49">🇩🇪 +49</option>
+                            <option value="+33">🇫🇷 +33</option>
+                          </select>
+                          <input 
+                            type="tel" 
+                            placeholder="Phone Number" 
+                            value={passenger.phone}
+                            onChange={(e) => setPassenger({...passenger, phone: e.target.value})}
+                            maxLength={10}
+                            className="flex-1 bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" 
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs text-slate-400 ml-2 font-bold uppercase tracking-widest">Date of Birth</label>
+                          <input 
+                            type="date" 
+                            value={passenger.dob}
+                            onChange={(e) => setPassenger({...passenger, dob: e.target.value})}
+                            className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium text-slate-500" 
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs text-slate-400 ml-2 font-bold uppercase tracking-widest">Booking Date</label>
+                          <input 
+                            type="date" 
+                            value={passenger.bookingDate}
+                            onChange={(e) => setPassenger({...passenger, bookingDate: e.target.value})}
+                            className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium text-slate-500" 
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs text-slate-400 ml-2 font-bold uppercase tracking-widest">Return Date (Optional)</label>
+                          <input 
+                            type="date" 
+                            value={passenger.returnDate}
+                            onChange={(e) => setPassenger({...passenger, returnDate: e.target.value})}
+                            className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium text-slate-500" 
+                          />
+                        </div>
                       </div>
                     </div>
                     <div className="space-y-6">

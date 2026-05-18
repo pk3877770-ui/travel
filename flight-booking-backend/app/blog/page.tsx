@@ -13,7 +13,7 @@ const posts = [
     excerpt: "Explore the latest trends in luxury private aviation and how Kramana is setting new standards.",
     date: "May 15, 2026",
     author: "Alexis Vance",
-    image: "https://images.unsplash.com/photo-1540962351504-03099e0a75c3?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=600&q=80",
     category: "Aviation",
   },
   {
