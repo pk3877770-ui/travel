@@ -263,7 +263,7 @@ const RefundClient = () => {
             <div className="bg-white/15 backdrop-blur-md rounded-[2.5rem] p-8 text-center border border-white/20 flex flex-col items-center group hover:bg-white transition-all duration-500">
               <Mail className="w-12 h-12 text-white group-hover:text-accent mb-6" />
               <h3 className="text-xl font-black font-outfit mb-4 group-hover:text-primary transition-colors">Email</h3>
-              <p className="text-lg font-bold group-hover:text-primary transition-colors">refund@karmana.com</p>
+              <p className="text-lg font-bold group-hover:text-primary transition-colors">refund@kramana.com</p>
               <span className="text-sm opacity-80 group-hover:text-slate-500 transition-colors mt-2">Reply in 2 hrs</span>
             </div>
           </div>

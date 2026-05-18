@@ -13,7 +13,7 @@ const TermsClient = () => {
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-black font-outfit mb-6 italic tracking-tight">Terms of Service</h1>
           <p className="text-xl md:text-2xl opacity-90 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Read our terms and conditions for luxury travel bookings and concierge services. By using Karmana, you agree to these terms.
+            Read our terms and conditions for luxury travel bookings and concierge services. By using Kramana, you agree to these terms.
           </p>
           <div className="flex flex-wrap justify-center gap-4 md:gap-8">
             <div className="bg-white/15 backdrop-blur-md px-6 py-2.5 rounded-full font-bold border border-white/10">Effective: April 9, 2026</div>
@@ -32,7 +32,7 @@ const TermsClient = () => {
               <Scroll className="text-accent w-8 h-8" /> 1. Acceptance of Terms
             </h2>
             <p className="text-slate-600 leading-relaxed text-lg font-medium">
-              By accessing and using Karmana's luxury travel concierge services, you accept and agree to be bound by the terms and provision of this agreement.
+              By accessing and using Kramana's luxury travel concierge services, you accept and agree to be bound by the terms and provision of this agreement.
             </p>
             <div className="bg-orange-50 p-8 rounded-3xl border-l-[6px] border-accent shadow-sm">
               <h3 className="text-xl font-black font-outfit text-primary mb-4 italic tracking-tight">⚠️ Important Notice</h3>
@@ -124,7 +124,7 @@ const TermsClient = () => {
               <Gavel className="text-accent w-8 h-8" /> 5. Liability
             </h2>
             <div className="bg-white border-2 border-slate-100 p-8 rounded-[2rem] space-y-4">
-               <p className="text-slate-600 font-bold italic">Karmana acts as a booking facilitator only:</p>
+               <p className="text-slate-600 font-bold italic">Kramana acts as a booking facilitator only:</p>
                <ul className="space-y-3">
                   {["Not responsible for airline delays", "Not liable for weather issues", "Limited to booking amount"].map((point, i) => (
                     <li key={i} className="flex items-center gap-4 text-slate-500 font-medium">
@@ -155,7 +155,7 @@ const TermsClient = () => {
               <Globe className="text-accent w-8 h-8" /> Contact & Law
             </h2>
             <p className="text-slate-600 font-bold italic">Governing Law: Indian laws. Mumbai courts jurisdiction.</p>
-            <p className="text-primary font-black text-lg">concierge@karmana.com | +91 (22) 6789 0123</p>
+            <p className="text-primary font-black text-lg">concierge@kramana.com | +91 (22) 6789 0123</p>
           </div>
         </div>
       </section>
@@ -187,7 +187,7 @@ const TermsClient = () => {
               }`}
               disabled={!agreed}
             >
-              Continue with Karmana
+              Continue with Kramana
             </button>
           </div>
         </div>

@@ -11,7 +11,7 @@ const PrivacyClient = () => {
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold font-outfit mb-6">Privacy Policy</h1>
           <p className="text-xl md:text-2xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Your privacy is our priority. Learn how we protect and handle your personal data when you book with Karmana.
+            Your privacy is our priority. Learn how we protect and handle your personal data when you book with Kramana.
           </p>
           <div className="bg-white/20 px-6 py-2.5 rounded-full inline-block font-medium">
             Last Updated: April 9, 2026
@@ -28,7 +28,7 @@ const PrivacyClient = () => {
               <Lock className="text-accent w-8 h-8" /> 1. Introduction
             </h2>
             <p className="text-slate-600 leading-relaxed text-lg">
-              Karmana is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you use our luxury travel concierge services.
+              Kramana is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you use our luxury travel concierge services.
             </p>
             <div className="bg-gradient-to-br from-accent to-accent-hover p-8 rounded-2xl border-l-[5px] border-primary text-white">
               <p className="text-xl font-bold mb-0 flex items-center gap-3">
@@ -186,7 +186,7 @@ const PrivacyClient = () => {
               <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
                 <h3 className="font-bold text-lg mb-2">Email</h3>
                 <p className="text-slate-600 mb-2">For privacy-related questions:</p>
-                <a href="mailto:privacy@karmana.com" className="text-primary font-bold hover:text-accent transition-colors">privacy@karmana.com</a>
+                <a href="mailto:privacy@kramana.com" className="text-primary font-bold hover:text-accent transition-colors">privacy@kramana.com</a>
               </div>
               <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
                 <h3 className="font-bold text-lg mb-2">Global HQ</h3>
@@ -203,7 +203,7 @@ const PrivacyClient = () => {
           <h2 className="text-4xl md:text-5xl font-bold font-outfit mb-6">Questions? Contact Our Privacy Team</h2>
           <p className="text-xl opacity-90 mb-10">24/7 privacy support and data protection assistance available</p>
           <a 
-            href="mailto:privacy@karmana.com" 
+            href="mailto:privacy@kramana.com" 
             className="inline-block bg-white text-primary px-10 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-2xl"
           >
             Contact Privacy Team

@@ -58,12 +58,12 @@ function readJsonFile(routePath: string): SEOData | null {
 
 export function getDefaultSEO(routePath: string): SEOData {
   return {
-    title: "Karmana | Luxury Travel Redefined",
-    description: "Experience the art of travel with Karmana's premium concierge services.",
+    title: "Kramana | Luxury Travel Redefined",
+    description: "Experience the art of travel with Kramana's premium concierge services.",
     keywords: "luxury travel, concierge, flights, hotels",
-    canonical: "https://karmana.vercel.app" + routePath,
-    og_url: "https://karmana.vercel.app" + routePath,
-    publisher: "https://karmana.vercel.app",
+    canonical: "https://kramana.vercel.app" + routePath,
+    og_url: "https://kramana.vercel.app" + routePath,
+    publisher: "https://kramana.vercel.app",
     robots: "index, follow"
   };
 }

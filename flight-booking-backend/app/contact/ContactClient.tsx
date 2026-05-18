@@ -132,7 +132,7 @@ const ContactClient = () => {
               <span className="text-accent font-bold uppercase tracking-[0.2em] text-sm mb-4">GLOBAL CONCIERGE</span>
               <h2 className="text-4xl md:text-5xl font-black font-outfit text-primary mb-8 leading-tight">Exquisite Support 24/7</h2>
               <p className="text-slate-600 mb-12 text-lg leading-relaxed">
-                Our global network ensures that no matter where you are in the world, Karmana's excellence is just a communication away.
+                Our global network ensures that no matter where you are in the world, Kramana's excellence is just a communication away.
               </p>
               
               <div className="space-y-10 group">
@@ -154,7 +154,7 @@ const ContactClient = () => {
                   <div>
                     <h4 className="font-bold text-xl font-outfit text-primary">Elite Correspondence</h4>
                     <p className="text-slate-500 mb-1">Direct Digital Channels</p>
-                    <a href="mailto:concierge@karmana.com" className="text-primary font-black text-lg hover:text-accent transition-colors">concierge@karmana.com</a>
+                    <a href="mailto:concierge@kramana.com" className="text-primary font-black text-lg hover:text-accent transition-colors">concierge@kramana.com</a>
                   </div>
                 </div>
 

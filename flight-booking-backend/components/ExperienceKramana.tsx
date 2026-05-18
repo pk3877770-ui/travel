@@ -22,7 +22,7 @@ const perks = [
   },
 ];
 
-const ExperienceKarmana = () => {
+const ExperienceKramana = () => {
   return (
     <section className="py-24 bg-slate-50 dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-6">
@@ -37,7 +37,7 @@ const ExperienceKarmana = () => {
               The Architecture of <span className="text-accent">Sovereign</span> Travel
             </h2>
             <p className="text-xl text-slate-500 mb-12 leading-relaxed font-medium">
-              We curate more than just destinations; we engineer the absolute orchestration of elite global logistics. From private aviation corridors to bespoke estate residencies, every Karmana journey is a masterpiece of precision, discretion, and unparalleled luxury.
+              We curate more than just destinations; we engineer the absolute orchestration of elite global logistics. From private aviation corridors to bespoke estate residencies, every Kramana journey is a masterpiece of precision, discretion, and unparalleled luxury.
             </p>
 
             <div className="space-y-10">
@@ -65,7 +65,7 @@ const ExperienceKarmana = () => {
             <div className="rounded-[3rem] overflow-hidden shadow-2xl relative">
               <img
                 src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80"
-                alt="Karmana Luxury Travel Orchestration and Bespoke Experiences"
+                alt="Kramana Luxury Travel Orchestration and Bespoke Experiences"
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
@@ -96,4 +96,4 @@ const ExperienceKarmana = () => {
   );
 };
 
-export default ExperienceKarmana;
+export default ExperienceKramana;

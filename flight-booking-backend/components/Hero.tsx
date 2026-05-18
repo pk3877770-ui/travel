@@ -19,7 +19,7 @@ const Hero = () => {
         >
           <Image
             src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=1600&q=80"
-            alt="Karmana Luxury Private Jet Aviation - Sovereign Excellence Travel"
+            alt="Kramana Luxury Private Jet Aviation - Sovereign Excellence Travel"
             fill
             priority
             className="object-cover"

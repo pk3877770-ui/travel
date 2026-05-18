@@ -5,7 +5,7 @@ const FlightSchema = new mongoose.Schema({
   to: { type: String, required: true },
   date: { type: String, required: true },
   travelers: { type: Number, default: 1 },
-  airline: { type: String, default: "Karmana Air" },
+  airline: { type: String, default: "Kramana Air" },
   flightNumber: { type: String, default: "KA-000" },
   price: { type: Number, default: 4500 },
   departureTime: { type: String, default: "10:00 AM" },

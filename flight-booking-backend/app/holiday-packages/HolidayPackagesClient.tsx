@@ -13,7 +13,7 @@ const signatureJourneys = [
     price: "₹22,999",
     oldPrice: "₹35,000",
     image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&q=80",
-    alt: "Azure Goa Heritage - Luxury Cultural Signature Journey by Karmana",
+    alt: "Azure Goa Heritage - Luxury Cultural Signature Journey by Kramana",
     badge: "SIGNATURE",
     perks: [
       { icon: Plane, label: "Airfare" },
@@ -26,7 +26,7 @@ const signatureJourneys = [
     price: "₹39,999",
     oldPrice: "₹55,000",
     image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80",
-    alt: "Whispering Palms Kerala - Romantic Backwater Signature Journey by Karmana",
+    alt: "Whispering Palms Kerala - Romantic Backwater Signature Journey by Kramana",
     badge: "ROMANTIC",
     perks: [
       { icon: Ship, label: "Private Boat" },
@@ -125,7 +125,7 @@ export default function HolidayPackages() {
           <div className="absolute inset-0 mesh-gradient opacity-20 pointer-events-none" />
           <img
             src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80"
-            alt="Karmana Curated Holiday Packages and Signature Journeys of a Lifetime"
+            alt="Kramana Curated Holiday Packages and Signature Journeys of a Lifetime"
             loading="eager"
             className="w-full h-full object-cover"
           />

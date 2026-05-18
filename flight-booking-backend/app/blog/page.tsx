@@ -36,28 +36,26 @@ const posts = [
   },
 ];
 
-const BlogSection = () => {
+export default function BlogPage() {
   return (
-    <section className="py-32 bg-white dark:bg-[#020617]">
+    <div className="bg-white dark:bg-[#020617] min-h-screen pt-32 pb-20">
       <div className="container max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             className="text-accent font-black tracking-[0.3em] text-sm uppercase"
           >
             Insights & Stories
           </motion.span>
-          <motion.h2
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl font-black font-outfit mt-4 mb-6 tracking-tighter"
+            className="text-5xl md:text-7xl font-black font-outfit mt-4 mb-6 tracking-tighter text-white"
           >
             The Kramana Journal
-          </motion.h2>
+          </motion.h1>
           <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
         </div>
 
@@ -66,8 +64,7 @@ const BlogSection = () => {
             <motion.div
               key={post.id}
               initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: idx * 0.1 }}
               className="bg-white dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none group hover:-translate-y-2 transition-all duration-500 flex flex-col"
             >
@@ -93,7 +90,7 @@ const BlogSection = () => {
                     {post.author}
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold font-outfit mb-3 group-hover:text-accent transition-colors">
+                <h3 className="text-2xl font-bold font-outfit mb-3 group-hover:text-accent transition-colors text-white">
                   {post.title}
                 </h3>
                 <p className="text-slate-500 dark:text-slate-400 mb-6 leading-relaxed text-sm flex-1">
@@ -111,18 +108,7 @@ const BlogSection = () => {
             </motion.div>
           ))}
         </div>
-
-        <div className="text-center mt-16">
-          <Link
-            href="/blog"
-            className="inline-flex items-center justify-center bg-primary-dark dark:bg-white text-white dark:text-primary-dark px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest hover:bg-accent dark:hover:bg-accent hover:text-primary-dark dark:hover:text-primary-dark transition-all shadow-xl"
-          >
-            View All Articles
-          </Link>
-        </div>
       </div>
-    </section>
+    </div>
   );
-};
-
-export default BlogSection;
+}

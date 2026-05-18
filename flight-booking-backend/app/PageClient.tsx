@@ -5,7 +5,7 @@ import Link from "next/link";
 import Hero from "@/components/Hero";
 import SearchSection from "@/components/SearchSection";
 import FeaturedOffers from "@/components/FeaturedOffers";
-import ExperienceKarmana from "@/components/ExperienceKarmana";
+import ExperienceKramana from "@/components/ExperienceKramana";
 import BlogSection from "@/components/BlogSection";
 import { Send, Sparkles, Crown } from "lucide-react";
 import { motion } from "framer-motion";
@@ -20,7 +20,7 @@ export default function Home() {
       
       <div className="relative overflow-hidden space-y-40 mb-40">
         <FeaturedOffers />
-        <ExperienceKarmana />
+        <ExperienceKramana />
         <BlogSection />
         
         {/* Newsletter Section - The Sovereign List */}
@@ -45,7 +45,7 @@ export default function Home() {
               </div>
 
               <h2 className="text-white text-5xl md:text-7xl font-black font-outfit mb-8 tracking-tighter leading-tight relative z-10">
-                Join the <span className="shimmer-text italic">Karmana Elite</span>
+                Join the <span className="shimmer-text italic">Kramana Elite</span>
               </h2>
               
               <p className="text-slate-400 text-xl mb-14 max-w-2xl mx-auto leading-relaxed font-medium opacity-80 relative z-10">
@@ -141,7 +141,7 @@ export default function Home() {
         {/* SEO Internal Linking / Link Juice Section */}
         <section className="py-16 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
           <div className="container max-w-7xl mx-auto px-6">
-            <h2 className="text-xl font-bold mb-8 text-slate-800 dark:text-slate-200 font-outfit">Explore Karmana Destinations & Services</h2>
+            <h2 className="text-xl font-bold mb-8 text-slate-800 dark:text-slate-200 font-outfit">Explore Kramana Destinations & Services</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
               <div>
                 <h3 className="font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-xs">Luxury Flights</h3>
@@ -177,7 +177,7 @@ export default function Home() {
                 <h3 className="font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-xs">Concierge & Info</h3>
                 <ul className="space-y-3">
                   <li><Link href="/services" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Our Premium Services</Link></li>
-                  <li><Link href="/about" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">About Karmana Brand</Link></li>
+                  <li><Link href="/about" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">About Kramana Brand</Link></li>
                   <li><Link href="/help-center" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Travel Help Center</Link></li>
                   <li><Link href="/ticket-inquiry" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Flight Status & Inquiry</Link></li>
                   <li><Link href="/contact" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Contact Our Concierge</Link></li>

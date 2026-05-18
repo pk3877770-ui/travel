@@ -46,7 +46,7 @@ export default function HelpCenter() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="text-5xl md:text-7xl font-black font-outfit mb-6">How can we <span className="text-accent">help?</span></h1>
             <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-12">
-              Get comprehensive support for your Karmana bookings. Find answers to flights, payments, and premium services.
+              Get comprehensive support for your Kramana bookings. Find answers to flights, payments, and premium services.
             </p>
 
             {/* Premium Search Box */}
@@ -150,7 +150,7 @@ export default function HelpCenter() {
             {[
               { icon: Phone, title: "Customer Care", val: "+91 (22) 6789 0123", action: "Call Now", link: "tel:+912267890123" },
               { icon: MessageSquare, title: "Live Chat", val: "Available Now", action: "Start Chat", link: "#" },
-              { icon: Mail, title: "Email Support", val: "concierge@karmana.com", action: "Send Email", link: "mailto:concierge@karmana.com" },
+              { icon: Mail, title: "Email Support", val: "concierge@kramana.com", action: "Send Email", link: "mailto:concierge@kramana.com" },
             ].map((item, i) => (
               <motion.div
                 key={i}

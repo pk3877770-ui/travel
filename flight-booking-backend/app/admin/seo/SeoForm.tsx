@@ -61,7 +61,7 @@ export default function SeoForm({ currentPage, currentMetadata, isLocalJson }: {
                         <label className="font-black text-sm text-slate-500 uppercase tracking-[0.2em] group-focus-within:text-amber-500 transition-colors">Route Signature (Title)</label>
                         <span className="text-[10px] text-slate-600 font-mono italic">SEO_CORE_VALUE</span>
                     </div>
-                    <input type="text" name="title" defaultValue={currentMetadata?.title || ''} placeholder="Karmana | Luxury Excellence..." required
+                    <input type="text" name="title" defaultValue={currentMetadata?.title || ''} placeholder="Kramana | Luxury Excellence..." required
                            className="bg-black/20 border border-white/[0.05] p-6 rounded-2xl text-white text-lg focus:outline-none focus:border-amber-500/40 focus:bg-black/40 focus:ring-4 focus:ring-amber-500/5 transition-all font-medium placeholder:text-slate-800"/>
                     <div className="flex items-center gap-2 px-1">
                         <div className="w-1 h-1 rounded-full bg-amber-500/50"></div>
@@ -94,13 +94,13 @@ export default function SeoForm({ currentPage, currentMetadata, isLocalJson }: {
 
                 <div className="flex flex-col gap-4 group">
                     <label className="font-black text-sm text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Authority Canonical</label>
-                    <input type="url" name="canonical" defaultValue={currentMetadata?.canonical || ''} placeholder="https://karmana.com/..." 
+                    <input type="url" name="canonical" defaultValue={currentMetadata?.canonical || ''} placeholder="https://kramana.com/..." 
                            className="bg-black/20 border border-white/[0.05] p-6 rounded-2xl text-white text-sm focus:outline-none focus:border-amber-500/40 focus:bg-black/40 transition-all font-medium placeholder:text-slate-800"/>
                 </div>
 
                 <div className="flex flex-col gap-4 group">
                     <label className="font-black text-sm text-slate-500 uppercase tracking-[0.2em] px-1 group-focus-within:text-amber-500 transition-colors">Graph Endpoints (OG Url)</label>
-                    <input type="url" name="og_url" defaultValue={currentMetadata?.og_url || ''} placeholder="https://karmana.social/..." 
+                    <input type="url" name="og_url" defaultValue={currentMetadata?.og_url || ''} placeholder="https://kramana.social/..." 
                            className="bg-black/20 border border-white/[0.05] p-6 rounded-2xl text-white text-sm focus:outline-none focus:border-amber-500/40 focus:bg-black/40 transition-all font-medium placeholder:text-slate-800"/>
                 </div>
 

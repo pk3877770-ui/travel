@@ -14,7 +14,7 @@ const Footer = () => {
               <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shadow-xl">
                 <Plane className="w-7 h-7 text-accent -rotate-45" />
               </div>
-              <span className="text-3xl font-black font-outfit tracking-tighter">KARMANA</span>
+              <span className="text-3xl font-black font-outfit tracking-tighter">KRAMANA</span>
             </div>
             <p className="text-slate-400 leading-relaxed max-w-sm font-medium opacity-80">
               The world's premier travel concierge. From seamless sovereign flights to bespoke private estates, we craft journeys for the discerning few.
@@ -89,7 +89,7 @@ const Footer = () => {
                 <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
                   <Mail className="w-5 h-5 text-accent" />
                 </div>
-                <span className="text-slate-300">concierge@karmana.com</span>
+                <span className="text-slate-300">concierge@kramana.com</span>
               </div>
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
@@ -111,7 +111,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left text-slate-500 text-sm">
-          <p>© 2026 Karmana Travel Concierge. Crafted for the discerning traveler.</p>
+          <p>© 2026 Kramana Travel Concierge. Crafted for the discerning traveler.</p>
           <div className="flex gap-6 grayscale opacity-50">
             {["Visa", "Mastercard", "Amex"].map((card) => (
               <span key={card} className="font-bold tracking-widest">{card.toUpperCase()}</span>

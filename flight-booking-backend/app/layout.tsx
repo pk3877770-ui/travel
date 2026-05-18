@@ -12,13 +12,13 @@ import SessionProvider from "@/components/SessionProvider";
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Karmana",
-  "url": "https://karmana.vercel.app",
-  "logo": "https://karmana.vercel.app/logo.png",
+  "name": "Kramana",
+  "url": "https://kramana.vercel.app",
+  "logo": "https://kramana.vercel.app/logo.png",
   "sameAs": [
-    "https://facebook.com/karmana",
-    "https://instagram.com/karmana",
-    "https://twitter.com/karmana"
+    "https://facebook.com/kramana",
+    "https://instagram.com/kramana",
+    "https://twitter.com/kramana"
   ],
   "contactPoint": {
     "@type": "ContactPoint",
@@ -32,11 +32,11 @@ const organizationSchema = {
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Karmana",
-  "url": "https://karmana.vercel.app",
+  "name": "Kramana",
+  "url": "https://kramana.vercel.app",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://karmana.vercel.app/flights?from={search_term_string}",
+    "target": "https://kramana.vercel.app/flights?from={search_term_string}",
     "query-input": "required name=search_term_string"
   }
 };
@@ -44,11 +44,11 @@ const websiteSchema = {
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Karmana",
-  "description": "Experience the art of travel with Karmana's premium concierge services.",
+  "name": "Kramana",
+  "description": "Experience the art of travel with Kramana's premium concierge services.",
   "publisher": {
     "@type": "Organization",
-    "name": "Karmana"
+    "name": "Kramana"
   }
 };
 
@@ -70,7 +70,7 @@ import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
     
     return {
       ...mappedMetadata,
-      metadataBase: new URL("https://karmana.vercel.app"),
+      metadataBase: new URL("https://kramana.vercel.app"),
       openGraph: {
         ...mappedMetadata.openGraph,
         images: [
@@ -78,7 +78,7 @@ import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
             url: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=1200&h=630&q=80',
             width: 1200,
             height: 630,
-            alt: 'Karmana Luxury Travel Concierge',
+            alt: 'Kramana Luxury Travel Concierge',
           },
         ],
       },

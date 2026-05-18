@@ -23,13 +23,13 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://karmana.vercel.app"
+        "item": "https://kramana.vercel.app"
       },
       ...items.map((item, index) => ({
         "@type": "ListItem",
         "position": index + 2,
         "name": item.name,
-        "item": `https://karmana.vercel.app${item.href}`
+        "item": `https://kramana.vercel.app${item.href}`
       }))
     ]
   };

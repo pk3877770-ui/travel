@@ -78,7 +78,7 @@ const SearchSection = () => {
   const handleBookFlight = (flight: any) => {
     const params = new URLSearchParams();
     params.append("book", "true");
-    params.append("airline", flight.airline || "Karmana Air");
+    params.append("airline", flight.airline || "Kramana Air");
     params.append("from", flight.from);
     params.append("to", flight.to);
     params.append("price", flight.price || "4499");
@@ -271,7 +271,7 @@ const SearchSection = () => {
                           <Plane className="w-10 h-10 text-accent -rotate-45" />
                         </div>
                         <div className="relative">
-                          <div className="font-black text-2xl font-outfit">{flight.airline || "Karmana Air"}</div>
+                          <div className="font-black text-2xl font-outfit">{flight.airline || "Kramana Air"}</div>
                           <div className="flex items-center gap-2 mt-1">
                             <span className="text-slate-400 text-[10px] font-black tracking-[0.2em] uppercase">{flight.flightNumber || `KA-${100+idx}`} • {flight.class || "Business"}</span>
                             <span className="bg-accent/10 text-accent text-[8px] font-black px-2 py-0.5 rounded-full border border-accent/20 tracking-widest uppercase">Sovereign Tier</span>

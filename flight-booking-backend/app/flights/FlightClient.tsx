@@ -11,9 +11,9 @@ import Script from "next/script";
 const flightServiceSchema = {
   "@context": "https://schema.org",
   "@type": "TravelAgency",
-  "name": "Karmana Flight Booking",
+  "name": "Kramana Flight Booking",
   "description": "Premium flight booking service with access to exclusive rates and priority routing.",
-  "url": "https://karmana.vercel.app/flights",
+  "url": "https://kramana.vercel.app/flights",
   "priceRange": "$$",
   "address": {
     "@type": "PostalAddress",
@@ -76,7 +76,7 @@ export default function FlightBookingPage() {
 
   // Derive unique airlines and classes from current search results
   const availableAirlines = React.useMemo(() => {
-    const airlines = flights.map(f => f.airline || "Karmana Air");
+    const airlines = flights.map(f => f.airline || "Kramana Air");
     return ["All", ...Array.from(new Set(airlines))];
   }, [flights]);
 
@@ -87,7 +87,7 @@ export default function FlightBookingPage() {
 
   const filteredFlights = React.useMemo(() => {
     return flights.filter(f => {
-      const flightAirline = f.airline || "Karmana Air";
+      const flightAirline = f.airline || "Kramana Air";
       const flightClass = f.class || "Business";
       const flightPrice = f.price || 4499;
 
@@ -190,7 +190,7 @@ export default function FlightBookingPage() {
             from: selectedFlight.from,
             to: selectedFlight.to,
             date: selectedFlight.date || new Date().toISOString(),
-            airline: selectedFlight.airline || "Karmana Air",
+            airline: selectedFlight.airline || "Kramana Air",
             price: selectedFlight.price,
             departureTime: selectedFlight.departureTime,
             arrivalTime: selectedFlight.arrivalTime
@@ -235,7 +235,7 @@ export default function FlightBookingPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/50 to-background z-10" />
           <img
             src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80"
-            alt="Karmana Luxury Aviation - Sovereign Skies International Flight Search"
+            alt="Kramana Luxury Aviation - Sovereign Skies International Flight Search"
             loading="eager"
             className="w-full h-full object-cover"
           />
@@ -678,7 +678,7 @@ export default function FlightBookingPage() {
                           <Plane className="w-10 h-10 text-accent -rotate-45" />
                         </div>
                         <div>
-                          <div className="font-bold text-2xl text-white font-outfit">{flight.airline || "Karmana Air"}</div>
+                          <div className="font-bold text-2xl text-white font-outfit">{flight.airline || "Kramana Air"}</div>
                           <div className="text-slate-400 text-sm font-black tracking-widest uppercase opacity-60">
                             {flight.flightNumber || `KA-${100 + idx}`} • {flight.class || "Business"}
                           </div>
@@ -828,7 +828,7 @@ export default function FlightBookingPage() {
               <div className="relative aspect-square w-full max-w-[450px] rounded-[3rem] overflow-hidden shadow-2xl premium-border">
                 <img 
                   src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80" 
-                  alt="Karmana Luxury Hotel Collection - Complementary Guest Accommodations" 
+                  alt="Kramana Luxury Hotel Collection - Complementary Guest Accommodations" 
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />

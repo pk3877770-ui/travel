@@ -14,10 +14,10 @@ const stats = [
 ];
 
 const timeline = [
-  { year: "2020", title: "Inception of Sovereign Travel", desc: "Karmana was established in Mumbai with a singular focus: to redefine global travel through the lens of elite concierge service and unparalleled accessibility." },
+  { year: "2020", title: "Inception of Sovereign Travel", desc: "Kramana was established in Mumbai with a singular focus: to redefine global travel through the lens of elite concierge service and unparalleled accessibility." },
   { year: "2021", title: "Digital Concierge Launch", desc: "Our revolutionary mobile platform launched, bringing real-time luxury aviation and hotel management to the fingertips of the modern voyager." },
   { year: "2023", title: "Expanding Global Horizons", desc: "Achieved the milestone of 10 million bookings while establishing a private network of five-star properties and exclusive aviation routes across seven continents." },
-  { year: "2025", title: "AI-Powered Luxury", desc: "Integrated advanced predictive analytics to offer hyper-personalized itineraries, ensuring every Karmana journey is as unique as the guest embarking upon it." },
+  { year: "2025", title: "AI-Powered Luxury", desc: "Integrated advanced predictive analytics to offer hyper-personalized itineraries, ensuring every Kramana journey is as unique as the guest embarking upon it." },
 ];
 
 const features = [
@@ -75,9 +75,9 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
             <div>
               <span className="text-accent font-black tracking-[0.3em] text-sm uppercase">Why Choose Us</span>
-              <h2 className="text-4xl md:text-5xl font-bold font-outfit mt-4 mb-8">Why Millions Trust Karmana</h2>
+              <h2 className="text-4xl md:text-5xl font-bold font-outfit mt-4 mb-8">Why Millions Trust Kramana</h2>
               <p className="text-lg text-slate-500 mb-10 leading-relaxed">
-                Karmana is a premium flight booking service designed to simplify travel planning. Our mission is to deliver affordable fares, reliable customer support, and a smooth booking experience for every journey.
+                Kramana is a premium flight booking service designed to simplify travel planning. Our mission is to deliver affordable fares, reliable customer support, and a smooth booking experience for every journey.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {features.map((feature, idx) => (
@@ -116,7 +116,7 @@ export default function AboutPage() {
         <div className="container max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
             <span className="text-accent font-black tracking-[0.3em] text-sm uppercase">Our Journey</span>
-            <h2 className="text-4xl md:text-5xl font-bold font-outfit mt-4">Karmana's Growth Story</h2>
+            <h2 className="text-4xl md:text-5xl font-bold font-outfit mt-4">Kramana's Growth Story</h2>
           </div>
 
           <div className="relative">

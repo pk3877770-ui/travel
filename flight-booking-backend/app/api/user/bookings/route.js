@@ -17,12 +17,12 @@ const sendConfirmationEmail = async (userEmail, booking) => {
     });
 
     const mailOptions = {
-      from: '"Karmana Luxury Travels" <no-reply@karmana.com>',
+      from: '"Kramana Luxury Travels" <no-reply@kramana.com>',
       to: userEmail,
       subject: `Booking Confirmed: ${booking.bookingReference}`,
       html: `
         <div style="font-family: 'Arial', sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #1e293b; padding: 30px; border-radius: 12px; background-color: #0f172a; color: #f8fafc;">
-          <h2 style="color: #f59e0b; text-align: center; letter-spacing: 2px; text-transform: uppercase;">Karmana Sovereign</h2>
+          <h2 style="color: #f59e0b; text-align: center; letter-spacing: 2px; text-transform: uppercase;">Kramana Sovereign</h2>
           <p>Dear ${booking.passengerDetails.name},</p>
           <p>Your luxury flight has been successfully booked and confirmed. Please find your itinerary details below:</p>
           
@@ -34,8 +34,8 @@ const sendConfirmationEmail = async (userEmail, booking) => {
             <p style="margin: 0 0 0 0; padding-top: 10px; border-top: 1px solid #334155;"><span style="color: #94a3b8; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Total Paid</span><br/><strong style="color: #f59e0b; font-size: 18px;">₹${booking.totalAmount}</strong></p>
           </div>
           
-          <p style="color: #cbd5e1;">You can manage your booking and view your digital ticket by logging into your Karmana Profile.</p>
-          <p style="color: #cbd5e1;">Safe travels,<br/><strong style="color: #f59e0b;">The Karmana Team</strong></p>
+          <p style="color: #cbd5e1;">You can manage your booking and view your digital ticket by logging into your Kramana Profile.</p>
+          <p style="color: #cbd5e1;">Safe travels,<br/><strong style="color: #f59e0b;">The Kramana Team</strong></p>
         </div>
       `,
     };

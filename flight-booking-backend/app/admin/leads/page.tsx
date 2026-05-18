@@ -51,7 +51,7 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
       <aside className="w-[320px] h-screen sticky top-0 bg-[#020617]/50 backdrop-blur-[50px] border-r border-white/[0.03] flex flex-col items-center z-50">
         <div className="w-full p-12 relative overflow-hidden group">
             <h2 className="font-black text-3xl text-white tracking-tighter text-center flex flex-col items-center">
-                KARMANA
+                KRAMANA
                 <span className="text-[10px] text-accent tracking-[0.5em] uppercase font-light mt-2">Sovereign Admin</span>
             </h2>
         </div>
@@ -99,7 +99,7 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-orange-400 to-rose-500">Analytics Panel</span>
                 </h1>
                 <p className="text-slate-500 text-lg max-w-2xl font-normal opacity-60 leading-relaxed">
-                    Real-time oversight of global search intent and sovereign booking inquiries across the Karmana network.
+                    Real-time oversight of global search intent and sovereign booking inquiries across the Kramana network.
                 </p>
             </header>
 

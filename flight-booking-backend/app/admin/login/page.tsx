@@ -18,7 +18,7 @@ export default async function AdminLoginPage() {
 
       <div className="relative z-10 bg-slate-900/50 backdrop-blur-xl border border-white/10 p-12 rounded-[2rem] shadow-[0_0_50px_rgba(0,0,0,0.5)] w-full max-w-[450px] mx-4 animate-in fade-in zoom-in-95 duration-500">
         <div className="text-center mb-10">
-            <h1 className="text-4xl font-black text-white tracking-widest uppercase">Karmana</h1>
+            <h1 className="text-4xl font-black text-white tracking-widest uppercase">Kramana</h1>
             <p className="text-amber-500 font-bold mt-3 tracking-[0.2em] text-[10px] uppercase">Secure Operations Portal</p>
         </div>
         <LoginForm />

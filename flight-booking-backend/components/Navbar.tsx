@@ -98,7 +98,7 @@ const Navbar = () => {
                 <Plane className="w-5 h-5 md:w-6 md:h-6 text-primary-dark -rotate-45" />
               </div>
               <span className="text-xl md:text-2xl font-black tracking-tighter text-white font-outfit uppercase">
-                Karmana
+                Kramana
               </span>
             </Link>
           </div>

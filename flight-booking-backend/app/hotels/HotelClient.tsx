@@ -11,9 +11,9 @@ import Script from "next/script";
 const hotelServiceSchema = {
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
-  "name": "Karmana Hotel Collection",
+  "name": "Kramana Hotel Collection",
   "description": "Exclusive access to the world's most celebrated Five-Star properties and private estates.",
-  "url": "https://karmana.vercel.app/hotels",
+  "url": "https://kramana.vercel.app/hotels",
   "priceRange": "$$$",
   "address": {
     "@type": "PostalAddress",
@@ -32,7 +32,7 @@ const hotelCollection = [
     price: "₹2,999",
     oldPrice: "₹4,500",
     image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
-    alt: "Azure Sands Resort - Luxury Beachfront Property by Karmana",
+    alt: "Azure Sands Resort - Luxury Beachfront Property by Kramana",
     tags: ["TOP RATED", "Beachfront"],
   },
   {
@@ -44,7 +44,7 @@ const hotelCollection = [
     price: "₹8,999",
     oldPrice: "₹12,000",
     image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&h=400&fit=crop",
-    alt: "The Majestic Palace - Sea View Luxury Estate by Karmana",
+    alt: "The Majestic Palace - Sea View Luxury Estate by Kramana",
     tags: ["LEGENDARY", "Sea View"],
   },
   {
@@ -252,7 +252,7 @@ export default function HotelBooking() {
           <div className="absolute inset-0 mesh-gradient opacity-20 pointer-events-none" />
           <img
             src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80"
-            alt="Karmana Luxury Hotel Sanctuary and Private Estate Reservations"
+            alt="Kramana Luxury Hotel Sanctuary and Private Estate Reservations"
             loading="eager"
             className="w-full h-full object-cover"
           />
@@ -423,7 +423,7 @@ export default function HotelBooking() {
       <section className="py-24 bg-slate-50 dark:bg-slate-900">
         <div className="container max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-accent font-black tracking-[0.3em] text-sm uppercase">The Karmana Advantage</span>
+            <span className="text-accent font-black tracking-[0.3em] text-sm uppercase">The Kramana Advantage</span>
             <h2 className="text-4xl md:text-5xl font-bold font-outfit mt-4 mb-6">Elevating Your Stay Experience</h2>
           </div>
 
@@ -461,7 +461,7 @@ export default function HotelBooking() {
                 Sovereign <span className="text-accent">Skies</span> Await
               </h2>
               <p className="text-slate-500 dark:text-slate-400 text-lg mb-10 leading-relaxed">
-                Your luxury stay deserves an equally exquisite arrival. Access unpublished private rates and priority routing across 500+ global airlines with Karmana's aviation desk.
+                Your luxury stay deserves an equally exquisite arrival. Access unpublished private rates and priority routing across 500+ global airlines with Kramana's aviation desk.
               </p>
               <div className="flex flex-wrap gap-6">
                 <button 
