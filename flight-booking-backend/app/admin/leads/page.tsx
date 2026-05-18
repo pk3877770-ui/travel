@@ -11,12 +11,6 @@ import { Search, MapPin, Calendar, Users, Trash2, ShieldCheck, Zap, Globe, Clock
 
 export default async function LeadsAdminPage({ searchParams }: { searchParams: Promise<{ filter?: string }> }) {
   const { filter } = await searchParams;
-  const cookieStore = await cookies();
-  const token = cookieStore.get('admin_token');
-
-  if (token?.value !== 'authenticated') {
-    redirect('/admin/login');
-  }
 
   let leads = [];
   let dbError = false;

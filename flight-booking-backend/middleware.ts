@@ -11,6 +11,6 @@ export const config = {
   // Protect specific routes that require authentication
   matcher: [
     "/profile/:path*",
-    "/admin/:path*",
+    "/admin/seo",
   ],
 };
