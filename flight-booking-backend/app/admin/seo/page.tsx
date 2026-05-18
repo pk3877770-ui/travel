@@ -10,6 +10,7 @@ const ALL_PAGES = [
   '/',
   '/about',
   '/contact',
+  '/auth',
   '/flight-booking',
   '/hotel-booking',
   '/holiday-packages',
