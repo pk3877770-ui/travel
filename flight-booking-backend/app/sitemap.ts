@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/services',
     '/about',
     '/contact',
+    '/blog',
     '/auth',
     '/refund',
     '/privacy',

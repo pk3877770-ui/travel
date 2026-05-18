@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -104,11 +105,11 @@ const FeaturedOffers = () => {
                 <div className="absolute top-6 right-6 z-10 bg-accent text-primary px-4 py-2 rounded-full font-black text-xs">
                   {offer.badge}
                 </div>
-                <img
+                <Image
                   src={offer.image}
                   alt={`Karmana Exclusive Travel Deal: ${offer.title} - ${offer.description}`}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
               <div className="p-8">

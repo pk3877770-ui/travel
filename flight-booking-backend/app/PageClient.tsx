@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import SearchSection from "@/components/SearchSection";
 import FeaturedOffers from "@/components/FeaturedOffers";
 import ExperienceKarmana from "@/components/ExperienceKarmana";
+import BlogSection from "@/components/BlogSection";
 import { Send, Sparkles, Crown } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <div className="relative overflow-hidden space-y-40 mb-40">
         <FeaturedOffers />
         <ExperienceKarmana />
+        <BlogSection />
         
         {/* Newsletter Section - The Sovereign List */}
         <section id="newsletter" className="py-32 relative overflow-hidden">

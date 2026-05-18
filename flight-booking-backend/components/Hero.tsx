@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Compass, Play, Sparkles, Crown } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -16,11 +17,12 @@ const Hero = () => {
           transition={{ duration: 2.5 }}
           className="absolute inset-0"
         >
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=1600&q=80"
             alt="Karmana Luxury Private Jet Aviation - Sovereign Excellence Travel"
-            loading="eager"
-            className="w-full h-full object-cover"
+            fill
+            priority
+            className="object-cover"
           />
         </motion.div>
       </div>

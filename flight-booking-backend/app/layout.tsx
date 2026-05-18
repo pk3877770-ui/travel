@@ -41,6 +41,17 @@ const websiteSchema = {
   }
 };
 
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Karmana",
+  "description": "Experience the art of travel with Karmana's premium concierge services.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Karmana"
+  }
+};
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -53,13 +64,26 @@ const outfit = Outfit({
 
 import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
  
- export async function generateMetadata(): Promise<Metadata> {
-   const seo = await getSEOMetadata("/"); // Use Home SEO as baseline
-   return {
-     ...mapSEOToMetadata(seo),
-     metadataBase: new URL("https://karmana.vercel.app"),
-   };
- }
+  export async function generateMetadata(): Promise<Metadata> {
+    const seo = await getSEOMetadata("/"); // Use Home SEO as baseline
+    const mappedMetadata = mapSEOToMetadata(seo);
+    
+    return {
+      ...mappedMetadata,
+      metadataBase: new URL("https://karmana.vercel.app"),
+      openGraph: {
+        ...mappedMetadata.openGraph,
+        images: [
+          {
+            url: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=1200&h=630&q=80',
+            width: 1200,
+            height: 630,
+            alt: 'Karmana Luxury Travel Concierge',
+          },
+        ],
+      },
+    };
+  }
 
 export default function RootLayout({
   children,
@@ -82,6 +106,11 @@ export default function RootLayout({
             id="website-schema"
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+          />
+          <Script
+            id="webpage-schema"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
           />
           <main className="min-h-screen">
             {children}
