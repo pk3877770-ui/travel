@@ -1,9 +1,10 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import AppleProvider from "next-auth/providers/apple";
+import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
-import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 
@@ -13,6 +14,18 @@ const handler = NextAuth({
       ? [GoogleProvider({
           clientId: process.env.GOOGLE_CLIENT_ID,
           clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        })] 
+      : []),
+    ...(process.env.APPLE_CLIENT_ID && process.env.APPLE_CLIENT_SECRET 
+      ? [AppleProvider({
+          clientId: process.env.APPLE_CLIENT_ID,
+          clientSecret: process.env.APPLE_CLIENT_SECRET,
+        })] 
+      : []),
+    ...(process.env.FACEBOOK_CLIENT_ID && process.env.FACEBOOK_CLIENT_SECRET 
+      ? [FacebookProvider({
+          clientId: process.env.FACEBOOK_CLIENT_ID,
+          clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
         })] 
       : []),
     CredentialsProvider({
@@ -55,7 +68,7 @@ const handler = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
-      if (account.provider === "google") {
+      if (["google", "apple", "facebook"].includes(account.provider)) {
         try {
           await dbConnect();
 
@@ -63,10 +76,10 @@ const handler = NextAuth({
           let existingUser = await User.findOne({ email: user.email });
 
           if (!existingUser) {
-            // Create a new user with a random password (they'll use Google to sign in)
+            // Create a new user with a random password
             const randomPassword = crypto.randomBytes(32).toString("hex");
             existingUser = await User.create({
-              name: user.name,
+              name: user.name || user.email.split('@')[0],
               email: user.email,
               password: randomPassword,
             });
@@ -80,7 +93,7 @@ const handler = NextAuth({
           user.role = existingUser.role;
           return true;
         } catch (error) {
-          console.error("Google sign-in error:", error);
+          console.error("Social sign-in error:", error);
           return false;
         }
       }
