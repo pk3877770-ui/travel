@@ -21,7 +21,7 @@ export async function loginAction(prevState: any, formData: FormData) {
   }
   
   // Notice: redirect must be called outside try-catch to work correctly in server actions
-  redirect('/admin/seo');
+  redirect('/admin/leads');
 }
 
 export async function logoutAction() {

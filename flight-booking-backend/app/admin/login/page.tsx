@@ -7,7 +7,7 @@ export default async function AdminLoginPage() {
   const token = cookieStore.get('admin_token');
   
   if (token?.value === 'authenticated') {
-    redirect('/admin/seo');
+    redirect('/admin/leads');
   }
 
   return (
