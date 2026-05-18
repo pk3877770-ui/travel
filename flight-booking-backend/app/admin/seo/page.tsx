@@ -85,7 +85,7 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
             <p className="px-6 text-[10px] font-black text-slate-600 uppercase tracking-widest mb-2">Target Pages</p>
             {allPaths.map((pagePath) => {
                 const isActive = currentPage === pagePath;
-                const linkName = pagePath === '/' ? 'Home Page' : pagePath.replace(/[-/]/g, ' ').trim().replace(/\b\w/g, c => c.toUpperCase());
+                const linkName = pagePath === '/' ? 'Home Page' : pagePath === '/auth' ? 'Sign In' : pagePath.replace(/[-/]/g, ' ').trim().replace(/\b\w/g, c => c.toUpperCase());
                 const hasData = !!seoMap[pagePath];
                 return (
                     <Link 
