@@ -38,14 +38,14 @@ const posts = [
 
 const BlogSection = () => {
   return (
-    <section className="py-32 bg-white dark:bg-[#020617]">
+    <section className="py-16 bg-white dark:bg-[#020617]">
       <div className="container max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-accent font-black tracking-[0.3em] text-sm uppercase"
+            className="text-accent font-black tracking-[0.3em] text-xs uppercase"
           >
             Insights & Stories
           </motion.span>
@@ -54,14 +54,14 @@ const BlogSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl font-black font-outfit mt-4 mb-6 tracking-tighter"
+            className="text-3xl md:text-4xl font-black font-outfit mt-2 mb-4 tracking-tighter"
           >
             The Kramana Journal
           </motion.h2>
-          <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
+          <div className="w-16 h-0.5 bg-accent mx-auto rounded-full" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post, idx) => (
             <motion.div
               key={post.id}
@@ -69,10 +69,10 @@ const BlogSection = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-white dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none group hover:-translate-y-2 transition-all duration-500 flex flex-col"
+              className="bg-white dark:bg-slate-900 rounded-[1.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none group hover:-translate-y-1 transition-all duration-500 flex flex-col"
             >
-              <div className="relative h-64 overflow-hidden">
-                <div className="absolute top-6 left-6 z-10 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-full font-black text-xs uppercase tracking-wider text-primary dark:text-accent">
+              <div className="relative h-44 overflow-hidden">
+                <div className="absolute top-3 left-3 z-10 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-3 py-1 rounded-full font-black text-[10px] uppercase tracking-wider text-primary dark:text-accent">
                   {post.category}
                 </div>
                 <Image
@@ -82,29 +82,29 @@ const BlogSection = () => {
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
-              <div className="p-8 flex flex-col flex-1">
-                <div className="flex items-center gap-4 text-xs text-slate-400 mb-4">
+              <div className="p-5 flex flex-col flex-1">
+                <div className="flex items-center gap-3 text-[10px] text-slate-400 mb-3">
                   <div className="flex items-center gap-1">
-                    <Calendar className="w-3.5 h-3.5" />
+                    <Calendar className="w-3 h-3" />
                     {post.date}
                   </div>
                   <div className="flex items-center gap-1">
-                    <User className="w-3.5 h-3.5" />
+                    <User className="w-3 h-3" />
                     {post.author}
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold font-outfit mb-3 group-hover:text-accent transition-colors">
+                <h3 className="text-sm font-bold font-outfit mb-2 group-hover:text-accent transition-colors leading-snug">
                   {post.title}
                 </h3>
-                <p className="text-slate-500 dark:text-slate-400 mb-6 leading-relaxed text-sm flex-1">
+                <p className="text-slate-500 dark:text-slate-400 mb-4 leading-relaxed text-xs flex-1">
                   {post.excerpt}
                 </p>
-                <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
+                <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
                   <Link
                     href={`/blog/${post.id}`}
-                    className="text-primary dark:text-accent font-bold flex items-center gap-2 hover:gap-3 transition-all text-sm"
+                    className="text-primary dark:text-accent font-bold flex items-center gap-1.5 hover:gap-2.5 transition-all text-xs"
                   >
-                    Read Full Article <ArrowRight className="w-4 h-4" />
+                    Read Full Article <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
@@ -112,10 +112,10 @@ const BlogSection = () => {
           ))}
         </div>
 
-        <div className="text-center mt-16">
+        <div className="text-center mt-10">
           <Link
             href="/blog"
-            className="inline-flex items-center justify-center bg-primary-dark dark:bg-white text-white dark:text-primary-dark px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest hover:bg-accent dark:hover:bg-accent hover:text-primary-dark dark:hover:text-primary-dark transition-all shadow-xl"
+            className="inline-flex items-center justify-center bg-primary-dark dark:bg-white text-white dark:text-primary-dark px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest hover:bg-accent dark:hover:bg-accent hover:text-primary-dark dark:hover:text-primary-dark transition-all shadow-xl"
           >
             View All Articles
           </Link>

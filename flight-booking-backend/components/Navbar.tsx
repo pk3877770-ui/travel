@@ -81,12 +81,12 @@ const Navbar = () => {
     <header 
       className={cn(
         "fixed top-0 left-0 right-0 z-[100] transition-all duration-500",
-        isScrolled ? "py-3 px-3 md:py-4 md:px-10" : "py-6 px-4 md:py-8 md:px-10"
+        isScrolled ? "py-2 px-3 md:py-3 md:px-10" : "py-3 px-4 md:py-4 md:px-10"
       )}
     >
       <div className="max-w-[1440px] mx-auto">
         <nav className={cn(
-          "flex items-center justify-between transition-all duration-500 rounded-[2rem] md:rounded-[2.5rem] px-5 md:px-8 py-3 md:py-4 border border-white/5 shadow-2xl",
+          "flex items-center justify-between transition-all duration-500 rounded-[1.5rem] md:rounded-[2rem] px-4 md:px-6 py-2 md:py-3 border border-white/5 shadow-2xl",
           isScrolled 
             ? "bg-slate-900/95 backdrop-blur-3xl" 
             : "bg-primary-dark/40 backdrop-blur-xl"
@@ -94,22 +94,22 @@ const Navbar = () => {
           {/* Section 1: Logo */}
           <div className="flex-shrink-0 relative z-[120]">
             <Link href="/" className="flex items-center gap-2 md:gap-3 group">
-              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-accent flex items-center justify-center shadow-2xl shadow-accent/20 transition-transform group-hover:rotate-12">
-                <Plane className="w-5 h-5 md:w-6 md:h-6 text-primary-dark -rotate-45" />
+              <div className="w-7 h-7 md:w-8 md:h-8 rounded-md md:rounded-lg bg-accent flex items-center justify-center shadow-2xl shadow-accent/20 transition-transform group-hover:rotate-12">
+                <Plane className="w-4 h-4 md:w-5 md:h-5 text-primary-dark -rotate-45" />
               </div>
-              <span className="text-xl md:text-2xl font-black tracking-tighter text-white font-outfit uppercase">
+              <span className="text-base md:text-lg font-black tracking-tighter text-white font-outfit uppercase">
                 Kramana
               </span>
             </Link>
           </div>
 
           {/* Section 2: Desktop Links - Center Aligned */}
-          <div className="hidden lg:flex flex-1 items-center justify-center gap-10 xl:gap-14 px-8">
+          <div className="hidden lg:flex flex-1 items-center justify-center gap-6 xl:gap-10 px-4">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-slate-200 hover:text-accent font-black text-[12px] uppercase tracking-[0.25em] transition-all relative group whitespace-nowrap"
+                className="text-slate-200 hover:text-accent font-black text-[11px] uppercase tracking-[0.2em] transition-all relative group whitespace-nowrap"
               >
                 {link.name}
                 <span className="absolute -bottom-2 left-0 w-0 h-px bg-accent transition-all group-hover:w-full" />
@@ -121,7 +121,7 @@ const Navbar = () => {
           <div className="flex items-center gap-4 md:gap-6 flex-shrink-0 relative z-[120]">
             <div className="hidden sm:flex items-center">
               {currentUser ? (
-                <Link href="/profile" className="flex items-center gap-3 bg-white/5 border border-white/10 px-6 py-3 rounded-2xl hover:bg-white/10 transition-all">
+                <Link href="/profile" className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-xl hover:bg-white/10 transition-all">
                   <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
                     <User className="w-4 h-4 text-accent" />
                   </div>
@@ -172,7 +172,7 @@ const Navbar = () => {
                     <Link
                       href={link.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="text-4xl md:text-5xl font-black text-white hover:text-accent transition-colors font-outfit tracking-tighter"
+                      className="text-2xl md:text-3xl font-black text-white hover:text-accent transition-colors font-outfit tracking-tighter"
                     >
                       {link.name}
                     </Link>
@@ -186,7 +186,7 @@ const Navbar = () => {
                     <Link 
                       href="/profile"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center gap-4 text-2xl font-black text-white"
+                      className="flex items-center gap-3 text-base font-black text-white"
                     >
                       <User className="text-accent" /> My Profile
                     </Link>
@@ -195,7 +195,7 @@ const Navbar = () => {
                         handleLogout();
                         setIsMobileMenuOpen(false);
                       }}
-                      className="text-2xl font-black text-rose-500 uppercase tracking-widest text-left"
+                      className="text-base font-black text-rose-500 uppercase tracking-widest text-left"
                     >
                       Logout
                     </button>
@@ -204,7 +204,7 @@ const Navbar = () => {
                   <Link 
                     href="/auth" 
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full py-6 bg-accent text-primary-dark rounded-[1.5rem] font-black text-2xl uppercase tracking-widest text-center"
+                    className="w-full py-4 bg-accent text-primary-dark rounded-[1.2rem] font-black text-base uppercase tracking-widest text-center"
                   >
                     Sign In
                   </Link>

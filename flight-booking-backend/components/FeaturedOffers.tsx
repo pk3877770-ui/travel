@@ -63,19 +63,19 @@ const FeaturedOffers = () => {
   };
 
   return (
-    <section className="py-32 bg-white dark:bg-[#020617]">
+    <section className="py-16 bg-white dark:bg-[#020617]">
       <Script
         id="offers-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(offersSchema) }}
       />
       <div className="container max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-accent font-black tracking-[0.3em] text-sm uppercase"
+            className="text-accent font-black tracking-[0.3em] text-xs uppercase"
           >
             Chosen for you
           </motion.span>
@@ -84,14 +84,14 @@ const FeaturedOffers = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl font-black font-outfit mt-4 mb-6 tracking-tighter"
+            className="text-3xl md:text-4xl font-black font-outfit mt-2 mb-4 tracking-tighter"
           >
             Exclusive Seasonal Offers
           </motion.h2>
-          <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
+          <div className="w-16 h-0.5 bg-accent mx-auto rounded-full" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {offers.map((offer, idx) => (
             <motion.div
               key={offer.id}
@@ -99,10 +99,10 @@ const FeaturedOffers = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-white dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none group hover:-translate-y-2 transition-all duration-500"
+              className="bg-white dark:bg-slate-900 rounded-[1.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none group hover:-translate-y-1 transition-all duration-500"
             >
-              <div className="relative h-64 overflow-hidden">
-                <div className="absolute top-6 right-6 z-10 bg-accent text-primary px-4 py-2 rounded-full font-black text-xs">
+              <div className="relative h-48 overflow-hidden">
+                <div className="absolute top-4 right-4 z-10 bg-accent text-primary px-3 py-1 rounded-full font-black text-[10px]">
                   {offer.badge}
                 </div>
                 <Image
@@ -112,24 +112,24 @@ const FeaturedOffers = () => {
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
-              <div className="p-8">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-2xl font-bold font-outfit">{offer.title}</h3>
-                  <span className="text-2xl font-black text-gradient">{offer.price}</span>
+              <div className="p-5">
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-base font-bold font-outfit">{offer.title}</h3>
+                  <span className="text-base font-black text-gradient">{offer.price}</span>
                 </div>
-                <p className="text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 mb-5 leading-relaxed text-sm">
                   {offer.description}
                 </p>
-                <div className="flex justify-between items-center pt-6 border-t border-slate-100 dark:border-slate-800">
-                  <div className="flex items-center gap-2 text-slate-400 text-sm">
-                    <offer.icon className="w-4 h-4" />
+                <div className="flex justify-between items-center pt-4 border-t border-slate-100 dark:border-slate-800">
+                  <div className="flex items-center gap-1.5 text-slate-400 text-xs">
+                    <offer.icon className="w-3.5 h-3.5" />
                     {offer.foot}
                   </div>
                   <Link 
                     href={`/flights?book=true&airline=Kramana+Signature&from=Exclusive+Route&to=${encodeURIComponent(offer.title)}&price=${offer.price.replace('$', '').replace(',', '')}&type=Holiday+Package`}
-                    className="text-primary dark:text-accent font-bold flex items-center gap-2 hover:gap-3 transition-all"
+                    className="text-primary dark:text-accent font-bold flex items-center gap-1.5 hover:gap-2.5 transition-all text-sm"
                   >
-                    Reserve This Offer <ArrowRight className="w-4 h-4" />
+                    Reserve <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
