@@ -38,9 +38,9 @@ const posts = [
 
 const BlogSection = () => {
   return (
-    <section className="py-16 bg-white dark:bg-[#020617]">
+    <section className="py-10 md:py-12 bg-white dark:bg-[#020617]">
       <div className="container max-w-7xl mx-auto px-6">
-        <div className="text-center mb-10">
+        <div className="text-center mb-6">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -54,14 +54,14 @@ const BlogSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-4xl font-black font-outfit mt-2 mb-4 tracking-tighter"
+            className="text-3xl md:text-4xl font-black font-outfit mt-2 mb-3 tracking-tighter"
           >
             The Kramana Journal
           </motion.h2>
           <div className="w-16 h-0.5 bg-accent mx-auto rounded-full" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {posts.map((post, idx) => (
             <motion.div
               key={post.id}
@@ -82,8 +82,8 @@ const BlogSection = () => {
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
-              <div className="p-5 flex flex-col flex-1">
-                <div className="flex items-center gap-3 text-[10px] text-slate-400 mb-3">
+              <div className="p-4 flex flex-col flex-1">
+                <div className="flex items-center gap-3 text-[10px] text-slate-400 mb-2">
                   <div className="flex items-center gap-1">
                     <Calendar className="w-3 h-3" />
                     {post.date}
@@ -96,10 +96,10 @@ const BlogSection = () => {
                 <h3 className="text-sm font-bold font-outfit mb-2 group-hover:text-accent transition-colors leading-snug">
                   {post.title}
                 </h3>
-                <p className="text-slate-500 dark:text-slate-400 mb-4 leading-relaxed text-xs flex-1">
+                <p className="text-slate-500 dark:text-slate-400 mb-3 leading-relaxed text-xs flex-1">
                   {post.excerpt}
                 </p>
-                <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
+                <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
                   <Link
                     href={`/blog/${post.id}`}
                     className="text-primary dark:text-accent font-bold flex items-center gap-1.5 hover:gap-2.5 transition-all text-xs"
@@ -112,10 +112,10 @@ const BlogSection = () => {
           ))}
         </div>
 
-        <div className="text-center mt-10">
+        <div className="text-center mt-6">
           <Link
             href="/blog"
-            className="inline-flex items-center justify-center bg-primary-dark dark:bg-white text-white dark:text-primary-dark px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest hover:bg-accent dark:hover:bg-accent hover:text-primary-dark dark:hover:text-primary-dark transition-all shadow-xl"
+            className="inline-flex items-center justify-center bg-primary-dark dark:bg-white text-white dark:text-primary-dark px-7 py-2.5 rounded-full font-black text-xs uppercase tracking-widest hover:bg-accent dark:hover:bg-accent hover:text-primary-dark dark:hover:text-primary-dark transition-all shadow-xl"
           >
             View All Articles
           </Link>

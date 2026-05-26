@@ -1,16 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Search, MapPin, Calendar, Users, Loader2, PlaneTakeoff, Sparkles, ArrowRight, ArrowLeftRight, Waypoints, Plus, Trash2, Box, Plane, Hotel, Ship, TrendingUp } from "lucide-react";
+import { Search, MapPin, Calendar, Users, Loader2, PlaneTakeoff, Sparkles, ArrowRight, ArrowLeftRight, Waypoints, Plus, Trash2, Box, Plane, Hotel, Ship, TrendingUp, Car } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-const tabs = [
+const tabs: Array<{
+  id: string;
+  label: string;
+  icon: React.ElementType;
+  promo?: string;
+}> = [
   { id: "flights", label: "Flights", icon: Plane },
   { id: "hotels", label: "Hotels", icon: Hotel },
-  { id: "bundles", label: "Bundles", icon: Box, promo: "-20%" },
-  { id: "cruises", label: "Cruises", icon: Ship },
+  { id: "cars", label: "Cars", icon: Car },
 ];
 
 const trending = ["Maldives", "Paris", "Dubai", "Swiss Alps", "Kyoto"];
@@ -30,6 +34,27 @@ const SearchSection = () => {
     { from: "Delhi", to: "Mumbai", date: "" },
     { from: "Mumbai", to: "Paris", date: "" }
   ]);
+  const [addNearbyFrom, setAddNearbyFrom] = useState(false);
+  const [directFlights, setDirectFlights] = useState(false);
+  const [addHotel, setAddHotel] = useState(true);
+  const locationRef = useRef<HTMLInputElement | null>(null);
+
+  const carLocationRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (activeTab === 'hotels') {
+      setTimeout(() => {
+        locationRef.current?.focus();
+      }, 50);
+      return;
+    }
+    if (activeTab === 'cars') {
+      setTimeout(() => {
+        carLocationRef.current?.focus();
+      }, 50);
+      return;
+    }
+  }, [activeTab]);
 
   const addMultiCityRow = () => {
     if (multiCityFlights.length < 5) {
@@ -101,6 +126,9 @@ const SearchSection = () => {
           to,
           date,
           travelers,
+          addNearbyFrom: activeTab === 'flights' ? addNearbyFrom : false,
+          directFlights: activeTab === 'flights' ? directFlights : false,
+          addHotel: activeTab === 'flights' ? addHotel : false,
           type: (activeTab === "flights" ? `Flight (${tripType === "one-way" ? "One Way" : tripType === "round-trip" ? "Round Trip" : "Multi-city"})` : activeTab.charAt(0).toUpperCase() + activeTab.slice(1)) + " Search"
         }),
       });
@@ -127,6 +155,15 @@ const SearchSection = () => {
       if (tripType === "multi-city") {
         const firstLeg = multiCityFlights[0];
         searchUrl = `/api/search?from=${firstLeg.from}&to=${firstLeg.to}&date=${firstLeg.date}&travelers=${travelers}`;
+      }
+      // Append flight-specific options
+      if (activeTab === 'flights') {
+        const flags = new URLSearchParams();
+        if (addNearbyFrom) flags.append('addNearbyFrom', '1');
+        if (directFlights) flags.append('directFlights', '1');
+        if (addHotel) flags.append('addHotel', '1');
+        const suf = flags.toString();
+        if (suf) searchUrl += `&${suf}`;
       }
       const res = await fetch(searchUrl);
       const data = await res.json();
@@ -173,18 +210,18 @@ const SearchSection = () => {
                 className={cn(
                   "relative px-3 md:px-5 py-1.5 md:py-2 rounded-lg md:rounded-xl flex items-center gap-1.5 md:gap-2 font-bold text-[11px] md:text-sm transition-all whitespace-nowrap overflow-hidden flex-shrink-0",
                   activeTab === tab.id
-                    ? "text-primary-dark dark:text-white"
+                    ? "text-white"
                     : "text-slate-500 hover:text-slate-800 dark:hover:text-white"
                 )}
               >
                 {activeTab === tab.id && (
                   <motion.div
                     layoutId="active-tab"
-                    className="absolute inset-0 bg-white dark:bg-white/10 shadow-xl shadow-black/5"
+                    className="absolute inset-0 bg-accent shadow-xl shadow-black/10"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
-                <tab.icon className={cn("relative z-10 w-4 h-4 md:w-5 md:h-5", activeTab === tab.id ? "text-accent" : "text-slate-400")} />
+                <tab.icon className={cn("relative z-10 w-4 h-4 md:w-5 md:h-5", activeTab === tab.id ? "text-white" : "text-slate-400")} />
                 <span className="relative z-10">{tab.label}</span>
                 {tab.promo && (
                   <span className="relative z-10 bg-emerald-500 text-white text-[10px] md:text-[12px] px-1.5 md:px-2 py-0.5 rounded-full font-black tracking-tighter">
@@ -245,7 +282,7 @@ const SearchSection = () => {
                       </div>
                       
                       <div className="md:col-span-4 space-y-1 pt-5 relative">
-                        <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] px-4 opacity-80">Departure</label>
+                        <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] px-4 opacity-80">From</label>
                         <div className="relative group">
                           <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                           <input
@@ -268,11 +305,30 @@ const SearchSection = () => {
                           >
                             <ArrowLeftRight className="w-3.5 h-3.5" />
                           </motion.button>
+                            {/* Mobile submit button (visible on small screens) */}
+                            <div className="mt-3 w-full md:hidden">
+                              <motion.button
+                                whileHover={{ scale: 1.01, y: -2 }}
+                                whileTap={{ scale: 0.99 }}
+                                type="submit"
+                                disabled={isLoading}
+                                className="w-full py-3.5 bg-gradient-to-r from-accent via-orange-400 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark rounded-[1.2rem] font-black text-sm uppercase tracking-[0.4em] flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(245,158,11,0.35)] disabled:opacity-70"
+                              >
+                                {isLoading ? (
+                                  <Loader2 className="w-6 h-6 animate-spin" />
+                                ) : (
+                                  <>
+                                    <Search className="w-4 h-4 text-primary-dark" />
+                                    <span>Search</span>
+                                  </>
+                                )}
+                              </motion.button>
+                            </div>
                         </div>
                       </div>
 
                       <div className="md:col-span-4 space-y-1">
-                        <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] px-4 opacity-80">Destination</label>
+                        <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] px-4 opacity-80">To</label>
                         <div className="relative group">
                           <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                           <input
@@ -290,10 +346,13 @@ const SearchSection = () => {
                         <div className="relative group">
                           <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                           <input
-                            type="date"
+                            type="text"
+                            placeholder="dd-mm-yyyy"
                             value={flight.date}
                             onChange={(e) => handleMultiCityChange(index, "date", e.target.value)}
-                            className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-3 pl-10 pr-3 rounded-[1.2rem] focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all font-bold text-sm dark:text-white appearance-none"
+                            onFocus={(e) => (e.currentTarget.type = 'date')}
+                            onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
+                            className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-3 pl-10 pr-3 rounded-full focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all font-bold text-base dark:text-white appearance-none"
                           />
                         </div>
                       </div>
@@ -318,6 +377,175 @@ const SearchSection = () => {
               </div>
 
               {/* Actions row: Add Leg & Travelers */}
+              {/* (Hidden) This block is duplicated below; we keep the later one that renders the visible Search button. */}
+              <div className="hidden">
+                {multiCityFlights.length < 5 ? (
+                  <motion.button
+                    type="button"
+                    onClick={addMultiCityRow}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-accent/10 border border-accent/30 text-accent font-black uppercase text-xs tracking-widest hover:bg-accent hover:text-primary-dark transition-all cursor-pointer shadow-md"
+                  >
+                    <Plus className="w-4 h-4" /> Add Flight Leg
+                  </motion.button>
+                ) : (
+                  <div />
+                )}
+
+                <div className="w-full sm:w-56 space-y-1">
+                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Travelers</label>
+                  <div className="relative group">
+                    <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                    <select 
+                      name="travelers"
+                      className="min-w-[140px] w-auto bg-slate-800/60 text-white border border-white/10 py-3 pl-10 pr-12 rounded-full focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all font-black text-base dark:text-white appearance-none cursor-pointer"
+                    >
+                      <option>1 Adult</option>
+                      <option>2 Adults</option>
+                      <option>Family</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="hidden mt-1 md:mt-2">
+                <motion.button
+                  whileHover={{ scale: 1.01, y: -2 }}
+                  whileTap={{ scale: 0.99 }}
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-3.5 md:py-4 bg-gradient-to-r from-accent via-orange-400 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark rounded-[1.2rem] md:rounded-[1.8rem] font-black text-sm md:text-base uppercase tracking-[0.4em] flex items-center justify-center gap-3 md:gap-4 shadow-[0_15px_30px_rgba(245,158,11,0.35)] disabled:opacity-70 group"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                  ) : (
+                    <>
+                      <Search className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-125 transition-transform" />
+                      <span className="text-glow">Search Sovereign Flights</span>
+                      <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4 animate-pulse" />
+                    </>
+                  )}
+                </motion.button>
+                {/* Mobile submit button (visible on small screens) */}
+                <div className="mt-3 w-full md:hidden">
+                  <motion.button
+                    whileHover={{ scale: 1.01, y: -2 }}
+                    whileTap={{ scale: 0.99 }}
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full py-3.5 bg-gradient-to-r from-accent via-orange-400 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark rounded-[1.2rem] font-black text-sm uppercase tracking-[0.4em] flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(245,158,11,0.35)] disabled:opacity-70"
+                  >
+                    {isLoading ? (
+                      <Loader2 className="w-6 h-6 animate-spin" />
+                    ) : (
+                      <>
+                        <Search className="w-4 h-4 text-primary-dark" />
+                        <span>Search</span>
+                      </>
+                    )}
+                  </motion.button>
+                </div>
+              </div>
+              <div className="hidden w-full mt-3 md:hidden">
+                <motion.button
+                  whileHover={{ scale: 1.01, y: -2 }}
+                  whileTap={{ scale: 0.99 }}
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-3.5 bg-gradient-to-r from-accent via-orange-400 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark rounded-[1.2rem] font-black text-sm uppercase tracking-[0.4em] flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(245,158,11,0.35)] disabled:opacity-70"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                  ) : (
+                    <>
+                      <Search className="w-4 h-4 text-primary-dark" />
+                      <span>Search</span>
+                    </>
+                  )}
+                </motion.button>
+              </div>
+
+              {/* Mobile submit button (visible on small screens) */}
+              <div className="hidden w-full mt-3 md:hidden">
+                <motion.button
+                  whileHover={{ scale: 1.01, y: -2 }}
+                  whileTap={{ scale: 0.99 }}
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-3.5 bg-gradient-to-r from-accent via-orange-400 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark rounded-[1.2rem] font-black text-sm uppercase tracking-[0.4em] flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(245,158,11,0.35)] disabled:opacity-70"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                  ) : (
+                    <>
+                      <Search className="w-4 h-4 text-primary-dark" />
+                      <span>Search</span>
+                    </>
+                  )}
+                </motion.button>
+              </div>
+
+              {/* Mobile submit button (visible on small screens) */}
+              <div className="hidden w-full mt-3 md:hidden">
+                <motion.button
+                  whileHover={{ scale: 1.01, y: -2 }}
+                  whileTap={{ scale: 0.99 }}
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-3.5 bg-gradient-to-r from-accent via-orange-400 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark rounded-[1.2rem] font-black text-sm uppercase tracking-[0.4em] flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(245,158,11,0.35)] disabled:opacity-70"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                  ) : (
+                    <>
+                      <Search className="w-4 h-4 text-primary-dark" />
+                      <span>Search</span>
+                    </>
+                  )}
+                </motion.button>
+              </div>
+
+              {/* Mobile submit button (visible on small screens) */}
+              <div className="hidden w-full mt-3 md:hidden">
+                <motion.button
+                  whileHover={{ scale: 1.01, y: -2 }}
+                  whileTap={{ scale: 0.99 }}
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-3.5 bg-gradient-to-r from-accent via-orange-400 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark rounded-[1.2rem] font-black text-sm uppercase tracking-[0.4em] flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(245,158,11,0.35)] disabled:opacity-70"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                  ) : (
+                    <>
+                      <Search className="w-4 h-4 text-primary-dark" />
+                      <span>Search</span>
+                    </>
+                  )}
+                </motion.button>
+              </div>
+
+              <div className="hidden w-full mt-3 md:hidden">
+                <motion.button
+                  whileHover={{ scale: 1.01, y: -2 }}
+                  whileTap={{ scale: 0.99 }}
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-3.5 bg-gradient-to-r from-accent via-orange-400 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark rounded-[1.2rem] font-black text-sm uppercase tracking-[0.4em] flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(245,158,11,0.35)] disabled:opacity-70"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                  ) : (
+                    <>
+                      <Search className="w-4 h-4 text-primary-dark" />
+                      <span>Search</span>
+                    </>
+                  )}
+                </motion.button>
+              </div>
+
+              {/* Actions row: Add Leg & Travelers */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
                 {multiCityFlights.length < 5 ? (
                   <motion.button
@@ -339,7 +567,7 @@ const SearchSection = () => {
                     <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                     <select 
                       name="travelers"
-                      className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-3 pl-10 pr-4 rounded-[1.2rem] focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all font-black text-sm dark:text-white appearance-none cursor-pointer"
+                      className="min-w-[140px] w-auto bg-slate-800/60 text-white border border-white/10 py-3 pl-10 pr-12 rounded-full focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all font-black text-base dark:text-white appearance-none cursor-pointer"
                     >
                       <option>1 Adult</option>
                       <option>2 Adults</option>
@@ -368,14 +596,252 @@ const SearchSection = () => {
                   )}
                 </motion.button>
               </div>
+
+            </form>
+          ) : activeTab === "hotels" ? (
+            <form onSubmit={handleSearch} className="relative z-10 space-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
+                <div className="lg:col-span-4 space-y-1">
+                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Location</label>
+                  <div className="relative group">
+                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                    <input
+                      type="text"
+                      name="location"
+                      placeholder="City, property or landmark"
+                      ref={locationRef}
+                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base placeholder:text-slate-400"
+                    />
+                  </div>
+                </div>
+
+                <div className="lg:col-span-3 space-y-1">
+                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Check-in</label>
+                  <div className="relative group">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                    <input
+                      type="text"
+                      name="checkin"
+                      placeholder="dd/mm/yyyy"
+                      onFocus={(e) => (e.currentTarget.type = 'date')}
+                      onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
+                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="lg:col-span-3 space-y-1">
+                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Check-out</label>
+                  <div className="relative group">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                    <input
+                      type="text"
+                      name="checkout"
+                      placeholder="dd/mm/yyyy"
+                      onFocus={(e) => (e.currentTarget.type = 'date')}
+                      onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
+                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="lg:col-span-2 space-y-1">
+                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Guests</label>
+                  <div className="relative group">
+                    <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                    <select
+                      name="guests"
+                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none cursor-pointer"
+                    >
+                      <option>1 Room, 1 Guest</option>
+                      <option>1 Room, 2 Guests</option>
+                      <option>2 Rooms</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 flex items-center gap-6">
+                <label className="flex items-center gap-2 text-sm text-slate-300">
+                  <input
+                    type="checkbox"
+                    name="freeCancellation"
+                    value="1"
+                    className="w-4 h-4 rounded border-slate-200"
+                  />
+                  <span className="font-black text-sm text-slate-300">Free cancellation</span>
+                </label>
+                <label className="flex items-center gap-2 text-sm text-slate-300">
+                  <input
+                    type="checkbox"
+                    name="fourStarsPlus"
+                    value="1"
+                    className="w-4 h-4 rounded border-slate-200"
+                  />
+                  <span className="font-black text-sm text-slate-300">4 stars +</span>
+                </label>
+              </div>
+
+              <div className="col-span-full mt-4">
+                <motion.button
+                  whileHover={{ scale: 1.01, y: -2 }}
+                  whileTap={{ scale: 0.99 }}
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full h-14 bg-gradient-to-r from-[#ff9a00] via-[#ff8a00] to-[#ffb347] hover:from-[#ff8a00] hover:to-[#ffb347] text-primary-dark rounded-full font-black text-base uppercase tracking-widest flex items-center justify-center gap-6 shadow-[0_15px_40px_rgba(255,138,0,0.25)] disabled:opacity-70 mx-auto px-6"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-6 h-6 animate-spin text-primary-dark" />
+                  ) : (
+                    <>
+                      <Search className="w-5 h-5 text-primary-dark" />
+                      <div className="flex flex-col items-center leading-none">
+                        <span className="text-[11px] font-black text-black/70 uppercase tracking-widest">{`Hotels`}</span>
+                        <span className="text-center text-black text-[15px] tracking-[0.6em] md:tracking-[0.7em]">SEARCH HOTELS</span>
+                      </div>
+                      <Sparkles className="w-4 h-4 text-primary-dark animate-pulse" />
+                    </>
+                  )}
+                </motion.button>
+              </div>
+
+            </form>
+          ) : activeTab === "cars" ? (
+            <form onSubmit={handleSearch} className="relative z-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
+                <div className="lg:col-span-4 space-y-1">
+                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Pick-up location</label>
+                  <div className="relative group">
+                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                    <input
+                      type="text"
+                      name="pickupLocation"
+                      placeholder="City, airport or station"
+                      ref={carLocationRef}
+                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base placeholder:text-slate-400"
+                    />
+                  </div>
+                </div>
+
+                <div className="lg:col-span-2 space-y-1">
+                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Pick-up date</label>
+                  <div className="relative group">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                    <input
+                      type="text"
+                      name="pickupDate"
+                      placeholder="dd/mm/yyyy"
+                      onFocus={(e) => (e.currentTarget.type = 'date')}
+                      onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
+                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="lg:col-span-1 space-y-1">
+                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Time</label>
+                  <div className="relative group">
+                    <input
+                      type="time"
+                      name="pickupTime"
+                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="lg:col-span-2 space-y-1">
+                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Drop-off date</label>
+                  <div className="relative group">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                    <input
+                      type="text"
+                      name="dropoffDate"
+                      placeholder="dd/mm/yyyy"
+                      onFocus={(e) => (e.currentTarget.type = 'date')}
+                      onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
+                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="lg:col-span-1 space-y-1">
+                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Time</label>
+                  <div className="relative group">
+                    <input
+                      type="time"
+                      name="dropoffTime"
+                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 flex items-center gap-6">
+                <label className="flex items-center gap-2 text-sm text-slate-300">
+                  <input type="checkbox" className="w-4 h-4 rounded border-slate-200" />
+                  <span className="font-black text-sm text-slate-300">Driver aged between 25 - 70</span>
+                </label>
+                <label className="flex items-center gap-2 text-sm text-slate-300">
+                  <input type="checkbox" className="w-4 h-4 rounded border-slate-200" />
+                  <span className="font-black text-sm text-slate-300">Return car to a different location</span>
+                </label>
+              </div>
+
+              {/* Desktop button (placed below inputs like Flights/Hotels) */}
+              <div className="mt-4 hidden md:block">
+                <motion.button
+                  whileHover={{ scale: 1.01, y: -2 }}
+                  whileTap={{ scale: 0.99 }}
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full h-14 bg-gradient-to-r from-[#ff9a00] via-[#ff8a00] to-[#ffb347] hover:from-[#ff8a00] hover:to-[#ffb347] text-primary-dark rounded-full font-black text-base uppercase tracking-widest flex items-center justify-center gap-6 shadow-[0_15px_40px_rgba(255,138,0,0.25)] disabled:opacity-70 mx-auto px-6"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-6 h-6 animate-spin text-primary-dark" />
+                  ) : (
+                    <>
+                      <Search className="w-5 h-5 text-primary-dark" />
+                      <div className="flex flex-col items-center leading-none">
+                        <span className="text-[11px] font-black text-black/70 uppercase tracking-widest">Cars</span>
+                        <span className="text-center text-black text-[15px] tracking-[0.6em] md:tracking-[0.7em]">SEARCH CARS</span>
+                      </div>
+                      <Sparkles className="w-4 h-4 text-primary-dark animate-pulse" />
+                    </>
+                  )}
+                </motion.button>
+              </div>
+
+              {/* Mobile full-width button (placed below inputs like Flights/Hotels) */}
+              <div className="mt-3 w-full md:hidden">
+                <motion.button
+                  whileHover={{ scale: 1.01, y: -2 }}
+                  whileTap={{ scale: 0.99 }}
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full h-14 bg-gradient-to-r from-[#ff9a00] via-[#ff8a00] to-[#ffb347] hover:from-[#ff8a00] hover:to-[#ffb347] text-primary-dark rounded-full font-black text-base uppercase tracking-widest flex items-center justify-center gap-6 shadow-[0_15px_40px_rgba(255,138,0,0.25)] disabled:opacity-70 mx-auto px-6"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-6 h-6 animate-spin text-primary-dark" />
+                  ) : (
+                    <>
+                      <Search className="w-5 h-5 text-primary-dark" />
+                      <div className="flex flex-col items-center leading-none">
+                        <span className="text-[11px] font-black text-black/70 uppercase tracking-widest">Cars</span>
+                        <span className="text-center text-black text-[15px] tracking-[0.6em] md:tracking-[0.7em]">SEARCH CARS</span>
+                      </div>
+                      <Sparkles className="w-4 h-4 text-primary-dark animate-pulse" />
+                    </>
+                  )}
+                </motion.button>
+              </div>
             </form>
           ) : (
             <form 
               onSubmit={handleSearch}
-              className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 gap-3"
+              className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end"
             >
-              <div className={cn("space-y-1 relative", activeTab === "flights" && tripType === "round-trip" ? "lg:col-span-2" : "lg:col-span-3")}>
-                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Departure</label>
+              <div className={cn("space-y-1 relative", activeTab === "flights" && tripType === "round-trip" ? "lg:col-span-3" : "lg:col-span-3")}>
+                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">From</label>
                 <div className="relative group">
                   <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                   <input
@@ -384,7 +850,7 @@ const SearchSection = () => {
                     placeholder="Where from?"
                     value={fromValue}
                     onChange={(e) => setFromValue(e.target.value)}
-                    className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-3 pl-9 pr-4 rounded-[1.2rem] focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all font-black text-sm text-slate-800 dark:text-white placeholder:text-slate-500"
+                    className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base placeholder:text-slate-400"
                   />
 
                   {/* Swap Button */}
@@ -402,17 +868,19 @@ const SearchSection = () => {
                 </div>
               </div>
 
-              <div className={cn("space-y-1", activeTab === "flights" && tripType === "round-trip" ? "lg:col-span-2" : "lg:col-span-3")}>
-                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Destination</label>
+              
+
+              <div className={cn("space-y-1", activeTab === "flights" && tripType === "round-trip" ? "lg:col-span-3" : "lg:col-span-3")}>
+                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">To</label>
                 <div className="relative group">
                   <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                   <input
                     type="text"
                     name="to"
-                    placeholder="Where to?"
+                    placeholder="Country, city or airport"
                     value={toValue}
                     onChange={(e) => setToValue(e.target.value)}
-                    className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-3 pl-9 pr-4 rounded-[1.2rem] focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all font-black text-sm text-slate-800 dark:text-white placeholder:text-slate-500"
+                    className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base placeholder:text-slate-400"
                   />
                 </div>
               </div>
@@ -422,9 +890,12 @@ const SearchSection = () => {
                 <div className="relative group">
                   <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                   <input
-                    type="date"
+                    type="text"
                     name="date"
-                    className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-3 pl-9 pr-2 rounded-[1.2rem] focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all font-black text-sm dark:text-white appearance-none"
+                    placeholder="dd/mm/yyyy"
+                    onFocus={(e) => (e.currentTarget.type = 'date')}
+                    onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
+                    className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base appearance-none"
                   />
                 </div>
               </div>
@@ -434,23 +905,26 @@ const SearchSection = () => {
                   <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Return Date</label>
                   <div className="relative group">
                     <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
-                    <input
-                      type="date"
+                      <input
+                      type="text"
                       name="returnDate"
-                      className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-3 pl-9 pr-2 rounded-[1.2rem] focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all font-black text-sm dark:text-white appearance-none"
+                      placeholder="dd/mm/yyyy"
+                      onFocus={(e) => (e.currentTarget.type = 'date')}
+                      onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
+                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base appearance-none"
                     />
                   </div>
                 </div>
               )}
 
-              <div className="lg:col-span-2 space-y-1">
+              <div className="lg:col-span-1 space-y-1">
                 <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Travelers</label>
-                <div className="relative group">
+                <div className="relative group max-w-xs">
                   <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
-                  <select 
-                    name="travelers"
-                    className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-3 pl-9 pr-2 rounded-[1.2rem] focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all font-black text-sm dark:text-white appearance-none cursor-pointer"
-                  >
+                    <select 
+                      name="travelers"
+                      className="min-w-[160px] w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none cursor-pointer"
+                    >
                     <option>1 Adult</option>
                     <option>2 Adults</option>
                     <option>Family</option>
@@ -458,47 +932,61 @@ const SearchSection = () => {
                 </div>
               </div>
 
-              <div className="lg:col-span-10 mt-1 md:mt-2">
-                <motion.button
-                  whileHover={{ scale: 1.01, y: -2 }}
-                  whileTap={{ scale: 0.99 }}
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full py-3.5 md:py-4 bg-gradient-to-r from-accent via-orange-400 to-accent bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-primary-dark rounded-[1.2rem] md:rounded-[1.8rem] font-black text-sm md:text-base uppercase tracking-[0.4em] flex items-center justify-center gap-3 md:gap-4 shadow-[0_15px_30px_rgba(245,158,11,0.35)] disabled:opacity-70 group"
-                >
-                  {isLoading ? (
-                    <Loader2 className="w-6 h-6 animate-spin" />
-                  ) : (
-                    <>
-                      <Search className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-125 transition-transform" />
-                      <span className="text-glow">Search Sovereign Flights</span>
-                      <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4 animate-pulse" />
-                    </>
-                  )}
-                </motion.button>
+              <div className="lg:col-span-1 flex items-center justify-center">
+                {/* Hidden: desktop inline button replaced by full-width pill below */}
               </div>
+            
+              {/* Add-on options row (flights-only) */}
+              {activeTab === 'flights' && (
+                <div className="w-full mt-6 flex items-center justify-between px-2 col-span-full">
+                  <div className="flex items-center gap-4">
+                    <label className="flex items-center gap-2 text-sm text-slate-300">
+                      <input type="checkbox" name="addNearbyFrom" checked={addNearbyFrom} onChange={(e) => setAddNearbyFrom(e.target.checked)} className="w-4 h-4 rounded border-slate-200 checked:bg-accent checked:border-accent" />
+                      <span className="font-black text-sm text-slate-300">Add nearby airports</span>
+                    </label>
+
+                    <label className="flex items-center gap-2 text-sm text-slate-300">
+                      <input type="checkbox" name="directFlights" checked={directFlights} onChange={(e) => setDirectFlights(e.target.checked)} className="w-4 h-4 rounded border-slate-200 checked:bg-accent checked:border-accent" />
+                      <span className="font-black text-sm text-slate-300">Direct flights</span>
+                    </label>
+                  </div>
+
+                  <div>
+                    <label className="flex items-center gap-3 text-sm text-slate-300">
+                      <input type="checkbox" name="addHotel" checked={addHotel} onChange={(e) => setAddHotel(e.target.checked)} className="w-4 h-4 rounded border-slate-200 checked:bg-accent checked:border-accent" />
+                      <span className="font-black text-sm text-slate-300">Add a hotel</span>
+                    </label>
+                  </div>
+                </div>
+              )}
+
+              {/* Results Section (Flights-only large button) */}
+              {activeTab === 'flights' && (
+                <div className="col-span-full mt-4">
+                  <motion.button
+                    whileHover={{ scale: 1.01, y: -2 }}
+                    whileTap={{ scale: 0.99 }}
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full h-14 bg-gradient-to-r from-[#ff9a00] via-[#ff8a00] to-[#ffb347] hover:from-[#ff8a00] hover:to-[#ffb347] text-primary-dark rounded-full font-black text-base uppercase tracking-widest flex items-center justify-center gap-6 shadow-[0_15px_40px_rgba(255,138,0,0.25)] disabled:opacity-70 mx-auto px-6"
+                  >
+                    {isLoading ? (
+                      <Loader2 className="w-6 h-6 animate-spin text-primary-dark" />
+                    ) : (
+                      <>
+                        <Search className="w-5 h-5 text-primary-dark" />
+                        <div className="flex flex-col items-center leading-none">
+                          <span className="text-[11px] font-black text-black/70 uppercase tracking-widest">{(tripType === 'multi-city') ? `${multiCityFlights[0]?.from || 'From'} → ${multiCityFlights[multiCityFlights.length-1]?.to || 'To'}` : `${fromValue || 'From'} → ${toValue || 'To'}`}</span>
+                          <span className="text-center text-black text-[15px] tracking-[0.6em] md:tracking-[0.7em]">SEARCH SOVEREIGN FLIGHTS</span>
+                        </div>
+                        <Sparkles className="w-4 h-4 text-primary-dark animate-pulse" />
+                      </>
+                    )}
+                  </motion.button>
+                </div>
+              )}
             </form>
           )}
-
-
-          {/* Quick Picks */}
-          <div className="mt-3 md:mt-4 flex items-center gap-3 md:gap-6 overflow-x-auto hscroll-hide pb-1">
-            <span className="flex items-center gap-2 text-xs md:text-sm font-black text-slate-400 uppercase tracking-[0.2em] whitespace-nowrap">
-              <TrendingUp className="w-4 h-4 text-emerald-500" /> Trending:
-            </span>
-            {trending.map((city) => (
-              <button 
-                type="button"
-                key={city}
-                onClick={() => handleTrendingClick(city)}
-                className="text-xs md:text-sm font-black text-slate-500 hover:text-accent transition-all whitespace-nowrap px-3 md:px-4 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg md:rounded-xl border border-white/10 hover:scale-105"
-              >
-                {city}
-              </button>
-            ))}
-          </div>
-
-          {/* Results Section */}
           <AnimatePresence>
             {hasSearched && flights.length === 0 && !isLoading && (
               <motion.div

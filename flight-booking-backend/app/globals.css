@@ -47,6 +47,11 @@
 }
 
 @layer base {
+  /* Set a consistent site-wide base font size to match the home page */
+  html {
+    font-size: 16px;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);

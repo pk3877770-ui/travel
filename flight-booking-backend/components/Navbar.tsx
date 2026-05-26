@@ -97,7 +97,7 @@ const Navbar = () => {
               <div className="w-7 h-7 md:w-8 md:h-8 rounded-md md:rounded-lg bg-accent flex items-center justify-center shadow-2xl shadow-accent/20 transition-transform group-hover:rotate-12">
                 <Plane className="w-4 h-4 md:w-5 md:h-5 text-primary-dark -rotate-45" />
               </div>
-              <span className="text-base md:text-lg font-black tracking-tighter text-white font-outfit uppercase">
+              <span className="text-lg md:text-2xl font-black tracking-tighter text-white font-outfit uppercase">
                 Kramana
               </span>
             </Link>
@@ -109,7 +109,7 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-slate-200 hover:text-accent font-black text-[11px] uppercase tracking-[0.2em] transition-all relative group whitespace-nowrap"
+                className="text-slate-200 hover:text-accent font-black text-base lg:text-lg uppercase tracking-[0.18em] transition-all relative group whitespace-nowrap"
               >
                 {link.name}
                 <span className="absolute -bottom-2 left-0 w-0 h-px bg-accent transition-all group-hover:w-full" />
@@ -121,18 +121,18 @@ const Navbar = () => {
           <div className="flex items-center gap-4 md:gap-6 flex-shrink-0 relative z-[120]">
             <div className="hidden sm:flex items-center">
               {currentUser ? (
-                <Link href="/profile" className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-xl hover:bg-white/10 transition-all">
+                  <Link href="/profile" className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-xl hover:bg-white/10 transition-all">
                   <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
                     <User className="w-4 h-4 text-accent" />
                   </div>
-                  <span className="text-white font-black text-[11px] uppercase tracking-widest">
+                  <span className="text-white font-black text-base uppercase tracking-widest">
                     {currentUser.name ? currentUser.name.split(' ')[0] : 'User'}
                   </span>
                 </Link>
               ) : (
                 <Link 
                   href="/auth"
-                  className="flex items-center justify-center text-white font-black text-[11px] uppercase tracking-[0.2em] hover:text-accent transition-colors px-6 py-2 rounded-xl hover:bg-white/5"
+                  className="flex items-center justify-center text-white font-black text-base uppercase tracking-[0.18em] hover:text-accent transition-colors px-6 py-2 rounded-xl hover:bg-white/5"
                 >
                   Sign In
                 </Link>

@@ -18,13 +18,13 @@ export default function Home() {
       <Hero />
       <SearchSection />
       
-      <div className="relative overflow-hidden space-y-40 mb-40">
+      <div className="relative overflow-hidden space-y-24 mb-24">
         <FeaturedOffers />
         <ExperienceKramana />
         <BlogSection />
         
         {/* Newsletter Section - The Sovereign List */}
-        <section id="newsletter" className="py-32 relative overflow-hidden">
+        <section id="newsletter" className="py-24 relative overflow-hidden">
           {/* Background Elements */}
           <div className="absolute inset-0 bg-primary-dark -z-10" />
           <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none overflow-hidden">
@@ -44,11 +44,11 @@ export default function Home() {
                 <span className="text-accent text-[10px] font-black uppercase tracking-[0.4em]">The Sovereign List</span>
               </div>
 
-              <h2 className="text-white text-5xl md:text-7xl font-black font-outfit mb-8 tracking-tighter leading-tight relative z-10">
+              <h2 className="text-white text-5xl md:text-7xl font-black font-outfit mb-6 tracking-tighter leading-tight relative z-10">
                 Join the <span className="shimmer-text italic">Kramana Elite</span>
               </h2>
               
-              <p className="text-slate-400 text-xl mb-14 max-w-2xl mx-auto leading-relaxed font-medium opacity-80 relative z-10">
+              <p className="text-slate-400 text-xl mb-10 max-w-2xl mx-auto leading-relaxed font-medium opacity-80 relative z-10">
                 Subscribe to our private network for secret itineraries, luxury aviation insights, and priority access to our signature journeys.
               </p>
               
@@ -139,7 +139,7 @@ export default function Home() {
         </section>
 
         {/* SEO Internal Linking / Link Juice Section */}
-        <section className="py-16 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+        <section className="py-12 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
           <div className="container max-w-7xl mx-auto px-6">
             <h2 className="text-xl font-bold mb-8 text-slate-800 dark:text-slate-200 font-outfit">Explore Kramana Destinations & Services</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
