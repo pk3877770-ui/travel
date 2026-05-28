@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
@@ -12,44 +12,45 @@ import SessionProvider from "@/components/SessionProvider";
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Kramana",
-  "url": "https://kramana.vercel.app",
-  "logo": "https://kramana.vercel.app/logo.png",
-  "sameAs": [
+  name: "Kramana",
+  url: "https://kramana.vercel.app",
+  logo: "https://kramana.vercel.app/logo.png",
+  sameAs: [
     "https://facebook.com/kramana",
     "https://instagram.com/kramana",
-    "https://twitter.com/kramana"
+    "https://twitter.com/kramana",
   ],
-  "contactPoint": {
+  contactPoint: {
     "@type": "ContactPoint",
-    "telephone": "+91-1234567890",
-    "contactType": "customer service",
-    "areaServed": "IN",
-    "availableLanguage": ["English", "Hindi"]
-  }
+    telephone: "+91-1234567890",
+    contactType: "customer service",
+    areaServed: "IN",
+    availableLanguage: ["English", "Hindi"],
+  },
 };
 
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Kramana",
-  "url": "https://kramana.vercel.app",
-  "potentialAction": {
+  name: "Kramana",
+  url: "https://kramana.vercel.app",
+  potentialAction: {
     "@type": "SearchAction",
-    "target": "https://kramana.vercel.app/flights?from={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
+    target: "https://kramana.vercel.app/flights?from={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
 };
 
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Kramana",
-  "description": "Experience the art of travel with Kramana's premium concierge services.",
-  "publisher": {
+  name: "Kramana",
+  description:
+    "Experience the art of travel with Kramana's premium concierge services.",
+  publisher: {
     "@type": "Organization",
-    "name": "Kramana"
-  }
+    name: "Kramana",
+  },
 };
 
 const inter = Inter({
@@ -63,27 +64,31 @@ const outfit = Outfit({
 });
 
 import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
- 
-  export async function generateMetadata(): Promise<Metadata> {
-    const seo = await getSEOMetadata("/"); // Use Home SEO as baseline
-    const mappedMetadata = mapSEOToMetadata(seo);
-    
-    return {
-      ...mappedMetadata,
-      metadataBase: new URL("https://kramana.vercel.app"),
-      openGraph: {
-        ...mappedMetadata.openGraph,
-        images: [
-          {
-            url: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=1200&h=630&q=80',
-            width: 1200,
-            height: 630,
-            alt: 'Kramana Luxury Travel Concierge',
-          },
-        ],
-      },
-    };
-  }
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSEOMetadata("/"); // Use Home SEO as baseline
+  const mappedMetadata = mapSEOToMetadata(seo);
+
+  return {
+    ...mappedMetadata,
+    verification: {
+      google: "WunfK7xwxVIaTuQXXc70LxW_WAvNzGitj",
+    },
+
+    metadataBase: new URL("https://kramana.vercel.app"),
+    openGraph: {
+      ...mappedMetadata.openGraph,
+      images: [
+        {
+          url: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=1200&h=630&q=80",
+          width: 1200,
+          height: 630,
+          alt: "Kramana Luxury Travel Concierge",
+        },
+      ],
+    },
+  };
+}
 
 export default function RootLayout({
   children,
@@ -100,7 +105,9 @@ export default function RootLayout({
           <Script
             id="organization-schema"
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(organizationSchema),
+            }}
           />
           <Script
             id="website-schema"
@@ -112,9 +119,7 @@ export default function RootLayout({
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
           />
-          <main className="min-h-screen">
-            {children}
-          </main>
+          <main className="min-h-screen">{children}</main>
           <Footer />
           <SpeedInsights />
         </SessionProvider>
