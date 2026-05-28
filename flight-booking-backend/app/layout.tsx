@@ -72,7 +72,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     ...mappedMetadata,
     verification: {
-      google: "WunfK7xwxVIaTuQXXc70LxW_WAvNzGitj",
+      google: "WunfK7xwxVIaTuQXXc70LxW_WAvNzGitj-HgGWeRjN0",
     },
 
     metadataBase: new URL("https://kramana.vercel.app"),
