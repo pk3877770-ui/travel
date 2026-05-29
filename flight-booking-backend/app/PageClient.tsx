@@ -2,13 +2,16 @@
 
 import React from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
 import SearchSection from "@/components/SearchSection";
-import FeaturedOffers from "@/components/FeaturedOffers";
-import ExperienceKramana from "@/components/ExperienceKramana";
-import BlogSection from "@/components/BlogSection";
 import { Send, Sparkles, Crown } from "lucide-react";
 import { motion } from "framer-motion";
+
+// Below-the-fold components — lazy loaded to reduce initial JS bundle
+const FeaturedOffers = dynamic(() => import("@/components/FeaturedOffers"), { ssr: false });
+const ExperienceKramana = dynamic(() => import("@/components/ExperienceKramana"), { ssr: false });
+const BlogSection = dynamic(() => import("@/components/BlogSection"), { ssr: false });
 
 export default function Home() {
   const [newsletterStatus, setNewsletterStatus] = React.useState<"idle" | "loading" | "success" | "error">("idle");

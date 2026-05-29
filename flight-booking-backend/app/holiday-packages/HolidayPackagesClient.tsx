@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { MapPin, Clock, Calendar, Search, Compass, Ship, Plane, Utensils, Snowflake, Car, ArrowRight, Loader2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -288,7 +289,9 @@ export default function HolidayPackages() {
                 className="relative h-96 rounded-[2.5rem] overflow-hidden group cursor-pointer"
                 onClick={() => handlePackageInquiry(loc)}
               >
-                <img src={loc.image} alt={loc.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div className="relative w-full h-full">
+                  <Image src={loc.image} alt={loc.name} fill className="object-cover group-hover:scale-110 transition-transform duration-700" sizes="(max-width: 768px) 100vw, 33vw" />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
                 <div className="absolute bottom-8 left-8 right-8 bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 flex justify-between items-center">
                    <div>

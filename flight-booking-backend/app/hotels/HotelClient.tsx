@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, MapPin, Calendar, Users, Star, Crown, Heart, Clock, ShieldCheck, ArrowRight, Loader2, Check, Plane, Map } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -155,15 +156,15 @@ export default function HotelBooking() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                 {/* Visuals */}
                 <div className="space-y-8">
-                  <div className="aspect-[4/3] rounded-[3rem] overflow-hidden shadow-2xl premium-border">
-                    <img src={selectedHotel.image} alt={selectedHotel.name} className="w-full h-full object-cover" />
+                  <div className="aspect-[4/3] rounded-[3rem] overflow-hidden shadow-2xl premium-border relative">
+                    <Image src={selectedHotel.image} alt={selectedHotel.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
                   </div>
                   <div className="grid grid-cols-2 gap-6">
-                    <div className="aspect-square rounded-3xl overflow-hidden bg-slate-100 dark:bg-white/5 border border-white/10">
-                      <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=400&q=80" className="w-full h-full object-cover opacity-80" />
+                    <div className="aspect-square rounded-3xl overflow-hidden bg-slate-100 dark:bg-white/5 border border-white/10 relative">
+                      <Image src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=400&q=80" alt="Hotel room detail" fill className="object-cover opacity-80" sizes="(max-width: 768px) 50vw, 25vw" />
                     </div>
-                    <div className="aspect-square rounded-3xl overflow-hidden bg-slate-100 dark:bg-white/5 border border-white/10">
-                      <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400&q=80" className="w-full h-full object-cover opacity-80" />
+                    <div className="aspect-square rounded-3xl overflow-hidden bg-slate-100 dark:bg-white/5 border border-white/10 relative">
+                      <Image src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400&q=80" alt="Hotel amenities" fill className="object-cover opacity-80" sizes="(max-width: 768px) 50vw, 25vw" />
                     </div>
                   </div>
                 </div>
@@ -482,10 +483,12 @@ export default function HotelBooking() {
             <div className="relative group w-full max-w-2xl">
               <div className="absolute -inset-4 bg-accent/20 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative aspect-video rounded-[3rem] overflow-hidden shadow-2xl premium-border">
-                <img 
+                <Image 
                   src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=1000&q=80" 
                   alt="Private Jet Interior" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-1000"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
             </div>

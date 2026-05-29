@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plane, Search, ArrowRight, ShieldCheck, Crown, RefreshCcw, HandCoins, MapPin, Calendar, Users, Globe, Check, Hotel, Map } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -883,11 +884,12 @@ export default function FlightBookingPage() {
             <div className="relative group">
               <div className="absolute -inset-4 bg-accent/20 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative aspect-square w-full max-w-[450px] rounded-[3rem] overflow-hidden shadow-2xl premium-border">
-                <img 
+                <Image 
                   src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80" 
                   alt="Kramana Luxury Hotel Collection - Complementary Guest Accommodations" 
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, 450px"
                 />
               </div>
             </div>

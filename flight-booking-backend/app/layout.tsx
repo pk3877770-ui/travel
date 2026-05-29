@@ -104,9 +104,9 @@ export default function RootLayout({
           <Navbar />
           <Script
             src="https://www.googletagmanager.com/gtag/js?id=G-5CW4N3EYJJ"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
           />
-          <Script id="google-analytics" strategy="afterInteractive">
+          <Script id="google-analytics" strategy="lazyOnload">
             {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
