@@ -20,11 +20,17 @@ const Footer = () => {
               The world's premier travel concierge. From seamless sovereign flights to bespoke private estates, we craft journeys for the discerning few.
             </p>
             <div className="flex gap-3">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, idx) => (
+              {[
+                { Icon: Facebook, label: "Facebook" },
+                { Icon: Twitter, label: "Twitter" },
+                { Icon: Instagram, label: "Instagram" },
+                { Icon: Linkedin, label: "LinkedIn" }
+              ].map(({ Icon, label }, idx) => (
                 <a
                   key={idx}
                   href="#"
                   className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-accent hover:text-primary transition-all hover:-translate-y-0.5"
+                  aria-label={`Visit Kramana on ${label}`}
                 >
                   <Icon className="w-4 h-4" />
                 </a>

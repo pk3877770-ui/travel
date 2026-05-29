@@ -96,8 +96,8 @@ const ContactClient = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">Subject</label>
-                  <select name="subject" className="w-full bg-white text-slate-900 border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all appearance-none cursor-pointer">
+                  <label htmlFor="subject-select" className="text-sm font-bold text-slate-500 uppercase tracking-wider">Subject</label>
+                  <select id="subject-select" name="subject" className="w-full bg-white text-slate-900 border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all appearance-none cursor-pointer">
                     <option>Bespoke Journey Consultation</option>
                     <option>Boutique Hotel Inquiry</option>
                     <option>Private Aviation Request</option>

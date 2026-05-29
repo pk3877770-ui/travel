@@ -47,7 +47,7 @@ const ExperienceKramana = () => {
                     <perk.icon className="w-5 h-5 text-accent group-hover:text-primary transition-colors" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold font-outfit mb-1">{perk.title}</h4>
+                    <h3 className="text-sm font-bold font-outfit mb-1">{perk.title}</h3>
                     <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{perk.desc}</p>
                   </div>
                 </div>

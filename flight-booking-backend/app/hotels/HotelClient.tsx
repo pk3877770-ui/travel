@@ -320,10 +320,11 @@ export default function HotelBooking() {
                 </div>
 
                 <div className="space-y-4">
-                  <label className="text-sm font-black text-slate-400 uppercase tracking-[0.3em] px-4 opacity-80">Travelers</label>
+                  <label htmlFor="hotel-travelers-select" className="text-sm font-black text-slate-400 uppercase tracking-[0.3em] px-4 opacity-80">Travelers</label>
                   <div className="relative group">
                     <Users className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-accent" />
                     <select 
+                      id="hotel-travelers-select"
                       name="travelers"
                       className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-6 pl-16 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-black text-lg dark:text-white appearance-none cursor-pointer"
                     >

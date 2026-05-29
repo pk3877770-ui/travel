@@ -394,10 +394,11 @@ const SearchSection = () => {
                 )}
 
                 <div className="w-full sm:w-56 space-y-1">
-                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Travelers</label>
+                  <label htmlFor="multi-city-travelers-hidden" className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Travelers</label>
                   <div className="relative group">
                     <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                     <select 
+                      id="multi-city-travelers-hidden"
                       name="travelers"
                       className="min-w-[140px] w-auto bg-slate-800/60 text-white border border-white/10 py-3 pl-10 pr-12 rounded-full focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all font-black text-base dark:text-white appearance-none cursor-pointer"
                     >
@@ -562,10 +563,11 @@ const SearchSection = () => {
                 )}
 
                 <div className="w-full sm:w-56 space-y-1">
-                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Travelers</label>
+                  <label htmlFor="multi-city-travelers" className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Travelers</label>
                   <div className="relative group">
                     <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                     <select 
+                      id="multi-city-travelers"
                       name="travelers"
                       className="min-w-[140px] w-auto bg-slate-800/60 text-white border border-white/10 py-3 pl-10 pr-12 rounded-full focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all font-black text-base dark:text-white appearance-none cursor-pointer"
                     >
@@ -646,10 +648,11 @@ const SearchSection = () => {
                 </div>
 
                 <div className="lg:col-span-2 space-y-1">
-                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Guests</label>
+                  <label htmlFor="hotel-guests-select" className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Guests</label>
                   <div className="relative group">
                     <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                     <select
+                      id="hotel-guests-select"
                       name="guests"
                       className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none cursor-pointer"
                     >
@@ -918,10 +921,11 @@ const SearchSection = () => {
               )}
 
               <div className="lg:col-span-1 space-y-1">
-                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Travelers</label>
+                <label htmlFor="one-way-round-trip-travelers" className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Travelers</label>
                 <div className="relative group max-w-xs">
                   <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                     <select 
+                      id="one-way-round-trip-travelers"
                       name="travelers"
                       className="min-w-[160px] w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none cursor-pointer"
                     >

@@ -155,10 +155,10 @@ export default function HolidayPackages() {
             <div className="max-w-5xl mx-auto bg-white/80 dark:bg-slate-900/40 backdrop-blur-[40px] rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] p-6 md:p-12 text-left border border-white/20 dark:border-white/10 noise-overlay">
                <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
                   <div className="lg:col-span-2 space-y-3">
-                    <label className="text-sm font-black text-slate-400 uppercase tracking-[0.2em] px-2 opacity-60">Destination</label>
+                    <label htmlFor="package-destination-select" className="text-sm font-black text-slate-400 uppercase tracking-[0.2em] px-2 opacity-60">Destination</label>
                     <div className="relative group">
                       <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
-                      <select name="destination" className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold dark:text-white appearance-none cursor-pointer">
+                      <select id="package-destination-select" name="destination" className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold dark:text-white appearance-none cursor-pointer">
                         <option>Maldives Over-water Experience</option>
                         <option>Kerala Backwaters & Luxury</option>
                         <option>Manali Swiss-Chalet Adventure</option>
@@ -169,10 +169,10 @@ export default function HolidayPackages() {
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-sm font-black text-slate-400 uppercase tracking-[0.2em] px-2 opacity-60">Duration</label>
+                    <label htmlFor="package-duration-select" className="text-sm font-black text-slate-400 uppercase tracking-[0.2em] px-2 opacity-60">Duration</label>
                     <div className="relative group">
                       <Clock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
-                      <select name="duration" className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold dark:text-white appearance-none cursor-pointer">
+                      <select id="package-duration-select" name="duration" className="w-full bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 py-5 pl-14 pr-6 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold dark:text-white appearance-none cursor-pointer">
                         <option>4-5 Nights</option>
                         <option>6-8 Nights</option>
                         <option>10-14 Nights</option>

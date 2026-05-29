@@ -301,6 +301,7 @@ export default function FlightBookingPage() {
                             value={passenger.countryCode}
                             onChange={(e) => setPassenger({...passenger, countryCode: e.target.value})}
                             className="bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium text-slate-500"
+                            aria-label="Country Code"
                           >
                             <option value="+91">🇮🇳 +91</option>
                             <option value="+1">🇺🇸 +1</option>
@@ -570,8 +571,9 @@ export default function FlightBookingPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
                 <div className="space-y-2">
-                  <label className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">Cabin Class</label>
+                  <label htmlFor="cabin-select" className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">Cabin Class</label>
                   <select 
+                    id="cabin-select"
                     name="cabin"
                     className="w-full bg-slate-50 dark:bg-slate-800 px-6 py-4 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent transition-all font-medium cursor-pointer"
                   >
@@ -645,8 +647,9 @@ export default function FlightBookingPage() {
                 {/* Filters Section */}
                 <div className="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 mb-8 mx-6 flex flex-col md:flex-row gap-6">
                   <div className="flex-1 space-y-2">
-                    <label className="text-sm font-black text-slate-400 uppercase tracking-widest">Airline</label>
+                    <label htmlFor="filter-airline-select" className="text-sm font-black text-slate-400 uppercase tracking-widest">Airline</label>
                     <select
+                      id="filter-airline-select"
                       value={filterAirline}
                       onChange={(e) => setFilterAirline(e.target.value)}
                       className="w-full bg-slate-900 border border-slate-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-accent"
@@ -658,8 +661,9 @@ export default function FlightBookingPage() {
                   </div>
                   
                   <div className="flex-1 space-y-2">
-                    <label className="text-sm font-black text-slate-400 uppercase tracking-widest">Cabin Class</label>
+                    <label htmlFor="filter-class-select" className="text-sm font-black text-slate-400 uppercase tracking-widest">Cabin Class</label>
                     <select
+                      id="filter-class-select"
                       value={filterClass}
                       onChange={(e) => setFilterClass(e.target.value)}
                       className="w-full bg-slate-900 border border-slate-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-accent"
@@ -671,8 +675,9 @@ export default function FlightBookingPage() {
                   </div>
 
                   <div className="flex-1 space-y-2">
-                    <label className="text-sm font-black text-slate-400 uppercase tracking-widest">Departure</label>
+                    <label htmlFor="filter-time-select" className="text-sm font-black text-slate-400 uppercase tracking-widest">Departure</label>
                     <select
+                      id="filter-time-select"
                       value={filterTime}
                       onChange={(e) => setFilterTime(e.target.value)}
                       className="w-full bg-slate-900 border border-slate-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-accent"

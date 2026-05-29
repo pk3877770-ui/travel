@@ -136,10 +136,11 @@ export default function TicketInquiry() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">Airlines Partnership</label>
+                <label htmlFor="airline-select" className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">Airlines Partnership</label>
                 <div className="relative">
                   <Plane className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent opacity-50" />
                   <select
+                    id="airline-select"
                     required
                     className="w-full bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 py-4 pl-12 pr-6 rounded-2xl focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all font-bold appearance-none cursor-pointer"
                     value={form.airline}
