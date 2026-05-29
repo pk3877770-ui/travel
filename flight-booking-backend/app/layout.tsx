@@ -103,6 +103,19 @@ export default function RootLayout({
         <SessionProvider>
           <Navbar />
           <Script
+            src="https://www.googletagmanager.com/gtag/js?id=G-5CW4N3EYJJ"
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-5CW4N3EYJJ');
+            `}
+          </Script>
+          <Script
             id="organization-schema"
             type="application/ld+json"
             dangerouslySetInnerHTML={{
