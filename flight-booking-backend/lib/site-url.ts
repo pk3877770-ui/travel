@@ -2,14 +2,14 @@
 const FALLBACK_SITE_URL = "https://flight-booking-backend-gold.vercel.app";
 
 export function getSiteUrl(): string {
-  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  const fromEnv = (process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL)?.trim();
   if (fromEnv) {
     return fromEnv.replace(/\/$/, "");
   }
 
   const vercel = process.env.VERCEL_URL?.trim();
   if (vercel) {
-    const host = vercel.replace(/^https?:\/\//, "");
+    const host = vercel.replace(/^https?:\/\//, "").replace(/\/$/, "");
     return `https://${host}`;
   }
 
