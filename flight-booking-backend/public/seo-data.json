@@ -98,6 +98,15 @@
         "publisher": "https://kramana.com",
         "robots": "index, follow"
     },
+    "/faq": {
+        "title": "FAQ | Kramana Luxury Travel",
+        "description": "Frequently asked questions about booking luxury travel, concierge services, and the Kramana experience.",
+        "keywords": "FAQ, luxury travel, concierge, Kramana FAQ, travel questions",
+        "canonical": "https://flight-booking-backend-gold.vercel.app/faq",
+        "og_url": "https://flight-booking-backend-gold.vercel.app/faq",
+        "publisher": "https://flight-booking-backend-gold.vercel.app",
+        "robots": "index, follow"
+    },
     "/ticket-inquiry": {
         "title": "Ticket Inquiry | Kramana Luxury Travel",
         "description": "Check the status of your ticket or PNR. Track your bookings and get real-time updates on your travel plans.",

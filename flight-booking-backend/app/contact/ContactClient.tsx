@@ -2,7 +2,13 @@
 
 import React, { useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { Mail, Phone, MapPin, Send, Headset, Landmark, Loader2 } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Headset, Loader2 } from "lucide-react";
+import {
+  CONTACT_ADDRESS,
+  CONTACT_EMAIL,
+  CONTACT_PHONE_DISPLAY,
+  CONTACT_PHONE_TEL,
+} from "@/lib/contact-info";
 
 const ContactClient = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -143,7 +149,9 @@ const ContactClient = () => {
                   <div>
                     <h4 className="font-bold text-xl font-outfit text-primary">Live Assistance</h4>
                     <p className="text-slate-500 mb-1">24/7 Global Concierge Hotline</p>
-                    <a href="tel:+912267890123" className="text-primary font-black text-lg hover:text-accent transition-colors">+91 (22) 6789 0123</a>
+                    <a href={`tel:${CONTACT_PHONE_TEL}`} className="text-primary font-black text-lg hover:text-accent transition-colors">
+                      {CONTACT_PHONE_DISPLAY}
+                    </a>
                   </div>
                 </div>
 
@@ -154,18 +162,37 @@ const ContactClient = () => {
                   <div>
                     <h4 className="font-bold text-xl font-outfit text-primary">Elite Correspondence</h4>
                     <p className="text-slate-500 mb-1">Direct Digital Channels</p>
-                    <a href="mailto:concierge@kramana.com" className="text-primary font-black text-lg hover:text-accent transition-colors">concierge@kramana.com</a>
+                    <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary font-black text-lg hover:text-accent transition-colors break-all">
+                      {CONTACT_EMAIL}
+                    </a>
                   </div>
                 </div>
 
                 <div className="flex gap-6 items-start">
                   <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center shrink-0 text-accent group-hover:scale-110 transition-transform">
-                    <Landmark className="w-8 h-8" />
+                    <MapPin className="w-8 h-8" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-xl font-outfit text-primary">Global HQ</h4>
-                    <p className="text-slate-500 mb-1">World Trade Center, Mumbai</p>
-                    <p className="text-slate-600 font-medium">Personal meetings available by invitation only.</p>
+                    <h4 className="font-bold text-xl font-outfit text-primary">Office Location</h4>
+                    <p className="text-slate-500 mb-2 text-sm">South Mumbai, {CONTACT_ADDRESS.country}</p>
+                    <address className="text-slate-600 font-medium leading-relaxed not-italic">
+                      {CONTACT_ADDRESS.placeName}
+                      <br />
+                      {CONTACT_ADDRESS.street}
+                      <br />
+                      {CONTACT_ADDRESS.city}, {CONTACT_ADDRESS.state} {CONTACT_ADDRESS.postalCode}
+                      <br />
+                      {CONTACT_ADDRESS.country}
+                    </address>
+                    <a
+                      href={CONTACT_ADDRESS.mapsLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 mt-3 text-sm font-bold text-accent hover:text-primary transition-colors"
+                    >
+                      View on Google Maps
+                    </a>
+                    <p className="text-slate-500 mt-3 text-sm">Personal meetings available by invitation only.</p>
                   </div>
                 </div>
               </div>
@@ -178,7 +205,8 @@ const ContactClient = () => {
       <section className="px-6 pb-24">
         <div className="max-w-7xl mx-auto overflow-hidden shadow-2xl rounded-[3rem] h-[450px] border border-slate-100 relative">
            <iframe 
-            src="https://maps.google.com/maps?q=World%20Trade%20Center%20Mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+            src={CONTACT_ADDRESS.mapEmbedUrl}
+            title={`Map: ${CONTACT_ADDRESS.mapQuery}`}
             width="100%" 
             height="100%" 
             loading="lazy" 

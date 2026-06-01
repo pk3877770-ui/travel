@@ -7,6 +7,7 @@ import Booking from '@/models/Booking';
 import User from '@/models/User';
 import Link from 'next/link';
 import { logoutAction } from '../login/actions';
+import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
 import { Search, MapPin, Calendar, Users, Trash2, ShieldCheck, Zap, Globe, Clock } from 'lucide-react';
 
 export default async function LeadsAdminPage({ searchParams }: { searchParams: Promise<{ filter?: string }> }) {
@@ -44,8 +45,9 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
     dbError = true;
   }
 
-  return (
-    <div className="flex bg-[#020617] text-slate-100 font-sans min-h-screen selection:bg-accent/30 overflow-hidden">
+    return (
+        <PageWithBreadcrumb routePath="/admin/leads">
+            <div className="flex bg-[#020617] text-slate-100 font-sans min-h-screen selection:bg-accent/30 overflow-hidden">
       
       {/* Cinematic Sidebar */}
       <aside className="w-[320px] h-screen sticky top-0 bg-[#020617]/50 backdrop-blur-[50px] border-r border-white/[0.03] flex flex-col items-center z-50">
@@ -344,7 +346,8 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
                 )}
             </div>
         </div>
-      </main>
-    </div>
+            </main>
+            </div>
+        </PageWithBreadcrumb>
   );
 }

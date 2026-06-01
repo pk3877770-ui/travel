@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import LoginForm from './LoginForm';
+import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
 
 export default async function AdminLoginPage() {
   const cookieStore = await cookies();
@@ -9,9 +10,9 @@ export default async function AdminLoginPage() {
   if (token?.value === 'authenticated') {
     redirect('/admin/leads');
   }
-
   return (
-    <div className="relative flex justify-center items-center h-screen bg-[#020617] overflow-hidden">
+    <PageWithBreadcrumb routePath="/admin/login">
+      <div className="relative flex justify-center items-center h-screen bg-[#020617] overflow-hidden">
       {/* Background aesthetics */}
       <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[30vw] h-[30vw] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none"></div>
@@ -23,6 +24,7 @@ export default async function AdminLoginPage() {
         </div>
         <LoginForm />
       </div>
-    </div>
+      </div>
+    </PageWithBreadcrumb>
   );
 }

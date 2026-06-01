@@ -1,12 +1,14 @@
 import React from "react";
 import Link from "next/link";
 import { Check, ArrowRight, ShieldCheck, Plane } from "lucide-react";
+import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
 
 export default async function PaymentSuccessPage({ searchParams }: { searchParams: Promise<{ ref?: string, from?: string, to?: string }> }) {
   const { ref, from, to } = await searchParams;
 
   return (
-    <div className="min-h-screen bg-primary-dark flex items-center justify-center relative overflow-hidden font-inter pt-20 px-6">
+    <PageWithBreadcrumb routePath="/payment-success">
+      <div className="min-h-screen bg-primary-dark flex items-center justify-center relative overflow-hidden font-inter pt-20 px-6">
       {/* Cinematic Backgrounds */}
       <div className="absolute top-0 left-0 w-full h-full mesh-gradient opacity-30 pointer-events-none -z-10" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/20 rounded-full blur-[150px] pointer-events-none -z-10 animate-pulse-slow" />
@@ -60,6 +62,7 @@ export default async function PaymentSuccessPage({ searchParams }: { searchParam
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </PageWithBreadcrumb>
   );
 }

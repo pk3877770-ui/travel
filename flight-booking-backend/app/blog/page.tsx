@@ -5,36 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Calendar, User } from "lucide-react";
-
-const posts = [
-  {
-    id: 1,
-    title: "The Art of Sovereign Aviation: Private Jets Redefined",
-    excerpt: "Explore the latest trends in luxury private aviation and how Kramana is setting new standards.",
-    date: "May 15, 2026",
-    author: "Alexis Vance",
-    image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=600&q=80",
-    category: "Aviation",
-  },
-  {
-    id: 2,
-    title: "Hidden Gems of the Maldives: Beyond the Resorts",
-    excerpt: "Discover the untouched atolls and exclusive experiences that await the discerning traveler.",
-    date: "May 10, 2026",
-    author: "Elena Rostova",
-    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600&q=80",
-    category: "Destinations",
-  },
-  {
-    id: 3,
-    title: "Culinary Journeys: Bespoke Dining at 30,000 Feet",
-    excerpt: "How world-class chefs are transforming the in-flight dining experience for our members.",
-    date: "May 05, 2026",
-    author: "Marcus Chen",
-    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80",
-    category: "Lifestyle",
-  },
-];
+import { blogPosts as posts } from "@/lib/blog-posts";
 
 export default function BlogPage() {
   return (
@@ -68,14 +39,15 @@ export default function BlogPage() {
               transition={{ delay: idx * 0.1 }}
               className="bg-white dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none group hover:-translate-y-2 transition-all duration-500 flex flex-col"
             >
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-64 overflow-hidden bg-slate-800">
                 <div className="absolute top-6 left-6 z-10 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-full font-black text-xs uppercase tracking-wider text-primary dark:text-accent">
                   {post.category}
                 </div>
                 <Image
                   src={post.image}
-                  alt={`Kramana Journal: ${post.title} - ${post.category} Insights`}
+                  alt={post.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>

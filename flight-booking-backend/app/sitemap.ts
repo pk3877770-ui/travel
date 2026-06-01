@@ -12,6 +12,7 @@ const PUBLIC_ROUTES = [
   "/services",
   "/about",
   "/contact",
+  "/faq",
   "/blog",
   "/help-center",
   "/ticket-inquiry",

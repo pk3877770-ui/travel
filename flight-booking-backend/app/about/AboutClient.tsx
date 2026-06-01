@@ -66,6 +66,22 @@ export default function AboutPage() {
           >
             Your trusted partner for seamless flight booking worldwide. Smart search. Best deals. Happy travels.
           </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-sm text-slate-300/90 mt-4"
+          >
+            Read more about how this platform was built in my DEV.to article:&nbsp;
+            <a
+              href="https://dev.to/pradeep_kumar_7527a036d91/how-i-built-a-flight-booking-website-using-nextjs-1ifk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent font-semibold hover:text-white underline"
+            >
+              https://dev.to/pradeep_kumar_7527a036d91/how-i-built-a-flight-booking-website-using-nextjs-1ifk
+            </a>
+          </motion.p>
         </div>
       </section>
 

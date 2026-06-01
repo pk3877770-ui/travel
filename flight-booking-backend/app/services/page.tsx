@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getSEOMetadata, mapSEOToMetadata } from '@/lib/seo';
 import ServicesClient from './ServicesClient';
+import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,5 +11,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Page() {
-  return <ServicesClient />;
+  return (
+    <PageWithBreadcrumb routePath="/services">
+      <ServicesClient />
+    </PageWithBreadcrumb>
+  );
 }

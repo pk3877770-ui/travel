@@ -5,42 +5,13 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Calendar, User } from "lucide-react";
-
-const posts = [
-  {
-    id: 1,
-    title: "The Art of Sovereign Aviation: Private Jets Redefined",
-    excerpt: "Explore the latest trends in luxury private aviation and how Kramana is setting new standards.",
-    date: "May 15, 2026",
-    author: "Alexis Vance",
-    image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=600&q=80",
-    category: "Aviation",
-  },
-  {
-    id: 2,
-    title: "Hidden Gems of the Maldives: Beyond the Resorts",
-    excerpt: "Discover the untouched atolls and exclusive experiences that await the discerning traveler.",
-    date: "May 10, 2026",
-    author: "Elena Rostova",
-    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600&q=80",
-    category: "Destinations",
-  },
-  {
-    id: 3,
-    title: "Culinary Journeys: Bespoke Dining at 30,000 Feet",
-    excerpt: "How world-class chefs are transforming the in-flight dining experience for our members.",
-    date: "May 05, 2026",
-    author: "Marcus Chen",
-    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80",
-    category: "Lifestyle",
-  },
-];
+import { getBlogPostById } from "@/lib/blog-posts";
 
 export default function BlogPostPage() {
   const params = useParams();
   const id = params.id;
   
-  const post = posts.find(p => p.id.toString() === id);
+  const post = getBlogPostById(id as string);
   
   if (!post) {
     return (
@@ -59,11 +30,12 @@ export default function BlogPostPage() {
           Back to Blog
         </Link>
         
-        <div className="relative h-96 rounded-[2rem] overflow-hidden mb-10">
+        <div className="relative h-96 rounded-[2rem] overflow-hidden mb-10 bg-slate-900">
           <Image
             src={post.image}
             alt={post.title}
             fill
+            sizes="(max-width: 768px) 100vw, 800px"
             className="object-cover"
           />
         </div>

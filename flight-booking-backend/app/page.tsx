@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import dynamicImport from 'next/dynamic';
 import { getSEOMetadata, mapSEOToMetadata } from '@/lib/seo';
 import Hero from '@/components/Hero';
+import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
 
 const HomeInteractiveShell = dynamicImport(
   () => import('@/components/HomeInteractiveShell'),
@@ -19,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function Page() {
   return (
-    <>
+    <PageWithBreadcrumb routePath="/">
       <Hero />
       <HomeInteractiveShell />
 
@@ -71,7 +72,7 @@ export default function Page() {
             <h2 className="text-xl font-bold mb-8 text-slate-800 dark:text-slate-200 font-outfit">Explore Kramana Destinations & Services</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
               <div>
-                <h3 className="font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-xs">Luxury Flights</h3>
+                <h3 className="font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-xs">Featured Flights</h3>
                 <ul className="space-y-3">
                   <li><a href="/flights?to=Dubai" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">First Class to Dubai</a></li>
                   <li><a href="/flights?to=London" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Business Class to London</a></li>
@@ -113,6 +114,6 @@ export default function Page() {
             </div>
           </div>
         </section>
-    </>
+      </PageWithBreadcrumb>
   );
 }

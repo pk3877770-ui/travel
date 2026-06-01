@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
+import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSEOMetadata("/blog");
@@ -11,5 +12,9 @@ export default function BlogLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return (
+    <PageWithBreadcrumb routePath="/blog">
+      {children}
+    </PageWithBreadcrumb>
+  )
 }

@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { logoutAction } from '../login/actions';
+import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
 import { getAllSEOData, isMongoAvailable, getDefaultSEO } from '@/lib/seo';
 import SeoForm from './SeoForm';
 import Link from 'next/link';
@@ -43,8 +44,9 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
   // Use specialized map data or fallback to global defaults
   const currentMetadata = seoMap[currentPage] || getDefaultSEO(currentPage);
 
-  return (
-    <div className="flex bg-[#030712] text-slate-100 font-sans min-h-screen selection:bg-amber-500/30 selection:text-amber-200">
+    return (
+        <PageWithBreadcrumb routePath="/admin/seo">
+            <div className="flex bg-[#030712] text-slate-100 font-sans min-h-screen selection:bg-amber-500/30 selection:text-amber-200">
       
       {/* Cinematic Sidebar */}
       <aside className="w-[340px] h-screen sticky top-0 bg-[#030712]/80 backdrop-blur-[40px] border-r border-white/[0.03] flex flex-col items-center shadow-[20px_0_50px_-20px_rgba(0,0,0,0.8)] z-30 transition-all duration-500">
@@ -203,7 +205,8 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
-      `}} />
-    </div>
-  );
+            `}} />
+            </div>
+        </PageWithBreadcrumb>
+    );
 }

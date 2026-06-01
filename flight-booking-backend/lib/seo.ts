@@ -9,6 +9,9 @@ export interface SEOData {
   keywords: string;
   canonical: string;
   og_url?: string;
+  og_image?: string;
+  og_type?: string;
+  og_site_name?: string;
   publisher?: string;
   robots?: string;
 }
@@ -60,6 +63,7 @@ function readJsonFile(routePath: string): SEOData | null {
 export function getDefaultSEO(routePath: string): SEOData {
   const siteUrl = getSiteUrl();
   const pathSuffix = routePath === "/" ? "" : routePath;
+  const defaultImage = `${siteUrl}/og-image.jpg`;
 
   return {
     title: "Kramana | Luxury Travel Redefined",
@@ -67,6 +71,9 @@ export function getDefaultSEO(routePath: string): SEOData {
     keywords: "luxury travel, concierge, flights, hotels",
     canonical: `${siteUrl}${pathSuffix}`,
     og_url: `${siteUrl}${pathSuffix}`,
+    og_image: defaultImage,
+    og_type: "website",
+    og_site_name: "Kramana",
     publisher: siteUrl,
     robots: "index, follow"
   };
@@ -141,6 +148,7 @@ export async function isMongoAvailable(): Promise<boolean> {
  * Maps the internal SEO data format to the Next.js Metadata object
  */
 export function mapSEOToMetadata(seo: SEOData): any {
+  const imageUrl = seo.og_image || `${getSiteUrl()}/og-image.jpg`;
   return {
     title: seo.title,
     description: seo.description,
@@ -150,11 +158,29 @@ export function mapSEOToMetadata(seo: SEOData): any {
       canonical: seo.canonical,
     },
     openGraph: {
+      title: seo.title,
+      description: seo.description,
       url: seo.og_url || seo.canonical,
+      type: seo.og_type || 'website',
+      siteName: seo.og_site_name || 'Kramana',
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: seo.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seo.title,
+      description: seo.description,
+      images: [imageUrl],
     },
     other: {
-      'publisher': seo.publisher || '',
-    }
+      publisher: seo.publisher || '',
+    },
   };
 }
 
