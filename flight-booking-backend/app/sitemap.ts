@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
-import { getSiteUrl } from "@/lib/site-url";
+
+const baseUrl = process.env.SITE_URL?.trim() || process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://flight-booking-backend-gold.vercel.app";
 
 export const dynamic = "force-static";
 
@@ -20,7 +21,6 @@ const PUBLIC_ROUTES = [
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = getSiteUrl();
   const lastModified = new Date();
 
   return PUBLIC_ROUTES.map((route) => ({
