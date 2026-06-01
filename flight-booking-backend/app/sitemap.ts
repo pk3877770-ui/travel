@@ -1,27 +1,32 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from "next";
+import { getSiteUrl } from "@/lib/site-url";
+
+export const dynamic = "force-static";
+
+const PUBLIC_ROUTES = [
+  "",
+  "/flights",
+  "/hotels",
+  "/holiday-packages",
+  "/services",
+  "/about",
+  "/contact",
+  "/blog",
+  "/help-center",
+  "/ticket-inquiry",
+  "/refund",
+  "/privacy",
+  "/terms",
+] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://kramana.vercel.app'
-  
-  const routes = [
-    '',
-    '/holiday-packages',
-    '/hotels',
-    '/flights',
-    '/services',
-    '/about',
-    '/contact',
-    '/blog',
-    '/auth',
-    '/refund',
-    '/privacy',
-    '/terms',
-  ]
+  const baseUrl = getSiteUrl();
+  const lastModified = new Date();
 
-  return routes.map((route) => ({
+  return PUBLIC_ROUTES.map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: route === '' ? 'daily' : 'weekly',
-    priority: route === '' ? 1 : 0.8,
-  }))
+    lastModified,
+    changeFrequency: route === "" ? "daily" : "weekly",
+    priority: route === "" ? 1 : 0.8,
+  }));
 }

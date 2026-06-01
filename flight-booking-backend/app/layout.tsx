@@ -3,55 +3,56 @@ export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import NavbarShell from "@/components/NavbarShell";
 import Script from "next/script";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import SessionProvider from "@/components/SessionProvider";
+import { getSiteUrl } from "@/lib/site-url";
 
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Kramana",
-  url: "https://kramana.vercel.app",
-  logo: "https://kramana.vercel.app/logo.png",
-  sameAs: [
-    "https://facebook.com/kramana",
-    "https://instagram.com/kramana",
-    "https://twitter.com/kramana",
-  ],
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+91-1234567890",
-    contactType: "customer service",
-    areaServed: "IN",
-    availableLanguage: ["English", "Hindi"],
-  },
-};
-
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Kramana",
-  url: "https://kramana.vercel.app",
-  potentialAction: {
-    "@type": "SearchAction",
-    target: "https://kramana.vercel.app/flights?from={search_term_string}",
-    "query-input": "required name=search_term_string",
-  },
-};
-
-const webPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "Kramana",
-  description:
-    "Experience the art of travel with Kramana's premium concierge services.",
-  publisher: {
-    "@type": "Organization",
-    name: "Kramana",
-  },
-};
+function getStructuredData(siteUrl: string) {
+  return {
+    organization: {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Kramana",
+      url: siteUrl,
+      logo: `${siteUrl}/logo.png`,
+      sameAs: [
+        "https://facebook.com/kramana",
+        "https://instagram.com/kramana",
+        "https://twitter.com/kramana",
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+91-1234567890",
+        contactType: "customer service",
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi"],
+      },
+    },
+    website: {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "Kramana",
+      url: siteUrl,
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${siteUrl}/flights?from={search_term_string}`,
+        "query-input": "required name=search_term_string",
+      },
+    },
+    webPage: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "Kramana",
+      description:
+        "Experience the art of travel with Kramana's premium concierge services.",
+      publisher: {
+        "@type": "Organization",
+        name: "Kramana",
+      },
+    },
+  };
+}
 
 const inter = Inter({
   variable: "--font-inter",
@@ -68,6 +69,7 @@ import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSEOMetadata("/"); // Use Home SEO as baseline
   const mappedMetadata = mapSEOToMetadata(seo);
+  const siteUrl = getSiteUrl();
 
   return {
     ...mappedMetadata,
@@ -75,7 +77,7 @@ export async function generateMetadata(): Promise<Metadata> {
       google: "WunfK7xwxVIaTuQXXc70LxW_WAvNzGitj-HgGWeRjN0",
     },
 
-    metadataBase: new URL("https://kramana.vercel.app"),
+    metadataBase: new URL(siteUrl),
     openGraph: {
       ...mappedMetadata.openGraph,
       images: [
@@ -95,14 +97,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteUrl = getSiteUrl();
+  const structuredData = getStructuredData(siteUrl);
+
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${outfit.variable} antialiased selection:bg-accent/30`}
       >
-        <SessionProvider>
-          <Navbar />
-          <Script
+        <NavbarShell />
+        <Script
             src="https://www.googletagmanager.com/gtag/js?id=G-5CW4N3EYJJ"
             strategy="lazyOnload"
           />
@@ -119,24 +123,26 @@ export default function RootLayout({
             id="organization-schema"
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify(organizationSchema),
+              __html: JSON.stringify(structuredData.organization),
             }}
           />
           <Script
             id="website-schema"
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(structuredData.website),
+            }}
           />
           <Script
             id="webpage-schema"
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(structuredData.webPage),
+            }}
           />
           <main className="min-h-screen">{children}</main>
           <Footer />
-          <SpeedInsights />
-        </SessionProvider>
-      </body>
+        </body>
     </html>
   );
 }

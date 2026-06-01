@@ -1,6 +1,7 @@
 import { unstable_noStore as noStore } from 'next/cache';
 import fs from 'fs';
 import path from 'path';
+import { getSiteUrl } from '@/lib/site-url';
 
 export interface SEOData {
   title: string;
@@ -57,13 +58,16 @@ function readJsonFile(routePath: string): SEOData | null {
 }
 
 export function getDefaultSEO(routePath: string): SEOData {
+  const siteUrl = getSiteUrl();
+  const pathSuffix = routePath === "/" ? "" : routePath;
+
   return {
     title: "Kramana | Luxury Travel Redefined",
     description: "Experience the art of travel with Kramana's premium concierge services.",
     keywords: "luxury travel, concierge, flights, hotels",
-    canonical: "https://kramana.vercel.app" + routePath,
-    og_url: "https://kramana.vercel.app" + routePath,
-    publisher: "https://kramana.vercel.app",
+    canonical: `${siteUrl}${pathSuffix}`,
+    og_url: `${siteUrl}${pathSuffix}`,
+    publisher: siteUrl,
     robots: "index, follow"
   };
 }

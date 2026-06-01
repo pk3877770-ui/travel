@@ -1,12 +1,17 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from "next";
+import { getSiteUrl } from "@/lib/site-url";
+
+export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
+  const siteUrl = getSiteUrl();
+
   return {
     rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/admin/', '/profile/'],
+      userAgent: "*",
+      allow: "/",
+      disallow: ["/admin/", "/profile/", "/api/"],
     },
-    sitemap: 'https://kramana.vercel.app/sitemap.xml',
-  }
+    sitemap: `${siteUrl}/sitemap.xml`,
+  };
 }
