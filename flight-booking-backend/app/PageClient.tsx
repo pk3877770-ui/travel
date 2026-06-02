@@ -67,7 +67,7 @@ export default function Home() {
                     <p className="text-slate-400">Your invitation has been accepted. Expect our first transmission shortly.</p>
                   </motion.div>
                 ) : (
-                  <form 
+                  <form
                     onSubmit={async (e) => {
                       e.preventDefault();
                       const form = e.currentTarget;
@@ -94,6 +94,7 @@ export default function Home() {
                         setTimeout(() => setNewsletterStatus("idle"), 3000);
                       }
                     }}
+                    autoComplete="on"
                     className="flex flex-col md:flex-row gap-4 w-full"
                   >
                     <div className="flex-1 relative group">
@@ -193,3 +194,4 @@ export default function Home() {
     </main>
   );
 }
+

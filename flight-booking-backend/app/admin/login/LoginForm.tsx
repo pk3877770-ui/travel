@@ -6,7 +6,7 @@ export default function LoginForm() {
   const [state, formAction, isPending] = useActionState(loginAction, { error: '' });
 
   return (
-    <form action={formAction} className="space-y-6">
+    <form action={formAction} method="post" autoComplete="on" className="space-y-5">
       {state?.error && (
         <div className="bg-red-500/10 border border-red-500/30 text-rose-400 px-4 py-3 rounded-xl text-sm font-semibold text-center animate-in fade-in slide-in-from-top-2">
           {state.error}
@@ -48,3 +48,4 @@ export default function LoginForm() {
     </form>
   );
 }
+

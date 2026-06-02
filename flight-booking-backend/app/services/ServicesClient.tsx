@@ -200,7 +200,7 @@ export default function ServicesPage() {
                 </button>
                 <h3 className="text-3xl font-black font-outfit mb-4">Personal Consultation</h3>
                 <p className="text-slate-500 mb-8">Share your vision, and our lifestyle managers will curate the perfect journey for you.</p>
-                <form onSubmit={handleConsultSubmit} className="space-y-6">
+                <form onSubmit={handleConsultSubmit} autoComplete="on" className="space-y-4 relative z-10">
                   <input type="text" name="name" placeholder="Full Name" required className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" />
                   <input type="email" name="email" placeholder="Email Address" required className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium" />
                   <textarea name="message" placeholder="What are you dreaming of?" required className="w-full bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-accent font-medium h-32 resize-none" />
@@ -219,3 +219,4 @@ export default function ServicesPage() {
     </div>
   );
 }
+

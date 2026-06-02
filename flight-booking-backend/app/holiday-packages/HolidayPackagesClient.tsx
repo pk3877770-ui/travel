@@ -154,7 +154,7 @@ export default function HolidayPackages() {
 
             {/* Specialized Package Search */}
             <div className="max-w-5xl mx-auto bg-white/80 dark:bg-slate-900/40 backdrop-blur-[40px] rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] p-6 md:p-12 text-left border border-white/20 dark:border-white/10 noise-overlay">
-               <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+              <form onSubmit={handleSearch} autoComplete="on" className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="lg:col-span-2 space-y-3">
                     <label htmlFor="package-destination-select" className="text-sm font-black text-slate-400 uppercase tracking-[0.2em] px-2 opacity-60">Destination</label>
                     <div className="relative group">
@@ -308,3 +308,4 @@ export default function HolidayPackages() {
     </main>
   );
 }
+

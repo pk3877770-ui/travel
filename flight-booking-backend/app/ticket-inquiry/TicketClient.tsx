@@ -101,7 +101,7 @@ export default function TicketInquiry() {
             className="bg-slate-50 dark:bg-slate-900 p-8 md:p-12 rounded-[2.5rem] shadow-2xl border border-slate-100 dark:border-slate-800"
           >
             <h2 className="text-3xl font-bold font-outfit mb-10 text-center text-primary dark:text-white">Retrieve Your Booking</h2>
-            <form onSubmit={handleSearch} className="space-y-6">
+            <form onSubmit={handleSearch} autoComplete="on">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">PNR Number</label>
@@ -304,3 +304,4 @@ export default function TicketInquiry() {
     </main>
   );
 }
+

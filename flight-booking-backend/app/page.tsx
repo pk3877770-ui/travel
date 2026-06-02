@@ -42,10 +42,7 @@ export default function Page() {
                 Subscribe to our private network for secret itineraries, luxury aviation insights, and priority access to our signature journeys.
               </p>
               <div className="max-w-2xl mx-auto">
-                <form
-                  action="#"
-                  className="flex flex-col md:flex-row gap-4 w-full"
-                >
+                <form action="/api/newsletter" method="POST" autoComplete="on" className="flex flex-col md:flex-row gap-4">
                   <div className="flex-1 relative group">
                     <input
                       type="email"
@@ -117,3 +114,4 @@ export default function Page() {
       </PageWithBreadcrumb>
   );
 }
+

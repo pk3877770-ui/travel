@@ -52,8 +52,7 @@ export default function SeoForm({ currentPage, currentMetadata, isLocalJson }: {
                     )}
                 </div>
             )}
-            
-            <form key={state?.timestamp || 'initial'} action={formAction} className="grid md:grid-cols-2 gap-x-12 gap-y-12 relative z-10">
+            <form action={formAction} method="post" autoComplete="on" className="grid gap-6 md:grid-cols-2 relative z-10">
                 <input type="hidden" name="page_key" value={currentPage} />
                 
                 <div className="flex flex-col gap-4 md:col-span-2 group">
@@ -132,3 +131,4 @@ export default function SeoForm({ currentPage, currentMetadata, isLocalJson }: {
         </div>
     );
 }
+

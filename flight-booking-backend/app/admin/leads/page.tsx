@@ -76,7 +76,7 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
         </nav>
 
         <div className="w-full p-8 mt-auto">
-            <form action={logoutAction}>
+            <form action={logoutAction} method="post" autoComplete="on">
                 <button className="w-full px-4 py-5 bg-white/5 text-slate-400 border border-white/5 rounded-2xl font-black tracking-widest text-[10px] uppercase hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all duration-500">
                     Exit Control
                 </button>
@@ -351,3 +351,4 @@ export default async function LeadsAdminPage({ searchParams }: { searchParams: P
         </PageWithBreadcrumb>
   );
 }
+

@@ -77,8 +77,7 @@ const ContactClient = () => {
               <p className="text-slate-500 mb-10 leading-relaxed">
                 Provide your details and a brief description of your travel requirements. A personal concierge will contact you within the hour.
               </p>
-              
-              <form className="space-y-6" onSubmit={handleSubmit}>
+              <form action="/api/contact" method="POST" autoComplete="on" className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">Full Name</label>
@@ -219,3 +218,4 @@ const ContactClient = () => {
 };
 
 export default ContactClient;
+

@@ -534,8 +534,7 @@ export default function FlightBookingPage() {
             transition={{ delay: 0.2 }}
             className="bg-white dark:bg-slate-900 rounded-[2.5rem] md:rounded-[3rem] shadow-2xl p-6 md:p-14 border border-slate-100 dark:border-slate-800"
           >
-            <form onSubmit={handleSearch} className="space-y-10">
-              <div className="grid grid-cols-1 lg:grid-cols-7 gap-6 items-end">
+            <form onSubmit={handleSearch} autoComplete="on" className="grid grid-cols-1 lg:grid-cols-7 gap-6 items-end">
                 <div className="lg:col-span-3 space-y-2">
                   <label className="text-sm font-black text-slate-400 uppercase tracking-widest px-1">Leaving From</label>
                   <div className="relative group">
@@ -925,3 +924,4 @@ export default function FlightBookingPage() {
 }
 
 // Helper for conditional classes (Removed duplicated local function as it is now imported from @/lib/utils)
+

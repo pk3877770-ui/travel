@@ -211,29 +211,30 @@ export default function HotelBooking() {
                   <div className="bg-accent p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] text-primary-dark space-y-8 shadow-2xl shadow-accent/20 relative overflow-hidden group">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     <h3 className="text-3xl font-black font-outfit relative z-10 tracking-tight">Request a Reservation</h3>
-                    <form 
-                      onSubmit={async (e) => {
-                        e.preventDefault();
-                        const btn = e.currentTarget.querySelector('button');
-                        if (btn) btn.disabled = true;
-                        
-                        await fetch("/api/leads", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({
-                            from: "Anywhere",
-                            to: selectedHotel.name,
-                            date: "TBD",
-                            travelers: "2 Adults",
-                            type: `HOTEL RESERVATION: ${selectedHotel.name}`
-                          }),
-                        });
-                        
-                        alert("Your reservation request for " + selectedHotel.name + " has been sent to our concierge.");
-                        setSelectedHotel(null);
-                      }}
-                      className="space-y-4 relative z-10"
-                    >
+                        <form
+                          onSubmit={async (e) => {
+                            e.preventDefault();
+                            const btn = e.currentTarget.querySelector('button');
+                            if (btn) btn.disabled = true;
+                            
+                            await fetch("/api/leads", {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({
+                                from: "Anywhere",
+                                to: selectedHotel.name,
+                                date: "TBD",
+                                travelers: "2 Adults",
+                                type: `HOTEL RESERVATION: ${selectedHotel.name}`
+                              }),
+                            });
+                            
+                            alert("Your reservation request for " + selectedHotel.name + " has been sent to our concierge.");
+                            setSelectedHotel(null);
+                          }}
+                          autoComplete="on"
+                          className="space-y-4 relative z-10"
+                        >
                       <input type="text" placeholder="Full Name" required className="w-full bg-black/5 border border-black/10 p-5 rounded-2xl text-primary-dark placeholder:text-primary-dark/40 focus:outline-none focus:border-primary-dark/30 font-bold" />
                       <input type="email" placeholder="Email Address" required className="w-full bg-black/5 border border-black/10 p-5 rounded-2xl text-primary-dark placeholder:text-primary-dark/40 focus:outline-none focus:border-primary-dark/30 font-bold" />
                       <button className="w-full bg-primary-dark text-white py-5 rounded-2xl font-black text-lg transition-all hover:-translate-y-1 shadow-xl uppercase tracking-[0.2em]">
@@ -281,7 +282,7 @@ export default function HotelBooking() {
 
             {/* Specialized Hotel Search */}
             <div className="max-w-6xl mx-auto bg-white/80 dark:bg-slate-900/60 backdrop-blur-[40px] rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] p-6 md:p-14 text-left border border-white/20 dark:border-white/10 noise-overlay">
-              <form onSubmit={handleSearch} className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-end">
+              
                 <div className="lg:col-span-4 space-y-4">
                   <label className="text-sm font-black text-slate-400 uppercase tracking-[0.3em] px-4 opacity-80">Destination or Property</label>
                   <div className="relative group">
@@ -514,3 +515,4 @@ export default function HotelBooking() {
     </main>
   );
 }
+

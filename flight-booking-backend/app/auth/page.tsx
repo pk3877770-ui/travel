@@ -169,7 +169,7 @@ export default function AuthPage() {
             )}
 
             {/* Form */}
-            <form className="space-y-5" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="on" className="space-y-6">
               <AnimatePresence mode="wait">
                 {!isLogin && (
                   <motion.div
@@ -386,4 +386,5 @@ export default function AuthPage() {
     </div>
   );
 }
+
 

@@ -267,7 +267,7 @@ const SearchSection = () => {
 
           {/* Form */}
           {activeTab === "flights" && tripType === "multi-city" ? (
-            <form onSubmit={handleSearch} className="relative z-10 space-y-3">
+            <form onSubmit={handleSearch} autoComplete="on" className="space-y-3">
               <div className="space-y-3">
                 {multiCityFlights.map((flight, index) => {
                   const showRemove = index >= 2;
@@ -601,7 +601,7 @@ const SearchSection = () => {
 
             </form>
           ) : activeTab === "hotels" ? (
-            <form onSubmit={handleSearch} className="relative z-10 space-y-3">
+            <form onSubmit={handleSearch} autoComplete="on" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
                 <div className="lg:col-span-4 space-y-1">
                   <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Location</label>
@@ -710,7 +710,7 @@ const SearchSection = () => {
 
             </form>
           ) : activeTab === "cars" ? (
-            <form onSubmit={handleSearch} className="relative z-10">
+            <form onSubmit={handleSearch} autoComplete="on" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
                 <div className="lg:col-span-4 space-y-1">
                   <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Pick-up location</label>
@@ -839,10 +839,7 @@ const SearchSection = () => {
               </div>
             </form>
           ) : (
-            <form 
-              onSubmit={handleSearch}
-              className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end"
-            >
+            <form onSubmit={handleSearch} autoComplete="on" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
               <div className={cn("space-y-1 relative", activeTab === "flights" && tripType === "round-trip" ? "lg:col-span-3" : "lg:col-span-3")}>
                 <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">From</label>
                 <div className="relative group">
@@ -1118,3 +1115,4 @@ const SearchSection = () => {
 };
 
 export default SearchSection;
+

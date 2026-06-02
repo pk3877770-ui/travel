@@ -120,7 +120,7 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
 
         {/* Interaction Footer */}
         <div className="w-full p-8 bg-[#030712]/60 border-t border-white/[0.03] mt-auto">
-            <form action={logoutAction}>
+            <form action={logoutAction} method="post" autoComplete="on">
                 <button className="w-full px-4 py-5 bg-rose-500/5 text-rose-500 border border-rose-500/10 rounded-2xl font-black tracking-widest text-[11px] uppercase hover:bg-rose-500 hover:text-white hover:shadow-[0_15px_40px_-10px_rgba(244,63,94,0.4)] transition-all duration-500 group overflow-hidden relative">
                     <span className="relative z-10 group-hover:scale-110 block transition-transform">Terminate Session</span>
                     <div className="absolute inset-0 bg-gradient-to-br from-rose-400 to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -210,3 +210,4 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
         </PageWithBreadcrumb>
     );
 }
+
