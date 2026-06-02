@@ -282,7 +282,7 @@ export default function HotelBooking() {
 
             {/* Specialized Hotel Search */}
             <div className="max-w-6xl mx-auto bg-white/80 dark:bg-slate-900/60 backdrop-blur-[40px] rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] p-6 md:p-14 text-left border border-white/20 dark:border-white/10 noise-overlay">
-              
+              <form onSubmit={handleSearch} className="grid gap-6 lg:grid-cols-4">
                 <div className="lg:col-span-4 space-y-4">
                   <label className="text-sm font-black text-slate-400 uppercase tracking-[0.3em] px-4 opacity-80">Destination or Property</label>
                   <div className="relative group">
