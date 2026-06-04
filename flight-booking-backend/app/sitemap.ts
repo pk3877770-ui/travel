@@ -26,15 +26,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const publicSitemap = PUBLIC_ROUTES.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: route === "" ? "daily" : "weekly",
-    priority: route === "" ? 1 : 0.8,
   }));
 
   const blogSitemap = blogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.id}`,
     lastModified: new Date(post.date),
-    changeFrequency: "weekly",
-    priority: 0.8,
   }));
 
   return [...publicSitemap, ...blogSitemap];
