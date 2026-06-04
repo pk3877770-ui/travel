@@ -1,8 +1,9 @@
 import { MetadataRoute } from "next";
+import { blogPosts } from "@/lib/blog-posts";
 
 const baseUrl = process.env.SITE_URL?.trim() || process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://flight-booking-backend-gold.vercel.app";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 const PUBLIC_ROUTES = [
   "",
@@ -22,12 +23,19 @@ const PUBLIC_ROUTES = [
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
-
-  return PUBLIC_ROUTES.map((route) => ({
+  const publicSitemap = PUBLIC_ROUTES.map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified,
+    lastModified: new Date(),
     changeFrequency: route === "" ? "daily" : "weekly",
     priority: route === "" ? 1 : 0.8,
   }));
+
+  const blogSitemap = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.id}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "weekly",
+    priority: 0.8,
+  }));
+
+  return [...publicSitemap, ...blogSitemap];
 }

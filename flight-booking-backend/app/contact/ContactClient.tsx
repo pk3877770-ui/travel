@@ -72,7 +72,7 @@ const ContactClient = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Contact Form */}
-            <div className="bg-slate-50 border border-slate-200 rounded-[2rem] p-6 md:p-12 shadow-sm">
+            <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-[2rem] p-6 md:p-12 shadow-sm">
               <h2 className="text-3xl md:text-4xl font-bold font-outfit text-primary mb-6">Send an Inquiry</h2>
               <p className="text-slate-500 mb-10 leading-relaxed">
                 Provide your details and a brief description of your travel requirements. A personal concierge will contact you within the hour.
@@ -102,7 +102,7 @@ const ContactClient = () => {
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="subject-select" className="text-sm font-bold text-slate-500 uppercase tracking-wider">Subject</label>
-                  <select id="subject-select" name="subject" className="w-full bg-white text-slate-900 border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all appearance-none cursor-pointer">
+                  <select id="subject-select" name="subject" className="w-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all appearance-none cursor-pointer">
                     <option>Bespoke Journey Consultation</option>
                     <option>Boutique Hotel Inquiry</option>
                     <option>Private Aviation Request</option>
@@ -114,7 +114,7 @@ const ContactClient = () => {
                   <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">Detailed Message</label>
                   <textarea 
                     name="message"
-                    className="w-full bg-white text-slate-900 placeholder:text-slate-400 border border-slate-200 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all min-h-[180px] resize-none" 
+                    className="w-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 border border-slate-200 dark:border-slate-700 px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent transition-all min-h-[180px] resize-none" 
                     placeholder="Tell us about your dream destination..."
                     required
                   ></textarea>

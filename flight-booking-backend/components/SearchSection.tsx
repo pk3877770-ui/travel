@@ -601,70 +601,68 @@ const SearchSection = () => {
 
             </form>
           ) : activeTab === "hotels" ? (
-            <form onSubmit={handleSearch} autoComplete="on" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
-                <div className="lg:col-span-4 space-y-1">
-                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Location</label>
-                  <div className="relative group">
-                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
-                    <input
-                      type="text"
-                      name="location"
-                      placeholder="City, property or landmark"
-                      ref={locationRef}
-                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base placeholder:text-slate-400"
-                    />
-                  </div>
-                </div>
-
-                <div className="lg:col-span-3 space-y-1">
-                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Check-in</label>
-                  <div className="relative group">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
-                    <input
-                      type="text"
-                      name="checkin"
-                      placeholder="dd/mm/yyyy"
-                      onFocus={(e) => (e.currentTarget.type = 'date')}
-                      onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
-                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="lg:col-span-3 space-y-1">
-                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Check-out</label>
-                  <div className="relative group">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
-                    <input
-                      type="text"
-                      name="checkout"
-                      placeholder="dd/mm/yyyy"
-                      onFocus={(e) => (e.currentTarget.type = 'date')}
-                      onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
-                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="lg:col-span-2 space-y-1">
-                  <label htmlFor="hotel-guests-select" className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Guests</label>
-                  <div className="relative group">
-                    <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
-                    <select
-                      id="hotel-guests-select"
-                      name="guests"
-                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none cursor-pointer"
-                    >
-                      <option>1 Room, 1 Guest</option>
-                      <option>1 Room, 2 Guests</option>
-                      <option>2 Rooms</option>
-                    </select>
-                  </div>
+            <form onSubmit={handleSearch} autoComplete="on" className="grid grid-cols-1 gap-3 lg:grid-cols-12 items-end">
+              <div className="lg:col-span-4 space-y-1">
+                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Location</label>
+                <div className="relative group">
+                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                  <input
+                    type="text"
+                    name="location"
+                    placeholder="City, property or landmark"
+                    ref={locationRef}
+                    className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                  />
                 </div>
               </div>
 
-              <div className="mt-3 flex items-center gap-6">
+              <div className="lg:col-span-2 space-y-1">
+                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Check-in</label>
+                <div className="relative group">
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                  <input
+                    type="text"
+                    name="checkin"
+                    placeholder="dd/mm/yyyy"
+                    onFocus={(e) => (e.currentTarget.type = 'date')}
+                    onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
+                    className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                  />
+                </div>
+              </div>
+
+              <div className="lg:col-span-2 space-y-1">
+                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Check-out</label>
+                <div className="relative group">
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                  <input
+                    type="text"
+                    name="checkout"
+                    placeholder="dd/mm/yyyy"
+                    onFocus={(e) => (e.currentTarget.type = 'date')}
+                    onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
+                    className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                  />
+                </div>
+              </div>
+
+              <div className="lg:col-span-2 space-y-1">
+                <label htmlFor="hotel-guests-select" className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Guests</label>
+                <div className="relative group">
+                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                  <select
+                    id="hotel-guests-select"
+                    name="guests"
+                    className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none cursor-pointer placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                  >
+                    <option>1 Room, 1 Guest</option>
+                    <option>1 Room, 2 Guests</option>
+                    <option>2 Rooms</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="lg:col-span-12 mt-3 flex flex-wrap items-center gap-6">
                 <label className="flex items-center gap-2 text-sm text-slate-300">
                   <input
                     type="checkbox"
@@ -710,76 +708,74 @@ const SearchSection = () => {
 
             </form>
           ) : activeTab === "cars" ? (
-            <form onSubmit={handleSearch} autoComplete="on" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
-                <div className="lg:col-span-4 space-y-1">
-                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Pick-up location</label>
-                  <div className="relative group">
-                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
-                    <input
-                      type="text"
-                      name="pickupLocation"
-                      placeholder="City, airport or station"
-                      ref={carLocationRef}
-                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base placeholder:text-slate-400"
-                    />
-                  </div>
-                </div>
-
-                <div className="lg:col-span-2 space-y-1">
-                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Pick-up date</label>
-                  <div className="relative group">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
-                    <input
-                      type="text"
-                      name="pickupDate"
-                      placeholder="dd/mm/yyyy"
-                      onFocus={(e) => (e.currentTarget.type = 'date')}
-                      onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
-                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="lg:col-span-1 space-y-1">
-                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Time</label>
-                  <div className="relative group">
-                    <input
-                      type="time"
-                      name="pickupTime"
-                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="lg:col-span-2 space-y-1">
-                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Drop-off date</label>
-                  <div className="relative group">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
-                    <input
-                      type="text"
-                      name="dropoffDate"
-                      placeholder="dd/mm/yyyy"
-                      onFocus={(e) => (e.currentTarget.type = 'date')}
-                      onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
-                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="lg:col-span-1 space-y-1">
-                  <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Time</label>
-                  <div className="relative group">
-                    <input
-                      type="time"
-                      name="dropoffTime"
-                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
-                    />
-                  </div>
+            <form onSubmit={handleSearch} autoComplete="on" className="grid grid-cols-1 gap-3 lg:grid-cols-12 items-end">
+              <div className="lg:col-span-4 space-y-1">
+                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Pick-up location</label>
+                <div className="relative group">
+                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                  <input
+                    type="text"
+                    name="pickupLocation"
+                    placeholder="City, airport or station"
+                    ref={carLocationRef}
+                    className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                  />
                 </div>
               </div>
 
-              <div className="mt-3 flex items-center gap-6">
+              <div className="lg:col-span-2 space-y-1">
+                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Pick-up date</label>
+                <div className="relative group">
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                  <input
+                    type="text"
+                    name="pickupDate"
+                    placeholder="dd/mm/yyyy"
+                    onFocus={(e) => (e.currentTarget.type = 'date')}
+                    onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
+                    className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                  />
+                </div>
+              </div>
+
+              <div className="lg:col-span-2 space-y-1">
+                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Drop-off date</label>
+                <div className="relative group">
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+                  <input
+                    type="text"
+                    name="dropoffDate"
+                    placeholder="dd/mm/yyyy"
+                    onFocus={(e) => (e.currentTarget.type = 'date')}
+                    onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
+                    className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                  />
+                </div>
+              </div>
+
+              <div className="lg:col-span-1 space-y-1">
+                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Pick-up time</label>
+                <div className="relative group">
+                  <input
+                    type="time"
+                    name="pickupTime"
+                    className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
+                  />
+                </div>
+              </div>
+
+              <div className="lg:col-span-1 space-y-1">
+                <label className="text-xs font-black text-slate-300 uppercase tracking-[0.2em] px-3 opacity-80">Drop-off time</label>
+                <div className="relative group">
+                  <input
+                    type="time"
+                    name="dropoffTime"
+                    className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none"
+                  />
+                </div>
+              </div>
+
+              <div className="lg:col-span-12 flex flex-col gap-3 md:flex-row md:items-center md:justify-between mt-3">
                 <label className="flex items-center gap-2 text-sm text-slate-300">
                   <input type="checkbox" className="w-4 h-4 rounded border-slate-200" />
                   <span className="font-black text-sm text-slate-300">Driver aged between 25 - 70</span>
@@ -790,32 +786,7 @@ const SearchSection = () => {
                 </label>
               </div>
 
-              {/* Desktop button (placed below inputs like Flights/Hotels) */}
-              <div className="mt-4 hidden md:block">
-                <motion.button
-                  whileHover={{ scale: 1.01, y: -2 }}
-                  whileTap={{ scale: 0.99 }}
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full h-14 bg-gradient-to-r from-[#ff9a00] via-[#ff8a00] to-[#ffb347] hover:from-[#ff8a00] hover:to-[#ffb347] text-primary-dark rounded-full font-black text-base uppercase tracking-widest flex items-center justify-center gap-6 shadow-[0_15px_40px_rgba(255,138,0,0.25)] disabled:opacity-70 mx-auto px-6"
-                >
-                  {isLoading ? (
-                    <Loader2 className="w-6 h-6 animate-spin text-primary-dark" />
-                  ) : (
-                    <>
-                      <Search className="w-5 h-5 text-primary-dark" />
-                      <div className="flex flex-col items-center leading-none">
-                        <span className="text-[11px] font-black text-black/70 uppercase tracking-widest">Cars</span>
-                        <span className="text-center text-black text-[15px] tracking-[0.6em] md:tracking-[0.7em]">SEARCH CARS</span>
-                      </div>
-                      <Sparkles className="w-4 h-4 text-primary-dark animate-pulse" />
-                    </>
-                  )}
-                </motion.button>
-              </div>
-
-              {/* Mobile full-width button (placed below inputs like Flights/Hotels) */}
-              <div className="mt-3 w-full md:hidden">
+              <div className="lg:col-span-12 mt-4">
                 <motion.button
                   whileHover={{ scale: 1.01, y: -2 }}
                   whileTap={{ scale: 0.99 }}
@@ -850,7 +821,7 @@ const SearchSection = () => {
                     placeholder="Where from?"
                     value={fromValue}
                     onChange={(e) => setFromValue(e.target.value)}
-                    className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base placeholder:text-slate-400"
+                    className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base placeholder:text-slate-400 dark:placeholder:text-slate-500"
                   />
 
                   {/* Swap Button */}
@@ -880,7 +851,7 @@ const SearchSection = () => {
                     placeholder="Country, city or airport"
                     value={toValue}
                     onChange={(e) => setToValue(e.target.value)}
-                    className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base placeholder:text-slate-400"
+                    className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base placeholder:text-slate-400 dark:placeholder:text-slate-500"
                   />
                 </div>
               </div>
@@ -895,7 +866,7 @@ const SearchSection = () => {
                     placeholder="dd/mm/yyyy"
                     onFocus={(e) => (e.currentTarget.type = 'date')}
                     onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
-                    className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base appearance-none"
+                    className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base appearance-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
                   />
                 </div>
               </div>
@@ -911,7 +882,7 @@ const SearchSection = () => {
                       placeholder="dd/mm/yyyy"
                       onFocus={(e) => (e.currentTarget.type = 'date')}
                       onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
-                      className="w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base appearance-none"
+                      className="w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none focus:ring-0 transition-all font-black text-base appearance-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
                     />
                   </div>
                 </div>
@@ -924,7 +895,7 @@ const SearchSection = () => {
                     <select 
                       id="one-way-round-trip-travelers"
                       name="travelers"
-                      className="min-w-[160px] w-full bg-white text-slate-800 border border-slate-200 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none cursor-pointer"
+                      className="min-w-[160px] w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 py-4 pl-6 pr-6 rounded-lg focus:outline-none transition-all font-black text-base appearance-none cursor-pointer placeholder:text-slate-400 dark:placeholder:text-slate-500"
                     >
                     <option>1 Adult</option>
                     <option>2 Adults</option>
