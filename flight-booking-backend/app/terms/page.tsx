@@ -1,19 +1,8 @@
-import { Metadata } from 'next';
-import { getSEOMetadata, mapSEOToMetadata } from '@/lib/seo';
-import TermsClient from './TermsClient';
-import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
-
-export const dynamic = 'force-dynamic';
-
-export async function generateMetadata(): Promise<Metadata> {
-  const seo = await getSEOMetadata('/terms');
-  return mapSEOToMetadata(seo);
-}
-
-export default function Page() {
+export default function TermsPage() {
   return (
-    <PageWithBreadcrumb routePath="/terms">
-      <TermsClient />
-    </PageWithBreadcrumb>
+    <div className="pt-32 pb-20 min-h-[70vh] flex flex-col items-center justify-center text-center px-4">
+      <h1 className="text-4xl font-bold text-slate-800 mb-4">Terms & Conditions</h1>
+      <p className="text-slate-500">Our terms of service. This page is under construction.</p>
+    </div>
   );
 }

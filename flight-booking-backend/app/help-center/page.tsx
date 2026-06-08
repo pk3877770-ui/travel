@@ -1,19 +1,8 @@
-import { Metadata } from 'next';
-import { getSEOMetadata, mapSEOToMetadata } from '@/lib/seo';
-import HelpClient from './HelpClient';
-import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
-
-export const dynamic = 'force-dynamic';
-
-export async function generateMetadata(): Promise<Metadata> {
-  const seo = await getSEOMetadata('/help-center');
-  return mapSEOToMetadata(seo);
-}
-
-export default function Page() {
+export default function HelpCenterPage() {
   return (
-    <PageWithBreadcrumb routePath="/help-center">
-      <HelpClient />
-    </PageWithBreadcrumb>
+    <div className="pt-32 pb-20 min-h-[70vh] flex flex-col items-center justify-center text-center px-4">
+      <h1 className="text-4xl font-bold text-slate-800 mb-4">Help Center</h1>
+      <p className="text-slate-500">How can we help you? This page is under construction.</p>
+    </div>
   );
 }

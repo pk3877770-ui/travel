@@ -1,354 +1,237 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import dbConnect from '@/lib/mongodb';
-import Lead from '@/models/Lead';
-import Contact from '@/models/Contact';
-import Booking from '@/models/Booking';
-import User from '@/models/User';
-import Link from 'next/link';
-import { logoutAction } from '../login/actions';
-import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
-import { Search, MapPin, Calendar, Users, Trash2, ShieldCheck, Zap, Globe, Clock } from 'lucide-react';
+"use client";
 
-export default async function LeadsAdminPage({ searchParams }: { searchParams: Promise<{ filter?: string }> }) {
-  const { filter } = await searchParams;
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { 
+  LayoutDashboard, Briefcase, Users, Plane, UserPlus, Tag, BarChart3, Settings, LogOut, 
+  Search, MessageSquare, PlaneTakeoff, Mail
+} from "lucide-react";
 
-  let leads = [];
-  let dbError = false;
-  try {
-    await dbConnect();
-    
-    let query = {};
-    if (filter === 'flights') query = { type: { $regex: /Flight|Aviation|Booking/i } };
-    if (filter === 'holidays') query = { type: { $regex: /Holiday|Bundle|Package|Journey/i } };
-    if (filter === 'hotels') query = { type: { $regex: /Hotel|Residency|Elite/i } };
+export default function AdminLeadsPage() {
+  const [activeTab, setActiveTab] = useState<"contacts" | "inquiries" | "subscribers">("contacts");
+  const [loading, setLoading] = useState(true);
+  
+  const [contacts, setContacts] = useState<any[]>([]);
+  const [inquiries, setInquiries] = useState<any[]>([]);
+  const [subscribers, setSubscribers] = useState<any[]>([]);
 
-    if (filter === 'contacts') {
-        let rawContacts = await Contact.find({}).sort({ createdAt: -1 });
-        const uniqueContacts = new Map();
-        rawContacts.forEach(contact => {
-            const key = `${contact.email}-${contact.subject}-${contact.message}`.toLowerCase().trim();
-            if (!uniqueContacts.has(key)) {
-                uniqueContacts.set(key, contact);
-            }
-        });
-        leads = Array.from(uniqueContacts.values());
-    } else if (filter === 'ticket') {
-        leads = await Booking.find({}).populate('user').sort({ createdAt: -1 });
-    } else if (filter === 'users') {
-        leads = await User.find({}).sort({ createdAt: -1 });
-    } else {
-        leads = await Lead.find(query).sort({ createdAt: -1 });
-    }
-  } catch (error) {
-    console.error("Database connection failed in LeadsAdminPage:", error);
-    dbError = true;
-  }
+  const sidebarLinks = [
+    { name: "Dashboard", icon: LayoutDashboard, href: "/admin" },
+    { name: "Bookings", icon: Briefcase, href: "/admin/bookings" },
+    { name: "Users", icon: Users, href: "/admin/users" },
+    { name: "Flights", icon: Plane, href: "#" },
+    { name: "Leads", icon: UserPlus, href: "/admin/leads", active: true },
+    { name: "Offers", icon: Tag, href: "#" },
+    { name: "Reports", icon: BarChart3, href: "/admin/reports" },
+    { name: "Settings", icon: Settings, href: "#" },
+  ];
 
-    return (
-        <PageWithBreadcrumb routePath="/admin/leads">
-            <div className="flex bg-[#020617] text-slate-100 font-sans min-h-screen selection:bg-accent/30 overflow-hidden">
+  useEffect(() => {
+    const fetchLeads = async () => {
+      try {
+        const res = await fetch("/api/admin/leads");
+        const json = await res.json();
+        if (json.success) {
+          setContacts(json.data.contacts);
+          setInquiries(json.data.inquiries);
+          setSubscribers(json.data.subscribers);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLeads();
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#f8f9fa] flex font-sans">
       
-      {/* Cinematic Sidebar */}
-      <aside className="w-[320px] h-screen sticky top-0 bg-[#020617]/50 backdrop-blur-[50px] border-r border-white/[0.03] flex flex-col items-center z-50">
-        <div className="w-full p-12 relative overflow-hidden group">
-            <h2 className="font-black text-3xl text-white tracking-tighter text-center flex flex-col items-center">
-                KRAMANA
-                <span className="text-[10px] text-accent tracking-[0.5em] uppercase font-light mt-2">Sovereign Admin</span>
-            </h2>
+      {/* Sidebar */}
+      <div className="w-64 bg-[#001233] text-white flex flex-col fixed h-full z-20">
+        <div className="p-8 pt-10 mb-2">
+          <h1 className="text-xl font-bold tracking-tight text-white">FlyBook Admin</h1>
         </div>
-
-        <nav className="flex-1 w-full px-6 py-6 flex flex-col gap-2">
-            <Link 
-                href="/admin/seo"
-                className="group px-6 py-4 rounded-2xl font-bold transition-all flex items-center gap-4 text-slate-500 hover:bg-white/[0.03] hover:text-white"
-            >
-                <ShieldCheck className="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" />
-                <span className="text-sm tracking-tight">SEO Portal</span>
-            </Link>
-            <Link 
-                href="/admin/leads"
-                className="group px-6 py-4 rounded-2xl font-bold transition-all flex items-center gap-4 bg-accent text-primary-dark shadow-[0_20px_40px_-10px_rgba(245,158,11,0.3)]"
-            >
-                <Zap className="w-5 h-5" />
-                <span className="text-sm tracking-tight">Lead Matrix</span>
-            </Link>
-        </nav>
-
-        <div className="w-full p-8 mt-auto">
-            <form action={logoutAction} method="post" autoComplete="on">
-                <button className="w-full px-4 py-5 bg-white/5 text-slate-400 border border-white/5 rounded-2xl font-black tracking-widest text-[10px] uppercase hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all duration-500">
-                    Exit Control
-                </button>
-            </form>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 h-screen overflow-y-auto p-12 lg:p-20 relative scrollbar-hide">
-        {/* Dynamic Background Glows */}
-        <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] -z-10 animate-pulse-slow"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[100px] -z-10 animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
         
-        <div className="max-w-6xl mx-auto">
-            <header className="mb-20">
-                <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-1px bg-accent/50"></div>
-                    <span className="text-accent font-black text-[10px] tracking-[0.4em] uppercase">Intelligence Dashboard</span>
-                </div>
-                <h1 className="text-8xl font-black text-white tracking-tighter leading-[0.8] mb-8">
-                    Operational <br/>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-orange-400 to-rose-500">Analytics Panel</span>
-                </h1>
-                <p className="text-slate-500 text-lg max-w-2xl font-normal opacity-60 leading-relaxed">
-                    Real-time oversight of global search intent and sovereign booking inquiries across the Kramana network.
-                </p>
-            </header>
-
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                {[
-                    { label: "Total Inquiries", value: leads.length, icon: Search, color: "text-accent", bg: "bg-accent/10" },
-                    { label: "System Status", value: "Operational", icon: Globe, color: "text-emerald-500", bg: "bg-emerald-500/10" },
-                    { label: "Active Sessions", value: "24", icon: Clock, color: "text-blue-500", bg: "bg-blue-500/10" }
-                ].map((stat, i) => (
-                    <div key={i} className="bg-white/[0.02] border border-white/[0.05] p-12 md:p-14 rounded-[3rem] backdrop-blur-2xl group hover:bg-white/[0.04] transition-all">
-                        <div className="flex items-center justify-between mb-6">
-                            <div className={`p-4 rounded-2xl ${stat.bg} ${stat.color}`}>
-                                <stat.icon className="w-6 h-6" />
-                            </div>
-                            <div className="w-1 h-10 bg-white/5 rounded-full"></div>
-                        </div>
-                        <div className="text-xs font-black text-slate-500 uppercase tracking-widest mb-2">{stat.label}</div>
-                        <div className={`text-4xl font-black ${i === 0 ? 'text-white' : stat.color}`}>{stat.value}</div>
-                    </div>
-                ))}
-            </div>
-
-            {/* Matrix Filters */}
-            <div className="flex flex-wrap gap-3 mb-10 bg-white/[0.02] p-2 rounded-3xl border border-white/[0.03] w-fit">
-                {[
-                    { id: null, label: "All Data" },
-                    { id: "flights", label: "Aviation" },
-                    { id: "holidays", label: "Bundles" },
-                    { id: "hotels", label: "Elite Stays" },
-                    { id: "contacts", label: "Direct Comms" },
-                    { id: "ticket", label: "Bookings" },
-                    { id: "users", label: "Registered Users" }
-                ].map((t) => (
-                    <Link 
-                        key={t.id}
-                        href={t.id ? `/admin/leads?filter=${t.id}` : "/admin/leads"} 
-                        className={`px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all ${
-                            (filter === t.id || (!filter && t.id === null)) 
-                            ? 'bg-accent text-primary-dark shadow-[0_10px_20px_rgba(245,158,11,0.2)]' 
-                            : 'text-slate-500 hover:text-white'
-                        }`}
-                    >
-                        {t.label}
-                    </Link>
-                ))}
-            </div>
-
-            {/* Premium Data Table */}
-            <div className="bg-white/[0.01] border border-white/[0.04] rounded-[3rem] overflow-hidden backdrop-blur-3xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)]">
-                <div className="p-8 border-b border-white/[0.04] bg-white/[0.01] flex items-center justify-between">
-                    <h3 className="font-black text-sm uppercase tracking-[0.2em] text-slate-400 flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
-                        Live Stream: {filter || "Global Matrix"}
-                    </h3>
-                </div>
-                
-                <div className="overflow-x-auto">
-                    {filter === 'contacts' ? (
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="bg-white/[0.02]">
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Temporal Origin</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Identified Entity</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Communication Channel</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Directive</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Payload</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/[0.02]">
-                                {leads.map((lead: any) => (
-                                    <tr key={lead._id} className="group hover:bg-white/[0.03] transition-all">
-                                        <td className="px-10 py-8 text-xs font-mono text-slate-500">
-                                            <div className="flex items-center gap-2">
-                                                <Clock className="w-3 h-3 text-accent" />
-                                                {new Date(lead.createdAt).toLocaleString()}
-                                            </div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <div className="text-white font-black tracking-tight">{lead.name}</div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <div className="text-accent font-bold text-sm">{lead.email}</div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <span className="px-3 py-1.5 rounded-lg bg-white/5 text-[9px] font-black uppercase tracking-widest border border-white/5">{lead.subject}</span>
-                                        </td>
-                                        <td className="px-10 py-8 max-w-xs">
-                                            <div className="text-slate-400 text-xs leading-relaxed line-clamp-1 group-hover:line-clamp-none transition-all cursor-help">{lead.message}</div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    ) : filter === 'ticket' ? (
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="bg-white/[0.02]">
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Reference</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Route</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Passenger Details</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Amount</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/[0.02]">
-                                {leads.map((booking: any) => (
-                                    <tr key={booking._id} className="group hover:bg-white/[0.03] transition-all">
-                                        <td className="px-10 py-8">
-                                            <div className="text-white font-mono font-bold tracking-tight">{booking.bookingReference}</div>
-                                            <div className="text-[10px] text-slate-500 mt-1">{new Date(booking.createdAt).toLocaleDateString()}</div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <div className="flex items-center gap-3">
-                                                <div className="text-white font-black uppercase text-sm">{booking.flight.from}</div>
-                                                <div className="w-6 h-px bg-white/20"></div>
-                                                <div className="text-white font-black uppercase text-sm">{booking.flight.to}</div>
-                                            </div>
-                                            <div className="text-xs text-accent mt-1">{booking.flight.airline}</div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <div className="text-white font-bold">{booking.passengerDetails?.name || booking.user?.name || "Unknown"}</div>
-                                            <div className="text-xs text-slate-400 mt-1">{booking.passengerDetails?.passport || "N/A"}</div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <div className="text-white font-black text-lg">₹{booking.totalAmount}</div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-black uppercase tracking-widest border border-emerald-500/20">
-                                                {booking.status}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    ) : filter === 'users' ? (
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="bg-white/[0.02]">
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">User Entity</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Email Address</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Role</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Last Active</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Member Since</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/[0.02]">
-                                {leads.map((u: any) => (
-                                    <tr key={u._id} className="group hover:bg-white/[0.03] transition-all">
-                                        <td className="px-10 py-8">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-accent font-black text-xs">
-                                                    {u.name.charAt(0)}
-                                                </div>
-                                                <div className="text-white font-black tracking-tight">{u.name}</div>
-                                            </div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <div className="text-slate-400 font-mono text-xs">{u.email}</div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${
-                                                u.role === 'admin' 
-                                                ? 'bg-rose-500/10 text-rose-500 border-rose-500/20' 
-                                                : 'bg-accent/10 text-accent border-accent/20'
-                                            }`}>
-                                                {u.role}
-                                            </span>
-                                        </td>
-                                        <td className="px-10 py-8 text-xs text-slate-400">
-                                            {u.lastLogin ? (
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse"></div>
-                                                    {new Date(u.lastLogin).toLocaleString()}
-                                                </div>
-                                            ) : "Never"}
-                                        </td>
-                                        <td className="px-10 py-8 text-xs text-slate-500">
-                                            {new Date(u.createdAt).toLocaleDateString()}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    ) : (
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="bg-white/[0.02]">
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Origin & Destination</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Category</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Target Date</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Unit Count</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-500 uppercase tracking-widest text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/[0.02]">
-                                {leads.map((lead: any) => (
-                                    <tr key={lead._id} className="group hover:bg-white/[0.03] transition-all">
-                                        <td className="px-10 py-8">
-                                            <div className="flex items-center gap-6">
-                                                <div className="text-white font-black tracking-tighter text-lg uppercase">{lead.from}</div>
-                                                <div className="w-10 h-px bg-white/10 group-hover:w-16 transition-all group-hover:bg-accent/50"></div>
-                                                <div className="text-white font-black tracking-tighter text-lg uppercase">{lead.to}</div>
-                                            </div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <span className="px-4 py-1.5 rounded-full bg-accent/10 text-accent text-[9px] font-black uppercase tracking-widest border border-accent/20">{lead.type || 'Standard'}</span>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <div className="flex items-center gap-2 text-slate-400 font-mono text-xs italic">
-                                                <Calendar className="w-3 h-3" />
-                                                {lead.date || 'UNSPECIFIED'}
-                                            </div>
-                                        </td>
-                                        <td className="px-10 py-8">
-                                            <div className="flex items-center gap-2 text-slate-300 font-black text-xs">
-                                                <Users className="w-4 h-4 text-blue-500" />
-                                                {lead.travelers}
-                                            </div>
-                                        </td>
-                                        <td className="px-10 py-8 text-right">
-                                            <button className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-slate-500 hover:bg-rose-500/20 hover:text-rose-500 transition-all border border-white/5">
-                                                <Trash2 className="w-5 h-5" />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    )}
-                </div>
-
-                {leads.length === 0 && (
-                    <div className="p-32 text-center">
-                        <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/5">
-                            <Search className="w-10 h-10 text-slate-700" />
-                        </div>
-                        <h4 className="text-2xl font-black text-white mb-2 tracking-tighter">Null Data Response</h4>
-                        <p className="text-slate-600 font-medium">The matrix has not captured any data points for this specific query.</p>
-                    </div>
-                )}
-            </div>
+        <div className="flex-1 px-4 space-y-2 overflow-y-auto">
+          {sidebarLinks.map((link) => (
+            <Link 
+              key={link.name} 
+              href={link.href}
+              className={cn(
+                "flex items-center gap-4 px-4 py-3 rounded-xl text-sm transition-colors font-medium",
+                link.active 
+                  ? "bg-[#1a2b4c] text-white" 
+                  : "text-slate-300 hover:text-white hover:bg-white/5"
+              )}
+            >
+              <link.icon className="w-4 h-4" />
+              {link.name}
+            </Link>
+          ))}
         </div>
-            </main>
+        
+        <div className="p-4 px-4 pb-8">
+          <button className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors font-medium">
+            <LogOut className="w-4 h-4" />
+            Logout
+          </button>
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="flex-1 ml-64 flex flex-col h-screen overflow-hidden bg-[#fafbfe]">
+        
+        {/* Top Header */}
+        <header className="h-24 px-10 flex items-center justify-between shrink-0 bg-white border-b border-slate-100">
+          <div className="flex items-center gap-4">
+            <h1 className="text-2xl font-bold text-slate-800">Lead Management</h1>
+          </div>
+          <div className="relative">
+            <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input 
+              type="text" 
+              placeholder="Search leads..." 
+              className="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-blue-500 w-64"
+            />
+          </div>
+        </header>
+
+        {/* Scrollable Content */}
+        <main className="flex-1 overflow-y-auto p-10">
+          
+          {/* Tabs */}
+          <div className="flex gap-4 mb-8">
+            <button 
+              onClick={() => setActiveTab("contacts")}
+              className={cn(
+                "flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all",
+                activeTab === "contacts" ? "bg-blue-600 text-white shadow-md" : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+              )}
+            >
+              <MessageSquare className="w-4 h-4" /> Contact Forms ({contacts.length})
+            </button>
+            <button 
+              onClick={() => setActiveTab("inquiries")}
+              className={cn(
+                "flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all",
+                activeTab === "inquiries" ? "bg-blue-600 text-white shadow-md" : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+              )}
+            >
+              <PlaneTakeoff className="w-4 h-4" /> Flight Inquiries ({inquiries.length})
+            </button>
+            <button 
+              onClick={() => setActiveTab("subscribers")}
+              className={cn(
+                "flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all",
+                activeTab === "subscribers" ? "bg-blue-600 text-white shadow-md" : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+              )}
+            >
+              <Mail className="w-4 h-4" /> Newsletter Subscribers ({subscribers.length})
+            </button>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+            <div className="overflow-x-auto">
+              {loading ? (
+                <div className="p-12 text-center text-slate-500 font-medium">Loading leads data...</div>
+              ) : (
+                <>
+                  {/* Contacts Tab Content */}
+                  {activeTab === "contacts" && (
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-slate-50 border-b border-slate-200 text-xs uppercase tracking-wider font-bold text-slate-500">
+                          <th className="p-4 w-1/4">Name & Email</th>
+                          <th className="p-4 w-1/4">Subject</th>
+                          <th className="p-4 w-2/4">Message</th>
+                          <th className="p-4 text-right">Date</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-sm">
+                        {contacts.length === 0 ? (
+                          <tr><td colSpan={4} className="p-8 text-center text-slate-500">No contact forms submitted.</td></tr>
+                        ) : contacts.map(c => (
+                          <tr key={c._id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td className="p-4">
+                              <p className="font-bold text-slate-800">{c.name}</p>
+                              <p className="text-xs text-slate-500">{c.email}</p>
+                            </td>
+                            <td className="p-4 font-bold text-slate-700">{c.subject}</td>
+                            <td className="p-4 text-slate-600 text-xs leading-relaxed">{c.message}</td>
+                            <td className="p-4 text-right text-xs text-slate-400 font-medium">
+                              {new Date(c.createdAt).toLocaleDateString()}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+
+                  {/* Inquiries Tab Content */}
+                  {activeTab === "inquiries" && (
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-slate-50 border-b border-slate-200 text-xs uppercase tracking-wider font-bold text-slate-500">
+                          <th className="p-4">Route Searched</th>
+                          <th className="p-4">Travel Date</th>
+                          <th className="p-4">Travelers</th>
+                          <th className="p-4 text-right">Search Time</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-sm">
+                        {inquiries.length === 0 ? (
+                          <tr><td colSpan={4} className="p-8 text-center text-slate-500">No flight inquiries logged.</td></tr>
+                        ) : inquiries.map(i => (
+                          <tr key={i._id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td className="p-4">
+                              <p className="font-bold text-slate-800">{i.from} &rarr; {i.to}</p>
+                              <span className="text-[10px] uppercase font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">{i.type}</span>
+                            </td>
+                            <td className="p-4 font-bold text-slate-700">{i.date}</td>
+                            <td className="p-4 text-slate-600">{i.travelers}</td>
+                            <td className="p-4 text-right text-xs text-slate-400 font-medium">
+                              {new Date(i.createdAt).toLocaleString()}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+
+                  {/* Subscribers Tab Content */}
+                  {activeTab === "subscribers" && (
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-slate-50 border-b border-slate-200 text-xs uppercase tracking-wider font-bold text-slate-500">
+                          <th className="p-4">Email Address</th>
+                          <th className="p-4 text-right">Subscription Date</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-sm">
+                        {subscribers.length === 0 ? (
+                          <tr><td colSpan={2} className="p-8 text-center text-slate-500">No subscribers yet.</td></tr>
+                        ) : subscribers.map(s => (
+                          <tr key={s._id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td className="p-4 font-bold text-slate-800">{s.email}</td>
+                            <td className="p-4 text-right text-xs text-slate-400 font-medium">
+                              {new Date(s.createdAt).toLocaleDateString()}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                </>
+              )}
             </div>
-        </PageWithBreadcrumb>
+          </div>
+
+        </main>
+      </div>
+
+    </div>
   );
 }
-

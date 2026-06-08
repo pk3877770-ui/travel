@@ -1,269 +1,121 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { Plane, Calendar, MapPin, CreditCard, Clock, User } from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { Plane, Calendar } from "lucide-react";
 
-export default function ProfilePage() {
+export default function ProfileDashboard() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
   const [bookings, setBookings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [expandedBookingId, setExpandedBookingId] = useState<string | null>(null);
-  const [isCancelling, setIsCancelling] = useState<string | null>(null);
-
-  const handleCancelBooking = async (bookingId: string) => {
-    if (!confirm("Are you sure you want to cancel this booking? This action cannot be fully undone online and may incur cancellation fees.")) return;
-    
-    setIsCancelling(bookingId);
-    try {
-      const res = await fetch("/api/user/bookings", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bookingId, action: "cancel" })
-      });
-      if (res.ok) {
-        setBookings(prev => prev.map(b => b._id === bookingId ? { ...b, status: "cancelled" } : b));
-        alert("Booking has been successfully cancelled.");
-      } else {
-        alert("Failed to cancel booking. Please try again.");
-      }
-    } catch (e) {
-      alert("An error occurred while cancelling your booking.");
-    } finally {
-      setIsCancelling(null);
-    }
-  };
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const userRes = await fetch("/api/auth/me");
-        if (!userRes.ok) {
-          router.push("/auth");
-          return;
-        }
-        const userData = await userRes.json();
-        setUser(userData.user);
+    Promise.all([
+      fetch("/api/user/profile").then(res => res.json()),
+      fetch("/api/user/bookings").then(res => res.json())
+    ])
+    .then(([profileData, bookingsData]) => {
+      if (profileData.success) setProfile(profileData.profile);
+      if (bookingsData.success) setBookings(bookingsData.bookings);
+    })
+    .finally(() => setLoading(false));
+  }, []);
 
-        const bookingsRes = await fetch("/api/user/bookings");
-        if (bookingsRes.ok) {
-          const bookingsData = await bookingsRes.json();
-          setBookings(bookingsData.bookings);
-        }
-      } catch (error) {
-        console.error("Failed to load profile", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const sidebarLinks = [
+    { name: "Dashboard", href: "/profile", active: true },
+    { name: "My Bookings", href: "/profile/bookings" },
+    { name: "My Profile", href: "/profile/settings" },
+    { name: "Saved Travelers", href: "/profile/travelers" },
+    { name: "Payment Methods", href: "/profile/payments" },
+    { name: "Offers", href: "/offers" },
+    { name: "Logout", href: "#", isLogout: true },
+  ];
 
-    fetchProfile();
-  }, [router]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-primary-dark">
-        <div className="animate-pulse-slow w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center border border-accent/50">
-          <Plane className="w-8 h-8 text-accent animate-float" />
-        </div>
-      </div>
-    );
-  }
+  const upcomingBookings = bookings.filter(b => b.status !== "cancelled" && new Date(b.flight.date) >= new Date());
 
   return (
-    <div className="relative min-h-screen bg-primary-dark pt-32 pb-20 px-6 font-inter overflow-hidden">
-      {/* Background Ambience */}
-      <div className="absolute top-0 left-0 w-full h-full mesh-gradient opacity-30 pointer-events-none -z-10" />
-      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[150px] pointer-events-none -z-10" />
+    <div className="pt-24 pb-16 bg-[#001233] min-h-screen font-sans flex justify-center">
+      <div className="container max-w-[1000px] mx-auto px-4">
+        <div className="bg-white rounded-xl shadow-lg flex flex-col md:flex-row overflow-hidden min-h-[600px]">
+          
+          {/* Sidebar */}
+          <div className="w-full md:w-[240px] border-r border-slate-100 p-6 flex flex-col gap-2 shrink-0">
+            {sidebarLinks.map((link) => (
+              <Link 
+                key={link.name} 
+                href={link.href}
+                className={cn(
+                  "px-4 py-3 rounded-lg text-xs font-medium transition-colors",
+                  link.active 
+                    ? "bg-[#f1f5f9] text-[#0A58CA] font-bold" 
+                    : link.isLogout
+                      ? "text-slate-600 hover:bg-slate-50 mt-auto"
+                      : "text-slate-600 hover:bg-slate-50"
+                )}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
 
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-12">
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-outfit font-bold text-white mb-4"
-          >
-            Welcome, <span className="text-gradient">{user?.name}</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-white/60 text-lg max-w-2xl"
-          >
-            Manage your premium travel portfolio and view your upcoming itineraries.
-          </motion.p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Profile Sidebar */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="lg:col-span-1"
-          >
-            <div className="glass-dark premium-border rounded-3xl p-8 sticky top-32">
-              <div className="w-20 h-20 rounded-2xl bg-white/10 flex items-center justify-center text-3xl font-bold text-accent mb-6 border border-white/10">
-                {user?.name?.charAt(0).toUpperCase()}
-              </div>
-              <h2 className="text-2xl font-outfit font-bold text-white mb-2">{user?.name}</h2>
-              <p className="text-white/60 mb-6">{user?.email}</p>
-              
-              <div className="space-y-4 pt-6 border-t border-white/10">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/40">Member Status</span>
-                  <span className="text-accent font-semibold px-3 py-1 bg-accent/10 rounded-full uppercase tracking-wider text-sm">Premium</span>
-                </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/40">Total Trips</span>
-                  <span className="text-white font-medium">{bookings.length}</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Bookings List */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="lg:col-span-2 space-y-6"
-          >
-            <h3 className="text-2xl font-outfit font-bold text-white mb-6">My Bookings</h3>
-
-            {bookings.length === 0 ? (
-              <div className="glass-dark rounded-3xl p-12 text-center border border-white/10">
-                <Plane className="w-16 h-16 text-white/20 mx-auto mb-6" />
-                <h4 className="text-xl font-outfit font-bold text-white mb-2">No upcoming trips</h4>
-                <p className="text-white/60 mb-8">Ready to explore the world in luxury?</p>
-                <button 
-                  onClick={() => router.push('/flight-booking')}
-                  className="bg-accent text-primary-dark font-bold py-3 px-8 rounded-xl shadow-lg shadow-accent/20 hover:shadow-accent/40 transition-all uppercase tracking-wider text-sm"
-                >
-                  Book a Flight
-                </button>
+          {/* Main Content */}
+          <div className="flex-1 p-8 md:p-10 relative">
+            {loading ? (
+              <div className="flex items-center justify-center h-40">
+                <div className="w-8 h-8 border-4 border-slate-200 border-t-[#0A58CA] rounded-full animate-spin"></div>
               </div>
             ) : (
-              bookings.map((booking, index) => (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index }}
-                  key={booking._id}
-                  className="glass-dark hover:bg-white/5 transition-colors border border-white/10 rounded-3xl p-6 md:p-8"
-                >
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b border-white/5 pb-6">
+              <div>
+                <h1 className="text-2xl font-bold text-slate-800 mb-2">Welcome back, {profile?.name || "Traveler"}!</h1>
+                <p className="text-sm text-slate-500 mb-8">Manage your bookings, travelers, and profile preferences here.</p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-slate-50 border border-slate-100 rounded-xl p-6 flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                      <Plane className="w-6 h-6" />
+                    </div>
                     <div>
-                      <span className="inline-block px-3 py-1 bg-green-500/10 text-green-400 border border-green-500/20 rounded-full text-sm font-bold uppercase tracking-wider mb-2">
-                        {booking.status}
-                      </span>
-                      <p className="text-white/40 text-sm flex items-center gap-2">
-                        Booking Ref: <span className="text-white font-mono">{booking.bookingReference}</span>
-                      </p>
-                    </div>
-                    <div className="text-left md:text-right">
-                      <p className="text-white/40 text-sm">Total Amount</p>
-                      <p className="text-2xl font-outfit font-bold text-gradient">₹{booking.totalAmount}</p>
+                      <p className="text-xs font-bold text-slate-500 uppercase">Total Trips</p>
+                      <h3 className="text-2xl font-black text-slate-800">{bookings.length}</h3>
                     </div>
                   </div>
-
-                  <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12 w-full">
-                    <div className="flex-1 text-center md:text-left">
-                      <h4 className="text-3xl font-outfit font-bold text-white">{booking.flight.from}</h4>
-                      <p className="text-white/60 text-sm mt-1 flex items-center justify-center md:justify-start gap-1">
-                        <Clock className="w-3 h-3" /> {booking.flight.departureTime || "10:00 AM"}
-                      </p>
+                  
+                  <div className="bg-slate-50 border border-slate-100 rounded-xl p-6 flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center">
+                      <Calendar className="w-6 h-6" />
                     </div>
-                    
-                    <div className="flex-1 flex flex-col items-center px-4 w-full">
-                      <div className="w-full flex items-center justify-center gap-2">
-                        <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/20 to-accent/50" />
-                        <Plane className="w-6 h-6 text-accent shrink-0" />
-                        <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-white/20 to-accent/50" />
-                      </div>
-                      <p className="text-white/40 text-sm mt-2 text-center uppercase tracking-widest">{booking.flight.airline}</p>
-                    </div>
-
-                    <div className="flex-1 text-center md:text-right">
-                      <h4 className="text-3xl font-outfit font-bold text-white">{booking.flight.to}</h4>
-                      <p className="text-white/60 text-sm mt-1 flex items-center justify-center md:justify-end gap-1">
-                        <Clock className="w-3 h-3" /> {booking.flight.arrivalTime || "12:00 PM"}
-                      </p>
+                    <div>
+                      <p className="text-xs font-bold text-slate-500 uppercase">Upcoming Trips</p>
+                      <h3 className="text-2xl font-black text-slate-800">{upcomingBookings.length}</h3>
                     </div>
                   </div>
+                </div>
 
-                  <div className="mt-8 pt-6 border-t border-white/5 flex flex-col md:flex-row gap-6 justify-between items-start md:items-center text-sm">
-                    <div className="flex flex-wrap gap-6">
-                      <div className="flex items-center gap-2 text-white/60">
-                        <Calendar className="w-4 h-4 text-accent" />
-                        {new Date(booking.flight.date).toLocaleDateString("en-US", { weekday: 'short', month: 'long', day: 'numeric' })}
-                      </div>
-                      <div className="flex items-center gap-2 text-white/60">
-                        <User className="w-4 h-4 text-accent" />
-                        {booking.travelers} Traveler(s)
-                        {booking.passengerDetails && (
-                          <span className="ml-2 px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-sm text-white/80 hidden md:inline-block">
-                            {booking.passengerDetails.name} ({booking.passengerDetails.passport})
-                          </span>
-                        )}
-                      </div>
+                <h3 className="font-bold text-slate-800 mb-4">Your Next Trip</h3>
+                {upcomingBookings.length > 0 ? (
+                  <div className="border border-slate-200 rounded-xl p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div>
+                      <div className="font-bold text-lg text-[#0A58CA]">{upcomingBookings[0].flight.from} → {upcomingBookings[0].flight.to}</div>
+                      <div className="text-xs text-slate-500 mt-1">{new Date(upcomingBookings[0].flight.date).toLocaleDateString()} | {upcomingBookings[0].flight.airline}</div>
                     </div>
-                    <div className="flex gap-4 w-full md:w-auto">
-                      <button 
-                        onClick={() => setExpandedBookingId(expandedBookingId === booking._id ? null : booking._id)}
-                        className="flex-1 md:flex-none px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white text-sm font-bold uppercase tracking-widest transition-all"
-                      >
-                        {expandedBookingId === booking._id ? "Hide Details" : "View Details"}
-                      </button>
-                      {booking.status !== "cancelled" && (
-                        <button 
-                          onClick={() => handleCancelBooking(booking._id)}
-                          disabled={isCancelling === booking._id}
-                          className="flex-1 md:flex-none px-4 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 rounded-lg text-sm font-bold uppercase tracking-widest transition-all disabled:opacity-50"
-                        >
-                          {isCancelling === booking._id ? "Wait..." : "Cancel"}
-                        </button>
-                      )}
-                    </div>
+                    <Link href="/profile/bookings" className="bg-[#0A58CA] text-white px-5 py-2 rounded text-xs font-bold hover:bg-blue-700 transition-colors">
+                      View Booking
+                    </Link>
                   </div>
-
-                  {expandedBookingId === booking._id && (
-                    <motion.div 
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      className="mt-6 pt-6 border-t border-white/5 grid grid-cols-1 md:grid-cols-2 gap-8"
-                    >
-                      <div>
-                        <h5 className="text-white font-bold mb-4 uppercase tracking-widest text-sm text-accent">Passenger Information</h5>
-                        {booking.passengerDetails ? (
-                          <div className="space-y-2 text-sm text-white/60">
-                            <p><span className="text-white/40">Name:</span> <span className="text-white">{booking.passengerDetails.name}</span></p>
-                            <p><span className="text-white/40">Email:</span> <span className="text-white">{booking.passengerDetails.email}</span></p>
-                            <p><span className="text-white/40">Passport:</span> <span className="text-white">{booking.passengerDetails.passport}</span></p>
-                          </div>
-                        ) : (
-                          <p className="text-sm text-white/60">No additional passenger details provided.</p>
-                        )}
-                      </div>
-                      <div>
-                        <h5 className="text-white font-bold mb-4 uppercase tracking-widest text-sm text-accent">Payment Summary</h5>
-                        <div className="space-y-2 text-sm text-white/60">
-                          <div className="flex justify-between"><span className="text-white/40">Base Fare ({booking.travelers}x)</span> <span className="text-white">₹{booking.flight.price * booking.travelers}</span></div>
-                          <div className="flex justify-between"><span className="text-white/40">Taxes & Fees</span> <span className="text-white">Included</span></div>
-                          <div className="flex justify-between border-t border-white/10 pt-2 mt-2 font-bold text-white">
-                            <span>Total Paid</span> <span className="text-accent text-lg">₹{booking.totalAmount}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </motion.div>
-              ))
+                ) : (
+                  <div className="border border-slate-200 rounded-xl p-8 text-center bg-slate-50">
+                    <p className="text-sm text-slate-500 mb-4">No upcoming trips. It's time to plan your next adventure!</p>
+                    <Link href="/flights" className="bg-[#0A58CA] text-white px-6 py-2 rounded text-xs font-bold hover:bg-blue-700 transition-colors">
+                      Search Flights
+                    </Link>
+                  </div>
+                )}
+              </div>
             )}
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

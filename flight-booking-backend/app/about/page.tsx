@@ -1,19 +1,8 @@
-import { Metadata } from 'next';
-import { getSEOMetadata, mapSEOToMetadata } from '@/lib/seo';
-import AboutClient from './AboutClient';
-import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
-
-export const dynamic = 'force-dynamic';
-
-export async function generateMetadata(): Promise<Metadata> {
-  const seo = await getSEOMetadata('/about');
-  return mapSEOToMetadata(seo);
-}
-
-export default function Page() {
+export default function AboutPage() {
   return (
-    <PageWithBreadcrumb routePath="/about">
-      <AboutClient />
-    </PageWithBreadcrumb>
+    <div className="pt-32 pb-20 min-h-[70vh] flex flex-col items-center justify-center text-center px-4">
+      <h1 className="text-4xl font-bold text-slate-800 mb-4">About Us</h1>
+      <p className="text-slate-500">Learn more about FlyBook. This page is under construction.</p>
+    </div>
   );
 }

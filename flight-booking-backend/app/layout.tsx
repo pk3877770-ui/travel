@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import NavbarShell from "@/components/NavbarShell";
 import Script from "next/script";
 import { getSiteUrl } from "@/lib/site-url";
+import { BookingProvider } from "@/context/BookingContext";
 
 function getStructuredData(siteUrl: string) {
   return {
@@ -140,7 +141,9 @@ export default function RootLayout({
               __html: JSON.stringify(structuredData.webPage),
             }}
           />
-          <main className="min-h-screen">{children}</main>
+          <BookingProvider>
+            <main className="min-h-screen">{children}</main>
+          </BookingProvider>
           <Footer />
         </body>
     </html>

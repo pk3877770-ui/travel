@@ -1,215 +1,134 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { Plane, Menu, X, User } from "lucide-react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { Plane, Menu, X, User, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSession, signOut as nextAuthSignOut } from "next-auth/react";
 
 const Navbar = () => {
   const pathname = usePathname();
-  const router = useRouter();
-  const isHome = pathname === "/";
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const [isMounted, setIsMounted] = useState(false);
-  const { data: session } = useSession();
-  
-  // Use either custom auth or NextAuth
-  const currentUser = user || session?.user;
-
-  useEffect(() => {
-    setIsMounted(true);
-    const fetchUser = async () => {
-      try {
-        const res = await fetch("/api/auth/me");
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data.user);
-        }
-      } catch (error) {
-        console.error("Failed to fetch user", error);
-      }
-    };
-    
-    // Only fetch custom user if we don't have a NextAuth session
-    if (!session) {
-      fetchUser();
-    }
-  }, [pathname, session]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Refetch when pathname changes, so login/logout updates nav
-
-  const handleLogout = async () => {
-    try {
-      if (session) {
-        await nextAuthSignOut({ redirect: false });
-      } else {
-        await fetch("/api/auth/logout", { method: "POST" });
-      }
-      setUser(null);
-      router.push("/");
-      router.refresh();
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
-  };
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Packages", href: "/holiday-packages" },
+    { name: "Flights", href: "/flights" },
     { name: "Hotels", href: "/hotels" },
-    { name: "Services", href: "/services" },
-    { name: "About", href: "/about" },
+    { name: "Offers", href: "/offers" },
+    { name: "About Us", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
 
-  if (!isMounted) return null;
-
   return (
-    <header 
-      className={cn(
-        "fixed top-0 left-0 right-0 z-[100] transition-all duration-500",
-        isScrolled ? "py-2 px-3 md:py-3 md:px-10" : "py-3 px-4 md:py-4 md:px-10"
-      )}
-    >
-      <div className="max-w-[1440px] mx-auto">
-        <nav className={cn(
-          "flex items-center justify-between transition-all duration-500 rounded-[1.5rem] md:rounded-[2rem] px-4 md:px-6 py-2 md:py-3 border border-white/5 shadow-2xl",
-          isScrolled 
-            ? "bg-slate-900/95 backdrop-blur-3xl" 
-            : "bg-primary-dark/40 backdrop-blur-xl"
-        )}>
-          {/* Section 1: Logo */}
-          <div className="flex-shrink-0 relative z-[120]">
-            <Link href="/" className="flex items-center gap-2 md:gap-3 group">
-              <div className="w-7 h-7 md:w-8 md:h-8 rounded-md md:rounded-lg bg-accent flex items-center justify-center shadow-2xl shadow-accent/20 transition-transform group-hover:rotate-12">
-                <Plane className="w-4 h-4 md:w-5 md:h-5 text-primary-dark -rotate-45" />
-              </div>
-              <span className="text-lg md:text-2xl font-black tracking-tighter text-white font-outfit uppercase">
-                Kramana
-              </span>
+    <header className="fixed top-0 left-0 right-0 z-[100] bg-white border-b border-slate-200">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-8">
+        <nav className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
+            <div className="relative w-48 h-12">
+              <Image 
+                src="/logo.png" 
+                alt="Kramana Logo" 
+                fill
+                className="object-contain object-left"
+                priority
+              />
+            </div>
+          </Link>
+
+          {/* Desktop Links - Center */}
+          <div className="hidden lg:flex items-center justify-center gap-8 h-full">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/');
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={cn(
+                    "text-sm font-semibold h-full flex items-center relative transition-colors",
+                    isActive ? "text-primary" : "text-slate-500 hover:text-primary"
+                  )}
+                >
+                  {link.name}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-primary rounded-t-sm" />
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Right Actions */}
+          <div className="hidden lg:flex items-center gap-6 flex-shrink-0">
+            {/* Currency */}
+            <button className="flex items-center gap-1 text-sm font-semibold text-slate-700 hover:text-primary transition-colors">
+              INR <ChevronDown className="w-4 h-4" />
+            </button>
+            
+            {/* Language */}
+            <button className="flex items-center gap-1 text-sm font-semibold text-slate-700 hover:text-primary transition-colors">
+              EN <ChevronDown className="w-4 h-4" />
+            </button>
+
+            {/* Login / Register */}
+            <Link 
+              href="/auth"
+              className="flex items-center gap-2 text-primary text-sm font-bold border-2 border-primary px-5 py-2 rounded-md hover:bg-primary/5 transition-colors"
+            >
+              <User className="w-4 h-4" />
+              Login / Register
             </Link>
           </div>
 
-          {/* Section 2: Desktop Links - Center Aligned */}
-          <div className="hidden lg:flex flex-1 items-center justify-center gap-6 xl:gap-10 px-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-slate-200 hover:text-accent font-black text-base lg:text-lg uppercase tracking-[0.18em] transition-all relative group whitespace-nowrap"
-              >
-                {link.name}
-                <span className="absolute -bottom-2 left-0 w-0 h-px bg-accent transition-all group-hover:w-full" />
-              </Link>
-            ))}
-          </div>
-
-          {/* Section 3: Actions - Right Aligned */}
-          <div className="flex items-center gap-4 md:gap-6 flex-shrink-0 relative z-[120]">
-            <div className="hidden sm:flex items-center">
-              {currentUser ? (
-                  <Link href="/profile" className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-xl hover:bg-white/10 transition-all">
-                  <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-                    <User className="w-4 h-4 text-accent" />
-                  </div>
-                  <span className="text-white font-black text-base uppercase tracking-widest">
-                    {currentUser.name ? currentUser.name.split(' ')[0] : 'User'}
-                  </span>
-                </Link>
-              ) : (
-                <Link 
-                  href="/auth"
-                  className="flex items-center justify-center text-white font-black text-base uppercase tracking-[0.18em] hover:text-accent transition-colors px-6 py-2 rounded-xl hover:bg-white/5"
-                >
-                  Sign In
-                </Link>
-              )}
-            </div>
-
-            {/* Mobile Toggle */}
-            <button 
-              className="lg:hidden w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white/5 rounded-xl md:rounded-2xl border border-white/10 text-white"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-            >
-              {isMobileMenuOpen ? <X className="w-5 h-5 md:w-6 md:h-6" /> : <Menu className="w-5 h-5 md:w-6 md:h-6" />}
-            </button>
-          </div>
+          {/* Mobile Toggle */}
+          <button 
+            className="lg:hidden p-2 text-slate-800"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </nav>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed inset-0 z-[110] bg-slate-950 flex flex-col p-8 md:p-12 lg:hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-white border-t border-slate-200 overflow-hidden"
           >
-            <div className="mt-20 flex flex-col h-full">
-              <div className="space-y-6 md:space-y-8">
-                {navLinks.map((link, idx) => (
-                  <motion.div
-                    key={link.name}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + idx * 0.05 }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="text-2xl md:text-3xl font-black text-white hover:text-accent transition-colors font-outfit tracking-tighter"
-                    >
-                      {link.name}
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-              
-              <div className="mt-auto pt-10 border-t border-white/10">
-                {currentUser ? (
-                  <div className="flex flex-col gap-6">
-                    <Link 
-                      href="/profile"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center gap-3 text-base font-black text-white"
-                    >
-                      <User className="text-accent" /> My Profile
-                    </Link>
-                    <button
-                      onClick={() => {
-                        handleLogout();
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="text-base font-black text-rose-500 uppercase tracking-widest text-left"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                ) : (
-                  <Link 
-                    href="/auth" 
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full py-4 bg-accent text-primary-dark rounded-[1.2rem] font-black text-base uppercase tracking-widest text-center"
-                  >
-                    Sign In
-                  </Link>
-                )}
+            <div className="px-4 pt-4 pb-8 space-y-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-lg font-medium text-slate-700 hover:text-primary py-2"
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <div className="pt-4 border-t border-slate-100 flex flex-col gap-4">
+                <div className="flex gap-4">
+                  <button className="flex-1 flex justify-between items-center bg-slate-50 text-slate-800 px-4 py-3 rounded-md border border-slate-200">
+                    INR <ChevronDown className="w-4 h-4" />
+                  </button>
+                  <button className="flex-1 flex justify-between items-center bg-slate-50 text-slate-800 px-4 py-3 rounded-md border border-slate-200">
+                    EN <ChevronDown className="w-4 h-4" />
+                  </button>
+                </div>
+                <Link 
+                  href="/auth"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 text-white font-semibold bg-primary px-5 py-3 rounded-md"
+                >
+                  <User className="w-4 h-4" />
+                  Login / Register
+                </Link>
               </div>
             </div>
           </motion.div>

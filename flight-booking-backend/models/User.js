@@ -30,6 +30,28 @@ const UserSchema = new mongoose.Schema(
     lastLogin: {
       type: Date,
     },
+    phone: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    dateOfBirth: {
+      type: Date,
+    },
+    savedTravelers: [
+      {
+        name: String,
+        email: String,
+        phone: String,
+        passport: String,
+        dob: Date,
+      }
+    ],
+    isBlocked: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 );

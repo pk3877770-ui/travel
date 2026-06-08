@@ -104,15 +104,15 @@ export default function AuthPage() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="w-full max-w-md relative z-10"
       >
-        <div className="glass-dark premium-border rounded-[2.5rem] p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+        <div className="bg-white rounded-[2.5rem] p-8 sm:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden border border-slate-100">
           {/* Noise Overlay */}
           <div className="noise-overlay absolute inset-0 rounded-[2.5rem] pointer-events-none"></div>
           
           <div className="relative z-10">
             {/* Logo area */}
             <div className="flex justify-center mb-8">
-              <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-xl">
-                <Plane className="w-8 h-8 text-accent -rotate-45" />
+              <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center shadow-sm">
+                <Plane className="w-8 h-8 text-[#0A58CA] -rotate-45" />
               </div>
             </div>
 
@@ -122,11 +122,11 @@ export default function AuthPage() {
                 key={isLogin ? "login" : "signup"}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-4xl font-outfit font-black text-white mb-3"
+                className="text-4xl font-outfit font-black text-slate-800 mb-3"
               >
                 {isLogin ? "Welcome Back" : "Start Journey"}
               </motion.h2>
-              <p className="text-white/50 font-inter text-sm tracking-wide">
+              <p className="text-slate-500 font-inter text-sm tracking-wide">
                 {isLogin
                   ? "Access your sovereign travel portfolio."
                   : "Join the elite circle of world travelers."}
@@ -134,13 +134,13 @@ export default function AuthPage() {
             </div>
 
             {/* Mode Toggle */}
-            <div className="flex bg-white/5 backdrop-blur-md rounded-2xl p-1.5 mb-10 border border-white/10 shadow-inner">
+            <div className="flex bg-slate-50 rounded-2xl p-1.5 mb-10 border border-slate-200 shadow-inner">
               <button
                 onClick={() => setIsLogin(true)}
                 className={`flex-1 py-3 text-sm font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${
                   isLogin
-                    ? "bg-accent text-primary-dark shadow-lg shadow-accent/20"
-                    : "text-white/40 hover:text-white"
+                    ? "bg-[#0A58CA] text-white shadow-lg"
+                    : "text-slate-400 hover:text-slate-800"
                 }`}
               >
                 Sign In
@@ -149,8 +149,8 @@ export default function AuthPage() {
                 onClick={toggleMode}
                 className={`flex-1 py-3 text-sm font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${
                   !isLogin
-                    ? "bg-accent text-primary-dark shadow-lg shadow-accent/20"
-                    : "text-white/40 hover:text-white"
+                    ? "bg-[#0A58CA] text-white shadow-lg"
+                    : "text-slate-400 hover:text-slate-800"
                 }`}
               >
                 Sign Up
@@ -180,13 +180,13 @@ export default function AuthPage() {
                     className="relative group"
                   >
                     <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                      <User className="h-5 w-5 text-white/20 group-focus-within:text-accent transition-colors" />
+                      <User className="h-5 w-5 text-slate-400 group-focus-within:text-[#0A58CA] transition-colors" />
                     </div>
                     <input
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="block w-full pl-14 pr-5 py-5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-white/20 focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent/50 transition-all font-medium text-sm"
+                      className="block w-full pl-14 pr-5 py-5 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-[#0A58CA] transition-all font-medium text-sm"
                       placeholder="Full Name"
                       required={!isLogin}
                     />
@@ -196,13 +196,13 @@ export default function AuthPage() {
 
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-white/20 group-focus-within:text-accent transition-colors" />
+                  <Mail className="h-5 w-5 text-slate-400 group-focus-within:text-[#0A58CA] transition-colors" />
                 </div>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-14 pr-5 py-5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-white/20 focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent/50 transition-all font-medium text-sm"
+                  className="block w-full pl-14 pr-5 py-5 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-[#0A58CA] transition-all font-medium text-sm"
                   placeholder="Email Address"
                   required
                 />
@@ -210,20 +210,20 @@ export default function AuthPage() {
 
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-white/20 group-focus-within:text-accent transition-colors" />
+                  <Lock className="h-5 w-5 text-slate-400 group-focus-within:text-[#0A58CA] transition-colors" />
                 </div>
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-14 pr-14 py-5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-white/20 focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent/50 transition-all font-medium text-sm"
+                  className="block w-full pl-14 pr-14 py-5 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-[#0A58CA] transition-all font-medium text-sm"
                   placeholder="Password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-5 flex items-center text-white/20 hover:text-white transition-colors"
+                  className="absolute inset-y-0 right-0 pr-5 flex items-center text-slate-400 hover:text-slate-800 transition-colors"
                 >
                   {showPassword ? (
                     <EyeOff className="h-5 w-5" />
@@ -257,12 +257,12 @@ export default function AuthPage() {
               {isLogin && (
                 <div className="flex items-center justify-between px-1">
                   <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className="accent-accent w-4 h-4 rounded border-white/10 bg-white/5" />
-                    <span className="text-xs font-bold text-white/50 uppercase tracking-widest">Remember Me</span>
+                    <input type="checkbox" className="w-4 h-4 rounded border-slate-200" />
+                    <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Remember Me</span>
                   </label>
                   <a
                     href="#"
-                    className="text-xs font-black uppercase tracking-widest text-accent hover:text-accent-hover transition-colors"
+                    className="text-xs font-black uppercase tracking-widest text-[#0A58CA] hover:text-blue-800 transition-colors"
                   >
                     Forgot Password?
                   </a>
@@ -274,7 +274,7 @@ export default function AuthPage() {
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-3 bg-accent text-primary-dark font-black py-5 px-8 rounded-2xl shadow-xl shadow-accent/10 hover:shadow-accent/30 transition-all uppercase tracking-[0.2em] text-sm mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-3 bg-[#0A58CA] text-white font-black py-5 px-8 rounded-2xl shadow-xl hover:bg-blue-700 transition-all uppercase tracking-[0.2em] text-sm mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <div className="flex items-center gap-2">
@@ -290,33 +290,33 @@ export default function AuthPage() {
               </motion.button>
 
               {isLogin && (
-                <p className="text-center text-sm text-white/50 mt-6">
+                <p className="text-center text-sm text-slate-500 mt-6">
                   Don't have an account?{" "}
                   <button
                     type="button"
                     onClick={toggleMode}
-                    className="text-accent font-bold hover:underline"
+                    className="text-[#0A58CA] font-bold hover:underline"
                   >
                     Create Account
                   </button>
                 </p>
               )}
 
-              <div className="text-center text-xs text-white/30 mt-6">
+              <div className="text-center text-xs text-slate-500 mt-6">
                 By continuing, you agree to our{" "}
-                <Link href="/terms" className="text-white/50 hover:text-white underline">Terms of Service</Link>{" "}
+                <Link href="/terms" className="text-slate-700 hover:text-slate-900 underline">Terms of Service</Link>{" "}
                 and{" "}
-                <Link href="/privacy" className="text-white/50 hover:text-white underline">Privacy Policy</Link>.
+                <Link href="/privacy" className="text-slate-700 hover:text-slate-900 underline">Privacy Policy</Link>.
               </div>
             </form>
 
             <div className="mt-10">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-white/5" />
+                  <div className="w-full border-t border-slate-200" />
                 </div>
                 <div className="relative flex justify-center text-[10px]">
-                  <span className="px-4 bg-transparent text-white/30 font-black uppercase tracking-widest">
+                  <span className="px-4 bg-white text-slate-400 font-black uppercase tracking-widest">
                     Elite Integrations
                   </span>
                 </div>
@@ -330,7 +330,7 @@ export default function AuthPage() {
                     signIn("google", { callbackUrl: "/" });
                   }}
                   disabled={googleLoading || appleLoading || facebookLoading}
-                  className="flex items-center justify-center gap-2 w-full py-4 px-4 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all font-bold text-xs uppercase tracking-widest group disabled:opacity-50"
+                  className="flex items-center justify-center gap-2 w-full py-4 px-4 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 hover:bg-slate-100 transition-all font-bold text-xs uppercase tracking-widest group disabled:opacity-50"
                 >
                   {googleLoading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -352,12 +352,12 @@ export default function AuthPage() {
                     signIn("apple", { callbackUrl: "/" });
                   }}
                   disabled={googleLoading || appleLoading || facebookLoading}
-                  className="flex items-center justify-center gap-2 w-full py-4 px-4 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all font-bold text-xs uppercase tracking-widest group disabled:opacity-50"
+                  className="flex items-center justify-center gap-2 w-full py-4 px-4 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 hover:bg-slate-100 transition-all font-bold text-xs uppercase tracking-widest group disabled:opacity-50"
                 >
                   {appleLoading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
-                    <Apple className="w-4 h-4 text-white transition-transform group-hover:scale-110" />
+                    <Apple className="w-4 h-4 text-slate-800 transition-transform group-hover:scale-110" />
                   )}
                   Apple
                 </button>
@@ -369,12 +369,12 @@ export default function AuthPage() {
                     signIn("facebook", { callbackUrl: "/" });
                   }}
                   disabled={googleLoading || appleLoading || facebookLoading}
-                  className="flex items-center justify-center gap-2 w-full py-4 px-4 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all font-bold text-xs uppercase tracking-widest group disabled:opacity-50"
+                  className="flex items-center justify-center gap-2 w-full py-4 px-4 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 hover:bg-slate-100 transition-all font-bold text-xs uppercase tracking-widest group disabled:opacity-50"
                 >
                   {facebookLoading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
-                    <Facebook className="w-4 h-4 text-white transition-transform group-hover:scale-110" />
+                    <Facebook className="w-4 h-4 text-[#1877F2] transition-transform group-hover:scale-110" />
                   )}
                   Facebook
                 </button>

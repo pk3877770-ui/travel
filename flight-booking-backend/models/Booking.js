@@ -38,6 +38,19 @@ const BookingSchema = new mongoose.Schema(
       type: String,
       unique: true,
       required: true,
+    },
+    reminderSent: {
+      type: Boolean,
+      default: false,
+    },
+    refundStatus: {
+      type: String,
+      enum: ["none", "pending", "processed", "failed"],
+      default: "none"
+    },
+    isReissued: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }
