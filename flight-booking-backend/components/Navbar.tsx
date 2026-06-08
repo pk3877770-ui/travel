@@ -13,10 +13,10 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: "Home", href: "/" },
     { name: "Flights", href: "/flights" },
     { name: "Hotels", href: "/hotels" },
     { name: "Offers", href: "/offers" },
+    { name: "Blog", href: "/blog" },
     { name: "About Us", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];

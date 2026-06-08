@@ -155,8 +155,8 @@ export default function HotelsPage() {
         
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           
-          {/* Main Content (Left) */}
-          <div className="lg:col-span-3 order-2 lg:order-1">
+          {/* Main Content (Right) */}
+          <div className="lg:col-span-3 order-2 lg:order-2">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6">
               <h2 className="text-lg font-bold text-slate-800">
                 {filteredHotels.length} {filteredHotels.length === 1 ? "Hotel" : "Hotels"} found {location ? `in ${location}` : ""}
@@ -202,8 +202,8 @@ export default function HotelsPage() {
             )}
           </div>
 
-          {/* Sidebar (Right) */}
-          <div className="lg:col-span-1 order-1 lg:order-2">
+          {/* Sidebar (Left) */}
+          <div className="lg:col-span-1 order-1 lg:order-1">
             <HotelSidebar 
               onOpenMap={() => setIsMapOpen(true)}
               priceMax={priceMax}
@@ -215,6 +215,7 @@ export default function HotelsPage() {
               selectedPropertyTypes={selectedPropertyTypes}
               togglePropertyType={togglePropertyType}
               clearAll={clearAllFilters}
+              hotels={filteredHotels}
             />
           </div>
 

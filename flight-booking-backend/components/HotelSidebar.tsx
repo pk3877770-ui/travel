@@ -13,6 +13,7 @@ interface HotelSidebarProps {
   selectedPropertyTypes: number[];
   togglePropertyType: (type: number) => void;
   clearAll: () => void;
+  hotels: any[];
 }
 
 const HotelSidebar = ({
@@ -25,8 +26,18 @@ const HotelSidebar = ({
   toggleGuestRating,
   selectedPropertyTypes,
   togglePropertyType,
-  clearAll
+  clearAll,
+  hotels
 }: HotelSidebarProps) => {
+
+  // Pre-defined random-ish positions for up to 5 hotel pins on the static map image
+  const pinPositions = [
+    { top: "10%", left: "10%" },
+    { top: "60%", left: "15%" },
+    { top: "50%", right: "20%" },
+    { bottom: "40%", left: "33%" },
+    { bottom: "25%", right: "25%" },
+  ];
   return (
     <div className="flex flex-col gap-6">
       
@@ -39,17 +50,24 @@ const HotelSidebar = ({
             fill
             className="object-cover opacity-60"
           />
-          {/* Price tags on map */}
-          <div className="absolute top-10 left-10 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">₹5,199</div>
-          <div className="absolute top-24 left-4 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">₹7,299</div>
-          <div className="absolute top-20 right-8 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">₹14,999</div>
-          <div className="absolute bottom-16 left-1/3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">₹3,199</div>
-          <div className="absolute bottom-10 right-1/4 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">₹9,499</div>
+          {/* Dynamic Price tags on map */}
+          {hotels.slice(0, 5).map((hotel, index) => {
+            const minRoomPrice = hotel.rooms?.length > 0 ? Math.min(...hotel.rooms.map((r: any) => r.price)) : 0;
+            return (
+              <div 
+                key={hotel._id}
+                className="absolute bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md cursor-pointer hover:bg-blue-700 hover:scale-105 transition-transform"
+                style={pinPositions[index]}
+              >
+                ₹{minRoomPrice.toLocaleString()}
+              </div>
+            );
+          })}
           
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <button 
               onClick={onOpenMap}
-              className="bg-slate-900 text-white flex items-center gap-2 px-4 py-2 rounded font-medium text-sm hover:bg-slate-800 transition-colors shadow-lg"
+              className="pointer-events-auto bg-slate-900 text-white flex items-center gap-2 px-4 py-2 rounded font-medium text-sm hover:bg-slate-800 transition-colors shadow-lg"
             >
               <Map className="w-4 h-4" /> View on Map
             </button>
