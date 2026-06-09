@@ -1,8 +1,24 @@
+import FaqBanner from "./components/FaqBanner";
+import PopularTopics from "./components/PopularTopics";
+import FaqSidebar from "./components/FaqSidebar";
+import FaqAccordion from "./components/FaqAccordion";
+import FaqContactSection from "./components/FaqContactSection";
+
 export default function FAQsPage() {
   return (
-    <div className="pt-32 pb-20 min-h-[70vh] flex flex-col items-center justify-center text-center px-4">
-      <h1 className="text-4xl font-bold text-slate-800 mb-4">FAQs</h1>
-      <p className="text-slate-500">Frequently Asked Questions. This page is under construction.</p>
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      <FaqBanner />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-12 pb-12">
+        <PopularTopics />
+        
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
+          <FaqSidebar />
+          <FaqAccordion />
+        </div>
+      </div>
+
+      <FaqContactSection />
     </div>
   );
 }

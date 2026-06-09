@@ -150,20 +150,20 @@ export default function Home() {
               <div>
                 <h3 className="font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-xs">Luxury Flights</h3>
                 <ul className="space-y-3">
-                  <li><Link href="/flights?to=Dubai" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">First Class to Dubai</Link></li>
-                  <li><Link href="/flights?to=London" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Business Class to London</Link></li>
-                  <li><Link href="/flights?to=Paris" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Private Jet to Paris</Link></li>
-                  <li><Link href="/flights?to=New+York" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Premium Flights to New York</Link></li>
+                  <li><Link href="/flights?to=dubai" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">First Class to Dubai</Link></li>
+                  <li><Link href="/flights?to=london" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Business Class to London</Link></li>
+                  <li><Link href="/flights?to=paris" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Private Jet to Paris</Link></li>
+                  <li><Link href="/flights?to=new-york" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Premium Flights to New York</Link></li>
                   <li><Link href="/flights?type=charter" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Private Charter Services</Link></li>
                 </ul>
               </div>
               <div>
                 <h3 className="font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider text-xs">Exclusive Hotels</h3>
                 <ul className="space-y-3">
-                  <li><Link href="/hotels?location=Maldives" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Luxury Resorts in Maldives</Link></li>
-                  <li><Link href="/hotels?location=Santorini" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Boutique Hotels Santorini</Link></li>
-                  <li><Link href="/hotels?location=Bali" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Private Villas in Bali</Link></li>
-                  <li><Link href="/hotels?location=Monaco" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">5-Star Stays in Monaco</Link></li>
+                  <li><Link href="/hotels?location=maldives" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Luxury Resorts in Maldives</Link></li>
+                  <li><Link href="/hotels?location=santorini" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Boutique Hotels Santorini</Link></li>
+                  <li><Link href="/hotels?location=bali" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">Private Villas in Bali</Link></li>
+                  <li><Link href="/hotels?location=monaco" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">5-Star Stays in Monaco</Link></li>
                   <li><Link href="/hotels" className="text-slate-600 dark:text-slate-400 hover:text-accent transition-colors">All Premium Accommodations</Link></li>
                 </ul>
               </div>

@@ -238,7 +238,7 @@ export default function MyBookingsPage() {
             {/* Footer Support Text */}
             <div className="mt-20 pt-8 border-t border-slate-50 text-center">
               <p className="text-[10px] text-slate-500 font-medium">
-                Can't find your booking? <a href="#" className="text-[#0A58CA] font-bold hover:underline">Contact Support</a>
+                Can't find your booking? <Link href="/contact" className="text-[#0A58CA] font-bold hover:underline">Contact Support</Link>
               </p>
             </div>
 

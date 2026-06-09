@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useBooking } from "@/context/BookingContext";
 import { Plane, ChevronRight, Briefcase, Coffee, RefreshCcw } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatSeoParam } from "@/lib/utils";
 
 export default function FlightDetailsPage() {
   const router = useRouter();
@@ -14,8 +14,8 @@ export default function FlightDetailsPage() {
   const [selectedReturnDate, setSelectedReturnDate] = useState("27 May Tue");
   const [selectedReturnFlight, setSelectedReturnFlight] = useState<number | null>(1);
 
-  const fromParam = searchParams.get("from") || "DEL";
-  const toParam = searchParams.get("to") || "BOM";
+  const fromParam = formatSeoParam(searchParams.get("from")) || "DEL";
+  const toParam = formatSeoParam(searchParams.get("to")) || "BOM";
   const dateParam = searchParams.get("date") || "20 May, 2025";
   const travelersParam = searchParams.get("travelers") || "1 Traveler";
   const cabinParam = searchParams.get("cabin") || "Economy";

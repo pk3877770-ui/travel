@@ -260,12 +260,12 @@ export default function AuthPage() {
                     <input type="checkbox" className="w-4 h-4 rounded border-slate-200" />
                     <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Remember Me</span>
                   </label>
-                  <a
-                    href="#"
+                  <Link
+                    href="/auth/forgot-password"
                     className="text-xs font-black uppercase tracking-widest text-[#0A58CA] hover:text-blue-800 transition-colors"
                   >
                     Forgot Password?
-                  </a>
+                  </Link>
                 </div>
               )}
 

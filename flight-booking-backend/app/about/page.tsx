@@ -1,4 +1,5 @@
 import React from "react";
+import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
 import { 
@@ -21,8 +22,26 @@ import {
 } from "lucide-react";
 
 export default function AboutPage() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "url": "https://www.kramana.com/about",
+    "name": "About Us - Kramana",
+    "description": "Kramana was founded with a simple mission — to make travel accessible for everyone.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Kramana",
+      "foundingDate": "2018"
+    }
+  };
+
   return (
     <main className="min-h-screen bg-white font-sans pb-20">
+      <Script
+        id="about-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       
       {/* 1. Hero Section */}
       <div className="relative w-full h-[400px] md:h-[500px]">

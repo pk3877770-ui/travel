@@ -23,7 +23,7 @@ const Footer = () => {
             <Link href="/" className="flex items-center gap-2 mb-6 group inline-flex">
               <div className="relative w-48 h-12">
                 <Image 
-                  src="/logo.png" 
+                  src="/kramana-logo.png" 
                   alt="Kramana Logo" 
                   fill
                   className="object-contain object-left"
@@ -84,11 +84,11 @@ const Footer = () => {
             <div className="w-[45%] md:w-auto">
               <h3 className="font-bold text-white mb-6 text-base tracking-wide">Top Routes</h3>
               <ul className="space-y-4">
-                <li><Link href="/flights" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Delhi to Mumbai</Link></li>
-                <li><Link href="/flights" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Delhi to Bangalore</Link></li>
-                <li><Link href="/flights" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Mumbai to Goa</Link></li>
-                <li><Link href="/flights" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Delhi to Dubai</Link></li>
-                <li><Link href="/flights" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Mumbai to Singapore</Link></li>
+                <li><Link href="/flights?from=delhi&to=mumbai" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Delhi to Mumbai</Link></li>
+                <li><Link href="/flights?from=delhi&to=bangalore" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Delhi to Bangalore</Link></li>
+                <li><Link href="/flights?from=mumbai&to=goa" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Mumbai to Goa</Link></li>
+                <li><Link href="/flights?from=delhi&to=dubai" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Delhi to Dubai</Link></li>
+                <li><Link href="/flights?from=mumbai&to=singapore" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Mumbai to Singapore</Link></li>
               </ul>
             </div>
 

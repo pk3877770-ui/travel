@@ -63,41 +63,41 @@ export default function AccountDashboard() {
                 </Link>
                 
                 <div className="group">
-                  <Link href="#" className="flex items-center justify-between text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors">
+                  <Link href="/profile/bookings" className="flex items-center justify-between text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors">
                     <div className="flex items-center gap-3">
                       <Briefcase className="w-5 h-5 text-slate-400 group-hover:text-slate-600" /> My Bookings
                     </div>
                     <ChevronRight className="w-4 h-4 text-slate-400 rotate-90" />
                   </Link>
                   <div className="flex flex-col pl-12 pr-4 py-1 space-y-2">
-                    <Link href="#" className="text-sm font-medium text-slate-500 hover:text-blue-600 flex items-center gap-2 before:content-[''] before:w-1 before:h-1 before:bg-slate-300 before:rounded-full">
+                    <Link href="/profile/bookings?type=flights" className="text-sm font-medium text-slate-500 hover:text-blue-600 flex items-center gap-2 before:content-[''] before:w-1 before:h-1 before:bg-slate-300 before:rounded-full">
                       Flights
                     </Link>
-                    <Link href="#" className="text-sm font-medium text-slate-500 hover:text-blue-600 flex items-center gap-2 before:content-[''] before:w-1 before:h-1 before:bg-slate-300 before:rounded-full">
+                    <Link href="/profile/bookings?type=hotels" className="text-sm font-medium text-slate-500 hover:text-blue-600 flex items-center gap-2 before:content-[''] before:w-1 before:h-1 before:bg-slate-300 before:rounded-full">
                       Hotels
                     </Link>
                   </div>
                 </div>
 
-                <Link href="#" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
+                <Link href="/profile/saved" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
                   <Heart className="w-5 h-5 text-slate-400 group-hover:text-slate-600" /> Saved Items
                 </Link>
-                <Link href="#" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
+                <Link href="/profile" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
                   <User className="w-5 h-5 text-slate-400 group-hover:text-slate-600" /> My Profile
                 </Link>
-                <Link href="#" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
+                <Link href="/profile/travelers" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
                   <Users className="w-5 h-5 text-slate-400 group-hover:text-slate-600" /> Saved Travelers
                 </Link>
-                <Link href="#" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
+                <Link href="/profile/payments" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
                   <CreditCard className="w-5 h-5 text-slate-400 group-hover:text-slate-600" /> Payment Methods
                 </Link>
-                <Link href="#" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
+                <Link href="/profile/rewards" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
                   <Star className="w-5 h-5 text-slate-400 group-hover:text-slate-600" /> Kramana Rewards
                 </Link>
-                <Link href="#" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
+                <Link href="/profile/notifications" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
                   <Bell className="w-5 h-5 text-slate-400 group-hover:text-slate-600" /> Notifications
                 </Link>
-                <Link href="#" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
+                <Link href="/profile/settings" className="flex items-center gap-3 text-slate-600 hover:text-slate-800 hover:bg-slate-50 font-medium px-4 py-3 rounded-xl transition-colors group">
                   <Settings className="w-5 h-5 text-slate-400 group-hover:text-slate-600" /> Settings
                 </Link>
               </nav>
@@ -133,7 +133,7 @@ export default function AccountDashboard() {
                 </div>
                 <div className="text-2xl font-black text-slate-800 mb-1">12</div>
                 <p className="text-xs font-bold text-slate-600 mb-4">Total Bookings</p>
-                <Link href="#" className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors">
+                <Link href="/profile/bookings" className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors">
                   View all bookings <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
@@ -144,7 +144,7 @@ export default function AccountDashboard() {
                 </div>
                 <div className="text-2xl font-black text-slate-800 mb-1">8</div>
                 <p className="text-xs font-bold text-slate-600 mb-4">Flight Bookings</p>
-                <Link href="#" className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors">
+                <Link href="/profile/bookings?type=flights" className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors">
                   View all <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
@@ -155,7 +155,7 @@ export default function AccountDashboard() {
                 </div>
                 <div className="text-2xl font-black text-slate-800 mb-1">4</div>
                 <p className="text-xs font-bold text-slate-600 mb-4">Hotel Bookings</p>
-                <Link href="#" className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors">
+                <Link href="/profile/bookings?type=hotels" className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors">
                   View all <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
@@ -166,7 +166,7 @@ export default function AccountDashboard() {
                 </div>
                 <div className="text-2xl font-black text-slate-800 mb-1">1,250</div>
                 <p className="text-xs font-bold text-slate-600 mb-4">Reward Points</p>
-                <Link href="#" className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors">
+                <Link href="/profile/rewards" className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors">
                   View rewards <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
@@ -177,7 +177,7 @@ export default function AccountDashboard() {
             <div>
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-bold text-slate-800">Upcoming Trips</h3>
-                <Link href="#" className="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors">
+                <Link href="/profile/bookings" className="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors">
                   View all bookings <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
@@ -302,14 +302,14 @@ export default function AccountDashboard() {
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
                 
                 {[
-                  { icon: User, label: "Edit Profile" },
-                  { icon: Users, label: "Saved Travelers" },
-                  { icon: CreditCard, label: "Payment Methods" },
-                  { icon: Briefcase, label: "My Bookings" },
-                  { icon: Bell, label: "Notifications" },
-                  { icon: HelpCircle, label: "Help Center" },
+                  { icon: User, label: "Edit Profile", href: "/profile/settings" },
+                  { icon: Users, label: "Saved Travelers", href: "/profile/travelers" },
+                  { icon: CreditCard, label: "Payment Methods", href: "/profile/payments" },
+                  { icon: Briefcase, label: "My Bookings", href: "/profile/bookings" },
+                  { icon: Bell, label: "Notifications", href: "/profile/notifications" },
+                  { icon: HelpCircle, label: "Help Center", href: "/help" },
                 ].map((item, idx) => (
-                  <Link key={idx} href="#" className="bg-white rounded-xl border border-slate-100 p-4 flex flex-col items-center text-center hover:border-blue-200 hover:shadow-sm transition-all group">
+                  <Link key={idx} href={item.href} className="bg-white rounded-xl border border-slate-100 p-4 flex flex-col items-center text-center hover:border-blue-200 hover:shadow-sm transition-all group">
                     <div className="w-10 h-10 rounded-full border-2 border-blue-100 text-blue-600 flex items-center justify-center mb-3 group-hover:bg-blue-50 transition-colors">
                       <item.icon className="w-5 h-5" strokeWidth={1.5} />
                     </div>
@@ -350,7 +350,7 @@ export default function AccountDashboard() {
                   <div className="h-full bg-white rounded-full w-[85%]"></div>
                 </div>
 
-                <Link href="#" className="w-full bg-white text-blue-700 hover:bg-slate-50 font-bold py-2.5 rounded-lg text-sm flex items-center justify-center gap-2 transition-colors">
+                <Link href="/profile/rewards" className="w-full bg-white text-blue-700 hover:bg-slate-50 font-bold py-2.5 rounded-lg text-sm flex items-center justify-center gap-2 transition-colors">
                   View Rewards <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -375,7 +375,7 @@ export default function AccountDashboard() {
                 </div>
               </div>
 
-              <Link href="#" className="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors">
+              <Link href="/profile/settings" className="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors">
                 Manage Profile <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>

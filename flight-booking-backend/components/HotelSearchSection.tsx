@@ -58,14 +58,14 @@ const HotelSearchSection = () => {
                 <label className="text-xs text-slate-700 font-bold block mb-1">
                   Check-in
                 </label>
-                <div className="flex items-center gap-2 justify-between">
+                <div className="flex items-center gap-2 justify-between relative">
                   <input
                     type="date"
                     value={checkIn}
                     onChange={(e) => setCheckIn(e.target.value)}
-                    className="w-full text-sm font-medium text-slate-800 outline-none bg-transparent appearance-none"
+                    className="w-full text-sm font-medium text-slate-800 outline-none bg-transparent appearance-none [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full cursor-pointer relative z-10"
                   />
-                  <Calendar className="w-4 h-4 text-slate-400 pointer-events-none hidden md:block" />
+                  <Calendar className="w-4 h-4 text-slate-400 pointer-events-none hidden md:block absolute right-0 z-0" />
                 </div>
               </div>
 
@@ -74,14 +74,14 @@ const HotelSearchSection = () => {
                 <label className="text-xs text-slate-700 font-bold block mb-1">
                   Check-out
                 </label>
-                <div className="flex items-center gap-2 justify-between">
+                <div className="flex items-center gap-2 justify-between relative">
                   <input
                     type="date"
                     value={checkOut}
                     onChange={(e) => setCheckOut(e.target.value)}
-                    className="w-full text-sm font-medium text-slate-800 outline-none bg-transparent appearance-none"
+                    className="w-full text-sm font-medium text-slate-800 outline-none bg-transparent appearance-none [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full cursor-pointer relative z-10"
                   />
-                  <Calendar className="w-4 h-4 text-slate-400 pointer-events-none hidden md:block" />
+                  <Calendar className="w-4 h-4 text-slate-400 pointer-events-none hidden md:block absolute right-0 z-0" />
                 </div>
               </div>
 

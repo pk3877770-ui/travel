@@ -4,7 +4,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Plane, Search, RefreshCcw } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatSeoParam } from "@/lib/utils";
 import { useBooking } from "@/context/BookingContext";
 
 export default function FlightClient() {
@@ -21,8 +21,8 @@ export default function FlightClient() {
   const [filterMaxPrice, setFilterMaxPrice] = useState<number>(25000);
   const [filterStops, setFilterStops] = useState<string[]>([]);
   
-  const fromParam = searchParams.get("from") || "DEL";
-  const toParam = searchParams.get("to") || "BOM";
+  const fromParam = formatSeoParam(searchParams.get("from")) || "DEL";
+  const toParam = formatSeoParam(searchParams.get("to")) || "BOM";
   const dateParam = searchParams.get("date") || "20 May, 2025";
   const travelersParam = searchParams.get("travelers") || "1 Traveler";
   const cabinParam = searchParams.get("cabin") || "Economy";

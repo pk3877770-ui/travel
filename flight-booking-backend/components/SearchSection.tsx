@@ -94,7 +94,7 @@ const SearchSection = () => {
               <div className="flex flex-col lg:flex-row items-center">
                 
                 {/* From & To Row */}
-                <div className="flex w-full lg:w-[45%] relative border-b lg:border-b-0 lg:border-r border-slate-200">
+                <div className="flex w-full lg:w-[42%] relative border-b lg:border-b-0 lg:border-r border-slate-200">
                   <div className="flex-1 pb-6 lg:pb-0 lg:pr-8">
                     <label className="text-xs text-slate-500 font-medium block mb-1">From</label>
                     <input
@@ -109,7 +109,7 @@ const SearchSection = () => {
                   <button 
                     type="button"
                     onClick={handleSwap}
-                    className="absolute left-1/2 lg:left-auto lg:top-1/2 lg:right-0 -translate-x-1/2 lg:translate-x-1/2 top-1/2 lg:-translate-y-1/2 w-10 h-10 bg-slate-50 border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shadow-sm z-10 hover:bg-slate-100"
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shadow-sm z-10 hover:bg-slate-50"
                   >
                     <ArrowLeftRight className="w-4 h-4" />
                   </button>
@@ -127,25 +127,25 @@ const SearchSection = () => {
                 </div>
 
                 {/* Dates Row */}
-                <div className="flex w-full lg:w-[35%] border-b lg:border-b-0 lg:border-r border-slate-200 pt-6 pb-6 lg:pt-0 lg:pb-0 lg:px-8">
-                  <div className="flex-1">
+                <div className="flex w-full lg:w-[38%] border-b lg:border-b-0 lg:border-r border-slate-200 pt-6 pb-6 lg:pt-0 lg:pb-0 lg:px-5">
+                  <div className="flex-1 min-w-0">
                     <label className="text-xs text-slate-500 font-medium block mb-1">Departure</label>
                     <input
                       type="date"
                       value={departureDate}
                       onChange={(e) => setDepartureDate(e.target.value)}
-                      className="w-full font-bold text-lg text-slate-800 outline-none bg-transparent"
+                      className="w-full font-bold text-lg text-slate-800 outline-none bg-transparent [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full cursor-pointer relative"
                     />
                     <div className="text-xs text-slate-400 mt-1">Tuesday</div>
                   </div>
                   {tripType === "round-trip" && (
-                    <div className="flex-1 pl-4">
+                    <div className="flex-1 min-w-0 pl-4 border-l border-slate-100 ml-4">
                       <label className="text-xs text-slate-500 font-medium block mb-1">Return</label>
                       <input
                         type="date"
                         value={returnDate}
                         onChange={(e) => setReturnDate(e.target.value)}
-                        className="w-full font-bold text-lg text-slate-800 outline-none bg-transparent"
+                        className="w-full font-bold text-lg text-slate-800 outline-none bg-transparent [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full cursor-pointer relative"
                       />
                       <div className="text-xs text-slate-400 mt-1">Tuesday</div>
                     </div>

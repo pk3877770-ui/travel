@@ -1,11 +1,44 @@
 "use client";
 
 import React from "react";
+import Script from "next/script";
 import { Mail, Phone, MapPin, Send, MessageSquare, Clock, ShieldCheck } from "lucide-react";
 
 export default function ContactPage() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ContactPage",
+        "url": "https://www.kramana.com/contact",
+        "name": "Contact Us - Kramana",
+        "description": "Have a question about your booking, need help planning a trip, or just want to say hello? Our team is here and ready to help."
+      },
+      {
+        "@type": "LocalBusiness",
+        "name": "Kramana",
+        "image": "https://www.kramana.com/kramana-logo.png",
+        "email": "hello@kramana.com",
+        "telephone": "+91-800-123-4567",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Sandhu Business Center, A-1, Transport Nagar, Subhash Nagar, Sewla Khurd",
+          "addressLocality": "Dehradun",
+          "addressRegion": "Uttarakhand",
+          "postalCode": "248001",
+          "addressCountry": "IN"
+        }
+      }
+    ]
+  };
+
   return (
     <main className="min-h-screen bg-[#fafbfe] font-sans pb-20">
+      <Script
+        id="contact-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       
       {/* 1. Hero Header */}
       <div className="bg-slate-900 pt-32 pb-24 px-4 text-center">
@@ -55,8 +88,8 @@ export default function ContactPage() {
             </div>
             <h3 className="font-bold text-slate-800 text-lg mb-2">Office Address</h3>
             <p className="text-slate-500 mb-4 text-sm">Come visit our headquarters for a cup of coffee.</p>
-            <span className="font-bold text-slate-800">
-              123 Travel Ave, New Delhi, India 110001
+            <span className="font-bold text-slate-800 text-sm">
+              Sandhu Business Center, A-1, Transport Nagar, Subhash Nagar, Dehradun, Sewla Khurd, Uttarakhand 248001
             </span>
           </div>
 
@@ -155,7 +188,7 @@ export default function ContactPage() {
                 style={{ border: 0, borderRadius: "0.75rem" }}
                 loading="lazy"
                 allowFullScreen
-                src="https://maps.google.com/maps?q=New%20Delhi,%20India&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.google.com/maps?q=Sandhu%20Business%20Center,%20Dehradun,%20Uttarakhand&t=&z=13&ie=UTF8&iwloc=&output=embed"
               />
             </div>
 

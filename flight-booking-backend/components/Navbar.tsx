@@ -29,7 +29,7 @@ const Navbar = () => {
           <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
             <div className="relative w-48 h-12">
               <Image 
-                src="/logo.png" 
+                src="/kramana-logo.png" 
                 alt="Kramana Logo" 
                 fill
                 className="object-contain object-left"

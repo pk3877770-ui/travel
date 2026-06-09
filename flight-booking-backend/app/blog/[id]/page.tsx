@@ -63,6 +63,32 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
     <main className="min-h-screen bg-[#fafbfe] pb-20 font-sans pt-28">
       <div className="container max-w-[1200px] mx-auto px-4">
         
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              "headline": post.title,
+              "image": [post.image],
+              "datePublished": new Date(post.date).toISOString(),
+              "author": {
+                "@type": "Person",
+                "name": post.author.name,
+                "url": "https://www.kramana.com/about"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Kramana",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://www.kramana.com/kramana-logo.png"
+                }
+              }
+            })
+          }}
+        />
+
         {/* Back Link */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-800 mb-8 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Blog

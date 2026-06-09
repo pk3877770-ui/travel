@@ -31,7 +31,7 @@ const BlogSidebar = () => {
             { label: "Flight Tips", icon: <Plane className="w-4 h-4" />, count: 10 },
             { label: "News & Updates", icon: <Newspaper className="w-4 h-4" />, count: 8 },
           ].map((cat, idx) => (
-            <Link key={idx} href="#" className="flex items-center justify-between group">
+            <Link key={idx} href={`/blog?category=${encodeURIComponent(cat.label.toLowerCase())}`} className="flex items-center justify-between group">
               <div className="flex items-center gap-3 text-slate-500 group-hover:text-blue-600 transition-colors">
                 {cat.icon}
                 <span className="text-sm font-medium">{cat.label}</span>
@@ -40,7 +40,7 @@ const BlogSidebar = () => {
             </Link>
           ))}
         </div>
-        <Link href="#" className="inline-block mt-6 text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors">
+        <Link href="/blog" className="inline-block mt-6 text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors">
           View All Categories &rarr;
         </Link>
       </div>
@@ -71,7 +71,7 @@ const BlogSidebar = () => {
               img: "https://images.unsplash.com/photo-1553531384-cc64ac80f931?w=150&q=80" 
             },
           ].map((post, idx) => (
-            <Link key={idx} href="#" className="flex items-start gap-4 group">
+            <Link key={idx} href={`/blog/${idx + 1}`} className="flex items-start gap-4 group">
               <div className="relative w-16 h-16 rounded-lg overflow-hidden shrink-0 border border-slate-100">
                 <Image src={post.img} alt={post.title} fill className="object-cover group-hover:scale-110 transition-transform duration-300" />
               </div>
