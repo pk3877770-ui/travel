@@ -4,13 +4,15 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Plane, Menu, X, User, ChevronDown } from "lucide-react";
+import { Plane, Menu, X, User, ChevronDown, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -73,14 +75,36 @@ const Navbar = () => {
               EN <ChevronDown className="w-4 h-4" />
             </button>
 
-            {/* Login / Register */}
-            <Link 
-              href="/auth"
-              className="flex items-center gap-2 text-primary text-sm font-bold border-2 border-primary px-5 py-2 rounded-md hover:bg-primary/5 transition-colors"
-            >
-              <User className="w-4 h-4" />
-              Login / Register
-            </Link>
+            {/* Login / Register / Profile */}
+            {session ? (
+              <div className="relative group">
+                <button className="flex items-center gap-2 text-primary text-sm font-bold border-2 border-primary px-5 py-2 rounded-md hover:bg-primary/5 transition-colors">
+                  <User className="w-4 h-4" />
+                  <span className="max-w-[100px] truncate">{session.user?.name || 'Account'}</span>
+                </button>
+                <div className="absolute right-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                  <div className="w-48 bg-white rounded-md shadow-lg border border-slate-200 overflow-hidden">
+                    <div className="px-4 py-3 border-b border-slate-100">
+                      <p className="text-sm font-semibold text-slate-800 truncate">{session.user?.name}</p>
+                      <p className="text-xs text-slate-500 truncate">{session.user?.email}</p>
+                    </div>
+                    <Link href="/profile" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary transition-colors">My Profile</Link>
+                    <Link href="/profile/bookings" className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary transition-colors">My Bookings</Link>
+                    <button onClick={() => signOut()} className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2">
+                      <LogOut className="w-4 h-4" /> Sign Out
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link 
+                href="/auth"
+                className="flex items-center gap-2 text-primary text-sm font-bold border-2 border-primary px-5 py-2 rounded-md hover:bg-primary/5 transition-colors"
+              >
+                <User className="w-4 h-4" />
+                Login / Register
+              </Link>
+            )}
           </div>
 
           {/* Mobile Toggle */}
@@ -123,14 +147,37 @@ const Navbar = () => {
                     EN <ChevronDown className="w-4 h-4" />
                   </button>
                 </div>
-                <Link 
-                  href="/auth"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center gap-2 text-white font-semibold bg-primary px-5 py-3 rounded-md"
-                >
-                  <User className="w-4 h-4" />
-                  Login / Register
-                </Link>
+                {session ? (
+                  <div className="flex flex-col gap-2">
+                    <Link 
+                      href="/profile"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="w-full flex items-center justify-center gap-2 text-slate-700 font-semibold border border-slate-200 px-5 py-3 rounded-md"
+                    >
+                      <User className="w-4 h-4" />
+                      {session.user?.name || 'My Profile'}
+                    </Link>
+                    <button 
+                      onClick={() => {
+                        signOut();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center justify-center gap-2 text-red-600 font-semibold border border-red-200 bg-red-50 px-5 py-3 rounded-md"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sign Out
+                    </button>
+                  </div>
+                ) : (
+                  <Link 
+                    href="/auth"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-full flex items-center justify-center gap-2 text-white font-semibold bg-primary px-5 py-3 rounded-md"
+                  >
+                    <User className="w-4 h-4" />
+                    Login / Register
+                  </Link>
+                )}
               </div>
             </div>
           </motion.div>

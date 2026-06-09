@@ -8,6 +8,7 @@ import NavbarShell from "@/components/NavbarShell";
 import Script from "next/script";
 import { getSiteUrl } from "@/lib/site-url";
 import { BookingProvider } from "@/context/BookingContext";
+import SessionProvider from "@/components/SessionProvider";
 
 function getStructuredData(siteUrl: string) {
   return {
@@ -106,46 +107,48 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${outfit.variable} antialiased selection:bg-accent/30`}
       >
-        <NavbarShell />
-        <Script
-            src="https://www.googletagmanager.com/gtag/js?id=G-5CW4N3EYJJ"
-            strategy="lazyOnload"
-          />
-          <Script id="google-analytics" strategy="lazyOnload">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
+        <SessionProvider>
+          <NavbarShell />
+          <Script
+              src="https://www.googletagmanager.com/gtag/js?id=G-5CW4N3EYJJ"
+              strategy="lazyOnload"
+            />
+            <Script id="google-analytics" strategy="lazyOnload">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
 
-              gtag('config', 'G-5CW4N3EYJJ');
-            `}
-          </Script>
-          <Script
-            id="organization-schema"
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify(structuredData.organization),
-            }}
-          />
-          <Script
-            id="website-schema"
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify(structuredData.website),
-            }}
-          />
-          <Script
-            id="webpage-schema"
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify(structuredData.webPage),
-            }}
-          />
-          <BookingProvider>
-            <main className="min-h-screen">{children}</main>
-          </BookingProvider>
-          <Footer />
-        </body>
+                gtag('config', 'G-5CW4N3EYJJ');
+              `}
+            </Script>
+            <Script
+              id="organization-schema"
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify(structuredData.organization),
+              }}
+            />
+            <Script
+              id="website-schema"
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify(structuredData.website),
+              }}
+            />
+            <Script
+              id="webpage-schema"
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify(structuredData.webPage),
+              }}
+            />
+            <BookingProvider>
+              <main className="min-h-screen">{children}</main>
+            </BookingProvider>
+            <Footer />
+        </SessionProvider>
+      </body>
     </html>
   );
 }
