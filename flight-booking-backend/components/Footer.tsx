@@ -38,16 +38,16 @@ const Footer = () => {
             </p>
             
             <div className="flex items-center gap-3">
-              <a href="#" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
+              <a href="#" aria-label="Facebook" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
                 <Facebook className="w-4 h-4" />
               </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
+              <a href="#" aria-label="Twitter" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
                 <Twitter className="w-4 h-4" />
               </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
+              <a href="#" aria-label="Instagram" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
+              <a href="#" aria-label="LinkedIn" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
                 <Linkedin className="w-4 h-4" />
               </a>
             </div>

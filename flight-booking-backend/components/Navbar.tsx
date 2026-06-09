@@ -84,6 +84,7 @@ const Navbar = () => {
 
           {/* Mobile Toggle */}
           <button 
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             className="lg:hidden p-2 text-slate-800"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >

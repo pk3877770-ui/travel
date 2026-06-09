@@ -96,8 +96,9 @@ const SearchSection = () => {
                 {/* From & To Row */}
                 <div className="flex w-full lg:w-[42%] relative border-b lg:border-b-0 lg:border-r border-slate-200">
                   <div className="flex-1 pb-6 lg:pb-0 lg:pr-8">
-                    <label className="text-xs text-slate-500 font-medium block mb-1">From</label>
+                    <label htmlFor="from-input" className="text-xs text-slate-500 font-medium block mb-1">From</label>
                     <input
+                      id="from-input"
                       type="text"
                       value={fromValue}
                       onChange={(e) => setFromValue(e.target.value)}
@@ -108,6 +109,7 @@ const SearchSection = () => {
 
                   <button 
                     type="button"
+                    aria-label="Swap departure and destination"
                     onClick={handleSwap}
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shadow-sm z-10 hover:bg-slate-50"
                   >
@@ -115,8 +117,9 @@ const SearchSection = () => {
                   </button>
 
                   <div className="flex-1 pt-6 lg:pt-0 lg:pl-12">
-                    <label className="text-xs text-slate-500 font-medium block mb-1">To</label>
+                    <label htmlFor="to-input" className="text-xs text-slate-500 font-medium block mb-1">To</label>
                     <input
+                      id="to-input"
                       type="text"
                       value={toValue}
                       onChange={(e) => setToValue(e.target.value)}
@@ -129,8 +132,9 @@ const SearchSection = () => {
                 {/* Dates Row */}
                 <div className="flex w-full lg:w-[38%] border-b lg:border-b-0 lg:border-r border-slate-200 pt-6 pb-6 lg:pt-0 lg:pb-0 lg:px-5">
                   <div className="flex-1 min-w-0">
-                    <label className="text-xs text-slate-500 font-medium block mb-1">Departure</label>
+                    <label htmlFor="departure-date" className="text-xs text-slate-500 font-medium block mb-1">Departure</label>
                     <input
+                      id="departure-date"
                       type="date"
                       value={departureDate}
                       onChange={(e) => setDepartureDate(e.target.value)}
@@ -140,8 +144,9 @@ const SearchSection = () => {
                   </div>
                   {tripType === "round-trip" && (
                     <div className="flex-1 min-w-0 pl-4 border-l border-slate-100 ml-4">
-                      <label className="text-xs text-slate-500 font-medium block mb-1">Return</label>
+                      <label htmlFor="return-date" className="text-xs text-slate-500 font-medium block mb-1">Return</label>
                       <input
+                        id="return-date"
                         type="date"
                         value={returnDate}
                         onChange={(e) => setReturnDate(e.target.value)}
@@ -165,6 +170,7 @@ const SearchSection = () => {
                       />
                       <span className="mx-2 text-slate-300">|</span>
                       <select
+                        aria-label="Cabin Class"
                         value={cabinClass}
                         onChange={(e) => setCabinClass(e.target.value)}
                         className="outline-none bg-transparent cursor-pointer text-sm font-medium text-slate-500"
