@@ -64,7 +64,7 @@ export default function ContactPage() {
             <div className="w-14 h-14 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-6">
               <Mail className="w-6 h-6" />
             </div>
-            <h3 className="font-bold text-slate-800 text-lg mb-2">Email Address</h3>
+            <h2 className="font-bold text-slate-800 text-lg mb-2">Email Address</h2>
             <p className="text-slate-500 mb-4 text-sm">Drop us a line anytime. We usually reply within 24 hours.</p>
             <a href="mailto:hello@kramana.com" className="font-bold text-blue-600 hover:text-blue-800 transition-colors">
               hello@kramana.com
@@ -75,7 +75,7 @@ export default function ContactPage() {
             <div className="w-14 h-14 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-6">
               <Phone className="w-6 h-6" />
             </div>
-            <h3 className="font-bold text-slate-800 text-lg mb-2">Phone Number</h3>
+            <h2 className="font-bold text-slate-800 text-lg mb-2">Phone Number</h2>
             <p className="text-slate-500 mb-4 text-sm">Call us directly. Our support team is available 24/7.</p>
             <a href="tel:+918001234567" className="font-bold text-blue-600 hover:text-blue-800 transition-colors">
               +91 (800) 123-4567
@@ -86,7 +86,7 @@ export default function ContactPage() {
             <div className="w-14 h-14 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-6">
               <MapPin className="w-6 h-6" />
             </div>
-            <h3 className="font-bold text-slate-800 text-lg mb-2">Office Address</h3>
+            <h2 className="font-bold text-slate-800 text-lg mb-2">Office Address</h2>
             <p className="text-slate-500 mb-4 text-sm">Come visit our headquarters for a cup of coffee.</p>
             <span className="font-bold text-slate-800 text-sm">
               Sandhu Business Center, A-1, Transport Nagar, Subhash Nagar, Dehradun, Sewla Khurd, Uttarakhand 248001

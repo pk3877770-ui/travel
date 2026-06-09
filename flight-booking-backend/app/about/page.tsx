@@ -105,21 +105,21 @@ export default function AboutPage() {
                 <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
                   <BadgeCheck className="w-5 h-5" />
                 </div>
-                <h4 className="font-bold text-slate-800 text-sm mb-1">Trusted by Millions</h4>
+                <h3 className="font-bold text-slate-800 text-sm mb-1">Trusted by Millions</h3>
                 <p className="text-xs text-slate-500">Over 2 million happy travelers worldwide.</p>
               </div>
               <div className="flex-1">
                 <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
                   <Plane className="w-5 h-5" />
                 </div>
-                <h4 className="font-bold text-slate-800 text-sm mb-1">Best Price Guarantee</h4>
+                <h3 className="font-bold text-slate-800 text-sm mb-1">Best Price Guarantee</h3>
                 <p className="text-xs text-slate-500">Get the best deals on flights and hotels.</p>
               </div>
               <Link href="/help" className="flex-1 block group hover:bg-slate-50 p-3 -m-3 rounded-xl transition-colors cursor-pointer">
                 <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                   <HeadphonesIcon className="w-5 h-5" />
                 </div>
-                <h4 className="font-bold text-slate-800 text-sm mb-1 group-hover:text-blue-600 transition-colors">24/7 Customer Support</h4>
+                <h3 className="font-bold text-slate-800 text-sm mb-1 group-hover:text-blue-600 transition-colors">24/7 Customer Support</h3>
                 <p className="text-xs text-slate-500">We're always here to help you.</p>
               </Link>
             </div>
