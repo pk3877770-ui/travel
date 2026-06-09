@@ -12,7 +12,26 @@ import { useSession, signOut } from "next-auth/react";
 const Navbar = () => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [language, setLanguage] = useState("EN");
   const { data: session } = useSession();
+
+  // On mount, check if there's a google translate cookie to set the initial language state
+  React.useEffect(() => {
+    if (typeof document !== "undefined") {
+      const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
+      if (match && match[1]) {
+        setLanguage(match[1].toUpperCase());
+      }
+    }
+  }, []);
+
+  const handleLanguageChange = (langCode: string) => {
+    setLanguage(langCode.toUpperCase());
+    // Set the translation cookie for Google Translate
+    document.cookie = `googtrans=/en/${langCode.toLowerCase()}; path=/`;
+    document.cookie = `googtrans=/en/${langCode.toLowerCase()}; domain=${window.location.hostname}; path=/`;
+    window.location.reload();
+  };
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -71,9 +90,19 @@ const Navbar = () => {
             </button>
             
             {/* Language */}
-            <button className="flex items-center gap-1 text-sm font-semibold text-slate-700 hover:text-primary transition-colors">
-              EN <ChevronDown className="w-4 h-4" />
-            </button>
+            <div className="relative group">
+              <button className="flex items-center gap-1 text-sm font-semibold text-slate-700 hover:text-primary transition-colors py-2">
+                {language} <ChevronDown className="w-4 h-4" />
+              </button>
+              <div className="absolute right-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="w-36 bg-white rounded-md shadow-lg border border-slate-200 overflow-hidden py-1">
+                  <button onClick={() => handleLanguageChange("en")} className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary transition-colors font-medium">English (EN)</button>
+                  <button onClick={() => handleLanguageChange("hi")} className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary transition-colors font-medium">Hindi (HI)</button>
+                  <button onClick={() => handleLanguageChange("fr")} className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary transition-colors font-medium">French (FR)</button>
+                  <button onClick={() => handleLanguageChange("es")} className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary transition-colors font-medium">Spanish (ES)</button>
+                </div>
+              </div>
+            </div>
 
             {/* Login / Register / Profile */}
             {session ? (
@@ -143,9 +172,19 @@ const Navbar = () => {
                   <button className="flex-1 flex justify-between items-center bg-slate-50 text-slate-800 px-4 py-3 rounded-md border border-slate-200">
                     INR <ChevronDown className="w-4 h-4" />
                   </button>
-                  <button className="flex-1 flex justify-between items-center bg-slate-50 text-slate-800 px-4 py-3 rounded-md border border-slate-200">
-                    EN <ChevronDown className="w-4 h-4" />
-                  </button>
+                  <div className="flex-1 relative">
+                    <select 
+                      value={language.toLowerCase()}
+                      onChange={(e) => handleLanguageChange(e.target.value)}
+                      className="w-full appearance-none bg-slate-50 text-slate-800 px-4 py-3 rounded-md border border-slate-200 focus:outline-none focus:border-primary font-medium"
+                    >
+                      <option value="en">English (EN)</option>
+                      <option value="hi">Hindi (HI)</option>
+                      <option value="fr">French (FR)</option>
+                      <option value="es">Spanish (ES)</option>
+                    </select>
+                    <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500" />
+                  </div>
                 </div>
                 {session ? (
                   <div className="flex flex-col gap-2">

@@ -1,3 +1,11 @@
+import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
+
+
+export async function generateMetadata() {
+  const seo = await getSEOMetadata("/press");
+  return mapSEOToMetadata(seo);
+}
+
 export default function PressPage() {
   return (
     <div className="pt-32 pb-20 min-h-[70vh] flex flex-col items-center justify-center text-center px-4">

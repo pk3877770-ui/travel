@@ -3,6 +3,13 @@ import PopularTopics from "./components/PopularTopics";
 import FaqSidebar from "./components/FaqSidebar";
 import FaqAccordion from "./components/FaqAccordion";
 import FaqContactSection from "./components/FaqContactSection";
+import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
+
+
+export async function generateMetadata() {
+  const seo = await getSEOMetadata("/faqs");
+  return mapSEOToMetadata(seo);
+}
 
 export default function FAQsPage() {
   return (

@@ -24,6 +24,13 @@ import {
   MessageSquare
 } from "lucide-react";
 import HelpSidebar from "@/components/HelpSidebar";
+import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
+
+
+export async function generateMetadata() {
+  const seo = await getSEOMetadata("/help");
+  return mapSEOToMetadata(seo);
+}
 
 export default function HelpCenterPage() {
   return (

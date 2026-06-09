@@ -3,6 +3,13 @@
 import React from "react";
 import Script from "next/script";
 import { Mail, Phone, MapPin, Send, MessageSquare, Clock, ShieldCheck } from "lucide-react";
+import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
+
+
+export async function generateMetadata() {
+  const seo = await getSEOMetadata("/contact");
+  return mapSEOToMetadata(seo);
+}
 
 export default function ContactPage() {
   const structuredData = {

@@ -2,6 +2,13 @@
 
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
+import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
+
+
+export async function generateMetadata() {
+  const seo = await getSEOMetadata("/offers");
+  return mapSEOToMetadata(seo);
+}
 
 export default function OffersPage() {
   const [activeTab, setActiveTab] = useState("Flight Offers");

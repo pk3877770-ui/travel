@@ -57,6 +57,17 @@
     background: var(--color-accent-light);
     color: var(--color-accent-hover);
   }
+
+  /* Hide Google Translate Toolbar */
+  .VIpgJd-ZVi9od-ORHb-OEVmcd {
+    display: none !important;
+  }
+  .goog-te-banner-frame.skiptranslate {
+    display: none !important;
+  }
+  body {
+    top: 0px !important;
+  }
 }
 
 @layer utilities {

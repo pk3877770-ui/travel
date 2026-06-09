@@ -143,6 +143,21 @@ export default function RootLayout({
                 __html: JSON.stringify(structuredData.webPage),
               }}
             />
+            <Script id="google-translate-init" strategy="lazyOnload">
+              {`
+                function googleTranslateElementInit() {
+                  new window.google.translate.TranslateElement(
+                    {pageLanguage: 'en', includedLanguages: 'en,hi,fr,es', autoDisplay: false}, 
+                    'google_translate_element'
+                  );
+                }
+              `}
+            </Script>
+            <Script 
+              src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" 
+              strategy="lazyOnload" 
+            />
+            <div id="google_translate_element" className="hidden"></div>
             <BookingProvider>
               <main className="min-h-screen">{children}</main>
             </BookingProvider>

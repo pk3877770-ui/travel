@@ -3,6 +3,7 @@ import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
 import { 
+import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
   ShieldCheck, 
   User, 
   Globe, 
@@ -20,6 +21,12 @@ import {
   BadgeCheck,
   HeadphonesIcon
 } from "lucide-react";
+
+
+export async function generateMetadata() {
+  const seo = await getSEOMetadata("/about");
+  return mapSEOToMetadata(seo);
+}
 
 export default function AboutPage() {
   const structuredData = {

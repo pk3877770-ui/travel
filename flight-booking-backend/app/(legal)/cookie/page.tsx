@@ -1,3 +1,11 @@
+import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
+
+
+export async function generateMetadata() {
+  const seo = await getSEOMetadata("/cookie");
+  return mapSEOToMetadata(seo);
+}
+
 export default function CookiePage() {
   return (
     <div className="bg-white rounded-2xl shadow-[0_2px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-100 p-8 md:p-10">
