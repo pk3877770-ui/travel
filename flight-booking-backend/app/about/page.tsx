@@ -2,8 +2,8 @@ import React from "react";
 import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
-import { 
 import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
+import { 
   ShieldCheck, 
   User, 
   Globe, 

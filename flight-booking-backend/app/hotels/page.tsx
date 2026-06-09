@@ -8,13 +8,8 @@ import HotelSidebar from "@/components/HotelSidebar";
 import Pagination from "@/components/Pagination";
 import { ChevronDown, X } from "lucide-react";
 import Image from "next/image";
-import { getSEOMetadata, mapSEOToMetadata } from "@/lib/seo";
 
 
-export async function generateMetadata() {
-  const seo = await getSEOMetadata("/hotels");
-  return mapSEOToMetadata(seo);
-}
 
 export default function HotelsPage() {
   const searchParams = useSearchParams();
