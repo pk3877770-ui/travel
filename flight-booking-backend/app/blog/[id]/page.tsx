@@ -6,57 +6,63 @@ import Link from "next/link";
 import { ArrowLeft, Calendar, Clock, Share2, Bookmark, Facebook, Twitter, Linkedin } from "lucide-react";
 import BlogSidebar from "@/components/BlogSidebar";
 
-// Mock data getter for a single post (since we don't have a real DB yet)
-const getMockPost = (id: string) => {
-  const images = [
-    "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=1200&q=80",
-    "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1200&q=80",
-    "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=1200&q=80",
-    "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1200&q=80",
-  ];
-  
-  return {
-    id,
-    title: `Amazing Travel Destination (Post ${id})`,
-    category: "TRAVEL GUIDES",
-    date: "May 25, 2025",
-    readTime: "8 min read",
-    image: images[parseInt(id) % images.length] || images[0],
-    author: {
-      name: "Travel Expert",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&q=80"
-    },
-    content: `
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      
-      <h3>Why You Should Visit</h3>
-      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      
-      <blockquote>"Traveling – it leaves you speechless, then turns you into a storyteller." – Ibn Battuta</blockquote>
-      
-      <h3>Top Things to Do</h3>
-      <ul>
-        <li>Explore the historic downtown and local markets.</li>
-        <li>Try the authentic street food and local delicacies.</li>
-        <li>Take a guided tour of the main attractions.</li>
-        <li>Watch the sunset from the highest viewpoint.</li>
-      </ul>
-      
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-    `
-  };
-};
+import { getPostById } from "@/lib/mockBlogData";
 
-export default function BlogPostPage({ params }: { params: { id: string } }) {
+export default function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
+  const unwrappedParams = React.use(params);
   const [post, setPost] = useState<any>(null);
+  const [isSaved, setIsSaved] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     // Simulate fetching post data
-    setPost(getMockPost(params.id));
-  }, [params.id]);
+    setPost(getPostById(unwrappedParams.id));
+    
+    const saved = JSON.parse(localStorage.getItem('saved_blogs') || '[]');
+    if (saved.includes(unwrappedParams.id)) {
+      setIsSaved(true);
+    }
+  }, [unwrappedParams.id]);
+
+  const handleSave = () => {
+    const saved = JSON.parse(localStorage.getItem('saved_blogs') || '[]');
+    if (isSaved) {
+      const newSaved = saved.filter((id: string) => id !== unwrappedParams.id);
+      localStorage.setItem('saved_blogs', JSON.stringify(newSaved));
+      setIsSaved(false);
+      showToast("Removed from saved blogs");
+    } else {
+      saved.push(unwrappedParams.id);
+      localStorage.setItem('saved_blogs', JSON.stringify(saved));
+      setIsSaved(true);
+      showToast("Blog saved successfully!");
+    }
+  };
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: post.title,
+          url: url
+        });
+      } catch (err) {
+        console.log("Error sharing", err);
+      }
+    } else {
+      navigator.clipboard.writeText(url);
+      showToast("Link copied to clipboard!");
+    }
+  };
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(""), 3000);
+  };
 
   if (!post) {
-    return <div className="min-h-screen bg-[#fafbfe] flex items-center justify-center">Loading...</div>;
+    return <div className="min-h-screen bg-[#fafbfe] flex items-center justify-center font-bold text-slate-500">Blog post not found!</div>;
   }
 
   return (
@@ -128,10 +134,18 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                 
                 {/* Actions */}
                 <div className="flex items-center gap-3">
-                  <button className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200 hover:text-blue-600 transition-colors">
-                    <Bookmark className="w-4 h-4" />
+                  <button 
+                    onClick={handleSave}
+                    title={isSaved ? "Remove from saved" : "Save this blog"}
+                    className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${isSaved ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-blue-600'}`}
+                  >
+                    <Bookmark className="w-4 h-4" fill={isSaved ? "currentColor" : "none"} />
                   </button>
-                  <button className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200 hover:text-blue-600 transition-colors">
+                  <button 
+                    onClick={handleShare}
+                    title="Share this blog"
+                    className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200 hover:text-blue-600 transition-colors"
+                  >
                     <Share2 className="w-4 h-4" />
                   </button>
                 </div>
@@ -150,13 +164,13 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
             <div className="flex items-center justify-between py-6 border-t border-slate-200 mt-12">
               <span className="font-bold text-slate-800">Share this article:</span>
               <div className="flex items-center gap-3">
-                <a href="#" className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:-translate-y-1 transition-transform shadow-sm">
+                <a href={`https://www.facebook.com/sharer/sharer.php?u=https://www.kramana.com/blog/${unwrappedParams.id}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:-translate-y-1 transition-transform shadow-sm">
                   <Facebook className="w-4 h-4" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-[#1DA1F2] text-white flex items-center justify-center hover:-translate-y-1 transition-transform shadow-sm">
+                <a href={`https://twitter.com/intent/tweet?url=https://www.kramana.com/blog/${unwrappedParams.id}&text=Check out this article on Kramana`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#1DA1F2] text-white flex items-center justify-center hover:-translate-y-1 transition-transform shadow-sm">
                   <Twitter className="w-4 h-4" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-[#0A66C2] text-white flex items-center justify-center hover:-translate-y-1 transition-transform shadow-sm">
+                <a href={`https://www.linkedin.com/shareArticle?mini=true&url=https://www.kramana.com/blog/${unwrappedParams.id}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#0A66C2] text-white flex items-center justify-center hover:-translate-y-1 transition-transform shadow-sm">
                   <Linkedin className="w-4 h-4" />
                 </a>
               </div>
@@ -170,6 +184,11 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
           </div>
 
         </div>
+      </div>
+      
+      {/* Toast Notification */}
+      <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl z-50 font-medium text-sm transition-all duration-300 ${toastMessage ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+        {toastMessage}
       </div>
     </main>
   );

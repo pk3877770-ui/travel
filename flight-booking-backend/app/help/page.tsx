@@ -37,7 +37,7 @@ export default function HelpCenterPage() {
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <Image 
             src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80" 
-            alt="Mountains" 
+            alt="Scenic view of airplanes flying over a mountain range" 
             fill 
             className="object-cover" 
           />

@@ -42,22 +42,22 @@ export default function FlightClient() {
         } else {
           // Mock data to match mockup specifically
           setFlights([
-            { id: 1, airline: "IndiGo", logo: "https://upload.wikimedia.org/wikipedia/commons/6/69/IndiGo_Airlines_logo.svg", dep: "06:20", arr: "08:50", dur: "2h 30m", stops: "Non Stop", price: 12499 },
-            { id: 2, airline: "Air India", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9b/Air_India_Logo.svg/1200px-Air_India_Logo.svg.png", dep: "07:45", arr: "13:25", dur: "1 Stop", stops: "5 Stop", price: 13290 },
-            { id: 3, airline: "Vistara", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f5/Vistara_Logo.svg/1200px-Vistara_Logo.svg.png", dep: "09:15", arr: "11:50", dur: "2h 35m", stops: "Non Stop", price: 14210 },
-            { id: 4, airline: "Akasa Air", logo: "https://upload.wikimedia.org/wikipedia/commons/1/18/Akasa_Air_logo.svg", dep: "11:30", arr: "14:15", dur: "2h 45m", stops: "Non Stop", price: 11990 },
-            { id: 5, airline: "SpiceJet", logo: "https://upload.wikimedia.org/wikipedia/commons/d/dd/SpiceJet_Logo.svg", dep: "20:45", arr: "02:55", dur: "1 Stop", stops: "6h 10m", price: 12890 },
+            { id: 1, airline: "IndiGo", logo: "https://images.kiwi.com/airlines/64x64/6E.png", dep: "06:20", arr: "08:50", dur: "2h 30m", stops: "Non Stop", price: 12499 },
+            { id: 2, airline: "Air India", logo: "https://images.kiwi.com/airlines/64x64/AI.png", dep: "07:45", arr: "13:25", dur: "1 Stop", stops: "5 Stop", price: 13290 },
+            { id: 3, airline: "Vistara", logo: "https://images.kiwi.com/airlines/64x64/UK.png", dep: "09:15", arr: "11:50", dur: "2h 35m", stops: "Non Stop", price: 14210 },
+            { id: 4, airline: "Akasa Air", logo: "https://images.kiwi.com/airlines/64x64/QP.png", dep: "11:30", arr: "14:15", dur: "2h 45m", stops: "Non Stop", price: 11990 },
+            { id: 5, airline: "SpiceJet", logo: "https://images.kiwi.com/airlines/64x64/SG.png", dep: "20:45", arr: "02:55", dur: "1 Stop", stops: "6h 10m", price: 12890 },
           ]);
         }
       } catch (error) {
         console.error("Search failed:", error);
         // Mock data to match mockup specifically
         setFlights([
-          { id: 1, airline: "IndiGo", logo: "https://upload.wikimedia.org/wikipedia/commons/6/69/IndiGo_Airlines_logo.svg", dep: "06:20", arr: "08:50", dur: "2h 30m", stops: "Non Stop", price: 12499 },
-          { id: 2, airline: "Air India", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9b/Air_India_Logo.svg/1200px-Air_India_Logo.svg.png", dep: "07:45", arr: "13:25", dur: "5h 40m", stops: "1 Stop", price: 13290 },
-          { id: 3, airline: "Vistara", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f5/Vistara_Logo.svg/1200px-Vistara_Logo.svg.png", dep: "09:15", arr: "11:50", dur: "2h 35m", stops: "Non Stop", price: 14210 },
-          { id: 4, airline: "Akasa Air", logo: "https://upload.wikimedia.org/wikipedia/commons/1/18/Akasa_Air_logo.svg", dep: "11:30", arr: "14:15", dur: "2h 45m", stops: "Non Stop", price: 11990 },
-          { id: 5, airline: "SpiceJet", logo: "https://upload.wikimedia.org/wikipedia/commons/d/dd/SpiceJet_Logo.svg", dep: "20:45", arr: "02:55", dur: "6h 10m", stops: "1 Stop", price: 12890 },
+          { id: 1, airline: "IndiGo", logo: "https://images.kiwi.com/airlines/64x64/6E.png", dep: "06:20", arr: "08:50", dur: "2h 30m", stops: "Non Stop", price: 12499 },
+          { id: 2, airline: "Air India", logo: "https://images.kiwi.com/airlines/64x64/AI.png", dep: "07:45", arr: "13:25", dur: "5h 40m", stops: "1 Stop", price: 13290 },
+          { id: 3, airline: "Vistara", logo: "https://images.kiwi.com/airlines/64x64/UK.png", dep: "09:15", arr: "11:50", dur: "2h 35m", stops: "Non Stop", price: 14210 },
+          { id: 4, airline: "Akasa Air", logo: "https://images.kiwi.com/airlines/64x64/QP.png", dep: "11:30", arr: "14:15", dur: "2h 45m", stops: "Non Stop", price: 11990 },
+          { id: 5, airline: "SpiceJet", logo: "https://images.kiwi.com/airlines/64x64/SG.png", dep: "20:45", arr: "02:55", dur: "6h 10m", stops: "1 Stop", price: 12890 },
         ]);
       } finally {
         setLoading(false);
@@ -88,8 +88,43 @@ export default function FlightClient() {
     );
   };
 
+  const schemaData = useMemo(() => {
+    return {
+      "@context": "https://schema.org",
+      "@type": "SearchResultsPage",
+      "name": `Flight Search Results from ${fromParam} to ${toParam}`,
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": flights.map((f, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "item": {
+            "@type": "Flight",
+            "name": `Flight ${f.airline} from ${fromParam} to ${toParam}`,
+            "provider": {
+              "@type": "Airline",
+              "name": f.airline,
+              "image": f.logo
+            },
+            "departureTime": f.departureTime || f.dep,
+            "arrivalTime": f.arrivalTime || f.arr,
+            "offers": {
+              "@type": "Offer",
+              "price": f.price,
+              "priceCurrency": "INR"
+            }
+          }
+        }))
+      }
+    };
+  }, [flights, fromParam, toParam]);
+
   return (
     <div className="pt-24 pb-16 bg-[#f8f9fa] min-h-screen font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
       <div className="container max-w-[1200px] mx-auto px-4 md:px-8">
         
         {/* Top Summary Bar */}
@@ -279,8 +314,8 @@ export default function FlightClient() {
                     </div>
 
                     {/* Price & Action */}
-                    <div className="flex flex-col items-end justify-center w-full md:w-auto md:min-w-[120px]">
-                      <div className="font-bold text-xl text-slate-800 mb-2">
+                    <div className="flex flex-col items-center md:items-end justify-center w-full md:w-auto md:min-w-[120px]">
+                      <div className="font-bold text-xl text-slate-800 mb-4 md:mb-2 text-center md:text-right">
                         ₹{(flight.price || 12499).toLocaleString()}
                       </div>
                       <button 

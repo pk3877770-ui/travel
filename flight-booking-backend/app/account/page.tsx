@@ -261,7 +261,7 @@ export default function AccountDashboard() {
                         <div className="relative w-32 h-20 rounded-xl overflow-hidden shrink-0">
                           <Image 
                             src="https://images.unsplash.com/photo-1542314831-c6a4d14b4b5b?w=400&q=80" 
-                            alt="Hotel" 
+                            alt="Luxury hotel property with pool at sunset" 
                             fill 
                             className="object-cover" 
                           />
@@ -416,7 +416,7 @@ export default function AccountDashboard() {
             <div className="rounded-2xl overflow-hidden relative h-40 shadow-sm group">
               <Image 
                 src="https://images.unsplash.com/photo-1506905925224-dd94bfaf337c?w=600&q=80" 
-                alt="Promo" 
+                alt="Special promotional travel offer banner" 
                 fill 
                 className="object-cover group-hover:scale-105 transition-transform duration-700" 
               />

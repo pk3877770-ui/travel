@@ -4,8 +4,8 @@ import { Map } from "lucide-react";
 
 interface HotelSidebarProps {
   onOpenMap: () => void;
-  priceMax: number;
-  setPriceMax: (val: number) => void;
+  priceMin: number;
+  setPriceMin: (val: number) => void;
   selectedAmenities: string[];
   toggleAmenity: (amenity: string) => void;
   selectedGuestRatings: number[];
@@ -14,12 +14,13 @@ interface HotelSidebarProps {
   togglePropertyType: (type: number) => void;
   clearAll: () => void;
   hotels: any[];
+  allHotels: any[];
 }
 
 const HotelSidebar = ({
   onOpenMap,
-  priceMax,
-  setPriceMax,
+  priceMin,
+  setPriceMin,
   selectedAmenities,
   toggleAmenity,
   selectedGuestRatings,
@@ -27,8 +28,30 @@ const HotelSidebar = ({
   selectedPropertyTypes,
   togglePropertyType,
   clearAll,
-  hotels
+  hotels,
+  allHotels
 }: HotelSidebarProps) => {
+
+  const getPropertyTypeCount = (star: number) => {
+    return allHotels.filter(hotel => {
+      let starRating = 1;
+      if (hotel.rating >= 4.8) starRating = 5;
+      else if (hotel.rating >= 4.0) starRating = 4;
+      else if (hotel.rating >= 3.0) starRating = 3;
+      else if (hotel.rating >= 2.0) starRating = 2;
+      return starRating === star;
+    }).length;
+  };
+
+  const getGuestRatingCount = (minRating: number) => {
+    return allHotels.filter(hotel => hotel.rating >= minRating).length;
+  };
+
+  const getAmenityCount = (amenity: string) => {
+    return allHotels.filter(hotel => 
+      hotel.amenities?.some((a: string) => a.toLowerCase().includes(amenity.toLowerCase()))
+    ).length;
+  };
 
   // Pre-defined random-ish positions for up to 5 hotel pins on the static map image
   const pinPositions = [
@@ -46,7 +69,7 @@ const HotelSidebar = ({
         <div className="relative h-[200px] w-full bg-slate-100">
           <Image
             src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&q=80"
-            alt="Map"
+            alt="Interactive map preview of hotel locations"
             fill
             className="object-cover opacity-60"
           />
@@ -89,16 +112,16 @@ const HotelSidebar = ({
 
         {/* Price Slider */}
         <div className="mb-8">
-          <h4 className="font-bold text-sm text-slate-800 mb-3">Max Price per night</h4>
-          <div className="text-xs text-slate-500 mb-2 font-medium text-blue-600">Up to ₹{priceMax.toLocaleString()}</div>
+          <h4 className="font-bold text-sm text-slate-800 mb-3">Min Price per night</h4>
+          <div className="text-xs text-slate-500 mb-2 font-medium text-blue-600">From ₹{priceMin.toLocaleString()}</div>
           <div className="relative mt-4">
             <input 
               type="range" 
               min="1000" 
               max="50000" 
               step="500"
-              value={priceMax}
-              onChange={(e) => setPriceMax(parseInt(e.target.value))}
+              value={priceMin}
+              onChange={(e) => setPriceMin(parseInt(e.target.value))}
               className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
             />
           </div>
@@ -111,10 +134,11 @@ const HotelSidebar = ({
           <h4 className="font-bold text-sm text-slate-800 mb-4">Property Type</h4>
           <div className="space-y-3">
             {[
-              { label: "Luxury (5 Stars)", val: 5, count: 120 },
-              { label: "Upscale (4 Stars)", val: 4, count: 95 },
-              { label: "Mid-range (3 Stars)", val: 3, count: 70 },
-              { label: "Budget (1-2 Stars)", val: 2, count: 27 },
+              { label: "5 Stars", val: 5, count: getPropertyTypeCount(5) },
+              { label: "4 Stars", val: 4, count: getPropertyTypeCount(4) },
+              { label: "3 Stars", val: 3, count: getPropertyTypeCount(3) },
+              { label: "2 Stars", val: 2, count: getPropertyTypeCount(2) },
+              { label: "1 Star", val: 1, count: getPropertyTypeCount(1) },
             ].map((item, idx) => (
               <label key={idx} className="flex items-center justify-between cursor-pointer group">
                 <div className="flex items-center gap-3">
@@ -137,10 +161,10 @@ const HotelSidebar = ({
           <h4 className="font-bold text-sm text-slate-800 mb-4">Guest Rating</h4>
           <div className="space-y-3">
             {[
-              { label: "4.5 & above", val: 4.5, count: 85 },
-              { label: "4.0 & above", val: 4.0, count: 140 },
-              { label: "3.5 & above", val: 3.5, count: 210 },
-              { label: "3.0 & above", val: 3.0, count: 260 },
+              { label: "4.5 & above", val: 4.5, count: getGuestRatingCount(4.5) },
+              { label: "4.0 & above", val: 4.0, count: getGuestRatingCount(4.0) },
+              { label: "3.5 & above", val: 3.5, count: getGuestRatingCount(3.5) },
+              { label: "3.0 & above", val: 3.0, count: getGuestRatingCount(3.0) },
             ].map((item, idx) => (
               <label key={idx} className="flex items-center justify-between cursor-pointer group">
                 <div className="flex items-center gap-3">
@@ -163,11 +187,11 @@ const HotelSidebar = ({
           <h4 className="font-bold text-sm text-slate-800 mb-4">Popular Amenities</h4>
           <div className="space-y-3">
             {[
-              { label: "Free WiFi", val: "Free WiFi", count: 290 },
-              { label: "Breakfast Included", val: "Breakfast Included", count: 200 },
-              { label: "Pool", val: "Pool", count: 120 },
-              { label: "Free Cancellation", val: "Free Cancellation", count: 180 },
-              { label: "Airport Shuttle", val: "Airport Shuttle", count: 90 },
+              { label: "Free WiFi", val: "Free WiFi", count: getAmenityCount("Free WiFi") },
+              { label: "Breakfast Included", val: "Breakfast Included", count: getAmenityCount("Breakfast Included") },
+              { label: "Pool", val: "Pool", count: getAmenityCount("Pool") },
+              { label: "Free Cancellation", val: "Free Cancellation", count: getAmenityCount("Free Cancellation") },
+              { label: "Airport Shuttle", val: "Airport Shuttle", count: getAmenityCount("Airport Shuttle") },
             ].map((item, idx) => (
               <label key={idx} className="flex items-center justify-between cursor-pointer group">
                 <div className="flex items-center gap-3">

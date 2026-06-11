@@ -1,91 +1,131 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, Suspense, useState } from "react";
 import Image from "next/image";
 import { Search } from "lucide-react";
 import BlogCard, { BlogPost } from "@/components/BlogCard";
 import BlogSidebar from "@/components/BlogSidebar";
-import Pagination from "@/components/Pagination";
+import { useSearchParams } from "next/navigation";
 
-const mockPosts: BlogPost[] = [
-  {
-    id: "1",
-    title: "10 Most Beautiful Places to Visit in Maldives",
-    category: "DESTINATIONS",
-    excerpt: "From crystal-clear waters to luxury resorts, explore the most beautiful places that make Maldives a perfect tropical getaway.",
-    date: "May 20, 2025",
-    readTime: "5 min read",
-    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800&q=80", // Maldives tropical
-    author: {
-      name: "Ananya Sharma",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&q=80"
-    }
-  },
-  {
-    id: "2",
-    title: "A Complete Travel Guide to Greece in 2025",
-    category: "TRAVEL GUIDES",
-    excerpt: "Everything you need to know before visiting Greece — visa, best time, places, food, budget and travel tips.",
-    date: "May 18, 2025",
-    readTime: "6 min read",
-    image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&q=80", // Greece Santorini
-    author: {
-      name: "Rohit Verma",
-      avatar: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=150&q=80"
-    }
-  },
-  {
-    id: "3",
-    title: "Solo Travel Tips for a Safe and Memorable Journey",
-    category: "TRAVEL TIPS",
-    excerpt: "Planning your first solo trip? Here are some essential tips to ensure a safe, fun and unforgettable experience.",
-    date: "May 15, 2025",
-    readTime: "4 min read",
-    image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&q=80", // Solo traveler
-    author: {
-      name: "Priya Nair",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&q=80"
-    }
-  },
-  {
-    id: "4",
-    title: "Top 7 Things to Do in Japan for First-Time Visitors",
-    category: "DESTINATIONS",
-    excerpt: "From temples to technology, explore the best experiences and attractions Japan has to offer.",
-    date: "May 12, 2025",
-    readTime: "7 min read",
-    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&q=80", // Japan Fuji/Cherry blossoms
-    author: {
-      name: "Karan Malhotra",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80"
-    }
-  }
-];
+import { allPosts } from "@/lib/mockBlogData";
 
-// Generate enough mock posts to make pagination functional
-const allPosts: BlogPost[] = Array.from({ length: 44 }).map((_, i) => ({
-  ...mockPosts[i % mockPosts.length],
-  id: String(i + 1),
-  title: `${mockPosts[i % mockPosts.length].title} (Post ${i + 1})`
-}));
-
-export default function BlogPage() {
+function BlogContent() {
+  const searchParams = useSearchParams();
+  const categoryFilter = searchParams.get('category')?.toUpperCase();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
-  const totalPages = Math.ceil(allPosts.length / itemsPerPage);
 
-  const currentPosts = allPosts.slice(
+  // If filter changes, reset to page 1
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [categoryFilter]);
+
+  const filteredPosts = useMemo(() => {
+    if (!categoryFilter) return allPosts;
+    return allPosts.filter(post => post.category === categoryFilter);
+  }, [categoryFilter]);
+
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
+
+  const currentPosts = filteredPosts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
   return (
+    <div className="flex flex-col gap-8">
+      {categoryFilter && (
+        <div className="bg-white px-6 py-3 rounded-lg border border-slate-200 shadow-sm inline-block w-fit mb-2">
+          <span className="text-slate-500 font-medium text-sm">Showing <span className="font-bold text-blue-600">{filteredPosts.length}</span> posts for <span className="font-bold text-slate-800">"{categoryFilter}"</span></span>
+        </div>
+      )}
+      <div className="flex flex-col gap-8">
+        {currentPosts.map(post => (
+          <BlogCard key={post.id} post={post} />
+        ))}
+      </div>
+      
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-8 border-t border-slate-200 pt-8">
+          <button 
+            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+            disabled={currentPage === 1}
+            className="w-10 h-10 rounded-lg flex items-center justify-center border border-slate-200 text-slate-500 hover:bg-blue-50 hover:text-blue-600 disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-slate-500 transition-colors font-medium"
+          >
+            &larr;
+          </button>
+          
+          {Array.from({ length: totalPages }).map((_, i) => {
+            const page = i + 1;
+            if (page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)) {
+              return (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold transition-colors ${
+                    currentPage === page 
+                      ? "bg-blue-600 text-white shadow-sm shadow-blue-500/30" 
+                      : "bg-white border border-slate-200 text-slate-600 hover:border-blue-600 hover:text-blue-600"
+                  }`}
+                >
+                  {page}
+                </button>
+              );
+            } else if (page === currentPage - 2 || page === currentPage + 2) {
+              return <span key={page} className="text-slate-400 px-1">...</span>;
+            }
+            return null;
+          })}
+
+          <button 
+            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+            disabled={currentPage === totalPages}
+            className="w-10 h-10 rounded-lg flex items-center justify-center border border-slate-200 text-slate-500 hover:bg-blue-50 hover:text-blue-600 disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-slate-500 transition-colors font-medium"
+          >
+            &rarr;
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function BlogPage() {
+  const schemaData = useMemo(() => {
+    return {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Kramana Travel Blog",
+      "description": "Travel Stories, Tips & Inspiration from around the world.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Kramana"
+      },
+      "blogPost": allPosts.map(post => ({
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "image": post.image,
+        "datePublished": post.date,
+        "author": {
+          "@type": "Person",
+          "name": post.author.name
+        }
+      }))
+    };
+  }, []);
+
+  return (
     <main className="min-h-screen bg-[#fafbfe] pb-20 font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
       
       {/* Hero Section */}
       <div className="relative w-full h-[450px]">
         <Image
-          src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=80" // Travel landscape
+          src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=80"
           alt="Travel Blog"
           fill
           className="object-cover"
@@ -128,17 +168,9 @@ export default function BlogPage() {
               Latest Articles
             </h2>
             
-            <div className="flex flex-col gap-8">
-              {currentPosts.map(post => (
-                <BlogCard key={post.id} post={post} />
-              ))}
-            </div>
-
-            <Pagination 
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-            />
+            <Suspense fallback={<div className="font-bold text-slate-500 animate-pulse">Loading articles...</div>}>
+              <BlogContent />
+            </Suspense>
           </div>
 
           {/* Sidebar (Right) */}

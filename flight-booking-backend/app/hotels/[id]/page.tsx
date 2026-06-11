@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { MapPin, Star, Wifi, Coffee, Map, Car, Wind, Tv } from "lucide-react";
@@ -31,6 +31,32 @@ export default function HotelDetailsPage() {
     if (id) fetchHotel();
   }, [id]);
 
+  const schemaData = useMemo(() => {
+    if (!hotel) return null;
+    return {
+      "@context": "https://schema.org",
+      "@type": "LodgingBusiness",
+      "name": hotel.name,
+      "description": hotel.description,
+      "image": hotel.images?.[0] || "",
+      "starRating": {
+        "@type": "Rating",
+        "ratingValue": hotel.rating
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": hotel.location?.address,
+        "addressLocality": hotel.location?.city,
+        "addressCountry": hotel.location?.country || "IN"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": hotel.rating,
+        "reviewCount": hotel.reviewsCount || 1
+      }
+    };
+  }, [hotel]);
+
   if (loading) {
     return (
       <div className="min-h-screen flex justify-center items-center pt-20">
@@ -50,6 +76,12 @@ export default function HotelDetailsPage() {
 
   return (
     <main className="min-h-screen bg-[#fafbfe] pt-24 pb-20 font-sans">
+      {schemaData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
+      )}
       <div className="container max-w-[1100px] mx-auto px-4">
         
         {/* Header Section */}

@@ -22,12 +22,9 @@ export async function GET(req) {
     if (dbWorking) {
       let query = {};
       if (location) {
-        // Basic case-insensitive search on city or country
+        // Basic case-insensitive search on city
         query = {
-          $or: [
-            { "location.city": { $regex: location, $options: "i" } },
-            { "location.country": { $regex: location, $options: "i" } },
-          ]
+          "location.city": { $regex: location, $options: "i" }
         };
       }
       hotels = await Hotel.find(query).limit(limit).lean();
@@ -41,8 +38,7 @@ export async function GET(req) {
       if (location) {
         const locLower = location.toLowerCase();
         filteredHotels = mockHotels.filter(h => 
-          h.location.city.toLowerCase().includes(locLower) || 
-          h.location.country.toLowerCase().includes(locLower)
+          h.location.city.toLowerCase().includes(locLower)
         );
       }
       return NextResponse.json({ success: true, data: filteredHotels.slice(0, limit) });

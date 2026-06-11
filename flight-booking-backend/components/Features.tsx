@@ -1,5 +1,6 @@
 import React from "react";
 import { Award, HeadphonesIcon, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 
 const features = [
   {
@@ -8,6 +9,7 @@ const features = [
     desc: "Get the best deals",
     color: "text-red-500",
     borderColor: "border-red-200",
+    link: "/flights",
   },
   {
     icon: HeadphonesIcon,
@@ -15,6 +17,7 @@ const features = [
     desc: "We are here to help",
     color: "text-blue-500",
     borderColor: "border-blue-200",
+    link: "/help",
   },
   {
     icon: ShieldCheck,
@@ -22,6 +25,7 @@ const features = [
     desc: "100% secure payment",
     color: "text-blue-600",
     borderColor: "border-blue-200",
+    link: "/booking/payment",
   }
 ];
 
@@ -31,7 +35,7 @@ const Features = () => {
       <div className="container max-w-[1000px] mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {features.map((item, idx) => (
-            <div key={idx} className="flex items-center gap-4">
+            <Link key={idx} href={item.link || "#"} className="flex items-center gap-4 hover:opacity-80 transition-opacity">
               <div className={`w-12 h-12 rounded-full border-2 ${item.borderColor} flex items-center justify-center shrink-0`}>
                 <item.icon className={`w-6 h-6 ${item.color}`} />
               </div>
@@ -39,7 +43,7 @@ const Features = () => {
                 <h4 className="font-bold text-slate-800 text-sm mb-0.5">{item.title}</h4>
                 <p className="text-xs text-slate-500 font-medium">{item.desc}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -2,19 +2,27 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeftRight, Plane } from "lucide-react";
+import { ArrowLeftRight, Plane, X, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import TravelersPopover from "@/components/TravelersPopover";
 
 const SearchSection = () => {
-  const [tripType, setTripType] = useState("round-trip");
+  const [tripType, setTripType] = useState("multi-city");
+  
+  // Single trip state
   const [fromValue, setFromValue] = useState("DEL");
   const [fromCity, setFromCity] = useState("New Delhi, India");
   const [toValue, setToValue] = useState("BOM");
   const [toCity, setToCity] = useState("Mumbai, India");
   const [departureDate, setDepartureDate] = useState("2025-05-20");
   const [returnDate, setReturnDate] = useState("2025-05-27");
+  
+  // Multi city state
+  const [multiFlights, setMultiFlights] = useState([
+    { id: 1, fromValue: "DEL", fromCity: "New Delhi, India", toValue: "BOM", toCity: "Mumbai, India", date: "2025-05-20" },
+    { id: 2, fromValue: "BOM", fromCity: "Mumbai, India", toValue: "", toCity: "", date: "" }
+  ]);
   
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
@@ -30,13 +38,56 @@ const SearchSection = () => {
     setToCity(fromCity);
   };
 
+  const handleSwapMulti = (id: number) => {
+    setMultiFlights(flights => flights.map(f => {
+      if (f.id === id) {
+        return { ...f, fromValue: f.toValue, toValue: f.fromValue, fromCity: f.toCity, toCity: f.fromCity };
+      }
+      return f;
+    }));
+  };
+
+  const updateMultiFlight = (id: number, field: string, value: string) => {
+    setMultiFlights(flights => flights.map(f => {
+      if (f.id === id) {
+        return { ...f, [field]: value };
+      }
+      return f;
+    }));
+  };
+
+  const addFlight = () => {
+    if (multiFlights.length < 5) {
+      const lastFlight = multiFlights[multiFlights.length - 1];
+      setMultiFlights([...multiFlights, {
+        id: Date.now(),
+        fromValue: lastFlight.toValue,
+        fromCity: lastFlight.toCity,
+        toValue: "",
+        toCity: "",
+        date: ""
+      }]);
+    }
+  };
+
+  const removeFlight = (id: number) => {
+    setMultiFlights(flights => flights.filter(f => f.id !== id));
+  };
+
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const params = new URLSearchParams();
-    params.append("from", fromValue);
-    params.append("to", toValue);
-    params.append("date", departureDate);
-    if (tripType === "round-trip") params.append("return", returnDate);
+    
+    if (tripType === "multi-city") {
+      params.append("type", "multi-city");
+      params.append("flights", JSON.stringify(multiFlights));
+    } else {
+      params.append("from", fromValue);
+      params.append("to", toValue);
+      params.append("date", departureDate);
+      if (tripType === "round-trip") params.append("return", returnDate);
+    }
+    
     params.append("travelers", `${adults} Adults, ${children} Children, ${infants} Infants`);
     params.append("cabin", cabinClass);
     
@@ -51,7 +102,7 @@ const SearchSection = () => {
           animate={{ opacity: 1, y: 0 }}
         >
           {/* Trip Type Tabs (Floating on top-left) */}
-          <div className="flex bg-white w-fit rounded-t-2xl px-6 py-4 shadow-sm border-b border-slate-100">
+          <div className="flex flex-wrap gap-y-3 bg-white w-full sm:w-fit rounded-t-2xl px-4 sm:px-6 py-4 shadow-sm border-b border-slate-100">
             {[
               { id: "round-trip", label: "Round Trip", icon: Plane },
               { id: "one-way", label: "One Way" },
@@ -61,7 +112,7 @@ const SearchSection = () => {
               return (
                 <label
                   key={type.id}
-                  className="flex items-center gap-2 cursor-pointer group mr-8 last:mr-0"
+                  className="flex items-center gap-2 cursor-pointer group mr-6 sm:mr-8 last:mr-0"
                 >
                   <div className={cn(
                     "w-4 h-4 rounded-full border flex items-center justify-center transition-colors",
@@ -91,105 +142,213 @@ const SearchSection = () => {
           {/* Main Search Card */}
           <div className="bg-white rounded-b-2xl rounded-tr-2xl shadow-xl p-8 relative">
             <form onSubmit={handleSearch}>
-              <div className="flex flex-col lg:flex-row items-center">
-                
-                {/* From & To Row */}
-                <div className="flex w-full lg:w-[42%] relative border-b lg:border-b-0 lg:border-r border-slate-200">
-                  <div className="flex-1 pb-6 lg:pb-0 lg:pr-8">
-                    <label htmlFor="from-input" className="text-xs text-slate-500 font-medium block mb-1">From</label>
-                    <input
-                      id="from-input"
-                      type="text"
-                      value={fromValue}
-                      onChange={(e) => setFromValue(e.target.value)}
-                      className="w-full font-bold text-2xl text-slate-800 outline-none uppercase mb-1"
-                    />
-                    <div className="text-sm text-slate-500 truncate">{fromCity}</div>
+              
+              {tripType === "multi-city" ? (
+                // Multi City UI
+                <div className="flex flex-col w-full">
+                  {multiFlights.map((flight, index) => (
+                    <div key={flight.id} className="flex flex-col lg:flex-row items-stretch lg:items-center w-full mb-4 pb-4 border-b border-slate-100 last:border-b-0 last:mb-0 last:pb-0">
+                      
+                      {/* From & To Row */}
+                      <div className="flex flex-col sm:flex-row w-full lg:w-[60%] relative border-b lg:border-b-0 lg:border-r border-slate-200">
+                        <div className="flex-1 pb-4 sm:pb-6 lg:pb-0 lg:pr-8 border-b sm:border-b-0 border-slate-100">
+                          <label className="text-xs text-slate-500 font-medium block mb-1">From</label>
+                          <input
+                            type="text"
+                            value={flight.fromValue}
+                            onChange={(e) => updateMultiFlight(flight.id, "fromValue", e.target.value)}
+                            className="w-full font-bold text-2xl text-slate-800 outline-none uppercase mb-1"
+                          />
+                          <div className="text-sm text-slate-500 truncate">{flight.fromCity || "Select City"}</div>
+                        </div>
+
+                        <button 
+                          type="button"
+                          aria-label="Swap departure and destination"
+                          onClick={() => handleSwapMulti(flight.id)}
+                          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shadow-sm z-10 hover:bg-slate-50"
+                        >
+                          <ArrowLeftRight className="w-4 h-4 rotate-90 sm:rotate-0 transition-transform" />
+                        </button>
+
+                        <div className="flex-1 pt-4 sm:pt-6 lg:pt-0 lg:pl-12">
+                          <label className="text-xs text-slate-500 font-medium block mb-1">To</label>
+                          <input
+                            type="text"
+                            value={flight.toValue}
+                            onChange={(e) => updateMultiFlight(flight.id, "toValue", e.target.value)}
+                            className="w-full font-bold text-2xl text-slate-800 outline-none uppercase mb-1"
+                          />
+                          <div className="text-sm text-slate-500 truncate">{flight.toCity || "Select City"}</div>
+                        </div>
+                      </div>
+
+                      {/* Date Row */}
+                      <div className="flex-1 min-w-0 pt-6 pb-6 lg:pt-0 lg:pb-0 lg:px-5 flex items-center justify-between">
+                        <div className="flex-1">
+                          <label className="text-xs text-slate-500 font-medium block mb-1">Departure</label>
+                          <input
+                            type="date"
+                            value={flight.date}
+                            onChange={(e) => updateMultiFlight(flight.id, "date", e.target.value)}
+                            className="w-full font-bold text-lg text-slate-800 outline-none bg-transparent [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full cursor-pointer relative"
+                          />
+                        </div>
+                        
+                        {index >= 2 && (
+                          <button 
+                            type="button" 
+                            onClick={() => removeFlight(flight.id)} 
+                            className="ml-4 text-slate-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-full transition-colors flex-shrink-0"
+                            aria-label="Remove flight"
+                          >
+                            <X className="w-5 h-5" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Multi City Bottom Controls */}
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-6 pt-6 border-t border-slate-100 gap-6 sm:gap-0">
+                    <button 
+                      type="button" 
+                      onClick={addFlight}
+                      disabled={multiFlights.length >= 5}
+                      className="text-[#0A58CA] font-bold text-sm hover:text-blue-700 flex items-center gap-1.5 px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors disabled:opacity-50 disabled:pointer-events-none"
+                    >
+                      <Plus className="w-4 h-4" /> Add another flight
+                    </button>
+
+                    <div className="flex items-center gap-6 bg-slate-50 px-6 py-3 rounded-xl border border-slate-100">
+                      <div>
+                        <label className="text-xs text-slate-500 font-medium block mb-1">Travelers</label>
+                        <TravelersPopover
+                          adults={adults} setAdults={setAdults}
+                          childrenCount={children} setChildrenCount={setChildren}
+                          infants={infants} setInfants={setInfants}
+                          className="!p-0 !border-0 !bg-transparent text-lg font-bold text-slate-800 !w-auto"
+                        />
+                      </div>
+                      <div className="w-px h-8 bg-slate-200" />
+                      <div>
+                        <label className="text-xs text-slate-500 font-medium block mb-1">Class</label>
+                        <select
+                          aria-label="Cabin Class"
+                          value={cabinClass}
+                          onChange={(e) => setCabinClass(e.target.value)}
+                          className="outline-none bg-transparent text-sm font-bold text-slate-800 cursor-pointer"
+                        >
+                          <option value="Economy">Economy</option>
+                          <option value="Business">Business</option>
+                          <option value="First">First</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
 
-                  <button 
-                    type="button"
-                    aria-label="Swap departure and destination"
-                    onClick={handleSwap}
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shadow-sm z-10 hover:bg-slate-50"
-                  >
-                    <ArrowLeftRight className="w-4 h-4" />
-                  </button>
-
-                  <div className="flex-1 pt-6 lg:pt-0 lg:pl-12">
-                    <label htmlFor="to-input" className="text-xs text-slate-500 font-medium block mb-1">To</label>
-                    <input
-                      id="to-input"
-                      type="text"
-                      value={toValue}
-                      onChange={(e) => setToValue(e.target.value)}
-                      className="w-full font-bold text-2xl text-slate-800 outline-none uppercase mb-1"
-                    />
-                    <div className="text-sm text-slate-500 truncate">{toCity}</div>
-                  </div>
                 </div>
-
-                {/* Dates Row */}
-                <div className="flex w-full lg:w-[38%] border-b lg:border-b-0 lg:border-r border-slate-200 pt-6 pb-6 lg:pt-0 lg:pb-0 lg:px-5">
-                  <div className="flex-1 min-w-0">
-                    <label htmlFor="departure-date" className="text-xs text-slate-500 font-medium block mb-1">Departure</label>
-                    <input
-                      id="departure-date"
-                      type="date"
-                      value={departureDate}
-                      onChange={(e) => setDepartureDate(e.target.value)}
-                      className="w-full font-bold text-lg text-slate-800 outline-none bg-transparent [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full cursor-pointer relative"
-                    />
-                    <div className="text-xs text-slate-400 mt-1">Tuesday</div>
-                  </div>
-                  {tripType === "round-trip" && (
-                    <div className="flex-1 min-w-0 pl-4 border-l border-slate-100 ml-4">
-                      <label htmlFor="return-date" className="text-xs text-slate-500 font-medium block mb-1">Return</label>
+              ) : (
+                // Single/Round Trip UI
+                <div className="flex flex-col lg:flex-row items-stretch lg:items-center">
+                  
+                  {/* From & To Row */}
+                  <div className="flex flex-col sm:flex-row w-full lg:w-[42%] relative border-b lg:border-b-0 lg:border-r border-slate-200">
+                    <div className="flex-1 pb-4 sm:pb-6 lg:pb-0 lg:pr-8 border-b sm:border-b-0 border-slate-100">
+                      <label htmlFor="from-input" className="text-xs text-slate-500 font-medium block mb-1">From</label>
                       <input
-                        id="return-date"
+                        id="from-input"
+                        type="text"
+                        value={fromValue}
+                        onChange={(e) => setFromValue(e.target.value)}
+                        className="w-full font-bold text-2xl text-slate-800 outline-none uppercase mb-1"
+                      />
+                      <div className="text-sm text-slate-500 truncate">{fromCity}</div>
+                    </div>
+
+                    <button 
+                      type="button"
+                      aria-label="Swap departure and destination"
+                      onClick={handleSwap}
+                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shadow-sm z-10 hover:bg-slate-50"
+                    >
+                      <ArrowLeftRight className="w-4 h-4 rotate-90 sm:rotate-0 transition-transform" />
+                    </button>
+
+                    <div className="flex-1 pt-4 sm:pt-6 lg:pt-0 lg:pl-12">
+                      <label htmlFor="to-input" className="text-xs text-slate-500 font-medium block mb-1">To</label>
+                      <input
+                        id="to-input"
+                        type="text"
+                        value={toValue}
+                        onChange={(e) => setToValue(e.target.value)}
+                        className="w-full font-bold text-2xl text-slate-800 outline-none uppercase mb-1"
+                      />
+                      <div className="text-sm text-slate-500 truncate">{toCity}</div>
+                    </div>
+                  </div>
+
+                  {/* Dates Row */}
+                  <div className="flex flex-col sm:flex-row w-full lg:w-[38%] border-b lg:border-b-0 lg:border-r border-slate-200 pt-6 pb-6 lg:pt-0 lg:pb-0 lg:px-5">
+                    <div className="flex-1 min-w-0">
+                      <label htmlFor="departure-date" className="text-xs text-slate-500 font-medium block mb-1">Departure</label>
+                      <input
+                        id="departure-date"
                         type="date"
-                        value={returnDate}
-                        onChange={(e) => setReturnDate(e.target.value)}
+                        value={departureDate}
+                        onChange={(e) => setDepartureDate(e.target.value)}
                         className="w-full font-bold text-lg text-slate-800 outline-none bg-transparent [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full cursor-pointer relative"
                       />
                       <div className="text-xs text-slate-400 mt-1">Tuesday</div>
                     </div>
-                  )}
-                </div>
+                    {tripType === "round-trip" && (
+                      <div className="flex-1 min-w-0 pl-0 sm:pl-4 border-t sm:border-t-0 sm:border-l border-slate-100 mt-4 pt-4 sm:mt-0 sm:pt-0 sm:ml-4">
+                        <label htmlFor="return-date" className="text-xs text-slate-500 font-medium block mb-1">Return</label>
+                        <input
+                          id="return-date"
+                          type="date"
+                          value={returnDate}
+                          onChange={(e) => setReturnDate(e.target.value)}
+                          className="w-full font-bold text-lg text-slate-800 outline-none bg-transparent [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full cursor-pointer relative"
+                        />
+                        <div className="text-xs text-slate-400 mt-1">Tuesday</div>
+                      </div>
+                    )}
+                  </div>
 
-                {/* Travelers & Class */}
-                <div className="flex-1 w-full pt-6 lg:pt-0 lg:pl-8 flex flex-col justify-between h-full">
-                  <div>
-                    <label className="text-xs text-slate-500 font-medium block mb-1">Travelers & Class</label>
-                    <div className="font-bold text-lg text-slate-800 flex items-center">
-                      <TravelersPopover
-                        adults={adults} setAdults={setAdults}
-                        childrenCount={children} setChildrenCount={setChildren}
-                        infants={infants} setInfants={setInfants}
-                        className="!p-0 !border-0 !bg-transparent inline text-lg text-slate-800 !w-auto"
-                      />
-                      <span className="mx-2 text-slate-300">|</span>
-                      <select
-                        aria-label="Cabin Class"
-                        value={cabinClass}
-                        onChange={(e) => setCabinClass(e.target.value)}
-                        className="outline-none bg-transparent cursor-pointer text-sm font-medium text-slate-500"
-                      >
-                        <option value="Economy">Economy</option>
-                        <option value="Business">Business</option>
-                        <option value="First">First</option>
-                      </select>
+                  {/* Travelers & Class */}
+                  <div className="flex-1 w-full pt-6 lg:pt-0 lg:pl-8 flex flex-col justify-between h-full">
+                    <div>
+                      <label className="text-xs text-slate-500 font-medium block mb-1">Travelers & Class</label>
+                      <div className="flex flex-col items-start">
+                        <TravelersPopover
+                          adults={adults} setAdults={setAdults}
+                          childrenCount={children} setChildrenCount={setChildren}
+                          infants={infants} setInfants={setInfants}
+                          className="!p-0 !border-0 !bg-transparent !w-auto"
+                        />
+                        <select
+                          aria-label="Cabin Class"
+                          value={cabinClass}
+                          onChange={(e) => setCabinClass(e.target.value)}
+                          className="outline-none bg-transparent cursor-pointer text-sm font-medium text-slate-500 mt-1"
+                        >
+                          <option value="Economy">Economy</option>
+                          <option value="Business">Business</option>
+                          <option value="First">First</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-              </div>
+                </div>
+              )}
 
               {/* Search Button positioned at bottom right */}
-              <div className="mt-8 flex justify-end">
+              <div className="mt-8 flex justify-center lg:justify-end">
                 <button 
                   type="submit"
-                  className="bg-[#0A58CA] hover:bg-blue-700 text-white px-10 py-3.5 rounded-lg font-bold transition-colors shadow-md shadow-blue-500/30"
+                  className="bg-[#0A58CA] hover:bg-blue-700 text-white px-10 py-3.5 rounded-lg font-bold transition-colors shadow-md shadow-blue-500/30 w-full sm:w-auto"
                 >
                   Search Flights
                 </button>

@@ -2,6 +2,7 @@
 
 import React from "react";
 import Script from "next/script";
+import Link from "next/link";
 import { Mail, Phone, MapPin, Send, MessageSquare, Clock, ShieldCheck } from "lucide-react";
 
 
@@ -52,7 +53,7 @@ export default function ContactPage() {
             Get in Touch
           </h1>
           <p className="text-lg text-slate-300 font-medium">
-            Have a question about your booking, need help planning a trip, or just want to say hello? Our team is here and ready to help.
+            Have a question about your <Link href="/account" className="underline hover:text-white transition-colors">booking</Link>, need <Link href="/help" className="underline hover:text-white transition-colors">help</Link> planning a trip, or just want to say hello? Our team is here and ready to help.
           </p>
         </div>
       </div>

@@ -44,16 +44,16 @@ const Footer = () => {
             </p>
             
             <div className="flex items-center gap-3">
-              <a href="#" aria-label="Facebook" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
+              <a href="https://facebook.com/kramana" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
                 <Facebook className="w-4 h-4" />
               </a>
-              <a href="#" aria-label="Twitter" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
+              <a href="https://twitter.com/kramana" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
                 <Twitter className="w-4 h-4" />
               </a>
-              <a href="#" aria-label="Instagram" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
+              <a href="https://instagram.com/kramana" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="#" aria-label="LinkedIn" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
+              <a href="https://linkedin.com/company/kramana" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-8 h-8 rounded-full bg-[#1a2b4c] flex items-center justify-center text-slate-300 hover:bg-[#3D8BFD] hover:text-white transition-colors">
                 <Linkedin className="w-4 h-4" />
               </a>
             </div>

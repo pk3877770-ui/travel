@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useBooking } from "@/context/BookingContext";
 import { Plane, ChevronRight, Briefcase, Coffee, RefreshCcw } from "lucide-react";
@@ -38,13 +38,34 @@ export default function FlightDetailsPage() {
   ];
 
   const returnFlights = [
-    { id: 1, airline: "IndiGo", logo: "https://upload.wikimedia.org/wikipedia/commons/6/69/IndiGo_Airlines_logo.svg", flightNum: "6E-5341", dep: "19:20", arr: "21:55", dur: "2h 30m", stops: "Non Stop", price: 12390 },
-    { id: 2, airline: "Air India", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9b/Air_India_Logo.svg/1200px-Air_India_Logo.svg.png", flightNum: "AI-232", dep: "20:45", arr: "22:25", dur: "2h 40m", stops: "Non Stop", price: 14100 },
-    { id: 3, airline: "Vistara", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f5/Vistara_Logo.svg/1200px-Vistara_Logo.svg.png", flightNum: "UK-902", dep: "22:10", arr: "00:40", dur: "2h 30m", stops: "Non Stop", price: 15990, arrDay: "+1" },
+    { id: 1, airline: "IndiGo", logo: "https://images.kiwi.com/airlines/64x64/6E.png", flightNum: "6E-5341", dep: "19:20", arr: "21:55", dur: "2h 30m", stops: "Non Stop", price: 12390 },
+    { id: 2, airline: "Air India", logo: "https://images.kiwi.com/airlines/64x64/AI.png", flightNum: "AI-232", dep: "20:45", arr: "22:25", dur: "2h 40m", stops: "Non Stop", price: 14100 },
+    { id: 3, airline: "Vistara", logo: "https://images.kiwi.com/airlines/64x64/UK.png", flightNum: "UK-902", dep: "22:10", arr: "00:40", dur: "2h 30m", stops: "Non Stop", price: 15990, arrDay: "+1" },
   ];
+
+  const schemaData = useMemo(() => {
+    return {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": `Flight from ${fromParam} to ${toParam}`,
+      "description": `Flight tickets from ${fromParam} to ${toParam} departing on ${dateParam}`,
+      "category": "Flight Tickets",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "INR",
+        "lowPrice": 12390,
+        "highPrice": 15990,
+        "offerCount": returnFlights.length
+      }
+    };
+  }, [fromParam, toParam, dateParam, returnFlights.length]);
 
   return (
     <div className="pt-24 pb-16 bg-[#f8f9fa] min-h-screen font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
       <div className="container max-w-[1000px] mx-auto px-4 md:px-8">
         
         {/* Top Summary Bar */}
@@ -66,7 +87,7 @@ export default function FlightDetailsPage() {
             
             {/* Airline Header */}
             <div className="flex items-center gap-3 mb-8">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/IndiGo_Airlines_logo.svg" alt="IndiGo" className="h-6 object-contain" />
+              <img src="https://images.kiwi.com/airlines/64x64/6E.png" alt="IndiGo" className="h-6 object-contain" />
               <span className="text-sm font-medium text-slate-500">6E-5324</span>
             </div>
 
@@ -78,7 +99,7 @@ export default function FlightDetailsPage() {
                 <div className="text-xs text-slate-400 mt-1">Tue, 20 May</div>
               </div>
               
-              <div className="flex-1 px-8 flex flex-col items-center justify-center relative">
+              <div className="flex-1 px-2 sm:px-8 flex flex-col items-center justify-center relative">
                 <div className="text-xs font-medium text-slate-400 mb-2">2h 30m</div>
                 <div className="w-full relative flex items-center justify-center">
                   <div className="h-px bg-slate-200 w-full" />
@@ -87,7 +108,7 @@ export default function FlightDetailsPage() {
                 <div className="text-xs font-medium text-slate-400 mt-2">Non Stop</div>
               </div>
 
-              <div className="text-center w-32">
+              <div className="text-center w-24 sm:w-32">
                 <div className="font-bold text-2xl text-slate-800">08:50</div>
                 <div className="text-sm font-medium text-slate-500">{toParam}</div>
                 <div className="text-xs text-slate-400 mt-1">Tue, 20 May</div>
@@ -97,8 +118,8 @@ export default function FlightDetailsPage() {
           </div>
           
           {/* Details Footer */}
-          <div className="border-t border-slate-100 p-6 px-8 flex items-center justify-between">
-            <div className="flex items-start gap-12">
+          <div className="border-t border-slate-100 p-6 sm:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-12 w-full md:w-auto">
               <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-2 text-xs font-medium text-slate-400 mb-1">
                   <Briefcase className="w-3 h-3" /> Baggage
@@ -120,7 +141,7 @@ export default function FlightDetailsPage() {
               </div>
             </div>
             
-            <button className="text-primary font-bold text-sm hover:underline">
+            <button className="text-primary font-bold text-sm hover:underline w-full md:w-auto text-left md:text-right">
               Flight Details
             </button>
           </div>

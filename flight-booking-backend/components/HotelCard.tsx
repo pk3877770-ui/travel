@@ -61,7 +61,7 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
             </div>
 
             {/* Amenities Preview */}
-            <div className="flex items-center gap-4 text-xs font-medium text-slate-600 mb-3">
+            <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-600 mb-3">
               {hotel.amenities?.slice(0, 4).map((amenity: string, idx: number) => (
                 <span key={idx} className="flex items-center gap-1.5">
                   {amenity.toLowerCase().includes("wifi") && <Wifi className="w-3.5 h-3.5 text-slate-400" />}
@@ -88,13 +88,13 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
         </div>
 
         {/* Pricing & Action */}
-        <div className="flex items-end justify-end mt-4">
-          <div className="text-right">
+        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between sm:justify-end mt-4 pt-4 sm:pt-0 border-t border-slate-100 sm:border-0 gap-4 sm:gap-0">
+          <div className="text-left sm:text-right w-full sm:w-auto">
             <div className="text-2xl font-black text-slate-800 mb-0.5">₹ {minPrice.toLocaleString()}</div>
             <div className="text-xs text-slate-500 mb-3">for 2 nights</div>
             <Link
               href={`/hotels/${hotel._id}`}
-              className="inline-block border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-2 rounded-lg text-sm font-bold transition-colors text-center w-full sm:w-auto"
+              className="block sm:inline-block border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-2 rounded-lg text-sm font-bold transition-colors text-center w-full sm:w-auto"
             >
               View Details
             </Link>

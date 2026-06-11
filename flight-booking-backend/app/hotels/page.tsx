@@ -5,7 +5,6 @@ import { useSearchParams } from "next/navigation";
 import HotelSearchSection from "@/components/HotelSearchSection";
 import HotelCard from "@/components/HotelCard";
 import HotelSidebar from "@/components/HotelSidebar";
-import Pagination from "@/components/Pagination";
 import { ChevronDown, X } from "lucide-react";
 import Image from "next/image";
 
@@ -19,7 +18,7 @@ export default function HotelsPage() {
   const [loading, setLoading] = useState(true);
 
   // Filter States
-  const [priceMax, setPriceMax] = useState<number>(50000);
+  const [priceMin, setPriceMin] = useState<number>(1000);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [selectedGuestRatings, setSelectedGuestRatings] = useState<number[]>([]);
   const [selectedPropertyTypes, setSelectedPropertyTypes] = useState<number[]>([]);
@@ -67,7 +66,7 @@ export default function HotelsPage() {
   };
 
   const clearAllFilters = () => {
-    setPriceMax(50000);
+    setPriceMin(1000);
     setSelectedAmenities([]);
     setSelectedGuestRatings([]);
     setSelectedPropertyTypes([]);
@@ -77,9 +76,9 @@ export default function HotelsPage() {
   // Client-Side Filtering
   const filteredHotels = useMemo(() => {
     const results = hotels.filter(hotel => {
-      // 1. Price Filter (Hotel's minimum room price must be <= priceMax)
+      // 1. Price Filter (Hotel's minimum room price must be >= priceMin)
       const minRoomPrice = hotel.rooms?.length > 0 ? Math.min(...hotel.rooms.map((r: any) => r.price)) : 0;
-      if (minRoomPrice > priceMax) return false;
+      if (minRoomPrice < priceMin) return false;
 
       // 2. Guest Rating Filter (Hotel rating must be >= the lowest selected required rating)
       if (selectedGuestRatings.length > 0) {
@@ -89,10 +88,11 @@ export default function HotelsPage() {
 
       // 3. Property Type Filter
       if (selectedPropertyTypes.length > 0) {
-        let starRating = 2; // Default to Budget
-        if (hotel.rating >= 4.8) starRating = 5; // Luxury
-        else if (hotel.rating >= 4.5) starRating = 4; // Upscale
-        else if (hotel.rating >= 4.0) starRating = 3; // Mid-range
+        let starRating = 1;
+        if (hotel.rating >= 4.8) starRating = 5;
+        else if (hotel.rating >= 4.0) starRating = 4;
+        else if (hotel.rating >= 3.0) starRating = 3;
+        else if (hotel.rating >= 2.0) starRating = 2;
         
         if (!selectedPropertyTypes.includes(starRating)) return false;
       }
@@ -110,7 +110,7 @@ export default function HotelsPage() {
     
     // Reset to page 1 whenever filters change and results change
     return results;
-  }, [hotels, priceMax, selectedAmenities, selectedGuestRatings, selectedPropertyTypes]);
+  }, [hotels, priceMin, selectedAmenities, selectedGuestRatings, selectedPropertyTypes]);
 
   // Reset pagination when filter results change
   useEffect(() => {
@@ -124,8 +124,41 @@ export default function HotelsPage() {
     currentPage * itemsPerPage
   );
 
+  const schemaData = useMemo(() => {
+    return {
+      "@context": "https://schema.org",
+      "@type": "SearchResultsPage",
+      "name": `Hotel Search Results ${location ? `for ${location}` : ''}`,
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": filteredHotels.map((hotel, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "item": {
+            "@type": "LodgingBusiness",
+            "name": hotel.name,
+            "image": hotel.images?.[0] || "",
+            "starRating": {
+              "@type": "Rating",
+              "ratingValue": hotel.rating
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": hotel.location?.city || location || "City",
+              "addressCountry": "IN"
+            }
+          }
+        }))
+      }
+    };
+  }, [filteredHotels, location]);
+
   return (
     <main className="min-h-screen bg-[#fafbfe] pb-20 font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
       
       {/* Hero Section */}
       <div className="relative w-full h-[400px]">
@@ -183,11 +216,6 @@ export default function HotelsPage() {
                     <HotelCard key={hotel._id} hotel={hotel} />
                   ))}
                 </div>
-                <Pagination 
-                  currentPage={currentPage} 
-                  totalPages={totalPages} 
-                  onPageChange={setCurrentPage} 
-                />
               </>
             ) : (
               <div className="bg-white rounded-2xl p-12 text-center border border-slate-100 shadow-sm mt-8">
@@ -208,8 +236,8 @@ export default function HotelsPage() {
           <div className="lg:col-span-1 order-1 lg:order-1">
             <HotelSidebar 
               onOpenMap={() => setIsMapOpen(true)}
-              priceMax={priceMax}
-              setPriceMax={setPriceMax}
+              priceMin={priceMin}
+              setPriceMin={setPriceMin}
               selectedAmenities={selectedAmenities}
               toggleAmenity={toggleAmenity}
               selectedGuestRatings={selectedGuestRatings}
@@ -218,6 +246,7 @@ export default function HotelsPage() {
               togglePropertyType={togglePropertyType}
               clearAll={clearAllFilters}
               hotels={filteredHotels}
+              allHotels={hotels}
             />
           </div>
 

@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Bookmark, Calendar, Clock } from "lucide-react";
@@ -22,6 +24,30 @@ interface BlogCardProps {
 }
 
 const BlogCard = ({ post }: BlogCardProps) => {
+  const [isSaved, setIsSaved] = useState(false);
+  
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem('saved_blogs') || '[]');
+    if (saved.includes(post.id)) {
+      setIsSaved(true);
+    }
+  }, [post.id]);
+
+  const handleSave = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const saved = JSON.parse(localStorage.getItem('saved_blogs') || '[]');
+    if (isSaved) {
+      const newSaved = saved.filter((id: string) => id !== post.id);
+      localStorage.setItem('saved_blogs', JSON.stringify(newSaved));
+      setIsSaved(false);
+    } else {
+      saved.push(post.id);
+      localStorage.setItem('saved_blogs', JSON.stringify(saved));
+      setIsSaved(true);
+    }
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all flex flex-col md:flex-row group">
       
@@ -42,8 +68,12 @@ const BlogCard = ({ post }: BlogCardProps) => {
             <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">
               {post.category}
             </span>
-            <button className="text-slate-400 hover:text-blue-600 transition-colors">
-              <Bookmark className="w-5 h-5" />
+            <button 
+              onClick={handleSave}
+              title={isSaved ? "Remove from saved" : "Save this blog"}
+              className={`transition-colors z-10 relative ${isSaved ? 'text-blue-600' : 'text-slate-400 hover:text-blue-600'}`}
+            >
+              <Bookmark className="w-5 h-5" fill={isSaved ? "currentColor" : "none"} />
             </button>
           </div>
           

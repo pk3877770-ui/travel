@@ -19,12 +19,12 @@ const destinations = [
   {
     city: "Bangkok",
     price: "₹ 9,999",
-    image: "https://images.unsplash.com/photo-1508009603885-50cf7cbf1c80?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80",
   },
   {
     city: "London",
     price: "₹ 24,999",
-    image: "https://images.unsplash.com/photo-1513635269975-59693e0cd156?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=600&q=80",
   }
 ];
 

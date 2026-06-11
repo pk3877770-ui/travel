@@ -29,7 +29,7 @@ const RoomCard = ({ hotelId, room }: RoomCardProps) => {
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-2 mb-4 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4 mt-4">
             {room.features?.map((feature: string, idx: number) => (
               <div key={idx} className="flex items-center gap-2 text-sm text-slate-600">
                 <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />

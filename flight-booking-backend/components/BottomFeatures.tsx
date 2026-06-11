@@ -1,11 +1,13 @@
 import React from "react";
 import { Plane, CheckCircle2, DollarSign, Users } from "lucide-react";
+import Link from "next/link";
 
 const bottomFeatures = [
   {
     icon: Plane,
     title: "Wide Range of Flights",
     desc: "1000+ airlines",
+    link: "/flights",
   },
   {
     icon: CheckCircle2,
@@ -21,6 +23,7 @@ const bottomFeatures = [
     icon: Users,
     title: "Customer Satisfaction",
     desc: "Trusted by millions",
+    link: "/about",
   }
 ];
 
@@ -30,13 +33,23 @@ const BottomFeatures = () => {
       <div className="container max-w-[1000px] mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {bottomFeatures.map((item, idx) => (
-            <div key={idx} className="flex flex-col items-center justify-center">
-              <div className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center mb-3">
-                <item.icon className="w-5 h-5 text-primary" />
+            item.link ? (
+              <Link key={idx} href={item.link} className="flex flex-col items-center justify-center hover:opacity-80 transition-opacity">
+                <div className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center mb-3">
+                  <item.icon className="w-5 h-5 text-primary" />
+                </div>
+                <h4 className="font-bold text-slate-800 text-xs mb-1">{item.title}</h4>
+                <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">{item.desc}</p>
+              </Link>
+            ) : (
+              <div key={idx} className="flex flex-col items-center justify-center">
+                <div className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center mb-3">
+                  <item.icon className="w-5 h-5 text-primary" />
+                </div>
+                <h4 className="font-bold text-slate-800 text-xs mb-1">{item.title}</h4>
+                <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">{item.desc}</p>
               </div>
-              <h4 className="font-bold text-slate-800 text-xs mb-1">{item.title}</h4>
-              <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">{item.desc}</p>
-            </div>
+            )
           ))}
         </div>
       </div>

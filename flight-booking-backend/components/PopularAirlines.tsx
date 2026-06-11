@@ -2,12 +2,12 @@ import React from "react";
 import Image from "next/image";
 
 const airlines = [
-  { name: "IndiGo", logo: "https://upload.wikimedia.org/wikipedia/commons/6/69/IndiGo_Airlines_logo.svg" },
-  { name: "Air India", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9b/Air_India_Logo.svg/1200px-Air_India_Logo.svg.png" },
-  { name: "Akasa Air", logo: "https://upload.wikimedia.org/wikipedia/commons/1/18/Akasa_Air_logo.svg" },
-  { name: "SpiceJet", logo: "https://upload.wikimedia.org/wikipedia/commons/d/dd/SpiceJet_Logo.svg" },
-  { name: "Vistara", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f5/Vistara_Logo.svg/1200px-Vistara_Logo.svg.png" },
-  { name: "Emirates", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Emirates_logo.svg" },
+  { name: "IndiGo", logo: "https://images.kiwi.com/airlines/64x64/6E.png" },
+  { name: "Air India", logo: "https://images.kiwi.com/airlines/64x64/AI.png" },
+  { name: "Akasa Air", logo: "https://images.kiwi.com/airlines/64x64/QP.png" },
+  { name: "SpiceJet", logo: "https://images.kiwi.com/airlines/64x64/SG.png" },
+  { name: "Vistara", logo: "https://images.kiwi.com/airlines/64x64/UK.png" },
+  { name: "Emirates", logo: "https://images.kiwi.com/airlines/64x64/EK.png" },
 ];
 
 const PopularAirlines = () => {
