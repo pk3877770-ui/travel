@@ -32,8 +32,41 @@ const HotelSidebar = ({
   allHotels
 }: HotelSidebarProps) => {
 
+  const passesFilters = (hotel: any, ignoreCategory: 'propertyType' | 'guestRating' | 'amenities') => {
+    // 1. Price is always applied
+    const minRoomPrice = hotel.rooms?.length > 0 ? Math.min(...hotel.rooms.map((r: any) => r.price)) : 0;
+    if (minRoomPrice < priceMin) return false;
+
+    // 2. Guest Rating
+    if (ignoreCategory !== 'guestRating' && selectedGuestRatings.length > 0) {
+      const minRatingRequired = Math.min(...selectedGuestRatings);
+      if (hotel.rating < minRatingRequired) return false;
+    }
+
+    // 3. Property Type
+    if (ignoreCategory !== 'propertyType' && selectedPropertyTypes.length > 0) {
+      let starRating = 1;
+      if (hotel.rating >= 4.8) starRating = 5;
+      else if (hotel.rating >= 4.0) starRating = 4;
+      else if (hotel.rating >= 3.0) starRating = 3;
+      else if (hotel.rating >= 2.0) starRating = 2;
+      if (!selectedPropertyTypes.includes(starRating)) return false;
+    }
+
+    // 4. Amenities
+    if (ignoreCategory !== 'amenities' && selectedAmenities.length > 0) {
+      const hasAllAmenities = selectedAmenities.every(amenity => 
+        hotel.amenities?.some((a: string) => a.toLowerCase().includes(amenity.toLowerCase()))
+      );
+      if (!hasAllAmenities) return false;
+    }
+
+    return true;
+  };
+
   const getPropertyTypeCount = (star: number) => {
     return allHotels.filter(hotel => {
+      if (!passesFilters(hotel, 'propertyType')) return false;
       let starRating = 1;
       if (hotel.rating >= 4.8) starRating = 5;
       else if (hotel.rating >= 4.0) starRating = 4;
@@ -44,13 +77,17 @@ const HotelSidebar = ({
   };
 
   const getGuestRatingCount = (minRating: number) => {
-    return allHotels.filter(hotel => hotel.rating >= minRating).length;
+    return allHotels.filter(hotel => {
+      if (!passesFilters(hotel, 'guestRating')) return false;
+      return hotel.rating >= minRating;
+    }).length;
   };
 
   const getAmenityCount = (amenity: string) => {
-    return allHotels.filter(hotel => 
-      hotel.amenities?.some((a: string) => a.toLowerCase().includes(amenity.toLowerCase()))
-    ).length;
+    return allHotels.filter(hotel => {
+      if (!passesFilters(hotel, 'amenities')) return false;
+      return hotel.amenities?.some((a: string) => a.toLowerCase().includes(amenity.toLowerCase()));
+    }).length;
   };
 
   // Pre-defined random-ish positions for up to 5 hotel pins on the static map image

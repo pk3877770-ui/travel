@@ -20,6 +20,8 @@ export default function FlightClient() {
   const [filterAirline, setFilterAirline] = useState<string[]>([]);
   const [filterMaxPrice, setFilterMaxPrice] = useState<number>(25000);
   const [filterStops, setFilterStops] = useState<string[]>([]);
+  const [filterMaxDeparture, setFilterMaxDeparture] = useState<number>(24);
+  const [filterMaxDuration, setFilterMaxDuration] = useState<number>(30);
   
   const fromParam = formatSeoParam(searchParams.get("from")) || "DEL";
   const toParam = formatSeoParam(searchParams.get("to")) || "BOM";
@@ -88,6 +90,56 @@ export default function FlightClient() {
     );
   };
 
+  const getStopCategory = (stopsRaw: any) => {
+    if (!stopsRaw) return "Non Stop";
+    const str = String(stopsRaw).toLowerCase();
+    if (str.includes("non")) return "Non Stop";
+    if (str.includes("1")) return "1 Stop";
+    if (str.includes("2") || str.includes("3") || str.includes("4") || str.includes("5")) return "2+ Stops";
+    return "Non Stop";
+  };
+
+  const parseDurationHours = (durStr: any) => {
+    if (!durStr) return 0;
+    const match = String(durStr).match(/(\d+)h/);
+    return match ? parseInt(match[1]) : 0;
+  };
+
+  const parseDepartureHour = (depStr: any) => {
+    if (!depStr) return 0;
+    const parts = String(depStr).split(":");
+    return parts.length > 0 ? parseInt(parts[0]) : 0;
+  };
+
+  const getStopCount = (label: string) => flights.filter(f => getStopCategory(f.stops) === label).length;
+  const getAirlineCount = (airline: string) => flights.filter(f => f.airline === airline).length;
+
+  const filteredFlights = useMemo(() => {
+    return flights.filter(flight => {
+      // Price
+      if (flight.price > filterMaxPrice) return false;
+      
+      // Airline
+      if (filterAirline.length > 0 && !filterAirline.includes(flight.airline)) return false;
+      
+      // Stops
+      if (filterStops.length > 0) {
+        const cat = getStopCategory(flight.stops);
+        if (!filterStops.includes(cat)) return false;
+      }
+
+      // Departure Time (Max Hour)
+      const depHour = parseDepartureHour(flight.departureTime || flight.dep);
+      if (depHour > filterMaxDeparture) return false;
+
+      // Duration (Max Hours)
+      const durHours = parseDurationHours(flight.dur);
+      if (durHours > filterMaxDuration) return false;
+      
+      return true;
+    });
+  }, [flights, filterMaxPrice, filterAirline, filterStops, filterMaxDeparture, filterMaxDuration]);
+
   const schemaData = useMemo(() => {
     return {
       "@context": "https://schema.org",
@@ -95,7 +147,7 @@ export default function FlightClient() {
       "name": `Flight Search Results from ${fromParam} to ${toParam}`,
       "mainEntity": {
         "@type": "ItemList",
-        "itemListElement": flights.map((f, index) => ({
+        "itemListElement": filteredFlights.map((f, index) => ({
           "@type": "ListItem",
           "position": index + 1,
           "item": {
@@ -117,7 +169,7 @@ export default function FlightClient() {
         }))
       }
     };
-  }, [flights, fromParam, toParam]);
+  }, [filteredFlights, fromParam, toParam]);
 
   return (
     <div className="pt-24 pb-16 bg-[#f8f9fa] min-h-screen font-sans">
@@ -179,9 +231,9 @@ export default function FlightClient() {
                 <span className="font-bold text-sm text-slate-800 block mb-4">Stops</span>
                 <div className="space-y-3">
                   {[
-                    { label: "Non Stop", count: 12 },
-                    { label: "1 Stop", count: 45 },
-                    { label: "2+ Stops", count: 18 }
+                    { label: "Non Stop", count: getStopCount("Non Stop") },
+                    { label: "1 Stop", count: getStopCount("1 Stop") },
+                    { label: "2+ Stops", count: getStopCount("2+ Stops") }
                   ].map((stop) => (
                     <label key={stop.label} className="flex items-center justify-between cursor-pointer group">
                       <div className="flex items-center gap-3">
@@ -204,11 +256,11 @@ export default function FlightClient() {
                 <span className="font-bold text-sm text-slate-800 block mb-4">Airlines</span>
                 <div className="space-y-3">
                   {[
-                    { label: "IndiGo", count: 25 },
-                    { label: "Air India", count: 18 },
-                    { label: "Vistara", count: 16 },
-                    { label: "SpiceJet", count: 10 },
-                    { label: "Akasa Air", count: 8 }
+                    { label: "IndiGo", count: getAirlineCount("IndiGo") },
+                    { label: "Air India", count: getAirlineCount("Air India") },
+                    { label: "Vistara", count: getAirlineCount("Vistara") },
+                    { label: "SpiceJet", count: getAirlineCount("SpiceJet") },
+                    { label: "Akasa Air", count: getAirlineCount("Akasa Air") }
                   ].map((airline) => (
                     <label key={airline.label} className="flex items-center justify-between cursor-pointer group">
                       <div className="flex items-center gap-3">
@@ -233,12 +285,14 @@ export default function FlightClient() {
               <div className="mb-8">
                 <span className="font-bold text-sm text-slate-800 block mb-4">Departure Time</span>
                 <div className="mb-2 text-xs font-medium text-slate-500">
-                  <span>00:00 - 24:00</span>
+                  <span>Up to {filterMaxDeparture < 10 ? `0${filterMaxDeparture}` : filterMaxDeparture}:00</span>
                 </div>
                 <input 
                   type="range" 
                   min="0" 
                   max="24" 
+                  value={filterMaxDeparture}
+                  onChange={(e) => setFilterMaxDeparture(Number(e.target.value))}
                   className="w-full accent-primary h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer mt-2"
                 />
               </div>
@@ -247,12 +301,14 @@ export default function FlightClient() {
               <div>
                 <span className="font-bold text-sm text-slate-800 block mb-4">Duration</span>
                 <div className="mb-2 text-xs font-medium text-slate-500">
-                  <span>0h - 30h</span>
+                  <span>Up to {filterMaxDuration}h</span>
                 </div>
                 <input 
                   type="range" 
                   min="0" 
                   max="30" 
+                  value={filterMaxDuration}
+                  onChange={(e) => setFilterMaxDuration(Number(e.target.value))}
                   className="w-full accent-primary h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer mt-2"
                 />
               </div>
@@ -262,7 +318,7 @@ export default function FlightClient() {
           {/* Main Content Area */}
           <div className="lg:col-span-3">
             <div className="flex justify-between items-center mb-6">
-              <span className="font-bold text-sm text-slate-800">120 Flights Found</span>
+              <span className="font-bold text-sm text-slate-800">{filteredFlights.length} Flights Found</span>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-medium text-slate-500">Sort By:</span>
                 <select className="bg-white border border-slate-200 rounded px-2 py-1 text-xs font-bold text-slate-700 outline-none">
@@ -278,9 +334,9 @@ export default function FlightClient() {
                 <RefreshCcw className="w-10 h-10 animate-spin mb-4 text-primary" />
                 <p className="font-bold">Searching the skies...</p>
               </div>
-            ) : flights.length > 0 ? (
+            ) : filteredFlights.length > 0 ? (
               <div className="space-y-4">
-                {flights.map((flight, idx) => (
+                {filteredFlights.map((flight, idx) => (
                   <div key={flight.id || idx} className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between">
                     
                     {/* Airline Logo */}
