@@ -9,6 +9,8 @@ import Script from "next/script";
 import { getSiteUrl } from "@/lib/site-url";
 import { BookingProvider } from "@/context/BookingContext";
 import SessionProvider from "@/components/SessionProvider";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 
 function getStructuredData(siteUrl: string) {
   return {
@@ -94,20 +96,21 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const siteUrl = getSiteUrl();
   const structuredData = getStructuredData(siteUrl);
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${outfit.variable} antialiased selection:bg-accent/30`}
       >
-        <SessionProvider>
+        <SessionProvider session={session}>
           <NavbarShell />
           <Script
               src="https://www.googletagmanager.com/gtag/js?id=G-5CW4N3EYJJ"

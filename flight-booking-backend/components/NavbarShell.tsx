@@ -9,8 +9,8 @@ export default function NavbarShell() {
   const isAdmin = pathname?.startsWith("/admin");
 
   return (
-    <SessionProvider>
+    <>
       {!isAdmin && <Navbar />}
-    </SessionProvider>
+    </>
   );
 }
