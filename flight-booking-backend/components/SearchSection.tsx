@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import TravelersPopover from "@/components/TravelersPopover";
 
 const SearchSection = () => {
-  const [tripType, setTripType] = useState("multi-city");
+  const [tripType, setTripType] = useState("one-way");
   
   // Single trip state
   const [fromValue, setFromValue] = useState("DEL");
@@ -104,8 +104,8 @@ const SearchSection = () => {
           {/* Trip Type Tabs (Floating on top-left) */}
           <div className="flex flex-wrap gap-y-3 bg-white w-full sm:w-fit rounded-t-2xl px-4 sm:px-6 py-4 shadow-sm border-b border-slate-100">
             {[
-              { id: "round-trip", label: "Round Trip", icon: Plane },
-              { id: "one-way", label: "One Way" },
+              { id: "one-way", label: "One Way", icon: Plane },
+              { id: "round-trip", label: "Round Trip" },
               { id: "multi-city", label: "Multi City" },
             ].map((type) => {
               const isActive = tripType === type.id;
