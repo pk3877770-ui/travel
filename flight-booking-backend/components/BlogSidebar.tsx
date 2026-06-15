@@ -8,15 +8,12 @@ import {
   Hotel, 
   Plane, 
   Newspaper, 
-  Facebook, 
-  Instagram, 
-  Twitter, 
-  Youtube, 
   Map,
   Search,
   Tag,
   Percent
 } from "lucide-react";
+import { FaFacebook as Facebook, FaInstagram as Instagram, FaTwitter as Twitter, FaYoutube as Youtube } from "react-icons/fa";
 
 const BlogSidebar = () => {
   return (

@@ -12,15 +12,14 @@ import {
   Plane, 
   Building2, 
   Globe2,
-  Linkedin,
-  Twitter,
+  BadgeCheck,
+  HeadphonesIcon,
   Mail,
   ChevronLeft,
   ChevronRight,
-  Award,
-  BadgeCheck,
-  HeadphonesIcon
+  Award
 } from "lucide-react";
+import { FaLinkedin as Linkedin, FaTwitter as Twitter } from "react-icons/fa";
 
 
 export async function generateMetadata() {

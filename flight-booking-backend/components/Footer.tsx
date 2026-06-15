@@ -4,7 +4,8 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Plane, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Plane } from "lucide-react";
+import { FaFacebook as Facebook, FaTwitter as Twitter, FaInstagram as Instagram, FaLinkedin as Linkedin } from "react-icons/fa";
 
 const Footer = () => {
   const pathname = usePathname();

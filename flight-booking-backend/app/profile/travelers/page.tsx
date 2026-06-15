@@ -18,7 +18,7 @@ export default function SavedTravelersPage() {
   });
 
   const fetchTravelers = () => {
-    setLoading(true);
+    setTimeout(() => setLoading(true), 0);
     fetch("/api/user/travelers")
       .then(res => res.json())
       .then(data => {

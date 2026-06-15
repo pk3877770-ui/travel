@@ -29,7 +29,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('saved_blogs') || '[]');
     if (saved.includes(post.id)) {
-      setIsSaved(true);
+      setTimeout(() => setIsSaved(true), 0);
     }
   }, [post.id]);
 
