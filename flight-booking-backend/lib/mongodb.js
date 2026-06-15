@@ -1,9 +1,12 @@
 // lib/mongodb.js
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || '';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/flightbooking';
 
-// Use a global cache to avoid multiple connections in dev (hot reload)
+if (!MONGODB_URI) {
+  throw new Error('Please define MONGODB_URI in your .env.local');
+}
+
 let cached = global.mongoose;
 
 if (!cached) {
@@ -15,31 +18,20 @@ async function dbConnect() {
     return cached.conn;
   }
 
-  if (!MONGODB_URI) {
-    throw new Error('Please define MONGODB_URI in your .env.local');
-  }
-
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
-      family: 4,                        // Force IPv4
-      serverSelectionTimeoutMS: 10000,  // Fail fast after 10s
-      socketTimeoutMS: 45000,
-      connectTimeoutMS: 10000,
     };
 
-    console.log('Connecting to MongoDB...');
-    cached.promise = mongoose.connect(MONGODB_URI, opts);
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      return mongoose;
+    });
   }
 
   try {
     cached.conn = await cached.promise;
-    console.log('✅ MongoDB connected');
   } catch (e) {
-    // Reset so next request retries the connection
     cached.promise = null;
-    cached.conn = null;
-    console.warn('❌ MongoDB connection failed:', e.message);
     throw e;
   }
 

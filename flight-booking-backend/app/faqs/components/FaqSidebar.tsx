@@ -2,7 +2,7 @@
 
 import { MessageSquare, Plane, CalendarDays, CreditCard, RefreshCcw, XCircle, Briefcase, UserCheck, FileText, HeartHandshake, Headphones } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 const categories = [
   { name: "All FAQs", icon: MessageSquare, count: 68 },
@@ -18,7 +18,21 @@ const categories = [
 ];
 
 export default function FaqSidebar() {
-  const [activeCategory, setActiveCategory] = useState("All FAQs");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  
+  const activeCategory = searchParams.get('category') || "All FAQs";
+
+  const handleCategoryClick = (name: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (name === "All FAQs") {
+      params.delete('category');
+    } else {
+      params.set('category', name);
+    }
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
   return (
     <div className="w-full lg:w-[320px] shrink-0 space-y-6">
@@ -31,7 +45,7 @@ export default function FaqSidebar() {
             return (
               <button
                 key={cat.name}
-                onClick={() => setActiveCategory(cat.name)}
+                onClick={() => handleCategoryClick(cat.name)}
                 className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl transition-all duration-200 text-sm font-medium ${
                   isActive
                     ? "bg-blue-50/80 text-blue-600"

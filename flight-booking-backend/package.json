@@ -9,36 +9,17 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@paypal/react-paypal-js": "^10.0.0",
-    "@stripe/react-stripe-js": "^6.6.0",
-    "@stripe/stripe-js": "^9.7.0",
-    "@vercel/speed-insights": "^2.0.0",
-    "amadeus": "^11.0.0",
     "bcryptjs": "^3.0.3",
-    "clsx": "^2.1.1",
-    "framer-motion": "^11.18.2",
-    "html2canvas": "^1.4.1",
     "jsonwebtoken": "^9.0.3",
-    "jspdf": "^4.2.1",
-    "lucide-react": "^0.475.0",
     "mongoose": "^9.4.1",
     "next": "16.2.3",
-    "next-auth": "^4.24.14",
-    "nodemailer": "^8.0.7",
     "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "tailwind-merge": "^3.5.0",
-    "twilio": "^6.0.2"
+    "react-dom": "19.2.4"
   },
-  "browserslist": [
-    "chrome >= 109",
-    "firefox >= 109",
-    "safari >= 15.6",
-    "edge >= 109",
-    "opera >= 95"
-  ],
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

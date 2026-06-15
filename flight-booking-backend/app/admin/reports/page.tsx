@@ -48,42 +48,7 @@ export default function AdminReportsPage() {
   const totalYtdRevenue = reportData.monthlyRevenue.reduce((sum: number, r: any) => sum + r.revenue, 0);
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] flex font-sans">
-      
-      {/* Sidebar */}
-      <div className="w-64 bg-[#001233] text-white flex flex-col fixed h-full z-20">
-        <div className="p-8 pt-10 mb-2">
-          <span className="text-xl font-bold tracking-tight text-white">FlyBook Admin</span>
-        </div>
-        
-        <div className="flex-1 px-4 space-y-2 overflow-y-auto">
-          {sidebarLinks.map((link) => (
-            <Link 
-              key={link.name} 
-              href={link.href}
-              className={cn(
-                "flex items-center gap-4 px-4 py-3 rounded-xl text-sm transition-colors font-medium",
-                link.active 
-                  ? "bg-[#1a2b4c] text-white" 
-                  : "text-slate-300 hover:text-white hover:bg-white/5"
-              )}
-            >
-              <link.icon className="w-4 h-4" />
-              {link.name}
-            </Link>
-          ))}
-        </div>
-        
-        <div className="p-4 px-4 pb-8">
-          <button className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors font-medium">
-            <LogOut className="w-4 h-4" />
-            Logout
-          </button>
-        </div>
-      </div>
-
-      {/* Main Content Area */}
-      <div className="flex-1 ml-64 flex flex-col h-screen overflow-hidden bg-[#fafbfe]">
+    <>
         
         {/* Top Header */}
         <header className="h-24 px-10 flex items-center justify-between shrink-0 bg-white border-b border-slate-100">
@@ -231,8 +196,6 @@ export default function AdminReportsPage() {
           )}
 
         </main>
-      </div>
-
-    </div>
+    </>
   );
 }

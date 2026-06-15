@@ -11,6 +11,8 @@ export async function generateMetadata() {
   return mapSEOToMetadata(seo);
 }
 
+import { Suspense } from "react";
+
 export default function FAQsPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
@@ -19,10 +21,12 @@ export default function FAQsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-12 pb-12">
         <PopularTopics />
         
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
-          <FaqSidebar />
-          <FaqAccordion />
-        </div>
+        <Suspense fallback={<div className="h-64 flex items-center justify-center">Loading FAQs...</div>}>
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
+            <FaqSidebar />
+            <FaqAccordion />
+          </div>
+        </Suspense>
       </div>
 
       <FaqContactSection />
