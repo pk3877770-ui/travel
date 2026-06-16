@@ -158,7 +158,7 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
                 <div className="flex flex-col items-start gap-2">
                     <h1 className="text-7xl font-black leading-[1] text-white tracking-tighter">
                         Metadata <br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-orange-600 font-light italic">Orchestration</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-orange-600 font-light italic pr-2">Orchestration</span>
                     </h1>
                 </div>
 
