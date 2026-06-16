@@ -12,42 +12,47 @@
     "@gsap/react": "^2.1.2",
     "@paypal/react-paypal-js": "^10.0.0",
     "@stripe/react-stripe-js": "^6.6.0",
-    "@stripe/stripe-js": "^9.7.0",
-    "@vercel/speed-insights": "^2.0.0",
+    "@stripe/stripe-js": "^9.8.0",
     "amadeus": "^11.0.0",
     "aos": "^2.3.4",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
+<<<<<<< HEAD
     "framer-motion": "^11.18.2",
     "gsap": "^3.15.0",
+=======
+    "framer-motion": "^12.40.0",
+>>>>>>> cf568ecb7642200487766cefa91f0ab2fb89a3c5
     "html2canvas": "^1.4.1",
     "jsonwebtoken": "^9.0.3",
     "jspdf": "^4.2.1",
-    "lucide-react": "^0.475.0",
+    "lucide-react": "^1.18.0",
     "mongoose": "^9.4.1",
     "next": "16.2.3",
     "next-auth": "^4.24.14",
-    "nodemailer": "^8.0.7",
+    "nodemailer": "^9.0.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "tailwind-merge": "^3.5.0",
+    "react-icons": "^5.6.0",
+    "tailwind-merge": "^3.6.0",
     "twilio": "^6.0.2"
   },
-  "browserslist": [
-    "chrome >= 109",
-    "firefox >= 109",
-    "safari >= 15.6",
-    "edge >= 109",
-    "opera >= 95"
-  ],
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+<<<<<<< HEAD
     "@types/aos": "^3.0.8",
+=======
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
+>>>>>>> cf568ecb7642200487766cefa91f0ab2fb89a3c5
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.3",
+    "prop-types": "^15.8.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

@@ -86,6 +86,7 @@ export default function AdminDashboardPage() {
   });
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen bg-[#fafbfe] flex font-sans">
 
       {/* Mobile overlay */}
@@ -157,6 +158,16 @@ export default function AdminDashboardPage() {
             </div>
           </div>
           <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">A</div>
+=======
+    <>
+        
+        {/* Top Header */}
+        <header className="h-24 px-10 flex items-center justify-between shrink-0">
+          <h1 className="text-2xl font-bold text-slate-800">Dashboard</h1>
+          <button className="text-slate-600 hover:text-slate-800">
+            <Menu className="w-6 h-6" />
+          </button>
+>>>>>>> cf568ecb7642200487766cefa91f0ab2fb89a3c5
         </header>
 
         {/* Scrollable Content */}
@@ -290,7 +301,6 @@ export default function AdminDashboardPage() {
           </div>
 
         </main>
-      </div>
-    </div>
+    </>
   );
 }

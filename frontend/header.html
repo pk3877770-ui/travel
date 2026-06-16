@@ -1,0 +1,40 @@
+<header class="site-header">
+    <div class="container-fluid px-lg-5 px-4 py-3 d-flex align-items-center justify-content-between">
+        <!-- Brand -->
+        <a href="index.html" class="brand d-flex align-items-center gap-3 text-white text-decoration-none" style="z-index: 1001;">
+            <div class="brand-icon glass d-flex align-items-center justify-content-center" style="width: 45px; height: 45px; border-radius: 12px; font-size: 1.25rem;">
+                <i class="fas fa-plane-departure text-accent"></i>
+            </div>
+            <span class="fs-3 fw-bold tracking-tight outfit" style="letter-spacing: -1px;">Karmana</span>
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button class="menu-toggle d-lg-none glass-dark text-white border-0" aria-label="Toggle Navigation Menu" style="width: 45px; height: 45px; border-radius: 12px; cursor: pointer; z-index: 1001;">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Navigation -->
+        <nav class="nav-container d-none d-lg-block">
+            <ul id="menu" class="nav-menu list-unstyled d-flex gap-4 mb-0 align-items-center">
+                <li><a href="index.html" class="nav-link"><i class="fas fa-home me-2"></i>Home</a></li>
+                <li><a href="About.html" class="nav-link"><i class="fas fa-info-circle me-2"></i>About Us</a></li>
+                <li><a href="services.html" class="nav-link"><i class="fas fa-concierge-bell me-2"></i>Services</a></li>
+                <li><a href="Contact.html" class="nav-link"><i class="fas fa-envelope me-2"></i>Contact</a></li>
+                <li><a href="#newsletter" class="btn-premium btn-accent ms-3 py-2 px-4 shadow-sm" style="font-size: 0.85rem;">
+                    <i class="fas fa-paper-plane"></i> Subscribe
+                </a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Mobile Navigation Overlay (Managed by JS) -->
+    <div class="mobile-nav-overlay d-lg-none position-fixed top-0 start-0 w-100 h-100 glass-dark" style="opacity: 0; pointer-events: none; z-index: 1000; transition: all 0.4s ease;">
+        <div class="mobile-menu-wrapper d-flex flex-column align-items-center justify-content-center h-100 gap-4">
+            <a href="index.html" class="nav-link fs-4">Home</a>
+            <a href="About.html" class="nav-link fs-4">About Us</a>
+            <a href="services.html" class="nav-link fs-4">Services</a>
+            <a href="Contact.html" class="nav-link fs-4">Contact</a>
+            <a href="Subscribe.html" class="nav-link fs-4">Subscribe</a>
+        </div>
+    </div>
+</header>

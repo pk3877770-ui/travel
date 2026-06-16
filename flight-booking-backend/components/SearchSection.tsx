@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import TravelersPopover from "@/components/TravelersPopover";
 
+<<<<<<< HEAD
 // Future-dated defaults so the form never opens on a past date
 const isoDateFromNow = (days: number) => {
   const d = new Date();
@@ -19,6 +20,11 @@ const dayName = (iso: string) =>
 const SearchSection = ({ vertical = false }: { vertical?: boolean }) => {
   const [tripType, setTripType] = useState("round-trip");
 
+=======
+const SearchSection = () => {
+  const [tripType, setTripType] = useState("one-way");
+  
+>>>>>>> cf568ecb7642200487766cefa91f0ab2fb89a3c5
   // Single trip state
   const [fromValue, setFromValue] = useState("DEL");
   const [fromCity, setFromCity] = useState("New Delhi, India");
@@ -113,8 +119,8 @@ const SearchSection = ({ vertical = false }: { vertical?: boolean }) => {
           {/* Trip Type Tabs (Floating on top-left) */}
           <div className="flex flex-wrap gap-y-3 bg-white w-full sm:w-fit rounded-t-2xl px-4 sm:px-6 py-4 shadow-sm border-b border-slate-100">
             {[
-              { id: "round-trip", label: "Round Trip", icon: Plane },
-              { id: "one-way", label: "One Way" },
+              { id: "one-way", label: "One Way", icon: Plane },
+              { id: "round-trip", label: "Round Trip" },
               { id: "multi-city", label: "Multi City" },
             ].map((type) => {
               const isActive = tripType === type.id;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import HotelSearchSection from "@/components/HotelSearchSection";
 import HotelCard from "@/components/HotelCard";
@@ -8,9 +8,7 @@ import HotelSidebar from "@/components/HotelSidebar";
 import { ChevronDown, X } from "lucide-react";
 import Image from "next/image";
 
-
-
-export default function HotelsPage() {
+function HotelsPageContent() {
   const searchParams = useSearchParams();
   const location = searchParams.get("location") || "";
   
@@ -321,5 +319,17 @@ export default function HotelsPage() {
       )}
 
     </main>
+  );
+}
+
+export default function HotelsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex justify-center items-center py-20 min-h-screen bg-[#fafbfe]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    }>
+      <HotelsPageContent />
+    </Suspense>
   );
 }

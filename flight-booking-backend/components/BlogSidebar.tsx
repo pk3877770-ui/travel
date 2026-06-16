@@ -8,15 +8,12 @@ import {
   Hotel, 
   Plane, 
   Newspaper, 
-  Facebook, 
-  Instagram, 
-  Twitter, 
-  Youtube, 
   Map,
   Search,
   Tag,
-  Percent
+  BadgePercent
 } from "lucide-react";
+import { FaFacebook as Facebook, FaInstagram as Instagram, FaTwitter as Twitter, FaYoutube as Youtube } from "react-icons/fa";
 
 const BlogSidebar = () => {
   return (
@@ -131,7 +128,7 @@ const BlogSidebar = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent z-10" />
         <div className="relative z-20 w-full text-center">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-red-500 text-white mb-3 shadow-lg">
-            <Percent className="w-6 h-6" />
+            <BadgePercent className="w-6 h-6" />
           </div>
           <h3 className="font-black text-white text-xl mb-2">Summer Sale!</h3>
           <p className="text-white/80 text-xs font-medium mb-4">Get up to 30% off on all international flights.</p>

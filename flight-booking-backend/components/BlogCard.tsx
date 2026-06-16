@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Bookmark, Calendar, Clock } from "lucide-react";
+import { Bookmark, Calendar, Clock1 } from "lucide-react";
 
 export interface BlogPost {
   id: string;
@@ -29,7 +29,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('saved_blogs') || '[]');
     if (saved.includes(post.id)) {
-      setIsSaved(true);
+      setTimeout(() => setIsSaved(true), 0);
     }
   }, [post.id]);
 
@@ -88,7 +88,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
             </div>
             <div className="w-1 h-1 rounded-full bg-slate-300"></div>
             <div className="flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5" />
+              <Clock1 className="w-3.5 h-3.5" />
               {post.readTime}
             </div>
           </div>

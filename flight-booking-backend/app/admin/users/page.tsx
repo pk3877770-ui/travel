@@ -121,6 +121,7 @@ export default function AdminUsersPage() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen bg-[#f8f9fa] flex font-sans">
       
       {/* Sidebar */}
@@ -157,6 +158,9 @@ export default function AdminUsersPage() {
 
       {/* Main Content Area */}
       <div className="flex-1 ml-64 flex flex-col h-screen overflow-hidden bg-[#fafbfe]">
+=======
+    <>
+>>>>>>> cf568ecb7642200487766cefa91f0ab2fb89a3c5
         
         {/* Top Header */}
         <header className="h-24 px-10 flex items-center justify-between shrink-0 bg-white border-b border-slate-100">
@@ -262,7 +266,6 @@ export default function AdminUsersPage() {
           </div>
 
         </main>
-      </div>
 
       {/* Booking History Modal */}
       {modalOpen && selectedUser && (
@@ -336,6 +339,7 @@ export default function AdminUsersPage() {
         </div>
       )}
 
+<<<<<<< HEAD
       {/* Add User Modal */}
       {addOpen && (
         <div className="fixed inset-0 bg-slate-900/50 z-50 flex items-center justify-center p-4">
@@ -430,5 +434,8 @@ export default function AdminUsersPage() {
       )}
 
     </div>
+=======
+    </>
+>>>>>>> cf568ecb7642200487766cefa91f0ab2fb89a3c5
   );
 }

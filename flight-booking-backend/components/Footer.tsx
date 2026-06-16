@@ -4,7 +4,8 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Plane, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Plane } from "lucide-react";
+import { FaFacebook as Facebook, FaTwitter as Twitter, FaInstagram as Instagram, FaLinkedin as Linkedin } from "react-icons/fa";
 
 const Footer = () => {
   const pathname = usePathname();
@@ -67,9 +68,7 @@ const Footer = () => {
               <h3 className="font-bold text-white mb-6 text-base tracking-wide">Company</h3>
               <ul className="space-y-4">
                 <li><Link href="/about" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">About Us</Link></li>
-                <li><Link href="/careers" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Careers</Link></li>
                 <li><Link href="/blog" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Blog</Link></li>
-                <li><Link href="/press" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Press</Link></li>
                 <li><Link href="/contact" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Contact Us</Link></li>
               </ul>
             </div>

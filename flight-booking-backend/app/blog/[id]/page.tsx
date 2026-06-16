@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Calendar, Clock, Share2, Bookmark, Facebook, Twitter, Linkedin } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Share2, Bookmark } from "lucide-react";
+import { FaFacebook as Facebook, FaTwitter as Twitter, FaLinkedin as Linkedin } from "react-icons/fa";
 import BlogSidebar from "@/components/BlogSidebar";
 
 import { getPostById } from "@/lib/mockBlogData";

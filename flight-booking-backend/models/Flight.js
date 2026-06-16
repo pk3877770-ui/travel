@@ -1,15 +1,19 @@
-import mongoose from "mongoose";
+// models/Flight.js
+import mongoose from 'mongoose';
 
-const FlightSchema = new mongoose.Schema({
+const flightSchema = new mongoose.Schema({
+  flightNumber: { type: String, required: true, unique: true },
+  airline: { type: String, required: true },
   from: { type: String, required: true },
   to: { type: String, required: true },
-  date: { type: String, required: true },
-  travelers: { type: Number, default: 1 },
-  airline: { type: String, default: "Kramana Air" },
-  flightNumber: { type: String, default: "KA-000" },
-  price: { type: Number, default: 4500 },
-  departureTime: { type: String, default: "10:00 AM" },
-  arrivalTime: { type: String, default: "12:00 PM" },
-});
+  departure: { type: Date, required: true },
+  arrival: { type: Date, required: true },
+  duration: { type: String, required: true },
+  price: { type: Number, required: true },
+  seatsAvailable: { type: Number, required: true, default: 200 },
+  totalSeats: { type: Number, required: true, default: 200 },
+  aircraft: { type: String, required: true },
+  status: { type: String, enum: ['scheduled', 'delayed', 'cancelled'], default: 'scheduled' }
+}, { timestamps: true });
 
-export default mongoose.models.Flight || mongoose.model("Flight", FlightSchema);
+export default mongoose.models.Flight || mongoose.model('Flight', flightSchema);

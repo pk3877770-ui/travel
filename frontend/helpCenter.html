@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center | Booking, Refund &amp; Flight FAQs | Karmana</title>
+    <meta name="description" content="Help for Karmana bookings: cancellations, refunds, payments, PNR, baggage, check-in FAQs, plus 24/7 phone, chat, and email.">
+    <meta name="keywords" content="Karmana help, travel support, booking FAQ, flight refund help, customer service Karmana, PNR baggage check-in">
+    <meta name="author" content="Karmana">
+    <meta name="publisher" content="Karmana">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="canonical" href="/helpCenter.html">
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Karmana">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/helpCenter.html">
+    <meta property="og:title" content="Help Center | Booking, Refund &amp; Flight FAQs | Karmana">
+    <meta property="og:description" content="Help for Karmana bookings: cancellations, refunds, payments, PNR, baggage, check-in FAQs, plus 24/7 phone, chat, and email.">
+    <meta property="og:image" content="https://karmana.com/images/hero.jpg">
+    <meta property="og:image:secure_url" content="https://karmana.com/images/hero.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Karmana customer help center and travel support">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="/helpCenter.html">
+    <meta name="twitter:title" content="Help Center | Booking, Refund &amp; Flight FAQs | Karmana">
+    <meta name="twitter:description" content="Help for Karmana bookings: cancellations, refunds, payments, PNR, baggage, check-in FAQs, plus 24/7 phone, chat, and email.">
+    <meta name="twitter:image" content="https://karmana.com/images/hero.jpg">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <!-- Style -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .help-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .help-hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .help-hero p {
+            font-size: 1.3em;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .search-section {
+            background: white;
+            padding: 60px 0;
+            margin-bottom: 60px;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 60px 20px 25px;
+            border: 3px solid var(--slate-200);
+            border-radius: 50px;
+            font-size: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 3px solid transparent;
+            text-align: center;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .category-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .category-card h3 {
+            color: var(--primary);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .faq-item h3.faq-question {
+            margin: 0;
+            font-size: inherit;
+            font-weight: 600;
+        }
+
+        .category-card p {
+            color: var(--slate-600);
+            margin-bottom: 20px;
+        }
+
+        .category-count {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .faq-section {
+            background: var(--slate-50);
+            padding: 80px 0;
+            margin-bottom: 60px;
+        }
+
+        .faq-container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: var(--shadow);
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--slate-200);
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 20px;
+            background: var(--slate-50);
+            border-radius: 15px;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--slate-100);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            padding: 0 20px;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+            padding: 20px;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .contact-section p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .contact-item {
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .contact-item h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .contact-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--accent-hover);
+        }
+
+        @media (max-width: 768px) {
+            .help-hero h1 {
+                font-size: 2em;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .faq-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header (Loaded via script.js) -->
+    <div id="header"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="help-hero">
+            <div class="container">
+                <h1>Help Center</h1>
+                <h2 class="visually-hidden">Karmana customer support: bookings, refunds, check-in, baggage, and flight status help</h2>
+                <p>Get comprehensive help and support for your Karmana travel bookings. Find answers to all your questions about flights, payments, and travel services.</p>
+            </div>
+        </section>
+
+        <!-- Search Section -->
+        <section class="search-section" aria-label="Help article search">
+            <h2 class="visually-hidden">Search Karmana help articles and travel support topics</h2>
+            <div class="container">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search for help articles...">
+                    <button class="search-btn">🔍</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="container" aria-labelledby="help-categories-heading">
+            <h2 id="help-categories-heading" class="visually-hidden">Browse help categories</h2>
+            <h3 class="visually-hidden">Popular support topics for flights, payments, status, and baggage</h3>
+            <div class="categories-grid">
+                <div class="category-card" data-aos="fade-up">
+                    <span class="category-icon">📅</span>
+                    <h3>Booking & Cancellation</h3>
+                    <p>Ticket booking, cancellation, date changes</p>
+                    <div class="category-count">12 Articles</div>
+                </div>
+                <div class="category-card" data-aos="fade-up" data-aos-delay="100">
+                    <span class="category-icon">💰</span>
+                    <h3>Payment & Refund</h3>
+                    <p>Payment issues, refund status, wallet problems</p>
+                    <div class="category-count">8 Articles</div>
+                </div>
+                <div class="category-card" data-aos="fade-up" data-aos-delay="200">
+                    <span class="category-icon">✈️</span>
+                    <h3>Flight Status</h3>
+                    <p>Live flight tracking, delays, gate information</p>
+                    <div class="category-count">6 Articles</div>
+                </div>
+                <div class="category-card" data-aos="fade-up" data-aos-delay="300">
+                    <span class="category-icon">🧳</span>
+                    <h3>Baggage & Check-in</h3>
+                    <p>Baggage allowance, web check-in, airport guide</p>
+                    <div class="category-count">10 Articles</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" aria-labelledby="help-faq-heading">
+            <div class="container">
+                <div class="faq-container">
+                    <h2 id="help-faq-heading">Common Questions</h2>
+                    <h3 class="visually-hidden">Frequently asked questions about Karmana bookings and travel support</h3>
+                    <div class="faq-item">
+                        <h3 class="faq-question">
+                            <span>How do I cancel my ticket?</span>
+                            <span>▼</span>
+                        </h3>
+                        <div class="faq-answer">
+                            Go to "My Bookings" with your booking ID → Select cancel option → Refund process will begin automatically.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-question">
+                            <span>How long does refund take?</span>
+                            <span>▼</span>
+                        </h3>
+                        <div class="faq-answer">
+                            Domestic flights: 7-10 working days<br>International flights: 10-15 working days<br>Check status on "Refund Status" page.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-question">
+                            <span>When does web check-in start?</span>
+                            <span>▼</span>
+                        </h3>
+                        <div class="faq-answer">
+                            Web check-in is available 48 hours before departure. Please complete it to save time at the airport!
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-question">
+                            <span>How to check PNR status?</span>
+                            <span>▼</span>
+                        </h3>
+                        <div class="faq-answer">
+                            Use "Track PNR" option on homepage or enter PNR in the app to get live status updates.
+                        </div>
+                    </div>
+                    <h4 class="visually-hidden">Expand a question to read the detailed answer</h4>
+                    <h5 class="visually-hidden">Refund, cancellation, check-in, and PNR tracking guidance</h5>
+                    <h6 class="visually-hidden">Help center FAQ accordion content</h6>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" aria-labelledby="help-contact-heading">
+            <div class="container">
+                <h2 id="help-contact-heading">Still need help?</h2>
+                <h3 class="visually-hidden">Contact Karmana support by phone, chat, or email</h3>
+                <p>24/7 customer support is available</p>
+                
+                <div class="contact-grid">
+                    <div class="contact-item" data-aos="fade-up">
+                        <span class="contact-icon">📞</span>
+                        <h3>Customer Care</h3>
+                        <h4 class="visually-hidden">Phone support hotline</h4>
+                        <p>+91 (22) 6789 0123</p>
+                        <a href="tel:+912267890123" class="contact-link">Call Now</a>
+                        <h5 class="visually-hidden">Voice support for urgent travel issues</h5>
+                        <h6 class="visually-hidden">Karmana customer care contact option</h6>
+                    </div>
+                    <div class="contact-item" data-aos="fade-up" data-aos-delay="100">
+                        <span class="contact-icon">💬</span>
+                        <h3>Live Chat</h3>
+                        <h4 class="visually-hidden">Instant messaging support</h4>
+                        <p>24/7 Support</p>
+                        <a href="#" class="contact-link">Start Chat</a>
+                        <h5 class="visually-hidden">Chat with a support agent anytime</h5>
+                        <h6 class="visually-hidden">Karmana live chat contact option</h6>
+                    </div>
+                    <div class="contact-item" data-aos="fade-up" data-aos-delay="200">
+                        <span class="contact-icon">📧</span>
+                        <h3>Email Support</h3>
+                        <h4 class="visually-hidden">Written support requests</h4>
+                        <p>Response within 2 hours</p>
+                        <a href="mailto:concierge@karmana.com" class="contact-link">Send Email</a>
+                        <h5 class="visually-hidden">Email the concierge team for detailed help</h5>
+                        <h6 class="visually-hidden">Karmana email support contact option</h6>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Loaded via script.js) -->
+    <div id="footer"></div>
+
+    <!-- Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+
+    <script>
+        // Search functionality
+        document.querySelector('.search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value;
+                alert(`Searching for: "${query}"\n\nSearch results will be displayed here! 🔍`);
+            }
+        });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                const icon = this.querySelector('span:last-child');
+                
+                // Close other answers
+                document.querySelectorAll('.faq-answer').forEach(ans => {
+                    if (ans !== answer) {
+                        ans.classList.remove('active');
+                        ans.previousElementSibling.querySelector('span:last-child').textContent = '▼';
+                    }
+                });
+                
+                // Toggle current
+                answer.classList.toggle('active');
+                icon.textContent = answer.classList.contains('active') ? '▲' : '▼';
+            });
+        });
+
+        // Category cards animation
+        document.querySelectorAll('.category-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.6s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 200);
+        });
+    </script>
+</body>
+
+</html>
