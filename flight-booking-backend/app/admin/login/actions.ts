@@ -14,7 +14,6 @@ export async function loginAction(prevState: any, formData: FormData) {
       httpOnly: true,
       path: '/',
       secure: false, // Ensure local testing works over HTTP
-      maxAge: 60 * 60 * 24 // 1 day
     });
   } else {
     return { error: 'Invalid username or password!' };
