@@ -8,6 +8,8 @@ import {
   LayoutDashboard, Briefcase, Users, Plane, UserPlus, Tag, BarChart3, Settings, LogOut
 } from "lucide-react";
 
+import { logoutAction } from "@/app/admin/login/actions";
+
 export default function AdminSidebar() {
   const pathname = usePathname();
 
@@ -50,10 +52,12 @@ export default function AdminSidebar() {
       </div>
       
       <div className="p-4 px-4 pb-8">
-        <button className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors font-medium">
-          <LogOut className="w-4 h-4" />
-          Logout
-        </button>
+        <form action={logoutAction}>
+          <button type="submit" className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors font-medium">
+            <LogOut className="w-4 h-4" />
+            Logout
+          </button>
+        </form>
       </div>
     </div>
   );
