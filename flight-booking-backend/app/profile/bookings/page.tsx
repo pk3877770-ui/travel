@@ -39,7 +39,7 @@ export default function MyBookingsPage() {
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
       
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`FlyBook_Ticket_${booking.bookingReference}.pdf`);
+      pdf.save(`Kramana_Ticket_${booking.bookingReference}.pdf`);
     } catch (e) {
       console.error("PDF generation failed", e);
     } finally {
@@ -178,7 +178,7 @@ export default function MyBookingsPage() {
                       {/* Hidden Ticket for PDF generation */}
                       <div id={`ticket-${booking._id}`} style={{ display: 'none', padding: '40px', backgroundColor: '#fff', width: '800px', fontFamily: 'sans-serif' }}>
                         <div style={{ borderBottom: '2px solid #001233', paddingBottom: '20px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <h1 style={{ color: '#0A58CA', margin: 0, fontSize: '32px' }}>FlyBook Ticket</h1>
+                          <h1 style={{ color: '#0A58CA', margin: 0, fontSize: '32px' }}>Kramana Ticket</h1>
                           <div style={{ textAlign: 'right' }}>
                             <p style={{ margin: 0, fontSize: '12px', color: '#666' }}>Booking Reference</p>
                             <h2 style={{ margin: 0, color: '#001233' }}>{booking.bookingReference}</h2>
@@ -225,7 +225,7 @@ export default function MyBookingsPage() {
                         
                         <div style={{ marginTop: '40px', fontSize: '12px', color: '#94a3b8', textAlign: 'center' }}>
                           <p>This is a computer-generated document. No signature is required.</p>
-                          <p>© {new Date().getFullYear()} FlyBook. All rights reserved.</p>
+                          <p>© {new Date().getFullYear()} Kramana. All rights reserved.</p>
                         </div>
                       </div>
 

@@ -25,7 +25,7 @@ export default function AdminSidebar() {
   return (
     <div className="w-64 bg-[#001233] text-white flex flex-col fixed h-full z-20">
       <div className="p-8 pt-10 mb-2">
-        <span className="text-xl font-bold tracking-tight text-white">FlyBook Admin</span>
+        <span className="text-xl font-bold tracking-tight text-white">Kramana Admin</span>
       </div>
       
       <div className="flex-1 px-4 space-y-2 overflow-y-auto">

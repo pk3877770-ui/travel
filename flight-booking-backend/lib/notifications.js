@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
  */
 const sendEmail = async (to, subject, html) => {
   const mailOptions = {
-    from: '"FlyBook Alerts" <no-reply@flybook.com>',
+    from: '"Kramana Alerts" <no-reply@kramana.com>',
     to,
     subject,
     html,
@@ -71,7 +71,7 @@ export const sendBookingConfirmation = async (booking) => {
     email,
     `Booking Confirmed: ${booking.bookingReference}`,
     `<div style="font-family: Arial, sans-serif; padding: 20px;">
-      <h2 style="color: #0A58CA;">FlyBook Itinerary</h2>
+      <h2 style="color: #0A58CA;">Kramana Itinerary</h2>
       <p>Dear ${booking.passengerDetails?.name},</p>
       <p>Your flight has been confirmed. PNR: <strong>${booking.bookingReference}</strong></p>
       <p>Route: ${booking.flight.from} &rarr; ${booking.flight.to}</p>
@@ -84,7 +84,7 @@ export const sendBookingConfirmation = async (booking) => {
   // SMS
   await sendSMS(
     phone,
-    `FlyBook: Booking Confirmed! PNR ${booking.bookingReference} for ${booking.flight.from} to ${booking.flight.to} on ${booking.flight.date}.`
+    `Kramana: Booking Confirmed! PNR ${booking.bookingReference} for ${booking.flight.from} to ${booking.flight.to} on ${booking.flight.date}.`
   );
 };
 
@@ -110,7 +110,7 @@ export const sendCancellationNotification = async (booking) => {
   // SMS
   await sendSMS(
     phone,
-    `FlyBook: Your booking PNR ${booking.bookingReference} has been cancelled. Refunds will be processed shortly.`
+    `Kramana: Your booking PNR ${booking.bookingReference} has been cancelled. Refunds will be processed shortly.`
   );
 };
 
@@ -137,6 +137,6 @@ export const sendFlightReminder = async (booking) => {
   // SMS
   await sendSMS(
     phone,
-    `FlyBook Reminder: Your flight to ${booking.flight.to} (PNR: ${booking.bookingReference}) is coming up soon. Remember to web check-in!`
+    `Kramana Reminder: Your flight to ${booking.flight.to} (PNR: ${booking.bookingReference}) is coming up soon. Remember to web check-in!`
   );
 };

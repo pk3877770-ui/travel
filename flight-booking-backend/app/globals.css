@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* FlyBook Palette */
+  /* Kramana Palette */
   --color-primary: #0A58CA;
   --color-primary-light: #3D8BFD;
   --color-primary-dark: #084298;
