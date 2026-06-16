@@ -15,7 +15,7 @@ export default function middleware(req: NextRequest) {
   
   // Custom Admin Route Protection
   if (pathname.startsWith("/admin")) {
-    const token = req.cookies.get("admin_token");
+    const token = req.cookies.get("admin_session_token");
     const isAuth = token?.value === "authenticated";
     const isLoginPage = pathname === "/admin/login";
 

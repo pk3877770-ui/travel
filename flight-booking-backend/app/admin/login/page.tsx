@@ -5,7 +5,7 @@ import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
 
 export default async function AdminLoginPage() {
   const cookieStore = await cookies();
-  const token = cookieStore.get('admin_token');
+  const token = cookieStore.get('admin_session_token');
   
   if (token?.value === 'authenticated') {
     redirect('/admin/leads');

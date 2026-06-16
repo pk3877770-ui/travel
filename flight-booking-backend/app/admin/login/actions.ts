@@ -10,7 +10,7 @@ export async function loginAction(prevState: any, formData: FormData) {
   // Hardcoded simple authentication logic - adjust as needed
   if (username === 'admin' && password === 'password123') {
     const cookieStore = await cookies();
-    cookieStore.set('admin_token', 'authenticated', {
+    cookieStore.set('admin_session_token', 'authenticated', {
       httpOnly: true,
       path: '/',
       secure: false, // Ensure local testing works over HTTP
@@ -25,6 +25,6 @@ export async function loginAction(prevState: any, formData: FormData) {
 
 export async function logoutAction() {
     const cookieStore = await cookies();
-    cookieStore.delete('admin_token');
+    cookieStore.delete('admin_session_token');
     redirect('/admin/login');
 }
