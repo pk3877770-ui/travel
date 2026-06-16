@@ -1,3 +1,5 @@
 {
-    "liveServer.settings.port": 5502
+    "liveServer.settings.port": 5502,
+    "css.customData": [".vscode/css-data.json"],
+    "css.lint.unknownAtRules": "ignore"
 }
