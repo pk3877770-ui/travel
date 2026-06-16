@@ -6,17 +6,34 @@ import { useBooking } from "@/context/BookingContext";
 import { Plane, ChevronRight, Briefcase, Coffee, RefreshCcw } from "lucide-react";
 import { cn, formatSeoParam } from "@/lib/utils";
 
+const dateFromNow = (days: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d;
+};
+const departureDefault = dateFromNow(7);
+const departureDefaultLabel = departureDefault.toLocaleDateString("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+});
+const returnDefaultLabel = dateFromNow(14).toLocaleDateString("en-GB", {
+  day: "2-digit",
+  month: "short",
+  weekday: "short",
+});
+
 export default function FlightDetailsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { selectedFlight } = useBooking();
 
-  const [selectedReturnDate, setSelectedReturnDate] = useState("27 May Tue");
+  const [selectedReturnDate, setSelectedReturnDate] = useState(returnDefaultLabel);
   const [selectedReturnFlight, setSelectedReturnFlight] = useState<number | null>(1);
 
   const fromParam = formatSeoParam(searchParams.get("from")) || "DEL";
   const toParam = formatSeoParam(searchParams.get("to")) || "BOM";
-  const dateParam = searchParams.get("date") || "20 May, 2025";
+  const dateParam = searchParams.get("date") || departureDefaultLabel;
   const travelersParam = searchParams.get("travelers") || "1 Traveler";
   const cabinParam = searchParams.get("cabin") || "Economy";
 

@@ -5,10 +5,16 @@ import { useRouter } from "next/navigation";
 import { MapPin, Calendar, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 
+const isoDateFromNow = (days: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d.toISOString().split("T")[0];
+};
+
 const HotelSearchSection = () => {
   const [location, setLocation] = useState("New Delhi");
-  const [checkIn, setCheckIn] = useState("2025-05-24");
-  const [checkOut, setCheckOut] = useState("2025-05-26");
+  const [checkIn, setCheckIn] = useState(isoDateFromNow(7));
+  const [checkOut, setCheckOut] = useState(isoDateFromNow(9));
   const [guests, setGuests] = useState(2);
   const [rooms, setRooms] = useState(1);
   

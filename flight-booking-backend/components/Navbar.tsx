@@ -49,10 +49,10 @@ const Navbar = () => {
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
-            <div className="relative w-48 h-12">
-              <Image 
-                src="/kramana-logo.png" 
-                alt="Kramana Logo" 
+            <div className="relative w-48 h-12 transition-transform duration-300 ease-out group-hover:scale-105">
+              <Image
+                src="/kramana-logo.png"
+                alt="Kramana Logo"
                 fill
                 className="object-contain object-left"
                 priority
@@ -61,7 +61,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Links - Center */}
-          <div className="hidden lg:flex items-center justify-center gap-8 h-full">
+          <div className="hidden lg:flex items-center justify-center gap-2 h-full">
             {navLinks.map((link) => {
               const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/');
               return (
@@ -69,14 +69,22 @@ const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   className={cn(
-                    "text-sm font-semibold h-full flex items-center relative transition-colors",
+                    "group relative text-sm font-semibold flex items-center px-4 py-2 rounded-full transition-colors duration-200",
                     isActive ? "text-primary" : "text-slate-500 hover:text-primary"
                   )}
                 >
-                  {link.name}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-primary rounded-t-sm" />
-                  )}
+                  {/* Colour pop background */}
+                  <span
+                    className={cn(
+                      "absolute inset-0 rounded-full bg-accent-light origin-center transition-all duration-300 ease-out",
+                      isActive
+                        ? "opacity-100 scale-100"
+                        : "opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100"
+                    )}
+                  />
+                  <span className="relative z-10 transition-transform duration-200 group-hover:-translate-y-0.5">
+                    {link.name}
+                  </span>
                 </Link>
               );
             })}
@@ -85,14 +93,14 @@ const Navbar = () => {
           {/* Right Actions */}
           <div className="hidden lg:flex items-center gap-6 flex-shrink-0">
             {/* Currency */}
-            <button className="flex items-center gap-1 text-sm font-semibold text-slate-700 hover:text-primary transition-colors">
-              INR <ChevronDown className="w-4 h-4" />
+            <button className="group flex items-center gap-1 text-sm font-semibold text-slate-700 hover:text-primary transition-colors">
+              INR <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
             </button>
-            
+
             {/* Language */}
             <div className="relative group">
               <button className="flex items-center gap-1 text-sm font-semibold text-slate-700 hover:text-primary transition-colors py-2">
-                {language} <ChevronDown className="w-4 h-4" />
+                {language} <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
               </button>
               <div className="absolute right-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                 <div className="w-36 bg-white rounded-md shadow-lg border border-slate-200 overflow-hidden py-1">
@@ -107,7 +115,7 @@ const Navbar = () => {
             {/* Login / Register / Profile */}
             {session ? (
               <div className="relative group">
-                <button className="flex items-center gap-2 text-primary text-sm font-bold border-2 border-primary px-5 py-2 rounded-md hover:bg-primary/5 transition-colors">
+                <button className="flex items-center gap-2 text-primary text-sm font-bold border-2 border-primary px-5 py-2 rounded-md transition-all duration-200 hover:bg-primary/5 hover:-translate-y-0.5 hover:shadow-md hover:shadow-primary/20 active:translate-y-0 active:scale-95">
                   <User className="w-4 h-4" />
                   <span className="max-w-[100px] truncate">{session.user?.name || 'Account'}</span>
                 </button>
@@ -126,11 +134,11 @@ const Navbar = () => {
                 </div>
               </div>
             ) : (
-              <Link 
+              <Link
                 href="/auth"
-                className="flex items-center gap-2 text-primary text-sm font-bold border-2 border-primary px-5 py-2 rounded-md hover:bg-primary/5 transition-colors"
+                className="group flex items-center gap-2 text-primary text-sm font-bold border-2 border-primary px-5 py-2 rounded-md transition-all duration-200 hover:bg-primary hover:text-white hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/30 active:translate-y-0 active:scale-95"
               >
-                <User className="w-4 h-4" />
+                <User className="w-4 h-4 transition-transform duration-200 group-hover:scale-110" />
                 Login / Register
               </Link>
             )}

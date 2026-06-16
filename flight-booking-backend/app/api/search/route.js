@@ -56,58 +56,52 @@ export async function GET(req) {
       query.date = date;
     }
 
-    let flights = await Flight.find(query).limit(10);
-    
+    let flights = await Flight.find(query).limit(20);
+
     // Fallback Mock Data for demo/unreachable DB purposes
-    if (flights.length === 0) {
-      flights = [
-        {
-          _id: "mock1",
-          from: from || "Delhi",
-          to: to || "Mumbai",
-          date: date || "2026-05-01",
-          price: 4500,
-          airline: "Air India",
-          logo: "AI",
-          departureTime: "08:00",
-          arrivalTime: "10:15",
-          class: "First Class"
-        },
-        {
-          _id: "mock2",
-          from: from || "Delhi",
-          to: to || "Mumbai",
-          date: date || "2026-05-01",
-          price: 4200,
-          airline: "IndiGo",
-          logo: "6E",
-          departureTime: "11:30",
-          arrivalTime: "13:45",
-          class: "Business"
-        },
-        {
-          _id: "mock3",
-          from: from || "Delhi",
-          to: to || "Mumbai",
-          date: date || "2026-05-01",
-          price: 5800,
-          airline: "Vistara",
-          logo: "UK",
-          departureTime: "15:00",
-          arrivalTime: "17:15",
-          class: "Luxury"
-        }
-      ];
+    if (!flights || flights.length === 0) {
+      flights = buildMockFlights(from, to, date);
     }
 
     return NextResponse.json({ success: true, count: flights.length, flights });
   } catch (error) {
-    console.error("Search Error:", error);
-    return NextResponse.json(
-      { success: false, message: "Search failed" },
-      { status: 500 }
+    // DB unreachable in local/dev — still return demo flights instead of failing
+    console.error("Search Error (serving mock flights):", error?.message || error);
+    const { searchParams } = new URL(req.url);
+    const flights = buildMockFlights(
+      searchParams.get("from"),
+      searchParams.get("to"),
+      searchParams.get("date")
     );
+    return NextResponse.json({ success: true, count: flights.length, flights, mock: true });
   }
+}
+
+// Demo flight list — shape matches what the flights UI renders
+function buildMockFlights(from, to, date) {
+  const f = from || "DEL";
+  const t = to || "BOM";
+  const d = date || new Date().toISOString().split("T")[0];
+  const L = (code) => `https://images.kiwi.com/airlines/64x64/${code}.png`;
+
+  return [
+    { airline: "IndiGo",    logo: L("6E"), departureTime: "06:20", arrivalTime: "08:50", dur: "2h 30m", stops: "Non Stop", price: 12499, class: "Economy" },
+    { airline: "SpiceJet",  logo: L("SG"), departureTime: "05:30", arrivalTime: "08:00", dur: "2h 30m", stops: "Non Stop", price: 9890,  class: "Economy" },
+    { airline: "Air India", logo: L("AI"), departureTime: "07:45", arrivalTime: "13:25", dur: "5h 40m", stops: "1 Stop",   price: 13290, class: "Economy" },
+    { airline: "IndiGo",    logo: L("6E"), departureTime: "13:10", arrivalTime: "15:35", dur: "2h 25m", stops: "Non Stop", price: 10999, class: "Economy" },
+    { airline: "Vistara",   logo: L("UK"), departureTime: "09:15", arrivalTime: "11:50", dur: "2h 35m", stops: "Non Stop", price: 14210, class: "Business" },
+    { airline: "Akasa Air", logo: L("QP"), departureTime: "11:30", arrivalTime: "14:15", dur: "2h 45m", stops: "Non Stop", price: 11990, class: "Economy" },
+    { airline: "Air India", logo: L("AI"), departureTime: "18:05", arrivalTime: "22:50", dur: "4h 45m", stops: "1 Stop",   price: 13750, class: "Economy" },
+    { airline: "Vistara",   logo: L("UK"), departureTime: "16:40", arrivalTime: "19:20", dur: "2h 40m", stops: "Non Stop", price: 15600, class: "Business" },
+    { airline: "Akasa Air", logo: L("QP"), departureTime: "22:15", arrivalTime: "00:45", dur: "2h 30m", stops: "Non Stop", price: 11250, class: "Economy" },
+    { airline: "SpiceJet",  logo: L("SG"), departureTime: "20:45", arrivalTime: "02:55", dur: "6h 10m", stops: "1 Stop",   price: 12890, class: "Economy" },
+  ].map((flight, i) => ({
+    _id: `mock${i + 1}`,
+    from: f,
+    to: t,
+    date: d,
+    ...flight,
+  }));
 }
 
 // Optional: POST to seed data

@@ -5,6 +5,12 @@ import { useRouter } from "next/navigation";
 import { useBooking } from "@/context/BookingContext";
 import { cn } from "@/lib/utils";
 
+const flightDateLabel = (() => {
+  const d = new Date();
+  d.setDate(d.getDate() + 7);
+  return d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+})();
+
 export default function SeatsSelectionPage() {
   const router = useRouter();
   const { selectedFlight, selectedSeat, setSelectedSeat, passenger } = useBooking();
@@ -110,7 +116,7 @@ export default function SeatsSelectionPage() {
               </div>
               <div>
                 <div className="font-bold text-sm text-slate-800 mb-1">IndiGo <span className="font-medium text-slate-500 ml-1">6E-5324</span></div>
-                <div className="text-xs font-medium text-slate-500">DEL → BOM <span className="mx-2">|</span> 20 May, 2025</div>
+                <div className="text-xs font-medium text-slate-500">DEL → BOM <span className="mx-2">|</span> {flightDateLabel}</div>
               </div>
             </div>
 

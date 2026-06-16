@@ -15,12 +15,11 @@ import {
   Linkedin,
   Twitter,
   Mail,
-  ChevronLeft,
-  ChevronRight,
   Award,
   BadgeCheck,
   HeadphonesIcon
 } from "lucide-react";
+import AirlinePartners from "@/components/AirlinePartners";
 
 
 export async function generateMetadata() {
@@ -60,9 +59,9 @@ export default function AboutPage() {
           priority
         />
         {/* Semi-transparent gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-r from-blue-900/80 to-transparent" />
         
-        <div className="relative z-10 container max-w-[1200px] mx-auto px-4 h-full flex flex-col justify-center">
+        <div className="relative z-10 container max-w-7xl mx-auto px-4 h-full flex flex-col justify-center">
           <div className="max-w-2xl">
             <span className="text-sm font-black text-blue-400 uppercase tracking-widest mb-4 inline-block">
               ABOUT US
@@ -78,7 +77,7 @@ export default function AboutPage() {
       </div>
 
       {/* 2. Our Story Section */}
-      <div className="container max-w-[1200px] mx-auto px-4 py-20">
+      <div className="container max-w-7xl mx-auto px-4 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
           {/* Left: Image */}
@@ -136,7 +135,7 @@ export default function AboutPage() {
       </div>
 
       {/* 3. Our Values Section */}
-      <div className="container max-w-[1200px] mx-auto px-4 py-10 pb-20">
+      <div className="container max-w-7xl mx-auto px-4 py-10 pb-20">
         <div className="text-center mb-12">
           <span className="text-xs font-black text-blue-600 uppercase tracking-widest mb-3 inline-block">
             OUR VALUES
@@ -153,8 +152,8 @@ export default function AboutPage() {
             { title: "Explore More", text: "We inspire people to explore new places and cultures.", icon: Globe },
             { title: "Commitment", text: "We are committed to making your travel seamless.", icon: Heart },
           ].map((val, idx) => (
-            <div key={idx} className="bg-white border border-slate-100 shadow-sm rounded-2xl p-8 flex flex-col items-center text-center hover:shadow-md transition-shadow">
-              <div className="w-16 h-16 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-6">
+            <div key={idx} className="group bg-white border border-slate-100 shadow-sm rounded-2xl p-8 flex flex-col items-center text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-1.5 hover:border-blue-200">
+              <div className="w-16 h-16 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110">
                 <val.icon className="w-8 h-8" strokeWidth={1.5} />
               </div>
               <h3 className="font-bold text-slate-800 mb-3">{val.title}</h3>
@@ -166,7 +165,7 @@ export default function AboutPage() {
 
       {/* 4. Statistics Section */}
       <div className="bg-blue-50 py-16">
-        <div className="container max-w-[1200px] mx-auto px-4">
+        <div className="container max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 divide-y sm:divide-y-0 sm:divide-x divide-blue-200">
             
             <div className="flex items-center justify-center gap-4 pt-6 sm:pt-0">
@@ -206,7 +205,7 @@ export default function AboutPage() {
       </div>
 
       {/* 5. Our Team Section */}
-      <div className="container max-w-[1200px] mx-auto px-4 py-20">
+      <div className="container max-w-7xl mx-auto px-4 py-20">
         <div className="text-center mb-16">
           <span className="text-xs font-black text-blue-600 uppercase tracking-widest mb-3 inline-block">
             OUR TEAM
@@ -223,9 +222,9 @@ export default function AboutPage() {
             { name: "Rohit Mehta", role: "CTO", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80" },
             { name: "Pooja Singh", role: "Head of Customer Experience", img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80" },
           ].map((member, idx) => (
-            <div key={idx} className="bg-white border border-slate-100 rounded-2xl p-8 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow">
+            <div key={idx} className="group bg-white border border-slate-100 rounded-2xl p-8 flex flex-col items-center text-center shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1.5 hover:border-blue-200">
               <div className="relative w-32 h-32 rounded-full overflow-hidden mb-6 bg-slate-100">
-                <Image src={member.img} alt={member.name} fill className="object-cover" />
+                <Image src={member.img} alt={member.name} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
               </div>
               <h3 className="font-bold text-slate-800 text-lg">{member.name}</h3>
               <p className="text-xs text-slate-500 mb-6">{member.role}</p>
@@ -247,29 +246,7 @@ export default function AboutPage() {
       </div>
 
       {/* 6. Airline Partners Section */}
-      <div className="container max-w-[1200px] mx-auto px-4 pb-20">
-        <h3 className="text-center font-bold text-slate-800 text-xl mb-10">Our Airline Partners</h3>
-        
-        <div className="flex items-center justify-between gap-4">
-          <button className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-blue-50 hover:text-blue-600 transition-colors shrink-0">
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          
-          <div className="flex-1 flex items-center justify-around overflow-hidden gap-8 px-4">
-            {/* Airline Logos - Using text as placeholders since I don't have actual logo assets, styling them to look like logos */}
-            <div className="font-black text-xl text-[#E31837] whitespace-nowrap">AIR INDIA</div>
-            <div className="font-black text-xl text-[#001B94] whitespace-nowrap">IndiGo</div>
-            <div className="font-black text-xl text-[#F9A01B] whitespace-nowrap">SpiceJet</div>
-            <div className="font-black text-xl text-[#5C2D91] whitespace-nowrap">Vistara</div>
-            <div className="font-black text-xl text-[#D71920] whitespace-nowrap">Emirates</div>
-            <div className="font-black text-xl text-[#8A1538] whitespace-nowrap hidden lg:block">QATAR</div>
-          </div>
-
-          <button className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-blue-50 hover:text-blue-600 transition-colors shrink-0">
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
+      <AirlinePartners />
 
     </main>
   );

@@ -14,13 +14,13 @@ const Footer = () => {
     <footer className="bg-[#001233] text-white pt-20 pb-8 relative overflow-hidden font-sans mt-auto">
       
       {/* Huge faded airplane graphic in the background */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/2 pointer-events-none opacity-5 z-0 hidden md:block">
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 pointer-events-none opacity-5 z-0 hidden md:block">
         <svg width="400" height="400" viewBox="0 0 24 24" fill="currentColor">
           <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
         </svg>
       </div>
 
-      <div className="container max-w-[1000px] mx-auto px-4 relative z-10">
+      <div className="container max-w-7xl mx-auto px-6 relative z-10">
         
         <div className="flex flex-col md:flex-row justify-between gap-12 mb-16">
           
@@ -104,7 +104,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-slate-400 text-sm font-medium">
-            © 2025 FlyBook. All rights reserved.
+            © {new Date().getFullYear()} Kramana. All rights reserved.
           </p>
           <div className="flex items-center gap-2">
             <div className="bg-white w-9 h-6 rounded flex items-center justify-center text-[8px] font-black text-blue-900">VISA</div>

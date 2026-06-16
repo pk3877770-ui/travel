@@ -16,16 +16,16 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
   else if (hotel.rating >= 4.0) ratingWord = "Very Good";
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-all flex flex-col sm:flex-row">
-      
+    <div className="group bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30 flex flex-col sm:flex-row">
+
       {/* Image Section */}
-      <div className="relative w-full sm:w-[280px] h-[220px] sm:h-auto overflow-hidden shrink-0 p-4 pb-0 sm:pr-0">
+      <div className="relative w-full sm:w-[300px] h-[220px] sm:h-auto sm:min-h-[260px] shrink-0 p-4 pb-0 sm:pb-4 sm:pr-0">
         <div className="relative w-full h-full rounded-xl overflow-hidden">
           <Image
             src={hotel.images?.[0] || "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80"}
             alt={hotel.name}
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
           />
           {hotel.rating >= 4.5 && (
             <div className="absolute top-2 left-2 bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider shadow-sm">
@@ -94,7 +94,7 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
             <div className="text-xs text-slate-500 mb-3">for 2 nights</div>
             <Link
               href={`/hotels/${hotel._id}`}
-              className="block sm:inline-block border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-2 rounded-lg text-sm font-bold transition-colors text-center w-full sm:w-auto"
+              className="block sm:inline-block border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 py-2 rounded-lg text-sm font-bold transition-all duration-200 text-center w-full sm:w-auto hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-95"
             >
               View Details
             </Link>

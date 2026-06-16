@@ -14,6 +14,40 @@ export async function GET(req) {
   }
 }
 
+export async function POST(req) {
+  try {
+    await dbConnect();
+    const { name, email, password, role } = await req.json();
+
+    if (!name || !email || !password) {
+      return NextResponse.json({ success: false, message: "Name, email and password are required." }, { status: 400 });
+    }
+    if (password.length < 6) {
+      return NextResponse.json({ success: false, message: "Password must be at least 6 characters." }, { status: 400 });
+    }
+
+    const existing = await User.findOne({ email: email.toLowerCase() });
+    if (existing) {
+      return NextResponse.json({ success: false, message: "A user with this email already exists." }, { status: 409 });
+    }
+
+    const user = await User.create({
+      name,
+      email: email.toLowerCase(),
+      password, // hashed by the model's pre-save hook
+      role: role === "admin" ? "admin" : "user",
+    });
+
+    const safeUser = user.toObject();
+    delete safeUser.password;
+
+    return NextResponse.json({ success: true, message: "User created successfully", user: safeUser }, { status: 201 });
+  } catch (error) {
+    console.error("Create user error:", error);
+    return NextResponse.json({ success: false, message: error.message || "Server error" }, { status: 500 });
+  }
+}
+
 export async function PATCH(req) {
   try {
     await dbConnect();

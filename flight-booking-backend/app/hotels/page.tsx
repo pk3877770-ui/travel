@@ -23,6 +23,7 @@ export default function HotelsPage() {
   const [selectedGuestRatings, setSelectedGuestRatings] = useState<number[]>([]);
   const [selectedPropertyTypes, setSelectedPropertyTypes] = useState<number[]>([]);
   const [isMapOpen, setIsMapOpen] = useState(false);
+  const [sortBy, setSortBy] = useState<string>("recommended");
 
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
@@ -117,9 +118,28 @@ export default function HotelsPage() {
     setCurrentPage(1);
   }, [filteredHotels.length]);
 
+  // Sorting
+  const minRoomPrice = (hotel: any) =>
+    hotel.rooms?.length > 0 ? Math.min(...hotel.rooms.map((r: any) => r.price)) : 0;
+
+  const sortedHotels = useMemo(() => {
+    const list = [...filteredHotels];
+    switch (sortBy) {
+      case "price-asc":
+        return list.sort((a, b) => minRoomPrice(a) - minRoomPrice(b));
+      case "price-desc":
+        return list.sort((a, b) => minRoomPrice(b) - minRoomPrice(a));
+      case "rating":
+        return list.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      case "recommended":
+      default:
+        return list;
+    }
+  }, [filteredHotels, sortBy]);
+
   // Pagination Logic
-  const totalPages = Math.ceil(filteredHotels.length / itemsPerPage);
-  const currentHotels = filteredHotels.slice(
+  const totalPages = Math.ceil(sortedHotels.length / itemsPerPage);
+  const currentHotels = sortedHotels.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -172,7 +192,7 @@ export default function HotelsPage() {
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-black/50" />
         
-        <div className="relative z-10 container max-w-[1200px] mx-auto px-4 pt-32 h-full">
+        <div className="relative z-10 container max-w-[1400px] mx-auto px-4 pt-32 h-full">
           <div className="flex items-center text-sm text-white/80 mb-6 gap-2 font-medium">
             <span>Home</span>
             <span className="text-white/40">{'>'}</span>
@@ -186,7 +206,7 @@ export default function HotelsPage() {
 
       <HotelSearchSection />
 
-      <div className="container max-w-[1200px] mx-auto px-4 mt-8">
+      <div className="container max-w-[1400px] mx-auto px-4 mt-8">
         
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           
@@ -199,9 +219,19 @@ export default function HotelsPage() {
               
               <div className="flex items-center gap-3 mt-4 sm:mt-0 text-sm">
                 <span className="text-slate-500">Sorted by:</span>
-                <button className="flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-lg font-medium text-slate-700 hover:bg-slate-50">
-                  Recommended <ChevronDown className="w-4 h-4 text-slate-400" />
-                </button>
+                <div className="relative">
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="appearance-none bg-white border border-slate-200 pl-4 pr-9 py-2 rounded-lg font-medium text-slate-700 hover:bg-slate-50 cursor-pointer outline-none focus:border-primary"
+                  >
+                    <option value="recommended">Recommended</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="rating">Guest Rating</option>
+                  </select>
+                  <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
               </div>
             </div>
 

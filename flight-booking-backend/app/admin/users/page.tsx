@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { 
-  LayoutDashboard, Briefcase, Users, Plane, UserPlus, Tag, BarChart3, Settings, LogOut, Menu, 
-  Search, ShieldAlert, ShieldCheck, Ticket, XCircle
+import {
+  LayoutDashboard, Briefcase, Users, Plane, UserPlus, Tag, BarChart3, Settings, LogOut, Menu,
+  Search, ShieldAlert, ShieldCheck, Ticket, XCircle, Plus, Loader2
 } from "lucide-react";
 
 export default function AdminUsersPage() {
@@ -17,6 +17,15 @@ export default function AdminUsersPage() {
   const [selectedUser, setSelectedUser] = useState<any>(null);
   const [userBookings, setUserBookings] = useState<any[]>([]);
   const [loadingBookings, setLoadingBookings] = useState(false);
+
+  // Add User modal state
+  const [addOpen, setAddOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [form, setForm] = useState({ name: "", email: "", password: "", role: "user" });
+
+  // Search
+  const [search, setSearch] = useState("");
 
   const sidebarLinks = [
     { name: "Dashboard", icon: LayoutDashboard, href: "/admin" },
@@ -64,6 +73,36 @@ export default function AdminUsersPage() {
     }
   };
 
+  const handleAddUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    setFormError("");
+    try {
+      const res = await fetch("/api/admin/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Failed to create user");
+      }
+      setAddOpen(false);
+      setForm({ name: "", email: "", password: "", role: "user" });
+      fetchUsers();
+    } catch (err: any) {
+      setFormError(err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const filteredUsers = users.filter((u) => {
+    const q = search.trim().toLowerCase();
+    if (!q) return true;
+    return u.name?.toLowerCase().includes(q) || u.email?.toLowerCase().includes(q);
+  });
+
   const openBookingsModal = async (user: any) => {
     setSelectedUser(user);
     setModalOpen(true);
@@ -87,7 +126,7 @@ export default function AdminUsersPage() {
       {/* Sidebar */}
       <div className="w-64 bg-[#001233] text-white flex flex-col fixed h-full z-20">
         <div className="p-8 pt-10 mb-2">
-          <span className="text-xl font-bold tracking-tight text-white">FlyBook Admin</span>
+          <span className="text-xl font-bold tracking-tight text-white">Kramana Admin</span>
         </div>
         
         <div className="flex-1 px-4 space-y-2 overflow-y-auto">
@@ -124,13 +163,23 @@ export default function AdminUsersPage() {
           <div className="flex items-center gap-4">
             <h1 className="text-2xl font-bold text-slate-800">User Management</h1>
           </div>
-          <div className="relative">
-            <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input 
-              type="text" 
-              placeholder="Search by name or email..." 
-              className="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-blue-500 w-64"
-            />
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by name or email..."
+                className="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-blue-500 w-48 sm:w-64"
+              />
+            </div>
+            <button
+              onClick={() => { setFormError(""); setAddOpen(true); }}
+              className="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95 whitespace-nowrap"
+            >
+              <Plus className="w-4 h-4" /> Add User
+            </button>
           </div>
         </header>
 
@@ -154,12 +203,12 @@ export default function AdminUsersPage() {
                     <tr>
                       <td colSpan={5} className="p-8 text-center text-slate-500">Loading users...</td>
                     </tr>
-                  ) : users.length === 0 ? (
+                  ) : filteredUsers.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="p-8 text-center text-slate-500">No users found.</td>
                     </tr>
                   ) : (
-                    users.map((user) => (
+                    filteredUsers.map((user) => (
                       <tr key={user._id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
                         <td className="p-4">
                           <p className="font-bold text-slate-800">{user.name}</p>
@@ -283,6 +332,99 @@ export default function AdminUsersPage() {
                 Close
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add User Modal */}
+      {addOpen && (
+        <div className="fixed inset-0 bg-slate-900/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
+            <div className="p-6 border-b border-slate-100 flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                  <UserPlus className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800">Add New User</h3>
+              </div>
+              <button onClick={() => setAddOpen(false)} className="text-slate-400 hover:text-slate-600">
+                <XCircle className="w-6 h-6" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddUser} className="p-6 space-y-4">
+              {formError && (
+                <div className="bg-red-50 border border-red-200 text-red-600 rounded-lg p-3 text-sm font-medium">
+                  {formError}
+                </div>
+              )}
+
+              <div>
+                <label className="block text-xs font-bold text-slate-500 mb-1.5">Full Name</label>
+                <input
+                  type="text"
+                  required
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-100"
+                  placeholder="John Davis"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-500 mb-1.5">Email</label>
+                <input
+                  type="email"
+                  required
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-100"
+                  placeholder="john@example.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-500 mb-1.5">Password</label>
+                <input
+                  type="password"
+                  required
+                  minLength={6}
+                  value={form.password}
+                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-100"
+                  placeholder="Min. 6 characters"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-500 mb-1.5">Role</label>
+                <select
+                  value={form.role}
+                  onChange={(e) => setForm({ ...form, role: e.target.value })}
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-primary cursor-pointer"
+                >
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setAddOpen(false)}
+                  className="flex-1 px-4 py-2.5 border border-slate-200 text-slate-600 rounded-lg font-bold text-sm hover:bg-slate-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="flex-1 px-4 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-bold text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
+                >
+                  {saving ? <><Loader2 className="w-4 h-4 animate-spin" /> Creating...</> : "Create User"}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

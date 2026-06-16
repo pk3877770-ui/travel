@@ -7,20 +7,29 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import TravelersPopover from "@/components/TravelersPopover";
 
-const SearchSection = () => {
-  const [tripType, setTripType] = useState("multi-city");
-  
+// Future-dated defaults so the form never opens on a past date
+const isoDateFromNow = (days: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d.toISOString().split("T")[0];
+};
+const dayName = (iso: string) =>
+  iso ? new Date(iso).toLocaleDateString("en-US", { weekday: "long" }) : "";
+
+const SearchSection = ({ vertical = false }: { vertical?: boolean }) => {
+  const [tripType, setTripType] = useState("round-trip");
+
   // Single trip state
   const [fromValue, setFromValue] = useState("DEL");
   const [fromCity, setFromCity] = useState("New Delhi, India");
   const [toValue, setToValue] = useState("BOM");
   const [toCity, setToCity] = useState("Mumbai, India");
-  const [departureDate, setDepartureDate] = useState("2025-05-20");
-  const [returnDate, setReturnDate] = useState("2025-05-27");
-  
+  const [departureDate, setDepartureDate] = useState(isoDateFromNow(7));
+  const [returnDate, setReturnDate] = useState(isoDateFromNow(14));
+
   // Multi city state
   const [multiFlights, setMultiFlights] = useState([
-    { id: 1, fromValue: "DEL", fromCity: "New Delhi, India", toValue: "BOM", toCity: "Mumbai, India", date: "2025-05-20" },
+    { id: 1, fromValue: "DEL", fromCity: "New Delhi, India", toValue: "BOM", toCity: "Mumbai, India", date: isoDateFromNow(7) },
     { id: 2, fromValue: "BOM", fromCity: "Mumbai, India", toValue: "", toCity: "", date: "" }
   ]);
   
@@ -95,8 +104,8 @@ const SearchSection = () => {
   };
 
   return (
-    <section id="search-section" className="relative z-30 -mt-24 px-4 md:px-8">
-      <div className="max-w-[1100px] mx-auto">
+    <section id="search-section" className={cn(vertical ? "relative z-30 w-full" : "relative z-30 -mt-24 px-4 md:px-8")}>
+      <div className={cn(vertical ? "w-full" : "max-w-[1100px] mx-auto")}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -147,10 +156,16 @@ const SearchSection = () => {
                 // Multi City UI
                 <div className="flex flex-col w-full">
                   {multiFlights.map((flight, index) => (
-                    <div key={flight.id} className="flex flex-col lg:flex-row items-stretch lg:items-center w-full mb-4 pb-4 border-b border-slate-100 last:border-b-0 last:mb-0 last:pb-0">
-                      
+                    <div key={flight.id} className={cn(
+                      "flex items-stretch w-full mb-4 pb-4 border-b border-slate-100 last:border-b-0 last:mb-0 last:pb-0",
+                      vertical ? "flex-col gap-4" : "flex-col lg:flex-row lg:items-center"
+                    )}>
+
                       {/* From & To Row */}
-                      <div className="flex flex-col sm:flex-row w-full lg:w-[60%] relative border-b lg:border-b-0 lg:border-r border-slate-200">
+                      <div className={cn(
+                        "flex flex-col sm:flex-row w-full relative",
+                        vertical ? "" : "lg:w-[60%] border-b lg:border-b-0 lg:border-r border-slate-200"
+                      )}>
                         <div className="flex-1 pb-4 sm:pb-6 lg:pb-0 lg:pr-8 border-b sm:border-b-0 border-slate-100">
                           <label className="text-xs text-slate-500 font-medium block mb-1">From</label>
                           <input
@@ -250,10 +265,13 @@ const SearchSection = () => {
                 </div>
               ) : (
                 // Single/Round Trip UI
-                <div className="flex flex-col lg:flex-row items-stretch lg:items-center">
-                  
+                <div className={cn(vertical ? "flex flex-col gap-6" : "flex flex-col lg:flex-row items-stretch lg:items-center")}>
+
                   {/* From & To Row */}
-                  <div className="flex flex-col sm:flex-row w-full lg:w-[42%] relative border-b lg:border-b-0 lg:border-r border-slate-200">
+                  <div className={cn(
+                    "flex flex-col sm:flex-row w-full relative",
+                    vertical ? "" : "lg:w-[42%] border-b lg:border-b-0 lg:border-r border-slate-200"
+                  )}>
                     <div className="flex-1 pb-4 sm:pb-6 lg:pb-0 lg:pr-8 border-b sm:border-b-0 border-slate-100">
                       <label htmlFor="from-input" className="text-xs text-slate-500 font-medium block mb-1">From</label>
                       <input
@@ -289,7 +307,10 @@ const SearchSection = () => {
                   </div>
 
                   {/* Dates Row */}
-                  <div className="flex flex-col sm:flex-row w-full lg:w-[38%] border-b lg:border-b-0 lg:border-r border-slate-200 pt-6 pb-6 lg:pt-0 lg:pb-0 lg:px-5">
+                  <div className={cn(
+                    "flex flex-col sm:flex-row w-full",
+                    vertical ? "gap-4 pt-0 pb-0" : "lg:w-[38%] border-b lg:border-b-0 lg:border-r border-slate-200 pt-6 pb-6 lg:pt-0 lg:pb-0 lg:px-5"
+                  )}>
                     <div className="flex-1 min-w-0">
                       <label htmlFor="departure-date" className="text-xs text-slate-500 font-medium block mb-1">Departure</label>
                       <input
@@ -299,7 +320,7 @@ const SearchSection = () => {
                         onChange={(e) => setDepartureDate(e.target.value)}
                         className="w-full font-bold text-lg text-slate-800 outline-none bg-transparent [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full cursor-pointer relative"
                       />
-                      <div className="text-xs text-slate-400 mt-1">Tuesday</div>
+                      <div className="text-xs text-slate-400 mt-1">{dayName(departureDate)}</div>
                     </div>
                     {tripType === "round-trip" && (
                       <div className="flex-1 min-w-0 pl-0 sm:pl-4 border-t sm:border-t-0 sm:border-l border-slate-100 mt-4 pt-4 sm:mt-0 sm:pt-0 sm:ml-4">
@@ -311,13 +332,16 @@ const SearchSection = () => {
                           onChange={(e) => setReturnDate(e.target.value)}
                           className="w-full font-bold text-lg text-slate-800 outline-none bg-transparent [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full cursor-pointer relative"
                         />
-                        <div className="text-xs text-slate-400 mt-1">Tuesday</div>
+                        <div className="text-xs text-slate-400 mt-1">{dayName(returnDate)}</div>
                       </div>
                     )}
                   </div>
 
                   {/* Travelers & Class */}
-                  <div className="flex-1 w-full pt-6 lg:pt-0 lg:pl-8 flex flex-col justify-between h-full">
+                  <div className={cn(
+                    "w-full flex flex-col justify-between",
+                    vertical ? "" : "flex-1 pt-6 lg:pt-0 lg:pl-8 h-full"
+                  )}>
                     <div>
                       <label className="text-xs text-slate-500 font-medium block mb-1">Travelers & Class</label>
                       <div className="flex flex-col items-start">
@@ -344,11 +368,14 @@ const SearchSection = () => {
                 </div>
               )}
 
-              {/* Search Button positioned at bottom right */}
-              <div className="mt-8 flex justify-center lg:justify-end">
-                <button 
+              {/* Search Button */}
+              <div className={cn("mt-8 flex", vertical ? "justify-center" : "justify-center lg:justify-end")}>
+                <button
                   type="submit"
-                  className="bg-[#0A58CA] hover:bg-blue-700 text-white px-10 py-3.5 rounded-lg font-bold transition-colors shadow-md shadow-blue-500/30 w-full sm:w-auto"
+                  className={cn(
+                    "bg-[#0A58CA] hover:bg-blue-700 text-white px-10 py-3.5 rounded-lg font-bold transition-all duration-200 shadow-md shadow-blue-500/30 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-95",
+                    vertical ? "w-full" : "w-full sm:w-auto"
+                  )}
                 >
                   Search Flights
                 </button>

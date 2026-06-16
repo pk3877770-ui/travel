@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "jetro": {
+      "command": "C:\\Users\\DELL\\.jetro\\runtime\\node-win32-x64.exe",
+      "args": [
+        "C:\\Users\\DELL\\.jetro\\mcp-server\\index.js"
+      ],
+      "env": {
+        "JET_WORKSPACE": "c:\\Users\\DELL\\Desktop\\git\\travel\\flight-booking-backend",
+        "JET_API_URL": "https://api.jetro.ai",
+        "JET_JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImVlOTA0NmVhZDJlMDUwMDAxMGVkNTA0M2I0ODNkODRiMGM1MmM3YzQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vamV0cm8tY2RhZWYiLCJhdWQiOiJqZXRyby1jZGFlZiIsImF1dGhfdGltZSI6MTc4MDY3MTQ4MiwidXNlcl9pZCI6IjFZTGVFMDMxbDZUejRNMHZUelJsdXJnSTJmeTIiLCJzdWIiOiIxWUxlRTAzMWw2VHo0TTB2VHpSbHVyZ0kyZnkyIiwiaWF0IjoxNzgxNjE3MzIwLCJleHAiOjE3ODE2MjA5MjAsImVtYWlsIjoiam9obi45NWF1dG9zQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImpvaG4uOTVhdXRvc0BnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.auJwFWO_8ngiQeciPa8KF5_iBEBKg7IedWOeqygc94jMu9Qe-kzXQgRvPiopHE5haAsMVfFfWxub42bEVlXNir_aV6EzsDZL7ZF1hi4LE9RD8w0sideJlxbq73hUr9wbwZDiE9IJqDw8H7gZVjFz4HQgXJ-RqRDdYA1VIJnNeJ2MaOoEaSPlBxLn1qAT7h10wEM3_W1jGSTcv6vte4bl1KEgwBzTreP8EP3rxi0T4W0PcsnTuGAllvoFzO4WJJX4DYADaeswyn_3p8moEIt2Fc7CiAI03g6oU5Ex9iINVcI4D0b3qWBUGALi-OaY9ZyvF2V91imeNxdWYdcCr9m_cA",
+        "PATH": "C:\\Users\\DELL\\.jetro\\runtime;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Git\\cmd;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Program Files\\nodejs\\;C:\\Users\\DELL\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\DELL\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\DELL\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\DELL\\AppData\\Local\\Python\\bin;C:\\Users\\DELL\\AppData\\Local\\Programs\\Antigravity\\bin;C:\\Users\\DELL\\AppData\\Roaming\\npm;C:\\Users\\DELL\\AppData\\Local\\Programs\\Antigravity IDE\\bin"
+      }
+    }
+  }
+}

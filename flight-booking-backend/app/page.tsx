@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import dynamicImport from 'next/dynamic';
 import { getSEOMetadata, mapSEOToMetadata } from '@/lib/seo';
 import Hero from '@/components/Hero';
+import AOSInit from '@/components/AOSInit';
 
-const SearchSection = dynamicImport(() => import('@/components/SearchSection'));
 const Features = dynamicImport(() => import('@/components/Features'));
 const BestFlightDeals = dynamicImport(() => import('@/components/BestFlightDeals'));
 const PopularAirlines = dynamicImport(() => import('@/components/PopularAirlines'));
@@ -18,9 +18,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function Page() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white overflow-x-hidden">
+      <AOSInit />
       <Hero />
-      <SearchSection />
       <Features />
       <BestFlightDeals />
       <PopularAirlines />

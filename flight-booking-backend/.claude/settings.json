@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm run dev 2>&1)",
+      "PowerShell(npm install 2>&1)",
+      "PowerShell($job = Start-Job -ScriptBlock { Set-Location \"c:\\\\Users\\\\DELL\\\\Desktop\\\\git\\\\travel\\\\flight-booking-backend\"; npm run dev 2>&1 }; Start-Sleep -Seconds 18; Receive-Job $job; Stop-Job $job; Remove-Job $job -Force)",
+      "Read(//c/Users/DELL/**)",
+      "PowerShell(\"--- stray lockfile size ---\"; \\(Get-Item \"C:\\\\Users\\\\DELL\\\\package-lock.json\" -ErrorAction SilentlyContinue\\).Length; \"--- is C:\\\\Users\\\\DELL a git/node project? ---\"; Get-ChildItem \"C:\\\\Users\\\\DELL\\\\node_modules\" -ErrorAction SilentlyContinue | Measure-Object | Select-Object -ExpandProperty Count; \"--- swc in project? ---\"; Get-ChildItem \"c:\\\\Users\\\\DELL\\\\Desktop\\\\git\\\\travel\\\\flight-booking-backend\\\\node_modules\\\\@next\" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Name)",
+      "PowerShell(\"--- swc packages present? ---\")",
+      "PowerShell(\"\\(end\\)\")",
+      "Bash(rm -f \"/c/Users/DELL/package-lock.json\" && echo \"stray lockfile deleted\" || echo \"delete failed\")",
+      "PowerShell(npm install --include=optional 2>&1)",
+      "PowerShell(\"--- swc now present? ---\")",
+      "PowerShell(\"--- node arch/platform ---\"; node -e \"console.log\\(process.platform, process.arch\\)\"; \"--- next optional swc deps in lockfile ---\"; Select-String -Path \"package-lock.json\" -Pattern \"swc-win32\" | Select-Object -First 5 | ForEach-Object { $_.Line.Trim\\(\\) }; \"--- npm os/cpu config ---\"; npm config get os; npm config get cpu)",
+      "PowerShell(\"--- nested swc ---\")",
+      "PowerShell(\"--- the actual binary file ---\")",
+      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 30; \"EXITCODE: $LASTEXITCODE\")",
+      "PowerShell(npm install gsap aos 2>&1)",
+      "PowerShell(npm install -D @types/aos 2>&1)",
+      "PowerShell(\"---\")",
+      "PowerShell(node -e \"console.log\\('gsap', require\\('gsap/package.json'\\).version\\); console.log\\('aos', require\\('aos/package.json'\\).version\\)\")",
+      "PowerShell(npm install @gsap/react 2>&1)",
+      "PowerShell(node -e \"console.log\\('@gsap/react', require\\('@gsap/react/package.json'\\).version\\)\")",
+      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 20; \"TSC EXIT: $LASTEXITCODE\")",
+      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 15; \"TSC EXIT: $LASTEXITCODE\")",
+      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 12; \"TSC EXIT: $LASTEXITCODE\"; $job = Start-Job -ScriptBlock { Set-Location \"c:\\\\Users\\\\DELL\\\\Desktop\\\\git\\\\travel\\\\flight-booking-backend\"; npm run dev 2>&1 }; for \\($i=0; $i -lt 30; $i++\\){ Start-Sleep -Seconds 2; if \\(\\(Receive-Job $job -Keep\\) -match \"Ready in\"\\){ break } }; try { $r = Invoke-WebRequest \"http://localhost:3000/offers\" -UseBasicParsing -TimeoutSec 45; \"OFFERS -> $\\($r.StatusCode\\)\" } catch { \"FAILED: $\\($_.Exception.Message\\)\" }; Stop-Job $job; Remove-Job $job -Force)",
+      "PowerShell($job = Start-Job -ScriptBlock { Set-Location \"c:\\\\Users\\\\DELL\\\\Desktop\\\\git\\\\travel\\\\flight-booking-backend\"; npm run dev 2>&1 }; for \\($i=0; $i -lt 30; $i++\\){ Start-Sleep -Seconds 2; if \\(\\(Receive-Job $job -Keep\\) -match \"Ready in\"\\){ break } }; try { $r = Invoke-WebRequest \"http://localhost:3000/about\" -UseBasicParsing -TimeoutSec 45; \"ABOUT -> $\\($r.StatusCode\\)\" } catch { \"FAILED: $\\($_.Exception.Message\\)\" }; Stop-Job $job; Remove-Job $job -Force)",
+      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 12; \"TSC EXIT: $LASTEXITCODE\"; $job = Start-Job -ScriptBlock { Set-Location \"c:\\\\Users\\\\DELL\\\\Desktop\\\\git\\\\travel\\\\flight-booking-backend\"; npm run dev 2>&1 }; for \\($i=0; $i -lt 30; $i++\\){ Start-Sleep -Seconds 2; if \\(\\(Receive-Job $job -Keep\\) -match \"Ready in\"\\){ break } }; try { $r = Invoke-WebRequest \"http://localhost:3000/about\" -UseBasicParsing -TimeoutSec 45; \"ABOUT -> $\\($r.StatusCode\\)\" } catch { \"FAILED: $\\($_.Exception.Message\\)\" }; Stop-Job $job; Remove-Job $job -Force)",
+      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 12; \"TSC EXIT: $LASTEXITCODE\"; $job = Start-Job -ScriptBlock { Set-Location \"c:\\\\Users\\\\DELL\\\\Desktop\\\\git\\\\travel\\\\flight-booking-backend\"; npm run dev 2>&1 }; for \\($i=0; $i -lt 40; $i++\\){ Start-Sleep -Seconds 2; if \\(\\(Receive-Job $job -Keep\\) -match \"Ready in\"\\){ break } }; Start-Sleep -Seconds 2; $ok=$false; for \\($t=0;$t -lt 3 -and -not $ok;$t++\\){ try { $r=Invoke-WebRequest \"http://localhost:3000/auth\" -UseBasicParsing -TimeoutSec 60; \"AUTH -> $\\($r.StatusCode\\)\"; $ok=$true } catch { Start-Sleep -Seconds 3 } }; if\\(-not $ok\\){\"probe failed\"}; Stop-Job $job; Remove-Job $job -Force)",
+      "PowerShell($job = Start-Job -ScriptBlock { Set-Location \"c:\\\\Users\\\\DELL\\\\Desktop\\\\git\\\\travel\\\\flight-booking-backend\"; npm run dev 2>&1 }; for \\($i=0; $i -lt 40; $i++\\){ Start-Sleep -Seconds 2; if \\(\\(Receive-Job $job -Keep\\) -match \"Ready in\"\\){ break } }; Start-Sleep -Seconds 2; $ok=$false; for \\($t=0;$t -lt 3 -and -not $ok;$t++\\){ try { $r=Invoke-WebRequest \"http://localhost:3000/auth\" -UseBasicParsing -TimeoutSec 60; \"AUTH -> $\\($r.StatusCode\\)\"; $ok=$true } catch { Start-Sleep -Seconds 3 } }; if\\(-not $ok\\){\"probe failed\"}; Stop-Job $job; Remove-Job $job -Force)",
+      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 15; \"TSC EXIT: $LASTEXITCODE\"; $job = Start-Job -ScriptBlock { Set-Location \"c:\\\\Users\\\\DELL\\\\Desktop\\\\git\\\\travel\\\\flight-booking-backend\"; npm run dev 2>&1 }; for \\($i=0; $i -lt 40; $i++\\){ Start-Sleep -Seconds 2; if \\(\\(Receive-Job $job -Keep\\) -match \"Ready in\"\\){ break } }; Start-Sleep -Seconds 2; try { $r=Invoke-WebRequest \"http://localhost:3000/admin/users\" -UseBasicParsing -TimeoutSec 60; \"USERS -> $\\($r.StatusCode\\)\" } catch { \"FAILED: $\\($_.Exception.Message\\)\" }; Stop-Job $job; Remove-Job $job -Force)",
+      "PowerShell(npm run dev)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\DELL"
+    ]
+  }
+}

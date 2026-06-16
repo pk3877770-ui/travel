@@ -32,10 +32,10 @@ const features = [
 const Features = () => {
   return (
     <section className="py-12 bg-white">
-      <div className="container max-w-[1000px] mx-auto px-6">
+      <div className="container max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {features.map((item, idx) => (
-            <Link key={idx} href={item.link || "#"} className="flex items-center gap-4 hover:opacity-80 transition-opacity">
+            <Link key={idx} href={item.link || "#"} data-aos="fade-up" data-aos-delay={idx * 100} className="flex items-center gap-4 hover:opacity-80 transition-opacity">
               <div className={`w-12 h-12 rounded-full border-2 ${item.borderColor} flex items-center justify-center shrink-0`}>
                 <item.icon className={`w-6 h-6 ${item.color}`} />
               </div>
