@@ -64,8 +64,8 @@ export default async function SeoAdminPage({ searchParams }: { searchParams: Pro
         {/* Aesthetic Branding Block */}
         <div className="w-full p-12 border-b border-white/[0.03] bg-gradient-to-b from-white/[0.02] to-transparent relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-            <h2 className="font-extrabold text-4xl text-white tracking-[-0.03em] text-center flex flex-col items-center gap-1">
-                K<span className="text-amber-500 font-light italic text-5xl mt-[-5px]">A</span>RMANA
+            <h2 className="font-extrabold text-4xl text-white tracking-[-0.03em] text-center flex justify-center items-center">
+                KRAM<span className="text-amber-500 font-light italic text-5xl mt-[-5px] mx-1">A</span>NA
             </h2>
             <div className="flex items-center justify-center gap-3 mt-5">
                 <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-slate-700"></div>
