@@ -13,7 +13,7 @@ export async function loginAction(prevState: any, formData: FormData) {
     cookieStore.set('admin_token', 'authenticated', {
       httpOnly: true,
       path: '/',
-      secure: process.env.NODE_ENV === 'production',
+      secure: false, // Ensure local testing works over HTTP
       maxAge: 60 * 60 * 24 // 1 day
     });
   } else {
