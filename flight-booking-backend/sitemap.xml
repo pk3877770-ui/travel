@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/hotels</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/offers</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/about</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/contact</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/auth</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/help</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/booking/payment</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?to=dubai</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?to=singapore</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?to=bangkok</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?to=london</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=JFK&amp;to=LAX</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=LAX&amp;to=SFO</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=ORD&amp;to=LGA</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=ATL&amp;to=MIA</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=DFW&amp;to=DEN</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=SEA&amp;to=LAS</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=BOS&amp;to=DCA</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=IAH&amp;to=MCO</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/faqs</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/terms</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/privacy</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/cancellation</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=delhi&amp;to=mumbai</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=delhi&amp;to=bangalore</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=mumbai&amp;to=goa</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=delhi&amp;to=dubai</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=mumbai&amp;to=singapore</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog?category=destinations</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog?category=travel%20tips</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog?category=travel%20guides</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog?category=hotel%20guides</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog?category=flight%20tips</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog?category=news%20%26%20updates</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog?destination=Bali</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog?destination=Paris</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog?destination=Tokyo</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog?destination=Rome</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/1</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/2</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/3</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/4</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/5</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/6</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/7</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/8</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/9</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/10</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/account</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/help?q=cancel+flight</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/help?q=refund+status</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/help?q=baggage+allowance</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/help?q=change+booking</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/help?q=check-in</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/contact?mode=chat</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/refund</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/cookie</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/13</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/19</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/25</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/31</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/37</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/43</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/49</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/54</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/14</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/20</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/26</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/32</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/38</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/44</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/50</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/55</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/15</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/21</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/27</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/33</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/39</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/45</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/51</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/56</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/16</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/22</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/28</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/34</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/40</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/46</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/52</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/57</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/11</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/17</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/23</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/29</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/35</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/41</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/47</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/53</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/58</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/12</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/18</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/24</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/30</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/36</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/42</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/blog/48</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/auth?callbackUrl=%2Fprofile%2Fbookings</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/auth?callbackUrl=%2Fprofile%2Fbookings%3Ftype%3Dflights</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/auth?callbackUrl=%2Fprofile%2Fbookings%3Ftype%3Dhotels</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/auth?callbackUrl=%2Fprofile%2Fsaved</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/auth?callbackUrl=%2Fprofile</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/auth?callbackUrl=%2Fprofile%2Ftravelers</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/auth?callbackUrl=%2Fprofile%2Fpayments</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/auth?callbackUrl=%2Fprofile%2Frewards</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/auth?callbackUrl=%2Fprofile%2Fnotifications</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://flight-booking-backend-gold.vercel.app/auth?callbackUrl=%2Fprofile%2Fsettings</loc>
+  <lastmod>2026-06-16T18:20:58+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+
+
+</urlset>
