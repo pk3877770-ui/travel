@@ -13,8 +13,8 @@ export default function TabSessionGuard() {
       if (!isTabActive) {
         // This tab doesn't have the active session flag.
         // It means the user opened a new tab or window.
-        // We log them out of the entire session and redirect to the auth page.
-        signOut({ redirect: true, callbackUrl: "/auth" });
+        // We log them out of the entire session and redirect to the home page.
+        signOut({ redirect: true, callbackUrl: "/" });
       }
     } else if (status === "unauthenticated") {
       // Mark this tab as ready to accept a new login session
