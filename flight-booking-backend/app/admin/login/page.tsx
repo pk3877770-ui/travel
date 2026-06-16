@@ -4,12 +4,6 @@ import LoginForm from './LoginForm';
 import PageWithBreadcrumb from '@/components/PageWithBreadcrumb';
 
 export default async function AdminLoginPage() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('admin_session_token');
-  
-  if (token?.value === 'authenticated') {
-    redirect('/admin/leads');
-  }
   return (
     <PageWithBreadcrumb routePath="/admin/login">
       <div className="relative flex justify-center items-center h-screen bg-[#020617] overflow-hidden">

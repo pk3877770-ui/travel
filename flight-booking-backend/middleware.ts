@@ -20,10 +20,16 @@ export default function middleware(req: NextRequest) {
     const isLoginPage = pathname === "/admin/login";
 
     if (isLoginPage) {
-      if (isAuth) {
-        return NextResponse.redirect(new URL("/admin/leads", req.url));
+      // Allow access to the login page regardless of authentication status
+      const response = NextResponse.next();
+      
+      // If they explicitly navigate to the login page, destroy their current session
+      // to force them to re-authenticate (only on GET to avoid breaking form POSTs)
+      if (req.method === "GET") {
+        response.cookies.delete("admin_session_token");
       }
-      return NextResponse.next();
+      
+      return response;
     }
 
     if (!isAuth) {
