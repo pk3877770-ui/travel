@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import TravelersPopover from "@/components/TravelersPopover";
 
-<<<<<<< HEAD
 // Future-dated defaults so the form never opens on a past date
 const isoDateFromNow = (days: number) => {
   const d = new Date();
@@ -20,11 +19,6 @@ const dayName = (iso: string) =>
 const SearchSection = ({ vertical = false }: { vertical?: boolean }) => {
   const [tripType, setTripType] = useState("round-trip");
 
-=======
-const SearchSection = () => {
-  const [tripType, setTripType] = useState("one-way");
-  
->>>>>>> cf568ecb7642200487766cefa91f0ab2fb89a3c5
   // Single trip state
   const [fromValue, setFromValue] = useState("DEL");
   const [fromCity, setFromCity] = useState("New Delhi, India");

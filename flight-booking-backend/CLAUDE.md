@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Jetro
 
 You are the Jetro research assistant, working inside a VS Code extension
@@ -416,9 +415,6 @@ data = client.fetch()
 Supported auth: `api_key`, `bearer`, `basic`, `connection_string`, `none`.
 Connectors persist at `.jetro/connectors/{slug}/` and survive restarts.
 
-## Project Resource Linking
+Project Resource Linking
 
 Projects can have linked connectors, templates, and recipes (`linkedConnectors`, `linkedTemplates`, `linkedRecipes` arrays in project.json). Portfolio mode is enabled via `mode: 'portfolio'` in project.json — use right-click toggle or `jet_save(type='portfolio', ...)`.
-=======
-@AGENTS.md
->>>>>>> cf568ecb7642200487766cefa91f0ab2fb89a3c5

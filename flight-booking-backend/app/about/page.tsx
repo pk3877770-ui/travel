@@ -15,19 +15,12 @@ import {
   BadgeCheck,
   HeadphonesIcon,
   Mail,
-<<<<<<< HEAD
   Award,
-  BadgeCheck,
-  HeadphonesIcon
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import AirlinePartners from "@/components/AirlinePartners";
-=======
-  ChevronLeft,
-  ChevronRight,
-  Award
-} from "lucide-react";
 import { FaLinkedin as Linkedin, FaTwitter as Twitter } from "react-icons/fa";
->>>>>>> cf568ecb7642200487766cefa91f0ab2fb89a3c5
 
 
 export async function generateMetadata() {

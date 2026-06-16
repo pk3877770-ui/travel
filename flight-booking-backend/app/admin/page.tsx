@@ -86,79 +86,6 @@ export default function AdminDashboardPage() {
   });
 
   return (
-<<<<<<< HEAD
-    <div className="min-h-screen bg-[#fafbfe] flex font-sans">
-
-      {/* Mobile overlay */}
-      {sidebarOpen && (
-        <div className="lg:hidden fixed inset-0 bg-slate-900/50 z-30" onClick={() => setSidebarOpen(false)} />
-      )}
-
-      {/* Sidebar */}
-      <aside
-        className={cn(
-          "w-64 bg-[#001233] text-white flex flex-col fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 lg:translate-x-0",
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        )}
-      >
-        <div className="p-6 pt-8 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-              <Plane className="w-5 h-5 -rotate-45" />
-            </div>
-            <span className="text-lg font-bold tracking-tight text-white">Kramana Admin</span>
-          </div>
-          <button className="lg:hidden text-slate-400 hover:text-white" onClick={() => setSidebarOpen(false)}>
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="flex-1 px-4 space-y-1.5 overflow-y-auto mt-2">
-          {sidebarLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              onClick={() => setSidebarOpen(false)}
-              className={cn(
-                "flex items-center gap-4 px-4 py-3 rounded-xl text-sm transition-colors font-medium",
-                link.active ? "bg-primary text-white shadow-lg shadow-primary/20" : "text-slate-300 hover:text-white hover:bg-white/5"
-              )}
-            >
-              <link.icon className="w-4 h-4" />
-              {link.name}
-            </Link>
-          ))}
-        </div>
-
-        <div className="p-4 pb-8">
-          <form action={logoutAction}>
-            <button
-              type="submit"
-              className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-red-500/20 transition-colors font-medium"
-            >
-              <LogOut className="w-4 h-4" />
-              Logout
-            </button>
-          </form>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <div className="flex-1 lg:ml-64 flex flex-col h-screen overflow-hidden">
-
-        {/* Header */}
-        <header className="h-20 px-6 md:px-10 flex items-center justify-between shrink-0 bg-white border-b border-slate-100">
-          <div className="flex items-center gap-4">
-            <button className="lg:hidden text-slate-600 hover:text-slate-900" onClick={() => setSidebarOpen(true)}>
-              <Menu className="w-6 h-6" />
-            </button>
-            <div>
-              <h1 className="text-xl font-bold text-slate-800">Dashboard</h1>
-              <p className="text-xs text-slate-400 hidden sm:block">Welcome back, here&apos;s your overview</p>
-            </div>
-          </div>
-          <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">A</div>
-=======
     <>
         
         {/* Top Header */}
@@ -167,7 +94,6 @@ export default function AdminDashboardPage() {
           <button className="text-slate-600 hover:text-slate-800">
             <Menu className="w-6 h-6" />
           </button>
->>>>>>> cf568ecb7642200487766cefa91f0ab2fb89a3c5
         </header>
 
         {/* Scrollable Content */}

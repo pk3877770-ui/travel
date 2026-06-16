@@ -2,12 +2,8 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-<<<<<<< HEAD
-import { Mail, Lock, User, Eye, EyeOff, ArrowRight, ArrowLeft, Plane, Loader2, ShieldCheck, BadgePercent, Globe2 } from "lucide-react";
-=======
-import { Mail, Lock, User, Eye, EyeOff, ArrowRight, ArrowLeft, Plane, Loader2, Apple } from "lucide-react";
+import { Mail, Lock, User, Eye, EyeOff, ArrowRight, ArrowLeft, Plane, Loader2, ShieldCheck, BadgePercent, Globe2, Apple } from "lucide-react";
 import { FaFacebook as Facebook } from "react-icons/fa";
->>>>>>> cf568ecb7642200487766cefa91f0ab2fb89a3c5
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
