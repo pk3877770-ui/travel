@@ -9,6 +9,7 @@ import Script from "next/script";
 import { getSiteUrl } from "@/lib/site-url";
 import { BookingProvider } from "@/context/BookingContext";
 import SessionProvider from "@/components/SessionProvider";
+import TabSessionGuard from "@/components/TabSessionGuard";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 
@@ -111,6 +112,7 @@ export default async function RootLayout({
         className={`${inter.variable} ${outfit.variable} antialiased selection:bg-accent/30`}
       >
         <SessionProvider session={session}>
+          <TabSessionGuard />
           <NavbarShell />
           <Script
               src="https://www.googletagmanager.com/gtag/js?id=G-5CW4N3EYJJ"
