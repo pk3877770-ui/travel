@@ -6,6 +6,7 @@ import { useBooking } from "@/context/BookingContext";
 import { CreditCard, Wallet, Landmark, RefreshCcw, Check, Smartphone, Lock, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import Stepper from "@/components/Stepper";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
@@ -79,7 +80,7 @@ export default function PaymentPage() {
 
   useEffect(() => {
     if (!selectedFlight || !selectedSeat) {
-      router.push("/flights");
+      // router.push("/flights");
     }
   }, [selectedFlight, selectedSeat, router]);
 
@@ -92,9 +93,9 @@ export default function PaymentPage() {
     return () => { document.body.removeChild(script); };
   }, []);
 
-  if (!selectedFlight) return null;
+  // if (!selectedFlight) return null;
 
-  const basePrice = Number(selectedFlight.price) || 12499;
+  const basePrice = Number(selectedFlight?.price) || 12499;
   const taxes = Math.floor(basePrice * 0.18);
   const seatFee = selectedSeat ? 450 : 0;
   const convenienceFee = 250;
@@ -118,39 +119,18 @@ export default function PaymentPage() {
   };
 
   const steps = [
-    { name: "Search Flights", active: false, completed: true },
-    { name: "Passenger Details", active: false, completed: true },
-    { name: "Seat Selection", active: false, completed: true },
+    { name: "Search", active: false, completed: true },
+    { name: "Passenger", active: false, completed: true },
+    { name: "Seat", active: false, completed: true },
     { name: "Payment", active: true, completed: false },
-    { name: "Confirmation", active: false, completed: false }
+    { name: "Confirm", active: false, completed: false }
   ];
 
   return (
     <div className="pt-24 pb-16 bg-[#f8f9fa] min-h-screen font-sans">
       <div className="container max-w-[1200px] mx-auto px-4 md:px-8">
         
-        {/* Stepper */}
-        <div className="mb-10 bg-white p-6 rounded-xl border border-slate-200 shadow-sm hidden md:block">
-          <div className="flex items-center justify-between relative">
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-slate-100 z-0" />
-            {steps.map((step, idx) => (
-              <div key={idx} className="relative z-10 flex flex-col items-center gap-2">
-                <div className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors",
-                  step.completed ? "bg-[#0A58CA] text-white" : step.active ? "bg-[#0A58CA] border-4 border-blue-100 text-white" : "bg-white border-2 border-slate-200 text-slate-400"
-                )}>
-                  {idx + 1}
-                </div>
-                <span className={cn(
-                  "text-xs font-bold",
-                  step.active ? "text-[#0A58CA]" : "text-slate-500"
-                )}>
-                  {step.name}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Stepper steps={steps} />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Payment Methods Column */}

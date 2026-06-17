@@ -5,7 +5,6 @@ import crypto from "crypto";
 
 export async function POST(req) {
   try {
-    await dbConnect();
     const body = await req.json();
 
     // In a real app, user ID comes from a session token

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useBooking } from "@/context/BookingContext";
 import { Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Stepper from "@/components/Stepper";
 
 export default function PassengerDetailsPage() {
   const router = useRouter();
@@ -35,34 +36,9 @@ export default function PassengerDetailsPage() {
     <div className="pt-24 pb-16 bg-[#f8f9fa] min-h-screen font-sans">
       <div className="container max-w-[800px] mx-auto px-4">
         
+        <Stepper steps={steps} />
+        
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-8">
-          
-          {/* Top Stepper */}
-          <div className="flex items-center justify-center py-6 px-8 border-b border-slate-100">
-            {steps.map((step, idx) => (
-              <React.Fragment key={idx}>
-                <div className="flex items-center gap-2">
-                  <div className={cn(
-                    "w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold",
-                    step.status === "completed" || step.status === "current" 
-                      ? "bg-primary text-white" 
-                      : "bg-white border border-slate-300 text-slate-400"
-                  )}>
-                    {step.num}
-                  </div>
-                  <span className={cn(
-                    "text-xs font-bold",
-                    step.status === "completed" || step.status === "current" ? "text-primary" : "text-slate-500"
-                  )}>
-                    {step.name}
-                  </span>
-                </div>
-                {idx < steps.length - 1 && (
-                  <div className="w-8 md:w-16 h-[1px] bg-slate-200 mx-2 md:mx-4 border-t border-dashed border-slate-300"></div>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
 
           <div className="p-8">
             {/* Contact Details */}

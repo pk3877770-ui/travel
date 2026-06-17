@@ -1,10 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { toPng } from "html-to-image";
+import jsPDF from "jspdf";
 import { useBooking } from "@/context/BookingContext";
 import { Check } from "lucide-react";
 import Link from "next/link";
+import Stepper from "@/components/Stepper";
 
 export default function ConfirmationPage() {
   const router = useRouter();
@@ -16,11 +19,84 @@ export default function ConfirmationPage() {
     }
   }, [bookingReference, selectedFlight, router]);
 
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownloadTicket = async () => {
+    const ticketElement = document.getElementById("ticket-content");
+    if (!ticketElement) return;
+
+    try {
+      setIsDownloading(true);
+      
+      // Next.js intercepts non-fatal console.errors from html-to-image (like cross-origin cssRules)
+      // and turns them into full-screen error overlays. We temporarily suppress them here.
+      const originalConsoleError = console.error;
+      const originalConsoleWarn = console.warn;
+      
+      console.error = (...args: any[]) => {
+        if (args[0] && args[0].name === 'SecurityError') return;
+        if (typeof args[0] === 'string' && args[0].includes('cssRules')) return;
+        originalConsoleError.apply(console, args);
+      };
+      
+      console.warn = (...args: any[]) => {
+        if (args[0] && args[0].name === 'SecurityError') return;
+        if (typeof args[0] === 'string' && args[0].includes('cssRules')) return;
+        originalConsoleWarn.apply(console, args);
+      };
+
+      let imgData;
+      try {
+        imgData = await toPng(ticketElement, { 
+          quality: 1.0, 
+          pixelRatio: 2,
+          filter: (node) => {
+            if (node.getAttribute && node.getAttribute('data-html2canvas-ignore') === 'true') {
+              return false;
+            }
+            return true;
+          }
+        });
+      } finally {
+        // Always restore console
+        console.error = originalConsoleError;
+        console.warn = originalConsoleWarn;
+      }
+      
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
+
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`Ticket-${bookingReference || "FB1234567890"}.pdf`);
+    } catch (error) {
+      console.error("Failed to download ticket", error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
+  const steps = [
+    { name: "Search", active: false, completed: true },
+    { name: "Passenger", active: false, completed: true },
+    { name: "Seat", active: false, completed: true },
+    { name: "Payment", active: false, completed: true },
+    { name: "Confirm", active: true, completed: true }
+  ];
+
   return (
     <div className="pt-24 pb-16 bg-[#001233] min-h-screen font-sans flex items-start justify-center">
-      <div className="container max-w-[800px] mx-auto px-4">
+      <div className="container max-w-[900px] mx-auto px-4">
         
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden pb-12">
+        <Stepper steps={steps} />
+
+        <div id="ticket-content" className="bg-white rounded-xl shadow-lg overflow-hidden pb-12">
           
           {/* Header */}
           <div className="flex flex-col md:flex-row items-center justify-center gap-6 p-12 text-center md:text-left">
@@ -90,9 +166,17 @@ export default function ConfirmationPage() {
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto sm:mx-0">
-              <button className="flex-1 bg-[#0A58CA] hover:bg-blue-700 text-white py-3 rounded text-sm font-bold transition-colors">
-                Download Ticket
+            <div data-html2canvas-ignore="true" className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto sm:mx-0 mt-8">
+              <button 
+                onClick={handleDownloadTicket}
+                disabled={isDownloading}
+                className="flex-1 bg-[#0A58CA] hover:bg-blue-700 text-white py-3 rounded text-sm font-bold transition-colors flex justify-center items-center gap-2 disabled:opacity-70"
+              >
+                {isDownloading ? (
+                  <>Downloading...</>
+                ) : (
+                  <>Download Ticket</>
+                )}
               </button>
               <Link 
                 href="/profile/bookings"

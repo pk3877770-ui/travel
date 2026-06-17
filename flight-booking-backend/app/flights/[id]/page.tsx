@@ -30,6 +30,7 @@ export default function FlightDetailsPage() {
 
   const [selectedReturnDate, setSelectedReturnDate] = useState(returnDefaultLabel);
   const [selectedReturnFlight, setSelectedReturnFlight] = useState<number | null>(1);
+  const [showDetails, setShowDetails] = useState(false);
 
   const fromParam = formatSeoParam(searchParams.get("from")) || "DEL";
   const toParam = formatSeoParam(searchParams.get("to")) || "BOM";
@@ -158,10 +159,37 @@ export default function FlightDetailsPage() {
               </div>
             </div>
             
-            <button className="text-primary font-bold text-sm hover:underline w-full md:w-auto text-left md:text-right">
-              Flight Details
+            <button 
+              onClick={() => setShowDetails(!showDetails)}
+              className="text-primary font-bold text-sm hover:underline w-full md:w-auto text-left md:text-right"
+            >
+              {showDetails ? "Hide Details" : "Flight Details"}
             </button>
           </div>
+          
+          {/* Expanded Flight Details */}
+          {showDetails && (
+            <div className="border-t border-slate-100 bg-slate-50 p-6 sm:px-8">
+              <h3 className="font-bold text-slate-800 mb-6">Flight Itinerary</h3>
+              <div className="relative border-l-2 border-primary/30 ml-3 pl-6 space-y-8">
+                <div className="relative">
+                  <div className="absolute -left-[31px] bg-white border-2 border-primary w-4 h-4 rounded-full"></div>
+                  <div className="font-bold text-slate-800">06:20 - {fromParam}</div>
+                  <div className="text-sm text-slate-500 mt-1">Airport Terminal</div>
+                </div>
+                <div className="relative">
+                  <div className="absolute -left-[31px] bg-white border-2 border-slate-300 w-4 h-4 rounded-full"></div>
+                  <div className="text-sm font-medium text-slate-500 mb-1">2h 30m flight duration</div>
+                  <div className="text-sm text-slate-500">Economy Class • Flight 6E-5324</div>
+                </div>
+                <div className="relative">
+                  <div className="absolute -left-[31px] bg-white border-2 border-primary w-4 h-4 rounded-full"></div>
+                  <div className="font-bold text-slate-800">08:50 - {toParam}</div>
+                  <div className="text-sm text-slate-500 mt-1">Airport Terminal</div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Select Return Flight Section */}
