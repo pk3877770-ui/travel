@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useBooking } from "@/context/BookingContext";
 import { Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Stepper from "@/components/Stepper";
+import Stepper, { Step } from "@/components/Stepper";
 
 export default function PassengerDetailsPage() {
   const router = useRouter();
@@ -24,12 +24,12 @@ export default function PassengerDetailsPage() {
     router.push("/booking/seats");
   };
 
-  const steps = [
-    { num: 1, name: "Search", status: "completed" },
-    { num: 2, name: "Passenger", status: "current" },
-    { num: 3, name: "Seat", status: "upcoming" },
-    { num: 4, name: "Payment", status: "upcoming" },
-    { num: 5, name: "Confirmation", status: "upcoming" }
+  const steps: Step[] = [
+    { name: "Search", status: "completed" },
+    { name: "Passenger", status: "current" },
+    { name: "Seat", status: "upcoming" },
+    { name: "Payment", status: "upcoming" },
+    { name: "Confirmation", status: "upcoming" }
   ];
 
   return (

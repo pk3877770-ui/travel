@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Plane, Info, Check, X } from "lucide-react";
 import { useBooking } from "@/context/BookingContext";
 import { cn } from "@/lib/utils";
-import Stepper from "@/components/Stepper";
+import Stepper, { Step } from "@/components/Stepper";
 
 const flightDateLabel = (() => {
   const d = new Date();
@@ -56,12 +56,12 @@ export default function SeatsSelectionPage() {
     }
   }, [selectedFlight, router]);
 
-  const steps = [
-    { num: 1, name: "Search", status: "completed" },
-    { num: 2, name: "Passenger", status: "completed" },
-    { num: 3, name: "Seat", status: "current" },
-    { num: 4, name: "Payment", status: "upcoming" },
-    { num: 5, name: "Confirmation", status: "upcoming" }
+  const steps: Step[] = [
+    { name: "Search", status: "completed" },
+    { name: "Passenger", status: "completed" },
+    { name: "Seat", status: "current" },
+    { name: "Payment", status: "upcoming" },
+    { name: "Confirmation", status: "upcoming" }
   ];
 
   // Using 6A as default selected for mockup match if none selected

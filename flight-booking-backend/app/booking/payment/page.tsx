@@ -6,7 +6,7 @@ import { useBooking } from "@/context/BookingContext";
 import { CreditCard, Wallet, Landmark, RefreshCcw, Check, Smartphone, Lock, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import Stepper from "@/components/Stepper";
+import Stepper, { Step } from "@/components/Stepper";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
@@ -118,12 +118,12 @@ export default function PaymentPage() {
     }, 2000);
   };
 
-  const steps = [
-    { name: "Search", active: false, completed: true },
-    { name: "Passenger", active: false, completed: true },
-    { name: "Seat", active: false, completed: true },
-    { name: "Payment", active: true, completed: false },
-    { name: "Confirm", active: false, completed: false }
+  const steps: Step[] = [
+    { name: "Search", status: "completed" },
+    { name: "Passenger", status: "completed" },
+    { name: "Seat", status: "completed" },
+    { name: "Payment", status: "current" },
+    { name: "Confirmation", status: "upcoming" }
   ];
 
   return (

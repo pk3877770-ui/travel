@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import { useBooking } from "@/context/BookingContext";
 import { Check } from "lucide-react";
 import Link from "next/link";
-import Stepper from "@/components/Stepper";
+import Stepper, { Step } from "@/components/Stepper";
 
 export default function ConfirmationPage() {
   const router = useRouter();
@@ -82,12 +82,12 @@ export default function ConfirmationPage() {
     }
   };
 
-  const steps = [
-    { name: "Search", active: false, completed: true },
-    { name: "Passenger", active: false, completed: true },
-    { name: "Seat", active: false, completed: true },
-    { name: "Payment", active: false, completed: true },
-    { name: "Confirm", active: true, completed: true }
+  const steps: Step[] = [
+    { name: "Search", status: "completed" },
+    { name: "Passenger", status: "completed" },
+    { name: "Seat", status: "completed" },
+    { name: "Payment", status: "completed" },
+    { name: "Confirmation", status: "current" }
   ];
 
   return (
