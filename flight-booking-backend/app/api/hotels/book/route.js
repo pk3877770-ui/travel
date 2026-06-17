@@ -15,14 +15,9 @@ export async function POST(req) {
       status: "confirmed",
     };
 
-    try {
-      await dbConnect();
-      const booking = await HotelBooking.create(payload);
-      return NextResponse.json({ success: true, data: booking }, { status: 201 });
-    } catch(e) {
-      console.warn("Simulating booking due to DB connection failure");
-      return NextResponse.json({ success: true, data: payload }, { status: 201 });
-    }
+    await dbConnect();
+    const booking = await HotelBooking.create(payload);
+    return NextResponse.json({ success: true, data: booking }, { status: 201 });
   } catch (error) {
     console.error("Error creating hotel booking:", error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });

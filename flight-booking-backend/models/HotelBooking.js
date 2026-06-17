@@ -8,8 +8,7 @@ const HotelBookingSchema = new mongoose.Schema(
       required: true,
     },
     hotel: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Hotel",
+      type: String,
       required: true,
     },
     hotelName: {
