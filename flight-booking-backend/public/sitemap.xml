@@ -58,66 +58,6 @@
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?to=dubai</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?to=singapore</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?to=bangkok</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?to=london</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=JFK&amp;to=LAX</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=LAX&amp;to=SFO</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=ORD&amp;to=LGA</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=ATL&amp;to=MIA</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=DFW&amp;to=DEN</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=SEA&amp;to=LAS</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=BOS&amp;to=DCA</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=IAH&amp;to=MCO</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
   <loc>https://flight-booking-backend-gold.vercel.app/faqs</loc>
   <lastmod>2026-06-16T21:32:46+00:00</lastmod>
   <priority>0.80</priority>
@@ -134,31 +74,6 @@
 </url>
 <url>
   <loc>https://flight-booking-backend-gold.vercel.app/cancellation</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=delhi&amp;to=mumbai</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=delhi&amp;to=bangalore</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=mumbai&amp;to=goa</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=delhi&amp;to=dubai</loc>
-  <lastmod>2026-06-16T21:32:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://flight-booking-backend-gold.vercel.app/flights?from=mumbai&amp;to=singapore</loc>
   <lastmod>2026-06-16T21:32:46+00:00</lastmod>
   <priority>0.80</priority>
 </url>

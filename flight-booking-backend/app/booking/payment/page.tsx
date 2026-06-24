@@ -117,7 +117,7 @@ export default function PaymentPage() {
         },
         travelers: 1,
         passengerDetails: {
-          name: passenger?.firstName + " " + passenger?.lastName,
+          name: passenger?.name || "Mock Passenger",
           email: passenger?.email || "mock@test.com",
           passport: passenger?.passport || "N/A"
         },
