@@ -5,6 +5,12 @@ import { useParams, useSearchParams, useRouter } from "next/navigation";
 import { CheckCircle2, ChevronRight, Lock } from "lucide-react";
 import Link from "next/link";
 
+const dateFromNow = (days: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d;
+};
+
 export default function HotelBookingPage() {
   const params = useParams();
   const searchParams = useSearchParams();
@@ -21,8 +27,8 @@ export default function HotelBookingPage() {
     name: "",
     email: "",
     phone: "",
-    checkIn: "2026-06-15",
-    checkOut: "2026-06-20",
+    checkIn: dateFromNow(7).toISOString().split('T')[0],
+    checkOut: dateFromNow(12).toISOString().split('T')[0],
     adults: 2,
     children: 0,
   });

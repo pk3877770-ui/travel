@@ -8,12 +8,22 @@ import Link from "next/link";
 import RoomCard from "@/components/RoomCard";
 import ReviewSection from "@/components/ReviewSection";
 
+const dateFromNow = (days: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d;
+};
+
 export default function HotelDetailsPage() {
   const params = useParams();
   const id = params.id as string;
   
   const [hotel, setHotel] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  const defaultCheckIn = dateFromNow(7).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+  const defaultCheckOut = dateFromNow(12).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+
 
   useEffect(() => {
     const fetchHotel = async () => {
@@ -171,7 +181,7 @@ export default function HotelDetailsPage() {
               </div>
             </section>
 
-            <section className="mb-12">
+            <section id="rooms" className="mb-12">
               <h2 className="text-2xl font-bold text-slate-800 mb-6">Available Rooms</h2>
               <div className="flex flex-col gap-6">
                 {hotel.rooms?.map((room: any) => (
@@ -200,21 +210,21 @@ export default function HotelDetailsPage() {
               <div className="bg-slate-50 rounded-xl p-4 mb-6 border border-slate-100">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-slate-500 font-medium">Check-in</span>
-                  <span className="text-slate-800 font-bold">15 Jun 2026</span>
+                  <span className="text-slate-800 font-bold">{defaultCheckIn}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-slate-500 font-medium">Check-out</span>
-                  <span className="text-slate-800 font-bold">20 Jun 2026</span>
+                  <span className="text-slate-800 font-bold">{defaultCheckOut}</span>
                 </div>
               </div>
               
               {hotel.rooms && hotel.rooms.length > 0 ? (
-                <Link 
-                  href={`/hotels/${hotel._id}/book?roomId=${hotel.rooms[0].id}`}
+                <a 
+                  href="#rooms"
                   className="block w-full text-center bg-[#0A58CA] hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-md shadow-blue-500/30 mb-4"
                 >
-                  Book Now
-                </Link>
+                  Select a Room
+                </a>
               ) : (
                 <button disabled className="block w-full text-center bg-slate-300 text-slate-500 px-6 py-3 rounded-xl font-bold mb-4 cursor-not-allowed">
                   No Rooms Available
