@@ -105,31 +105,31 @@ export default function FlightDetailsPage() {
             
             {/* Airline Header */}
             <div className="flex items-center gap-3 mb-8">
-              <img src="https://images.kiwi.com/airlines/64x64/6E.png" alt="IndiGo" className="h-6 object-contain" />
-              <span className="text-sm font-medium text-slate-500">6E-5324</span>
+              <img src={selectedFlight?.logo || "https://images.kiwi.com/airlines/64x64/6E.png"} alt={selectedFlight?.airline || "IndiGo"} className="h-6 object-contain" />
+              <span className="text-sm font-medium text-slate-500">{selectedFlight?.flightNumber || "6E-5324"}</span>
             </div>
 
             {/* Flight Times */}
             <div className="flex items-center justify-between mb-8">
               <div className="text-center w-32">
-                <div className="font-bold text-2xl text-slate-800">06:20</div>
+                <div className="font-bold text-2xl text-slate-800">{selectedFlight?.dep || selectedFlight?.departureTime || "06:20"}</div>
                 <div className="text-sm font-medium text-slate-500">{fromParam}</div>
-                <div className="text-xs text-slate-400 mt-1">Tue, 20 May</div>
+                <div className="text-xs text-slate-400 mt-1">{dateParam}</div>
               </div>
               
               <div className="flex-1 px-2 sm:px-8 flex flex-col items-center justify-center relative">
-                <div className="text-xs font-medium text-slate-400 mb-2">2h 30m</div>
+                <div className="text-xs font-medium text-slate-400 mb-2">{selectedFlight?.dur || "2h 30m"}</div>
                 <div className="w-full relative flex items-center justify-center">
                   <div className="h-px bg-slate-200 w-full" />
                   <ChevronRight className="w-4 h-4 text-slate-300 absolute right-0 -translate-y-1/2 top-1/2 translate-x-2" />
                 </div>
-                <div className="text-xs font-medium text-slate-400 mt-2">Non Stop</div>
+                <div className="text-xs font-medium text-slate-400 mt-2">{selectedFlight?.stops || "Non Stop"}</div>
               </div>
 
               <div className="text-center w-24 sm:w-32">
-                <div className="font-bold text-2xl text-slate-800">08:50</div>
+                <div className="font-bold text-2xl text-slate-800">{selectedFlight?.arr || selectedFlight?.arrivalTime || "08:50"}</div>
                 <div className="text-sm font-medium text-slate-500">{toParam}</div>
-                <div className="text-xs text-slate-400 mt-1">Tue, 20 May</div>
+                <div className="text-xs text-slate-400 mt-1">{dateParam}</div>
               </div>
             </div>
 
@@ -159,12 +159,20 @@ export default function FlightDetailsPage() {
               </div>
             </div>
             
-            <button 
-              onClick={() => setShowDetails(!showDetails)}
-              className="text-primary font-bold text-sm hover:underline w-full md:w-auto text-left md:text-right"
-            >
-              {showDetails ? "Hide Details" : "Flight Details"}
-            </button>
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+              <button 
+                onClick={() => setShowDetails(!showDetails)}
+                className="text-primary font-bold text-sm hover:underline w-full sm:w-auto text-center"
+              >
+                {showDetails ? "Hide Details" : "Flight Details"}
+              </button>
+              <button
+                onClick={() => router.push("/booking/passenger")}
+                className="bg-primary hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-colors shadow-sm w-full sm:w-auto text-center"
+              >
+                Book This Flight
+              </button>
+            </div>
           </div>
           
           {/* Expanded Flight Details */}
@@ -174,17 +182,17 @@ export default function FlightDetailsPage() {
               <div className="relative border-l-2 border-primary/30 ml-3 pl-6 space-y-8">
                 <div className="relative">
                   <div className="absolute -left-[31px] bg-white border-2 border-primary w-4 h-4 rounded-full"></div>
-                  <div className="font-bold text-slate-800">06:20 - {fromParam}</div>
+                  <div className="font-bold text-slate-800">{selectedFlight?.dep || selectedFlight?.departureTime || "06:20"} - {fromParam}</div>
                   <div className="text-sm text-slate-500 mt-1">Airport Terminal</div>
                 </div>
                 <div className="relative">
                   <div className="absolute -left-[31px] bg-white border-2 border-slate-300 w-4 h-4 rounded-full"></div>
-                  <div className="text-sm font-medium text-slate-500 mb-1">2h 30m flight duration</div>
-                  <div className="text-sm text-slate-500">Economy Class • Flight 6E-5324</div>
+                  <div className="text-sm font-medium text-slate-500 mb-1">{selectedFlight?.dur || "2h 30m"} flight duration</div>
+                  <div className="text-sm text-slate-500">{cabinParam} Class • Flight {selectedFlight?.flightNumber || "6E-5324"}</div>
                 </div>
                 <div className="relative">
                   <div className="absolute -left-[31px] bg-white border-2 border-primary w-4 h-4 rounded-full"></div>
-                  <div className="font-bold text-slate-800">08:50 - {toParam}</div>
+                  <div className="font-bold text-slate-800">{selectedFlight?.arr || selectedFlight?.arrivalTime || "08:50"} - {toParam}</div>
                   <div className="text-sm text-slate-500 mt-1">Airport Terminal</div>
                 </div>
               </div>

@@ -3,19 +3,25 @@
 import React, { createContext, useContext, useState } from "react";
 
 export type Flight = {
-  id: string;
+  id: string | number;
   _id?: string;
-  from: string;
-  to: string;
-  departureTime: string;
-  arrivalTime: string;
+  from?: string;
+  to?: string;
+  departureTime?: string;
+  arrivalTime?: string;
   durationHours?: string;
-  price: string;
+  price: string | number;
   airline: string;
   flightNumber?: string;
   class?: string;
   date?: string;
-  stops?: number;
+  stops?: number | string;
+  dur?: string;
+  dep?: string;
+  arr?: string;
+  logo?: string;
+  flightNum?: string;
+  arrDay?: string;
 };
 
 export type PassengerDetails = {
