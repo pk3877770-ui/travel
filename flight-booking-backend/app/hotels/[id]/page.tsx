@@ -4,6 +4,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { MapPin, Star, Wifi, Coffee, Map, Car, Wind, Tv } from "lucide-react";
+import Link from "next/link";
 import RoomCard from "@/components/RoomCard";
 import ReviewSection from "@/components/ReviewSection";
 
@@ -207,6 +208,19 @@ export default function HotelDetailsPage() {
                 </div>
               </div>
               
+              {hotel.rooms && hotel.rooms.length > 0 ? (
+                <Link 
+                  href={`/hotels/${hotel._id}/book?roomId=${hotel.rooms[0].id}`}
+                  className="block w-full text-center bg-[#0A58CA] hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-md shadow-blue-500/30 mb-4"
+                >
+                  Book Now
+                </Link>
+              ) : (
+                <button disabled className="block w-full text-center bg-slate-300 text-slate-500 px-6 py-3 rounded-xl font-bold mb-4 cursor-not-allowed">
+                  No Rooms Available
+                </button>
+              )}
+
               <div className="text-center text-xs text-slate-400">
                 You won't be charged yet.
               </div>
