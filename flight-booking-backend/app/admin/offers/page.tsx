@@ -25,6 +25,7 @@ export default function AdminOffersPage() {
     validUntil: "",
     isActive: true,
     image: "",
+    category: "Other",
   });
 
   // Search
@@ -74,6 +75,7 @@ export default function AdminOffersPage() {
       validUntil: "",
       isActive: true,
       image: "",
+      category: "Other",
     });
     setFormError("");
     setAddOpen(true);
@@ -89,6 +91,7 @@ export default function AdminOffersPage() {
       validUntil: new Date(offer.validUntil).toISOString().split('T')[0],
       isActive: offer.isActive,
       image: offer.image || "",
+      category: offer.category || "Other",
     });
     setFormError("");
     setEditOpen(true);
@@ -377,6 +380,20 @@ export default function AdminOffersPage() {
                   >
                     <option value="true">Active</option>
                     <option value="false">Inactive</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5">Category</label>
+                  <select
+                    value={form.category}
+                    onChange={(e) => setForm({ ...form, category: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-primary cursor-pointer"
+                  >
+                    <option value="Flight Offers">Flight Offers</option>
+                    <option value="Bank Offers">Bank Offers</option>
+                    <option value="Hotel Offers">Hotel Offers</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
 

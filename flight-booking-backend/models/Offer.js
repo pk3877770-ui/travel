@@ -6,6 +6,7 @@ const offerSchema = new mongoose.Schema({
   code: { type: String, required: true, unique: true },
   discountPercentage: { type: Number, required: true },
   validUntil: { type: Date, required: true },
+  category: { type: String, enum: ["Flight Offers", "Bank Offers", "Hotel Offers", "Other"], default: "Other" },
   isActive: { type: Boolean, default: true },
   image: { type: String, default: "" }
 }, { timestamps: true });

@@ -16,7 +16,10 @@ const themes: Record<string, { bg: string; border: string; text: string; chip: s
 
 const themeKeys = Object.keys(themes);
 
+const tabs = ["All Offers", "Flight Offers", "Bank Offers", "Hotel Offers"];
+
 export default function OffersPage() {
+  const [activeTab, setActiveTab] = useState("All Offers");
   const [offers, setOffers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -57,6 +60,24 @@ export default function OffersPage() {
           <p className="text-slate-500 text-base font-medium">Grab the best deals and discounts on your next booking</p>
         </div>
 
+        {/* Tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {tabs.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={cn(
+                "px-6 py-2.5 text-sm font-bold rounded-full transition-all duration-200",
+                activeTab === tab
+                  ? "bg-primary text-white shadow-md shadow-primary/30"
+                  : "bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700"
+              )}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
         {/* Offer Cards */}
         {loading ? (
           <div className="flex justify-center items-center py-20">
@@ -68,7 +89,9 @@ export default function OffersPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            {offers.map((offer, idx) => {
+            {offers
+              .filter((offer) => activeTab === "All Offers" || offer.category === activeTab)
+              .map((offer, idx) => {
               // Assign a stable pseudo-random theme based on index
               const t = themes[themeKeys[idx % themeKeys.length]];
               const Icon = t.icon;

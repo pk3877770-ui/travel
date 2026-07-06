@@ -18,7 +18,7 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const { title, description, code, discountPercentage, validUntil, isActive, image } = await req.json();
+    const { title, description, code, discountPercentage, validUntil, isActive, image, category } = await req.json();
 
     if (!title || !code || !discountPercentage || !validUntil) {
       return NextResponse.json(
@@ -44,6 +44,7 @@ export async function POST(req) {
       code,
       discountPercentage,
       validUntil,
+      category: category || "Other",
       isActive: isActive !== undefined ? isActive : true,
       image,
     });
