@@ -181,12 +181,12 @@ export default function HelpCenterPage() {
               <h2 className="text-xl font-bold text-slate-800 mb-6">Guides & Policies</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {[
-                  { title: "Terms & Conditions", desc: "Read our terms and conditions.", icon: FileText },
-                  { title: "Privacy Policy", desc: "Learn how we protect your data.", icon: ShieldCheck },
-                  { title: "Cancellation Policy", desc: "Understand our cancellation policy.", icon: FileText },
-                  { title: "Refund Policy", desc: "Know our refund rules and timelines.", icon: FileText },
+                  { title: "Terms & Conditions", desc: "Read our terms and conditions.", icon: FileText, href: "/terms-conditions" },
+                  { title: "Privacy Policy", desc: "Learn how we protect your data.", icon: ShieldCheck, href: "/privacy-policy" },
+                  { title: "Cancellation Policy", desc: "Understand our cancellation policy.", icon: FileText, href: "/cancellation-policy" },
+                  { title: "Refund Policy", desc: "Know our refund rules and timelines.", icon: FileText, href: "/refund-policy" },
                 ].map((doc, idx) => (
-                  <Link key={idx} href={`/${doc.title.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`} className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center text-center hover:shadow-md transition-shadow group cursor-pointer">
+                  <Link key={idx} href={doc.href} className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center text-center hover:shadow-md transition-shadow group cursor-pointer">
                     <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
                       <doc.icon className="w-5 h-5" />
                     </div>

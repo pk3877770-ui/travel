@@ -79,9 +79,9 @@ const Footer = () => {
               <ul className="space-y-4">
                 <li><Link href="/help" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Help Center</Link></li>
                 <li><Link href="/faqs" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">FAQs</Link></li>
-                <li><Link href="/terms" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Terms & Conditions</Link></li>
-                <li><Link href="/privacy" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Privacy Policy</Link></li>
-                <li><Link href="/cancellation" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Cancellation Policy</Link></li>
+                <li><Link href="/terms-conditions" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Terms & Conditions</Link></li>
+                <li><Link href="/privacy-policy" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Privacy Policy</Link></li>
+                <li><Link href="/cancellation-policy" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">Cancellation Policy</Link></li>
               </ul>
             </div>
 

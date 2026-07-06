@@ -7,11 +7,11 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 const navigation = [
-  { name: "Terms & Conditions", href: "/terms", icon: FileText },
-  { name: "Privacy Policy", href: "/privacy", icon: Lock },
-  { name: "Refund Policy", href: "/refund", icon: RefreshCcw },
-  { name: "Cancellation Policy", href: "/cancellation", icon: XCircle },
-  { name: "Cookie Policy", href: "/cookie", icon: Cookie },
+  { name: "Terms & Conditions", href: "/terms-conditions", icon: FileText },
+  { name: "Privacy Policy", href: "/privacy-policy", icon: Lock },
+  { name: "Refund Policy", href: "/refund-policy", icon: RefreshCcw },
+  { name: "Cancellation Policy", href: "/cancellation-policy", icon: XCircle },
+  { name: "Cookie Policy", href: "/cookie-policy", icon: Cookie },
 ];
 
 export default function LegalSidebar() {
