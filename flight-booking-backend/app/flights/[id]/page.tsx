@@ -46,15 +46,28 @@ export default function FlightDetailsPage() {
     }
   }, [selectedFlight, router]);
 
-  const dates = [
-    { label: "24 May", day: "Sat" },
-    { label: "25 May", day: "Sun" },
-    { label: "26 May", day: "Mon" },
-    { label: "27 May", day: "Tue" },
-    { label: "28 May", day: "Wed" },
-    { label: "29 May", day: "Thu" },
-    { label: "30 May", day: "Fri" },
-  ];
+  const dates = useMemo(() => {
+    const baseDate = returnParam ? new Date(returnParam) : dateFromNow(14);
+    const arr = [];
+    for (let i = -1; i <= 5; i++) {
+      const d = new Date(baseDate);
+      d.setDate(d.getDate() + i);
+      arr.push({
+        label: d.toLocaleDateString("en-GB", { day: "2-digit", month: "short" }),
+        day: d.toLocaleDateString("en-GB", { weekday: "short" })
+      });
+    }
+    return arr;
+  }, [returnParam]);
+
+  useEffect(() => {
+    if (returnParam) {
+      const d = new Date(returnParam);
+      const label = d.toLocaleDateString("en-GB", { day: "2-digit", month: "short" });
+      const day = d.toLocaleDateString("en-GB", { weekday: "short" });
+      setSelectedReturnDate(`${label} ${day}`);
+    }
+  }, [returnParam]);
 
   const returnFlights = [
     { id: 1, airline: "IndiGo", logo: "https://images.kiwi.com/airlines/64x64/6E.png", flightNum: "6E-5341", dep: "19:20", arr: "21:55", dur: "2h 30m", stops: "Non Stop", price: 12390 },
