@@ -17,11 +17,8 @@ const departureDefaultLabel = departureDefault.toLocaleDateString("en-GB", {
   month: "short",
   year: "numeric",
 });
-const returnDefaultLabel = dateFromNow(14).toLocaleDateString("en-GB", {
-  day: "2-digit",
-  month: "short",
-  weekday: "short",
-});
+const dReturn = dateFromNow(14);
+const returnDefaultLabel = `${dReturn.toLocaleDateString("en-GB", { day: "2-digit", month: "short" })} ${dReturn.toLocaleDateString("en-GB", { weekday: "short" })}`;
 
 export default function FlightDetailsPage() {
   const router = useRouter();
@@ -215,7 +212,6 @@ export default function FlightDetailsPage() {
         </div>
 
         {/* Select Return Flight Section */}
-        {returnParam && (
         <div className="mb-12">
           <h2 className="font-bold text-lg text-slate-800 mb-6">Select Return Flight</h2>
           
@@ -314,7 +310,6 @@ export default function FlightDetailsPage() {
           </div>
 
         </div>
-        )}
 
       </div>
     </div>
