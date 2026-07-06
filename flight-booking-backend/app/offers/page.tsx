@@ -1,14 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Plane, CreditCard, BedDouble, Tag, Copy, Check, Sparkles } from "lucide-react";
-
-const validTill = (daysFromNow: number) => {
-  const d = new Date();
-  d.setDate(d.getDate() + daysFromNow);
-  return `Valid till ${d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}`;
-};
+import { Plane, CreditCard, BedDouble, Tag, Copy, Check, Sparkles, Loader2 } from "lucide-react";
 
 const themes: Record<string, { bg: string; border: string; text: string; chip: string; icon: any }> = {
   blue: { bg: "bg-blue-50", border: "border-blue-200", text: "text-blue-600", chip: "bg-blue-100 text-blue-700", icon: Plane },
@@ -20,27 +14,31 @@ const themes: Record<string, { bg: string; border: string; text: string; chip: s
   teal: { bg: "bg-teal-50", border: "border-teal-200", text: "text-teal-600", chip: "bg-teal-100 text-teal-700", icon: BedDouble },
 };
 
-const offers = [
-  { id: 1, category: "Flight Offers", title: "KRAMANA10", badge: "10% OFF", discount: "Get 10% Instant Discount", condition: "On Domestic Flights", minBooking: "Min. Booking ₹ 2,000", validity: validTill(45), theme: "blue" },
-  { id: 2, category: "Flight Offers", title: "KRAMANA15", badge: "15% OFF", discount: "Get 15% Instant Discount", condition: "On International Flights", minBooking: "Min. Booking ₹ 10,000", validity: validTill(30), theme: "amber" },
-  { id: 3, category: "Flight Offers", title: "FLY20", badge: "20% OFF", discount: "Get 20% Off on Select Routes", condition: "On Business Class Fares", minBooking: "Min. Booking ₹ 25,000", validity: validTill(60), theme: "indigo" },
-  { id: 4, category: "Bank Offers", title: "HDFC1000", badge: "₹1,000 OFF", discount: "Flat ₹1,000 Off", condition: "On HDFC Bank Credit Cards", minBooking: "Min. Booking ₹ 8,000", validity: validTill(50), theme: "emerald" },
-  { id: 5, category: "Bank Offers", title: "ICICIFLY", badge: "12% OFF", discount: "Get 12% Instant Discount", condition: "On ICICI Credit & Debit Cards", minBooking: "Min. Booking ₹ 6,000", validity: validTill(40), theme: "rose" },
-  { id: 6, category: "Bank Offers", title: "SBIWOW", badge: "₹750 BACK", discount: "₹750 Cashback", condition: "On SBI Card Transactions", minBooking: "Min. Booking ₹ 5,000", validity: validTill(35), theme: "blue" },
-  { id: 7, category: "Hotel Offers", title: "STAY25", badge: "25% OFF", discount: "Get 25% Off on Hotels", condition: "On Stays of 2+ Nights", minBooking: "Min. Booking ₹ 4,000", validity: validTill(55), theme: "teal" },
-  { id: 8, category: "Hotel Offers", title: "WELCOME500", badge: "₹500 OFF", discount: "Flat ₹500 Off", condition: "On Your First Hotel Booking", minBooking: "Min. Booking ₹ 4,000", validity: validTill(70), theme: "purple" },
-  { id: 9, category: "Hotel Offers", title: "WEEKEND12", badge: "12% OFF", discount: "Get 12% Off Weekend Stays", condition: "On Fri–Sun Check-ins", minBooking: "Min. Booking ₹ 3,000", validity: validTill(25), theme: "amber" },
-];
-
-const tabs = ["All Offers", "Flight Offers", "Bank Offers", "Hotel Offers"];
+const themeKeys = Object.keys(themes);
 
 export default function OffersPage() {
-  const [activeTab, setActiveTab] = useState("All Offers");
-  const [copiedId, setCopiedId] = useState<number | null>(null);
+  const [offers, setOffers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const visibleOffers = activeTab === "All Offers" ? offers : offers.filter((o) => o.category === activeTab);
+  useEffect(() => {
+    const fetchOffers = async () => {
+      try {
+        const res = await fetch("/api/offers");
+        const data = await res.json();
+        if (data.success) {
+          setOffers(data.offers);
+        }
+      } catch (err) {
+        console.error("Failed to fetch offers", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOffers();
+  }, []);
 
-  const handleCopy = (id: number, code: string) => {
+  const handleCopy = (id: string, code: string) => {
     navigator.clipboard?.writeText(code).catch(() => {});
     setCopiedId(id);
     setTimeout(() => setCopiedId((c) => (c === id ? null : c)), 2000);
@@ -59,74 +57,69 @@ export default function OffersPage() {
           <p className="text-slate-500 text-base font-medium">Grab the best deals and discounts on your next booking</p>
         </div>
 
-        {/* Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={cn(
-                "px-6 py-2.5 text-sm font-bold rounded-full transition-all duration-200",
-                activeTab === tab
-                  ? "bg-primary text-white shadow-md shadow-primary/30"
-                  : "bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700"
-              )}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-
         {/* Offer Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {visibleOffers.map((offer) => {
-            const t = themes[offer.theme];
-            const Icon = t.icon;
-            const copied = copiedId === offer.id;
-            return (
-              <div
-                key={offer.id}
-                className={cn(
-                  "group relative rounded-2xl p-7 flex flex-col border border-dashed shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg",
-                  t.bg,
-                  t.border
-                )}
-              >
-                {/* Top row: icon + discount chip */}
-                <div className="flex items-center justify-between mb-5">
-                  <div className={cn("w-11 h-11 rounded-xl bg-white flex items-center justify-center shadow-sm", t.text)}>
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <span className={cn("text-xs font-black px-3 py-1 rounded-full", t.chip)}>{offer.badge}</span>
-                </div>
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : offers.length === 0 ? (
+          <div className="text-center py-20 text-slate-500 font-medium">
+            No active offers at the moment. Check back later!
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {offers.map((offer, idx) => {
+              // Assign a stable pseudo-random theme based on index
+              const t = themes[themeKeys[idx % themeKeys.length]];
+              const Icon = t.icon;
+              const copied = copiedId === offer._id;
+              
+              const validTill = new Date(offer.validUntil).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
 
-                <h3 className={cn("text-2xl font-black tracking-wide mb-4", t.text)}>{offer.title}</h3>
-
-                <div className="flex flex-col gap-2 flex-1 mb-6">
-                  <div className="text-sm font-bold text-slate-800">{offer.discount}</div>
-                  <div className="text-sm font-medium text-slate-500">{offer.condition}</div>
-                  <div className="text-sm font-medium text-slate-500">{offer.minBooking}</div>
-                  <div className="text-xs font-medium text-slate-400 mt-1">{offer.validity}</div>
-                </div>
-
-                <button
-                  onClick={() => handleCopy(offer.id, offer.title)}
+              return (
+                <div
+                  key={offer._id}
                   className={cn(
-                    "w-full bg-white border py-3 rounded-lg text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 hover:-translate-y-0.5 hover:shadow-md active:scale-95",
-                    t.border,
-                    copied ? "text-green-600 border-green-300" : t.text
+                    "group relative rounded-2xl p-7 flex flex-col border border-dashed shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg",
+                    t.bg,
+                    t.border
                   )}
                 >
-                  {copied ? (
-                    <><Check className="w-4 h-4" /> Copied!</>
-                  ) : (
-                    <><Copy className="w-4 h-4" /> Copy Code</>
-                  )}
-                </button>
-              </div>
-            );
-          })}
-        </div>
+                  {/* Top row: icon + discount chip */}
+                  <div className="flex items-center justify-between mb-5">
+                    <div className={cn("w-11 h-11 rounded-xl bg-white flex items-center justify-center shadow-sm", t.text)}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <span className={cn("text-xs font-black px-3 py-1 rounded-full", t.chip)}>{offer.discountPercentage}% OFF</span>
+                  </div>
+
+                  <h3 className={cn("text-2xl font-black tracking-wide mb-4", t.text)}>{offer.code}</h3>
+
+                  <div className="flex flex-col gap-2 flex-1 mb-6">
+                    <div className="text-sm font-bold text-slate-800">{offer.title}</div>
+                    {offer.description && <div className="text-sm font-medium text-slate-500">{offer.description}</div>}
+                    <div className="text-xs font-medium text-slate-400 mt-1">Valid till {validTill}</div>
+                  </div>
+
+                  <button
+                    onClick={() => handleCopy(offer._id, offer.code)}
+                    className={cn(
+                      "w-full bg-white border py-3 rounded-lg text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 hover:-translate-y-0.5 hover:shadow-md active:scale-95",
+                      t.border,
+                      copied ? "text-green-600 border-green-300" : t.text
+                    )}
+                  >
+                    {copied ? (
+                      <><Check className="w-4 h-4" /> Copied!</>
+                    ) : (
+                      <><Copy className="w-4 h-4" /> Copy Code</>
+                    )}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {/* Newsletter Section */}
         <div className="bg-linear-to-r from-[#e0f2fe] to-[#ccfbf1] rounded-3xl p-10 md:p-14 text-center shadow-sm">
