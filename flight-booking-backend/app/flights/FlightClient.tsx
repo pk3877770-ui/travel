@@ -99,7 +99,7 @@ export default function FlightClient() {
     setTimeout(() => {
       setIsBooking(null);
       setSelectedFlight(flight);
-      router.push(`/flights/${flight._id || flight.id || "123"}`);
+      router.push(`/flights/${flight._id || flight.id || "123"}?${searchParams.toString()}`);
     }, 1000);
   };
 
