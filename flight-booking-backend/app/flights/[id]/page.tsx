@@ -37,6 +37,7 @@ export default function FlightDetailsPage() {
   const dateParam = searchParams.get("date") || departureDefaultLabel;
   const travelersParam = searchParams.get("travelers") || "1 Traveler";
   const cabinParam = searchParams.get("cabin") || "Economy";
+  const returnParam = searchParams.get("return");
 
   useEffect(() => {
     if (!selectedFlight) {
@@ -201,7 +202,8 @@ export default function FlightDetailsPage() {
         </div>
 
         {/* Select Return Flight Section */}
-        <div>
+        {returnParam && (
+        <div className="mb-12">
           <h2 className="font-bold text-lg text-slate-800 mb-6">Select Return Flight</h2>
           
           {/* Date Carousel */}
@@ -299,6 +301,7 @@ export default function FlightDetailsPage() {
           </div>
 
         </div>
+        )}
 
       </div>
     </div>
