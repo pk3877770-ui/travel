@@ -308,9 +308,9 @@ export default function AuthPage() {
 
             <p className="text-center text-xs text-slate-400 mt-4">
               By continuing, you agree to our{" "}
-              <Link href="/terms" className="text-slate-600 hover:text-slate-900 underline">Terms of Service</Link>{" "}
+              <Link href="/terms-conditions" className="text-slate-600 hover:text-slate-900 underline">Terms of Service</Link>{" "}
               and{" "}
-              <Link href="/privacy" className="text-slate-600 hover:text-slate-900 underline">Privacy Policy</Link>.
+              <Link href="/privacy-policy" className="text-slate-600 hover:text-slate-900 underline">Privacy Policy</Link>.
             </p>
           </form>
         </motion.div>
