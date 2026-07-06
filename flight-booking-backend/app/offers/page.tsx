@@ -88,60 +88,82 @@ export default function OffersPage() {
             No active offers at the moment. Check back later!
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            {offers
-              .filter((offer) => activeTab === "All Offers" || offer.category === activeTab)
-              .map((offer, idx) => {
-              // Assign a stable pseudo-random theme based on index
-              const t = themes[themeKeys[idx % themeKeys.length]];
-              const Icon = t.icon;
-              const copied = copiedId === offer._id;
-              
-              const validTill = new Date(offer.validUntil).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+          (() => {
+            const filteredOffers = offers.filter((offer) => {
+              if (activeTab === "All Offers") return true;
+              // Fallback for older database entries without category
+              let cat = offer.category;
+              if (!cat || cat === "Other") {
+                if (offer.code.includes("FLY") || offer.code.includes("KRAMANA")) cat = "Flight Offers";
+                else if (offer.code.includes("HDFC") || offer.code.includes("SBI") || offer.code.includes("ICICI")) cat = "Bank Offers";
+                else if (offer.code.includes("STAY") || offer.code.includes("WEEKEND") || offer.code.includes("WELCOME")) cat = "Hotel Offers";
+              }
+              return cat === activeTab;
+            });
 
+            if (filteredOffers.length === 0) {
               return (
-                <div
-                  key={offer._id}
-                  className={cn(
-                    "group relative rounded-2xl p-7 flex flex-col border border-dashed shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg",
-                    t.bg,
-                    t.border
-                  )}
-                >
-                  {/* Top row: icon + discount chip */}
-                  <div className="flex items-center justify-between mb-5">
-                    <div className={cn("w-11 h-11 rounded-xl bg-white flex items-center justify-center shadow-sm", t.text)}>
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <span className={cn("text-xs font-black px-3 py-1 rounded-full", t.chip)}>{offer.discountPercentage}% OFF</span>
-                  </div>
-
-                  <h3 className={cn("text-2xl font-black tracking-wide mb-4", t.text)}>{offer.code}</h3>
-
-                  <div className="flex flex-col gap-2 flex-1 mb-6">
-                    <div className="text-sm font-bold text-slate-800">{offer.title}</div>
-                    {offer.description && <div className="text-sm font-medium text-slate-500">{offer.description}</div>}
-                    <div className="text-xs font-medium text-slate-400 mt-1">Valid till {validTill}</div>
-                  </div>
-
-                  <button
-                    onClick={() => handleCopy(offer._id, offer.code)}
-                    className={cn(
-                      "w-full bg-white border py-3 rounded-lg text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 hover:-translate-y-0.5 hover:shadow-md active:scale-95",
-                      t.border,
-                      copied ? "text-green-600 border-green-300" : t.text
-                    )}
-                  >
-                    {copied ? (
-                      <><Check className="w-4 h-4" /> Copied!</>
-                    ) : (
-                      <><Copy className="w-4 h-4" /> Copy Code</>
-                    )}
-                  </button>
+                <div className="text-center py-20 text-slate-500 font-medium mb-16 border border-dashed rounded-2xl bg-slate-50">
+                  No {activeTab.toLowerCase()} available at the moment.
                 </div>
               );
-            })}
-          </div>
+            }
+
+            return (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+                {filteredOffers.map((offer, idx) => {
+                  // Assign a stable pseudo-random theme based on index
+                  const t = themes[themeKeys[idx % themeKeys.length]];
+                  const Icon = t.icon;
+                  const copied = copiedId === offer._id;
+                  
+                  const validTill = new Date(offer.validUntil).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+
+                  return (
+                    <div
+                      key={offer._id}
+                      className={cn(
+                        "group relative rounded-2xl p-7 flex flex-col border border-dashed shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg",
+                        t.bg,
+                        t.border
+                      )}
+                    >
+                      {/* Top row: icon + discount chip */}
+                      <div className="flex items-center justify-between mb-5">
+                        <div className={cn("w-11 h-11 rounded-xl bg-white flex items-center justify-center shadow-sm", t.text)}>
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <span className={cn("text-xs font-black px-3 py-1 rounded-full", t.chip)}>{offer.discountPercentage}% OFF</span>
+                      </div>
+
+                      <h3 className={cn("text-2xl font-black tracking-wide mb-4", t.text)}>{offer.code}</h3>
+
+                      <div className="flex flex-col gap-2 flex-1 mb-6">
+                        <div className="text-sm font-bold text-slate-800">{offer.title}</div>
+                        {offer.description && <div className="text-sm font-medium text-slate-500">{offer.description}</div>}
+                        <div className="text-xs font-medium text-slate-400 mt-1">Valid till {validTill}</div>
+                      </div>
+
+                      <button
+                        onClick={() => handleCopy(offer._id, offer.code)}
+                        className={cn(
+                          "w-full bg-white border py-3 rounded-lg text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 hover:-translate-y-0.5 hover:shadow-md active:scale-95",
+                          t.border,
+                          copied ? "text-green-600 border-green-300" : t.text
+                        )}
+                      >
+                        {copied ? (
+                          <><Check className="w-4 h-4" /> Copied!</>
+                        ) : (
+                          <><Copy className="w-4 h-4" /> Copy Code</>
+                        )}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })()
         )}
 
         {/* Newsletter Section */}
