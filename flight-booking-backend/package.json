@@ -13,6 +13,7 @@
     "@paypal/react-paypal-js": "^10.0.0",
     "@stripe/react-stripe-js": "^6.6.0",
     "@stripe/stripe-js": "^9.8.0",
+    "@vercel/analytics": "^2.0.1",
     "amadeus": "^11.0.0",
     "aos": "^2.3.4",
     "bcryptjs": "^3.0.3",
