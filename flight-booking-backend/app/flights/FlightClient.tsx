@@ -219,7 +219,7 @@ export default function FlightClient() {
         
         {/* Top Summary Bar */}
         <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between mb-8">
-          <div className="flex items-center gap-4 text-sm font-medium text-slate-500 w-full overflow-x-auto">
+          <div className="flex items-center gap-4 text-sm font-medium text-slate-500 w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <div className="flex items-center gap-2 border border-slate-200 rounded-lg px-3 py-1.5 whitespace-nowrap">
               <Search className="w-4 h-4" />
               <span className="font-bold text-slate-800 uppercase">{fromParam} → {toParam}</span>

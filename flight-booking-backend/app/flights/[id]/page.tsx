@@ -205,7 +205,7 @@ export default function FlightDetailsPage() {
           <h2 className="font-bold text-lg text-slate-800 mb-6">Select Return Flight</h2>
           
           {/* Date Carousel */}
-          <div className="flex items-center gap-3 mb-8 overflow-x-auto pb-2">
+          <div className="flex items-center gap-3 mb-8 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <button className="w-8 h-8 rounded-full flex items-center justify-center text-slate-300 hover:text-slate-500 shrink-0">
               <ChevronRight className="w-5 h-5 rotate-180" />
             </button>
