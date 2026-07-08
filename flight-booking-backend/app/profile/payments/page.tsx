@@ -54,9 +54,9 @@ export default function ProfilePaymentsPage() {
                 You haven't saved any payment methods yet. Save a card during your next flight or hotel booking for faster checkouts.
               </p>
               
-              <button disabled className="bg-slate-100 text-slate-400 px-8 py-3 rounded-xl text-sm font-bold uppercase tracking-widest cursor-not-allowed">
-                Add New Card
-              </button>
+              <Link href="/flights" className="bg-[#0A58CA] hover:bg-blue-700 text-white px-8 py-3 rounded-xl text-sm font-bold uppercase tracking-widest transition-colors shadow-md">
+                Search Flights
+              </Link>
             </div>
           </div>
         </div>
