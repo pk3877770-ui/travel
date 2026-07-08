@@ -65,10 +65,10 @@ export default function ProfileSettingsPage() {
   return (
     <div className="pt-24 pb-16 bg-[#001233] min-h-screen font-sans flex justify-center">
       <div className="container max-w-[1000px] mx-auto px-4">
-        <div className="bg-white rounded-xl shadow-lg flex flex-col md:flex-row overflow-hidden min-h-[600px]">
+        <div className="bg-white rounded-xl shadow-lg grid md:grid-cols-[240px_1fr] overflow-hidden min-h-[600px]">
           
           {/* Sidebar */}
-          <div className="w-full md:w-[240px] border-r border-slate-100 p-6 flex flex-col gap-2 shrink-0">
+          <div className="border-b md:border-b-0 md:border-r border-slate-100 p-6 flex flex-col gap-2 h-full">
             {sidebarLinks.map((link) => (
               <Link 
                 key={link.name} 

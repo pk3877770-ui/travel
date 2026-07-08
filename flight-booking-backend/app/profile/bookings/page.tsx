@@ -69,10 +69,10 @@ export default function MyBookingsPage() {
     <div className="pt-24 pb-16 bg-[#001233] min-h-screen font-sans flex justify-center">
       <div className="container max-w-[1000px] mx-auto px-4">
         
-        <div className="bg-white rounded-xl shadow-lg flex flex-col md:flex-row overflow-hidden min-h-[600px]">
+        <div className="bg-white rounded-xl shadow-lg grid md:grid-cols-[240px_1fr] overflow-hidden min-h-[600px]">
           
           {/* Sidebar */}
-          <div className="w-full md:w-[240px] border-r border-slate-100 p-6 flex flex-col gap-2 shrink-0">
+          <div className="border-b md:border-b-0 md:border-r border-slate-100 p-6 flex flex-col gap-2 h-full">
             {sidebarLinks.map((link) => (
               <Link 
                 key={link.name} 
@@ -92,7 +92,7 @@ export default function MyBookingsPage() {
           </div>
 
           {/* Main Content */}
-          <div className="flex-1 p-8 md:p-10 relative">
+          <div className="flex-1 p-8 md:p-10 flex flex-col relative">
             <h1 className="text-xl font-bold text-slate-800 mb-6">My Bookings</h1>
             
             <div className="flex border-b border-slate-100 mb-8">
@@ -236,7 +236,7 @@ export default function MyBookingsPage() {
             )}
 
             {/* Footer Support Text */}
-            <div className="mt-20 pt-8 border-t border-slate-50 text-center">
+            <div className="mt-auto pt-8 border-t border-slate-50 text-center">
               <p className="text-[10px] text-slate-500 font-medium">
                 Can't find your booking? <Link href="/contact" className="text-[#0A58CA] font-bold hover:underline">Contact Support</Link>
               </p>
