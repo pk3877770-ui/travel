@@ -1,23 +1,14 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Booking from "@/models/Booking";
-import jwt from "jsonwebtoken";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/authOptions";
 import { sendBookingConfirmation, sendCancellationNotification } from "@/lib/notifications";
-
-const getUserIdFromToken = (req) => {
-  const token = req.cookies.get("token")?.value;
-  if (!token) return null;
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "default_secret_key");
-    return decoded.id;
-  } catch (err) {
-    return null;
-  }
-};
 
 export async function GET(req) {
   try {
-    const userId = getUserIdFromToken(req);
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
     if (!userId) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -34,7 +25,8 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const userId = getUserIdFromToken(req);
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
     if (!userId) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -65,7 +57,8 @@ export async function POST(req) {
 
 export async function PATCH(req) {
   try {
-    const userId = getUserIdFromToken(req);
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
     if (!userId) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }

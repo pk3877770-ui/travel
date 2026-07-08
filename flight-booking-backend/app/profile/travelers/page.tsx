@@ -113,8 +113,8 @@ export default function SavedTravelersPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <input type="text" placeholder="Full Name" value={newTraveler.name} onChange={e => setNewTraveler({...newTraveler, name: e.target.value})} className="border rounded-lg px-3 py-2 text-sm outline-none" />
                   <input type="email" placeholder="Email" value={newTraveler.email} onChange={e => setNewTraveler({...newTraveler, email: e.target.value})} className="border rounded-lg px-3 py-2 text-sm outline-none" />
-                  <input type="text" placeholder="Phone" value={newTraveler.phone} onChange={e => setNewTraveler({...newTraveler, phone: e.target.value})} className="border rounded-lg px-3 py-2 text-sm outline-none" />
-                  <input type="text" placeholder="Passport Number" value={newTraveler.passport} onChange={e => setNewTraveler({...newTraveler, passport: e.target.value})} className="border rounded-lg px-3 py-2 text-sm outline-none" />
+                  <input type="text" placeholder="Phone" maxLength={10} value={newTraveler.phone} onChange={e => setNewTraveler({...newTraveler, phone: e.target.value.replace(/\D/g, '')})} className="border rounded-lg px-3 py-2 text-sm outline-none" />
+                  <input type="text" placeholder="Passport Number" maxLength={9} value={newTraveler.passport} onChange={e => setNewTraveler({...newTraveler, passport: e.target.value.toUpperCase()})} className="border rounded-lg px-3 py-2 text-sm outline-none" />
                 </div>
                 <div className="flex justify-end gap-3 pt-2">
                   <button onClick={() => setShowAddForm(false)} className="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-200 rounded">Cancel</button>

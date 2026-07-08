@@ -1,22 +1,13 @@
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
-
-const getUserIdFromToken = (req) => {
-  const token = req.cookies.get("token")?.value;
-  if (!token) return null;
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "default_secret_key");
-    return decoded.id;
-  } catch (err) {
-    return null;
-  }
-};
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/authOptions";
 
 export async function GET(req) {
   try {
-    const userId = getUserIdFromToken(req);
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
     if (!userId) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -45,7 +36,8 @@ export async function GET(req) {
 
 export async function PUT(req) {
   try {
-    const userId = getUserIdFromToken(req);
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
     if (!userId) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
