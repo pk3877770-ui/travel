@@ -195,14 +195,14 @@ export default function ConfirmationPage() {
               <table className="w-full">
                 <tbody>
                   <tr><td className="font-bold pb-1 w-[70%]">Fare Breakdown</td><td></td></tr>
-                  <tr><td className="pb-1">Airfare:</td><td className="text-right pb-1">{((selectedFlight?.price || 754.80) * 0.8).toFixed(2)}</td></tr>
+                  <tr><td className="pb-1">Airfare:</td><td className="text-right pb-1">{(Number(selectedFlight?.price || 754.80) * 0.8).toFixed(2)}</td></tr>
                   <tr><td className="pb-1">Departure Tax:</td><td className="text-right pb-1">12.36</td></tr>
                   <tr><td className="pb-1">Pax Terminal Facilities Charge:</td><td className="text-right pb-1">10.60</td></tr>
                   <tr><td className="pb-1">Security Charge:</td><td className="text-right pb-1">5.50</td></tr>
                   <tr><td className="pb-1">Passenger Service Charge:</td><td className="text-right pb-1">15.00</td></tr>
-                  <tr><td className="pb-1">Per Person Total:</td><td className="text-right pb-1">{((selectedFlight?.price || 754.80) * 0.95).toFixed(2)}</td></tr>
+                  <tr><td className="pb-1">Per Person Total:</td><td className="text-right pb-1">{(Number(selectedFlight?.price || 754.80) * 0.95).toFixed(2)}</td></tr>
                   <tr><td className="py-2">&nbsp;</td><td></td></tr>
-                  <tr><td className="font-bold">Ticket Total:</td><td className="text-right font-bold">{(selectedFlight?.price || 754.80).toFixed(2)}</td></tr>
+                  <tr><td className="font-bold">Ticket Total:</td><td className="text-right font-bold">{Number(selectedFlight?.price || 754.80).toFixed(2)}</td></tr>
                 </tbody>
               </table>
             </div>
@@ -223,7 +223,7 @@ export default function ConfirmationPage() {
             </div>
           </div>
 
-          <div className="mb-8">The airfare you paid on this itinerary totals: {(selectedFlight?.price || 754.80).toFixed(2)} USD</div>
+          <div className="mb-8">The airfare you paid on this itinerary totals: {Number(selectedFlight?.price || 754.80).toFixed(2)} USD</div>
 
           <div className="flex text-[11px] mb-6">
             <div className="w-24 shrink-0">Award Rules:</div>
