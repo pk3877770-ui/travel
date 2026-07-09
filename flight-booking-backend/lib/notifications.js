@@ -140,3 +140,33 @@ export const sendFlightReminder = async (booking) => {
     `Kramana Reminder: Your flight to ${booking.flight.to} (PNR: ${booking.bookingReference}) is coming up soon. Remember to web check-in!`
   );
 };
+
+/**
+ * Triggered when a hotel booking is created
+ */
+export const sendHotelBookingConfirmation = async (booking) => {
+  const email = booking.guestDetails?.email || "user@example.com";
+  const phone = booking.guestDetails?.phone || "+1234567890";
+
+  // Email
+  await sendEmail(
+    email,
+    `Hotel Booking Confirmed: ${booking.bookingReference}`,
+    `<div style="font-family: Arial, sans-serif; padding: 20px;">
+      <h2 style="color: #0A58CA;">Kramana Hotel Itinerary</h2>
+      <p>Dear ${booking.guestDetails?.name || "Guest"},</p>
+      <p>Your hotel has been confirmed. Booking Reference: <strong>${booking.bookingReference}</strong></p>
+      <p>Hotel: ${booking.hotelName}</p>
+      <p>Check-In: ${new Date(booking.checkIn).toLocaleDateString()}</p>
+      <p>Check-Out: ${new Date(booking.checkOut).toLocaleDateString()}</p>
+      <p>Total Paid: ₹${booking.totalAmount}</p>
+      <p>Enjoy your stay!</p>
+    </div>`
+  );
+
+  // SMS
+  await sendSMS(
+    phone,
+    `Kramana: Hotel Booking Confirmed! Ref ${booking.bookingReference} for ${booking.hotelName} from ${new Date(booking.checkIn).toLocaleDateString()} to ${new Date(booking.checkOut).toLocaleDateString()}.`
+  );
+};

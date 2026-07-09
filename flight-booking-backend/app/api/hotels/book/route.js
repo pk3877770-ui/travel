@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import HotelBooking from "@/models/HotelBooking";
 import crypto from "crypto";
+import { sendHotelBookingConfirmation } from "@/lib/notifications";
 
 export async function POST(req) {
   try {
@@ -30,6 +31,9 @@ export async function POST(req) {
       };
     }
     
+    // Send confirmation email
+    await sendHotelBookingConfirmation(booking);
+
     return NextResponse.json({ success: true, data: booking }, { status: 201 });
   } catch (error) {
     console.error("Error creating hotel booking:", error);

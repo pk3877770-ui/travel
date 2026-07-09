@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import Booking from '@/models/Booking';
 import crypto from 'crypto';
+import { sendBookingConfirmation } from '@/lib/notifications';
 
 export async function POST(request) {
   try {
@@ -31,6 +32,14 @@ export async function POST(request) {
       console.warn("DB connection or creation failed, falling back to mock flight booking success:", dbError.message);
       bookingId = `mock-fb-${crypto.randomBytes(4).toString("hex")}`;
     }
+
+    // Send confirmation email asynchronously (no need to await and block response if we don't want to, but we'll await here to ensure it finishes or fails silently in the catch block inside notifications.js)
+    await sendBookingConfirmation({
+      bookingReference: pnr,
+      flight: payload.flight,
+      passengerDetails: payload.passengerDetails,
+      totalAmount: payload.totalAmount
+    });
 
     return NextResponse.json({ 
       success: true, 
