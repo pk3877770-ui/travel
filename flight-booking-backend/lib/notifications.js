@@ -69,15 +69,101 @@ export const sendBookingConfirmation = async (booking) => {
   // Email
   await sendEmail(
     email,
-    `Booking Confirmed: ${booking.bookingReference}`,
-    `<div style="font-family: Arial, sans-serif; padding: 20px;">
-      <h2 style="color: #0A58CA;">Kramana Itinerary</h2>
-      <p>Dear ${booking.passengerDetails?.name},</p>
-      <p>Your flight has been confirmed. PNR: <strong>${booking.bookingReference}</strong></p>
-      <p>Route: ${booking.flight.from} &rarr; ${booking.flight.to}</p>
-      <p>Date: ${booking.flight.date}</p>
-      <p>Total Paid: ₹${booking.totalAmount}</p>
-      <p>Have a great trip!</p>
+    `eTicket Receipt, Itinerary and Receipt for Confirmation ${booking.bookingReference}`,
+    `<div style="font-family: 'Courier New', Courier, monospace; color: #000; font-size: 11px; max-width: 800px; line-height: 1.4; padding: 20px;">
+      <div style="font-size: 12px; font-weight: bold; margin-bottom: 5px;">eTicket Receipt &amp; Itinerary</div>
+      <div style="border-top: 3px solid #000; border-bottom: 1px solid #000; margin-bottom: 15px; height: 2px;"></div>
+      
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px; font-size: 11px;">
+        <tr><td width="100"><strong>From:</strong></td><td>Kramana Airlines &lt;no-reply@kramana.com&gt;</td></tr>
+        <tr><td><strong>To:</strong></td><td>${booking.passengerDetails?.name || 'Customer'} &lt;${email}&gt;</td></tr>
+        <tr><td><strong>Subject:</strong></td><td>eTicket Receipt, Itinerary and Receipt for Confirmation ${booking.bookingReference}</td></tr>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 10px;">
+        <tr>
+          <td style="font-size: 18px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">${(booking.flight?.airline || 'KRAMANA AIRLINES').toUpperCase()}</td>
+          <td align="right">
+            <div style="font-size: 10px;">Confirmation</div>
+            <div style="font-size: 16px; font-weight: bold; font-family: Arial, sans-serif;">${booking.bookingReference}</div>
+          </td>
+        </tr>
+      </table>
+
+      <div style="margin-bottom: 15px;"><strong>Issue Date:</strong> ${new Date().toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</div>
+
+      <div style="border-top: 2px solid #000; margin-bottom: 2px;"></div>
+      <div style="border-top: 1px solid #000; margin-bottom: 5px;"></div>
+      
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 15px; text-align: left; font-size: 11px;">
+        <tr>
+          <th>Traveler</th>
+          <th>Ticket Number</th>
+          <th>Frequent Flyer</th>
+          <th>Seats</th>
+        </tr>
+        <tr>
+          <td>${booking.passengerDetails?.name || 'Customer'}<br>ADT</td>
+          <td>016${Math.floor(Math.random() * 10000000000).toString().padStart(10, '0')}</td>
+          <td>---</td>
+          <td>---</td>
+        </tr>
+      </table>
+
+      <div style="border-top: 2px solid #000; margin-bottom: 2px;"></div>
+      <div style="border-top: 1px solid #000; margin-bottom: 5px;"></div>
+
+      <div style="font-weight: bold; margin-bottom: 5px;">FLIGHT INFORMATION</div>
+      <table width="100%" cellpadding="2" cellspacing="0" style="margin-bottom: 15px; text-align: left; font-size: 10px;">
+        <tr>
+          <th width="15%">Day, Date</th>
+          <th width="15%">Flight Class</th>
+          <th width="30%">Departure City and Time</th>
+          <th width="30%">Arrival City and Time</th>
+          <th width="10%">Aircraft Meal</th>
+        </tr>
+        <tr>
+          <td>${booking.flight?.date || 'N/A'}</td>
+          <td>${booking.flight?.airline || 'N/A'}<br>Economy</td>
+          <td>${booking.flight?.from || 'N/A'}<br>${booking.flight?.departureTime || 'TBD'}</td>
+          <td>${booking.flight?.to || 'N/A'}<br>${booking.flight?.arrivalTime || 'TBD'}</td>
+          <td>737<br>---</td>
+        </tr>
+      </table>
+
+      <div style="border-top: 2px solid #000; margin-bottom: 2px;"></div>
+      <div style="border-top: 1px solid #000; margin-bottom: 5px;"></div>
+
+      <div style="font-weight: bold; margin-bottom: 5px;">FARE INFORMATION</div>
+      
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 15px; font-size: 11px;">
+        <tr>
+          <td width="50%" valign="top">
+            <table width="100%" cellpadding="2" cellspacing="0" style="font-size: 11px;">
+              <tr><td width="60%"><strong>Fare Breakdown</strong></td><td></td></tr>
+              <tr><td>Airfare:</td><td>${((booking.totalAmount || 0) * 0.8).toFixed(2)}</td></tr>
+              <tr><td>Taxes &amp; Fees:</td><td>${((booking.totalAmount || 0) * 0.2).toFixed(2)}</td></tr>
+              <tr><td><strong>Ticket Total:</strong></td><td><strong>${(booking.totalAmount || 0).toFixed(2)}</strong></td></tr>
+            </table>
+          </td>
+          <td width="50%" valign="top">
+            <table width="100%" cellpadding="2" cellspacing="0" style="font-size: 11px;">
+              <tr><td><strong>Form of Payment:</strong></td></tr>
+              <tr><td>CREDIT CARD</td></tr>
+              <tr><td>Last Four Digits: ****</td></tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      
+      <div style="border-top: 1px dashed #000; margin-bottom: 10px;"></div>
+      <div>The eTicket receipt will reflect the ticket total: ${(booking.totalAmount || 0).toFixed(2)}</div>
+      
+      <div style="border-top: 1px solid #000; margin-top: 15px; padding-top: 10px; font-size: 9px; color: #555;">
+        Additional charges may apply for changes in addition to any fare rules stated.<br>
+        All charges must be paid prior to the departure date on the ticket file on record.
+      </div>
+      <div style="border-top: 2px solid #000; margin-top: 5px;"></div>
     </div>`
   );
 
