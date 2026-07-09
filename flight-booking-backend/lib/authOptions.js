@@ -102,9 +102,37 @@ export const authOptions = {
     async jwt({ token, user, account }) {
       // On initial sign-in, persist MongoDB user data into the JWT
       if (user) {
-        token.mongoId = user.mongoId;
-        token.role = user.role;
+        if (user.mongoId) {
+          token.mongoId = user.mongoId;
+          token.role = user.role;
+        } else if (user.email) {
+          try {
+            await dbConnect();
+            const dbUser = await User.findOne({ email: user.email });
+            if (dbUser) {
+              token.mongoId = dbUser._id.toString();
+              token.role = dbUser.role;
+            }
+          } catch (e) {
+            console.error("JWT DB Fetch Error:", e);
+          }
+        }
       }
+
+      // Self-heal: If an existing session doesn't have mongoId, fetch it
+      if (!token.mongoId && token.email) {
+        try {
+          await dbConnect();
+          const dbUser = await User.findOne({ email: token.email });
+          if (dbUser) {
+            token.mongoId = dbUser._id.toString();
+            token.role = dbUser.role;
+          }
+        } catch (e) {
+          console.error("JWT Session Healing Error:", e);
+        }
+      }
+
       return token;
     },
     async session({ session, token }) {
