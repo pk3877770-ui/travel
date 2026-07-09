@@ -33,6 +33,12 @@ export type PassengerDetails = {
   phone: string;
   bookingDate: string;
   countryCode: string;
+  title?: string;
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  nationality?: string;
+  baggage?: boolean;
 };
 
 interface BookingContextType {
@@ -58,6 +64,12 @@ const defaultPassenger = {
   phone: "",
   bookingDate: "",
   countryCode: "+91",
+  title: "Mr",
+  firstName: "",
+  lastName: "",
+  gender: "Male",
+  nationality: "Indian",
+  baggage: false,
 };
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);

@@ -10,17 +10,20 @@ import Stepper, { Step } from "@/components/Stepper";
 export default function PassengerDetailsPage() {
   const router = useRouter();
   const { selectedFlight, passenger, setPassenger } = useBooking();
-  const [addBaggage, setAddBaggage] = useState(false);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setPassenger(prev => ({ ...prev, [name]: value }));
+  };
 
-  useEffect(() => {
-    if (!selectedFlight) {
-      // Allow previewing the page without selected flight for mockup purposes
-      // router.push("/flights");
-    }
-  }, [selectedFlight, router]);
+  const handleBaggageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassenger(prev => ({ ...prev, baggage: e.target.checked }));
+  };
 
   const handleContinue = () => {
     // Basic validation could go here
+    if (!passenger.name) {
+      setPassenger(prev => ({ ...prev, name: `${prev.firstName || ''} ${prev.lastName || ''}`.trim() || 'Guest' }));
+    }
     router.push("/booking/seats");
   };
 
@@ -49,7 +52,10 @@ export default function PassengerDetailsPage() {
                   <label className="text-xs font-medium text-slate-500 block mb-2">Full Name</label>
                   <input 
                     type="text" 
-                    defaultValue="Rahul Sharma"
+                    name="name"
+                    value={passenger.name}
+                    onChange={handleChange}
+                    placeholder="Rahul Sharma"
                     className="w-full border border-slate-200 rounded-lg p-3 outline-none focus:border-primary text-sm font-medium text-slate-800" 
                   />
                 </div>
@@ -57,7 +63,10 @@ export default function PassengerDetailsPage() {
                   <label className="text-xs font-medium text-slate-500 block mb-2">Email Address</label>
                   <input 
                     type="email" 
-                    defaultValue="rahulsharma@email.com"
+                    name="email"
+                    value={passenger.email}
+                    onChange={handleChange}
+                    placeholder="rahulsharma@email.com"
                     className="w-full border border-slate-200 rounded-lg p-3 outline-none focus:border-primary text-sm font-medium text-slate-800" 
                   />
                 </div>
@@ -67,7 +76,10 @@ export default function PassengerDetailsPage() {
                   <label className="text-xs font-medium text-slate-500 block mb-2">Phone Number</label>
                   <input 
                     type="tel" 
-                    defaultValue="+91 98765 43210"
+                    name="phone"
+                    value={passenger.phone}
+                    onChange={handleChange}
+                    placeholder="+91 98765 43210"
                     className="w-full border border-slate-200 rounded-lg p-3 outline-none focus:border-primary text-sm font-medium text-slate-800" 
                   />
                 </div>
@@ -82,17 +94,20 @@ export default function PassengerDetailsPage() {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-6">
                 <div className="col-span-1 md:col-span-3">
                   <label className="text-xs font-medium text-slate-500 block mb-2">Title</label>
-                  <select className="w-full border border-slate-200 rounded-lg p-3 outline-none focus:border-primary text-sm font-medium text-slate-800 bg-white cursor-pointer">
-                    <option>Mr</option>
-                    <option>Mrs</option>
-                    <option>Ms</option>
+                  <select name="title" value={passenger.title} onChange={handleChange} className="w-full border border-slate-200 rounded-lg p-3 outline-none focus:border-primary text-sm font-medium text-slate-800 bg-white cursor-pointer">
+                    <option value="Mr">Mr</option>
+                    <option value="Mrs">Mrs</option>
+                    <option value="Ms">Ms</option>
                   </select>
                 </div>
                 <div className="col-span-1 md:col-span-4">
                   <label className="text-xs font-medium text-slate-500 block mb-2">First Name</label>
                   <input 
                     type="text" 
-                    defaultValue="Rahul"
+                    name="firstName"
+                    value={passenger.firstName}
+                    onChange={handleChange}
+                    placeholder="Rahul"
                     className="w-full border border-slate-200 rounded-lg p-3 outline-none focus:border-primary text-sm font-medium text-slate-800" 
                   />
                 </div>
@@ -100,7 +115,10 @@ export default function PassengerDetailsPage() {
                   <label className="text-xs font-medium text-slate-500 block mb-2">Last Name</label>
                   <input 
                     type="text" 
-                    defaultValue="Sharma"
+                    name="lastName"
+                    value={passenger.lastName}
+                    onChange={handleChange}
+                    placeholder="Sharma"
                     className="w-full border border-slate-200 rounded-lg p-3 outline-none focus:border-primary text-sm font-medium text-slate-800" 
                   />
                 </div>
@@ -111,7 +129,10 @@ export default function PassengerDetailsPage() {
                   <div className="relative">
                     <input 
                       type="text" 
-                      defaultValue="12/05/1995"
+                      name="dob"
+                      value={passenger.dob}
+                      onChange={handleChange}
+                      placeholder="12/05/1995"
                       className="w-full border border-slate-200 rounded-lg p-3 outline-none focus:border-primary text-sm font-medium text-slate-800" 
                     />
                     <Calendar className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -119,18 +140,18 @@ export default function PassengerDetailsPage() {
                 </div>
                 <div>
                   <label className="text-xs font-medium text-slate-500 block mb-2">Gender</label>
-                  <select className="w-full border border-slate-200 rounded-lg p-3 outline-none focus:border-primary text-sm font-medium text-slate-800 bg-white cursor-pointer">
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Other</option>
+                  <select name="gender" value={passenger.gender} onChange={handleChange} className="w-full border border-slate-200 rounded-lg p-3 outline-none focus:border-primary text-sm font-medium text-slate-800 bg-white cursor-pointer">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
                 <div>
                   <label className="text-xs font-medium text-slate-500 block mb-2">Nationality</label>
-                  <select className="w-full border border-slate-200 rounded-lg p-3 outline-none focus:border-primary text-sm font-medium text-slate-800 bg-white cursor-pointer">
-                    <option>Indian</option>
-                    <option>American</option>
-                    <option>British</option>
+                  <select name="nationality" value={passenger.nationality} onChange={handleChange} className="w-full border border-slate-200 rounded-lg p-3 outline-none focus:border-primary text-sm font-medium text-slate-800 bg-white cursor-pointer">
+                    <option value="Indian">Indian</option>
+                    <option value="American">American</option>
+                    <option value="British">British</option>
                   </select>
                 </div>
               </div>
@@ -145,8 +166,8 @@ export default function PassengerDetailsPage() {
                 <div className="flex items-center gap-4">
                   <input 
                     type="checkbox" 
-                    checked={addBaggage}
-                    onChange={(e) => setAddBaggage(e.target.checked)}
+                    checked={passenger.baggage || false}
+                    onChange={handleBaggageChange}
                     className="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary accent-primary" 
                   />
                   <span className="text-sm font-medium text-slate-600">15 kg Check-in Baggage</span>

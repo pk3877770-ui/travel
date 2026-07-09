@@ -14,9 +14,17 @@ const bookingSchema = new mongoose.Schema({
   },
   travelers: { type: Number, required: true },
   passengerDetails: {
+    title: { type: String },
+    firstName: { type: String },
+    lastName: { type: String },
     name: { type: String, required: true },
     email: { type: String, required: true },
-    passport: { type: String, required: true }
+    phone: { type: String },
+    dob: { type: String },
+    gender: { type: String },
+    nationality: { type: String },
+    passport: { type: String },
+    baggage: { type: Boolean }
   },
   totalAmount: { type: Number, required: true },
   status: { 
