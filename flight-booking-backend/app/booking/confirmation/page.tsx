@@ -97,26 +97,25 @@ export default function ConfirmationPage() {
         <Stepper steps={steps} />
 
         <div id="ticket-content" className="bg-white p-8 font-mono text-[11px] leading-[1.2] text-black w-full max-w-[800px] mx-auto shadow-lg relative">
-          <div className="font-bold uppercase text-[13px]">{passenger.name || "JULIAN LOPEZ / BROWN"}</div>
+          <div className="font-bold uppercase text-[13px]">{passenger.name || "UNKNOWN PASSENGER"}</div>
           <div className="border-b-[3px] border-black mt-1 mb-3"></div>
 
           <table className="w-full mb-5 text-[11px]">
             <tbody>
-              <tr><td className="w-24 font-bold align-top">From:</td><td>{selectedFlight?.airline || 'United Airlines, Inc.'} &lt;no-reply@{(selectedFlight?.airline || 'united').toLowerCase().replace(/\\s+/g, '')}.com&gt;</td></tr>
+              <tr><td className="w-24 font-bold align-top">From:</td><td>{selectedFlight?.airline || 'Airline'} &lt;no-reply@{(selectedFlight?.airline || 'airline').toLowerCase().replace(/\\s+/g, '')}.com&gt;</td></tr>
               <tr><td className="font-bold align-top">Sent:</td><td>{new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true })}</td></tr>
-              <tr><td className="font-bold align-top">To:</td><td>{passenger.name || 'Julian Lopez Brown'}, &lt;{passenger.email || 'julietabrownie@gmail.com'}&gt;</td></tr>
-              <tr><td className="font-bold align-top">Subject:</td><td>MileagePlus Ticket itinerary and Receipt for Confirmation {bookingReference || "ER7020S"}</td></tr>
+              <tr><td className="font-bold align-top">To:</td><td>{passenger.name || 'Passenger'}, &lt;{passenger.email || 'passenger@email.com'}&gt;</td></tr>
+              <tr><td className="font-bold align-top">Subject:</td><td>Ticket itinerary and Receipt for Confirmation {bookingReference || "PENDING"}</td></tr>
             </tbody>
           </table>
 
           <div className="flex justify-between items-end mb-4">
             <div>
-              <span className="text-[#002244] text-2xl font-bold font-sans uppercase tracking-widest">{selectedFlight?.airline || 'UNITED'}</span> 
-              <span className="text-[10px] text-gray-600 font-sans ml-2">A STAR ALLIANCE MEMBER</span>
+              <span className="text-[#002244] text-2xl font-bold font-sans uppercase tracking-widest">{selectedFlight?.airline || 'AIRLINE'}</span> 
             </div>
             <div className="text-right">
               <div className="text-[11px]">Confirmation:</div>
-              <div className="text-lg font-bold font-sans">{bookingReference || "ER7020S"}</div>
+              <div className="text-lg font-bold font-sans">{bookingReference || "PENDING"}</div>
             </div>
           </div>
 
@@ -136,10 +135,10 @@ export default function ConfirmationPage() {
             </thead>
             <tbody>
               <tr>
-                <td className="uppercase whitespace-pre-line">{passenger.name ? passenger.name.replace(' ', '\\n') : 'JULIAN LOPEZ\\nBROWN'}</td>
+                <td className="uppercase whitespace-pre-line">{passenger.name ? passenger.name.replace(' ', '\\n') : 'UNKNOWN\\nPASSENGER'}</td>
                 <td className="align-top">016{Math.floor(Math.random() * 10000000000).toString().padStart(10, '0')}</td>
-                <td className="align-top">UA-X0000X058</td>
-                <td className="align-top">{selectedSeat || 'C-15'}</td>
+                <td className="align-top">---</td>
+                <td className="align-top">{selectedSeat || '---'}</td>
               </tr>
             </tbody>
           </table>
@@ -160,29 +159,15 @@ export default function ConfirmationPage() {
             </thead>
             <tbody>
               <tr>
-                <td className="align-top py-1">{selectedFlight?.date || 'Wed, Dec 27'}</td>
+                <td className="align-top py-1">{selectedFlight?.date || 'Unknown Date'}</td>
                 <td className="align-top py-1">Economy</td>
-                <td className="align-top py-1 uppercase">{selectedFlight?.from || 'QUEBEC CITY, (YQB)'}<br/>{selectedFlight?.departureTime || '6:04a'}</td>
-                <td className="align-top py-1 uppercase">{selectedFlight?.to || 'NEWARK, (EWR)'}<br/>{selectedFlight?.arrivalTime || '8:15a'}</td>
-                <td className="align-top py-1 text-right">UA 3783</td>
-              </tr>
-              <tr className="bg-[#e5e7eb]">
-                <td className="align-top py-1 px-1 -ml-1">{selectedFlight?.date || 'Wed, Dec 27'}</td>
-                <td className="align-top py-1">Economy</td>
-                <td className="align-top py-1 uppercase">{selectedFlight?.to || 'NEWARK, (EWR)'}<br/>11:00a</td>
-                <td className="align-top py-1 uppercase">TORONTO, (YYZ)<br/>12:45p</td>
-                <td className="align-top py-1 text-right pr-1">AC 8877</td>
-              </tr>
-              <tr>
-                <td className="align-top py-1">{selectedFlight?.date || 'Wed, Dec 27'}</td>
-                <td className="align-top py-1">Economy</td>
-                <td className="align-top py-1 uppercase">TORONTO, (YYZ)<br/>5:55p</td>
-                <td className="align-top py-1 uppercase">WINNIPEG, (YWG)<br/>7:39p</td>
-                <td className="align-top py-1 text-right">AC 267</td>
+                <td className="align-top py-1 uppercase">{selectedFlight?.from || 'UNKNOWN'}<br/>{selectedFlight?.departureTime || 'TBD'}</td>
+                <td className="align-top py-1 uppercase">{selectedFlight?.to || 'UNKNOWN'}<br/>{selectedFlight?.arrivalTime || 'TBD'}</td>
+                <td className="align-top py-1 text-right">---</td>
               </tr>
             </tbody>
           </table>
-          <div className="italic text-[11px] mb-2">Operated by Air Canada Express - Jazz</div>
+          <div className="italic text-[11px] mb-2">Operated by {selectedFlight?.airline || 'Airline'}</div>
           <div className="bg-[#e5e7eb] h-6 mb-4 w-full"></div>
 
           <div className="border-b-[2px] border-black mb-[2px]"></div>
@@ -195,14 +180,10 @@ export default function ConfirmationPage() {
               <table className="w-full">
                 <tbody>
                   <tr><td className="font-bold pb-1 w-[70%]">Fare Breakdown</td><td></td></tr>
-                  <tr><td className="pb-1">Airfare:</td><td className="text-right pb-1">{(Number(selectedFlight?.price || 754.80) * 0.8).toFixed(2)}</td></tr>
-                  <tr><td className="pb-1">Departure Tax:</td><td className="text-right pb-1">12.36</td></tr>
-                  <tr><td className="pb-1">Pax Terminal Facilities Charge:</td><td className="text-right pb-1">10.60</td></tr>
-                  <tr><td className="pb-1">Security Charge:</td><td className="text-right pb-1">5.50</td></tr>
-                  <tr><td className="pb-1">Passenger Service Charge:</td><td className="text-right pb-1">15.00</td></tr>
-                  <tr><td className="pb-1">Per Person Total:</td><td className="text-right pb-1">{(Number(selectedFlight?.price || 754.80) * 0.95).toFixed(2)}</td></tr>
+                  <tr><td className="pb-1">Airfare:</td><td className="text-right pb-1">{(Number(selectedFlight?.price || 0) * 0.8).toFixed(2)}</td></tr>
+                  <tr><td className="pb-1">Taxes &amp; Fees:</td><td className="text-right pb-1">{(Number(selectedFlight?.price || 0) * 0.2).toFixed(2)}</td></tr>
                   <tr><td className="py-2">&nbsp;</td><td></td></tr>
-                  <tr><td className="font-bold">Ticket Total:</td><td className="text-right font-bold">{Number(selectedFlight?.price || 754.80).toFixed(2)}</td></tr>
+                  <tr><td className="font-bold">Ticket Total:</td><td className="text-right font-bold">{Number(selectedFlight?.price || 0).toFixed(2)}</td></tr>
                 </tbody>
               </table>
             </div>
@@ -223,7 +204,7 @@ export default function ConfirmationPage() {
             </div>
           </div>
 
-          <div className="mb-8">The airfare you paid on this itinerary totals: {Number(selectedFlight?.price || 754.80).toFixed(2)} USD</div>
+          <div className="mb-8">The airfare you paid on this itinerary totals: {Number(selectedFlight?.price || 0).toFixed(2)} USD</div>
 
           <div className="flex text-[11px] mb-6">
             <div className="w-24 shrink-0">Award Rules:</div>

@@ -71,21 +71,20 @@ export const sendBookingConfirmation = async (booking) => {
     email,
     `eTicket Receipt, Itinerary and Receipt for Confirmation ${booking.bookingReference}`,
     `<div style="font-family: 'Courier New', Courier, monospace; color: #000; font-size: 11px; max-width: 800px; margin: 0 auto; line-height: 1.2; padding: 20px;">
-      <div style="font-weight: bold; text-transform: uppercase;">${booking.passengerDetails?.name || 'JULIAN LOPEZ / BROWN'}</div>
+      <div style="font-weight: bold; text-transform: uppercase;">${booking.passengerDetails?.name || 'Unknown Passenger'}</div>
       <div style="border-bottom: 3px solid #000; margin-top: 5px; margin-bottom: 10px;"></div>
 
       <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px; font-size: 11px;">
-        <tr><td width="100"><strong>From:</strong></td><td>${booking.flight?.airline || 'United Airlines, Inc.'} &lt;no-reply@${(booking.flight?.airline || 'united').toLowerCase().replace(/\\s+/g, '')}.com&gt;</td></tr>
+        <tr><td width="100"><strong>From:</strong></td><td>${booking.flight?.airline || 'Airline'} &lt;no-reply@${(booking.flight?.airline || 'airline').toLowerCase().replace(/\\s+/g, '')}.com&gt;</td></tr>
         <tr><td><strong>Sent:</strong></td><td>${new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true })}</td></tr>
-        <tr><td><strong>To:</strong></td><td>${booking.passengerDetails?.name || 'Julian Lopez Brown'}, &lt;${email}&gt;</td></tr>
-        <tr><td><strong>Subject:</strong></td><td>MileagePlus Ticket itinerary and Receipt for Confirmation ${booking.bookingReference}</td></tr>
+        <tr><td><strong>To:</strong></td><td>${booking.passengerDetails?.name || 'Passenger'}, &lt;${email}&gt;</td></tr>
+        <tr><td><strong>Subject:</strong></td><td>Ticket itinerary and Receipt for Confirmation ${booking.bookingReference}</td></tr>
       </table>
 
       <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
         <tr>
           <td>
-            <span style="color: #002244; font-size: 24px; font-weight: bold; font-family: Arial, sans-serif;">${(booking.flight?.airline || 'UNITED').toUpperCase()}</span> 
-            <span style="font-size: 10px; color: #555; font-family: Arial, sans-serif; margin-left: 10px;">A STAR ALLIANCE MEMBER</span>
+            <span style="color: #002244; font-size: 24px; font-weight: bold; font-family: Arial, sans-serif;">${(booking.flight?.airline || 'AIRLINE').toUpperCase()}</span> 
           </td>
           <td align="right">
             <div style="font-size: 11px;">Confirmation:</div>
@@ -107,10 +106,10 @@ export const sendBookingConfirmation = async (booking) => {
           <th width="25%" style="font-weight: bold;">Seats</th>
         </tr>
         <tr>
-          <td style="text-transform: uppercase;">${booking.passengerDetails?.name || 'JULIAN LOPEZ<br>BROWN'}</td>
+          <td style="text-transform: uppercase;">${booking.passengerDetails?.name || 'UNKNOWN PASSENGER'}</td>
           <td>016${Math.floor(Math.random() * 10000000000).toString().padStart(10, '0')}</td>
-          <td>UA-X0000X058</td>
-          <td>C-15</td>
+          <td>---</td>
+          <td>---</td>
         </tr>
       </table>
 
@@ -127,28 +126,14 @@ export const sendBookingConfirmation = async (booking) => {
           <th width="10%" style="font-weight: bold;">Aircraft Meal</th>
         </tr>
         <tr>
-          <td valign="top">${booking.flight?.date || 'Wed, Dec 27'}</td>
+          <td valign="top">${booking.flight?.date || 'Unknown Date'}</td>
           <td valign="top">Economy</td>
-          <td valign="top">${booking.flight?.from?.toUpperCase() || 'QUEBEC CITY, (YQB)'}<br>${booking.flight?.departureTime || '6:04a'}</td>
-          <td valign="top">${booking.flight?.to?.toUpperCase() || 'NEWARK, (EWR)'}<br>${booking.flight?.arrivalTime || '8:15a'}</td>
-          <td valign="top" align="right">UA 3783</td>
-        </tr>
-        <tr style="background-color: #d9d9d9;">
-          <td valign="top">${booking.flight?.date || 'Wed, Dec 27'}</td>
-          <td valign="top">Economy</td>
-          <td valign="top">${booking.flight?.to?.toUpperCase() || 'NEWARK, (EWR)'}<br>11:00a</td>
-          <td valign="top">TORONTO, (YYZ)<br>12:45p</td>
-          <td valign="top" align="right">AC 8877</td>
-        </tr>
-        <tr>
-          <td valign="top">${booking.flight?.date || 'Wed, Dec 27'}</td>
-          <td valign="top">Economy</td>
-          <td valign="top">TORONTO, (YYZ)<br>5:55p</td>
-          <td valign="top">WINNIPEG, (YWG)<br>7:39p</td>
-          <td valign="top" align="right">AC 267</td>
+          <td valign="top">${booking.flight?.from?.toUpperCase() || 'UNKNOWN'}<br>${booking.flight?.departureTime || 'TBD'}</td>
+          <td valign="top">${booking.flight?.to?.toUpperCase() || 'UNKNOWN'}<br>${booking.flight?.arrivalTime || 'TBD'}</td>
+          <td valign="top" align="right">---</td>
         </tr>
       </table>
-      <div style="font-style: italic; font-size: 11px; margin-top: -10px; margin-bottom: 10px;">Operated by Air Canada Express - Jazz</div>
+      <div style="font-style: italic; font-size: 11px; margin-top: -10px; margin-bottom: 10px;">Operated by ${booking.flight?.airline || 'Airline'}</div>
       <div style="background-color: #d9d9d9; height: 20px; margin-bottom: 15px;"></div>
 
       <div style="border-bottom: 2px solid #000; margin-bottom: 2px;"></div>
@@ -161,44 +146,29 @@ export const sendBookingConfirmation = async (booking) => {
           <td width="35%" valign="top">
             <table width="100%" cellpadding="1" cellspacing="0" style="font-size: 11px;">
               <tr><td width="70%"><strong>Fare Breakdown</strong></td><td></td></tr>
-              <tr><td>Airfare:</td><td align="right">${((booking.totalAmount || 754.80) * 0.8).toFixed(2)}</td></tr>
-              <tr><td>Departure Tax:</td><td align="right">12.36</td></tr>
-              <tr><td>Pax Terminal Facilities Charge:</td><td align="right">10.60</td></tr>
-              <tr><td>Security Charge:</td><td align="right">5.50</td></tr>
-              <tr><td>Passenger Service Charge:</td><td align="right">15.00</td></tr>
-              <tr><td>Per Person Total:</td><td align="right">${((booking.totalAmount || 754.80) * 0.95).toFixed(2)}</td></tr>
+              <tr><td>Airfare:</td><td align="right">${(Number(booking.totalAmount || 0) * 0.8).toFixed(2)}</td></tr>
+              <tr><td>Taxes &amp; Fees:</td><td align="right">${(Number(booking.totalAmount || 0) * 0.2).toFixed(2)}</td></tr>
               <tr><td>&nbsp;</td><td></td></tr>
-              <tr><td><strong>Ticket Total:</strong></td><td align="right"><strong>${(booking.totalAmount || 754.80).toFixed(2)}</strong></td></tr>
+              <tr><td><strong>Ticket Total:</strong></td><td align="right"><strong>${Number(booking.totalAmount || 0).toFixed(2)}</strong></td></tr>
             </table>
           </td>
           <td width="30%" valign="top" style="padding-left: 10px;">
             <table width="100%" cellpadding="1" cellspacing="0" style="font-size: 11px;">
-              <tr><td><strong>MileagePlus Account Debited:</strong></td></tr>
-              <tr><td>L0754601</td></tr>
-              <tr><td>&nbsp;</td></tr>
               <tr><td><strong>Form of Payment:</strong></td></tr>
-              <tr><td>VISA</td></tr>
-              <tr><td>Last Four Digits 0024</td></tr>
-            </table>
-          </td>
-          <td width="35%" valign="top" style="padding-left: 10px;">
-            <table width="100%" cellpadding="1" cellspacing="0" style="font-size: 11px;">
-              <tr><td><strong>MileagePlus Miles Debited/</strong></td></tr>
-              <tr><td><strong>Award Used:</strong></td></tr>
-              <tr><td>37500/WC77K</td></tr>
+              <tr><td>CREDIT CARD</td></tr>
+              <tr><td>Last Four Digits: ****</td></tr>
             </table>
           </td>
         </tr>
       </table>
 
-      <div style="margin-bottom: 30px;">The airfare you paid on this itinerary totals: ${(booking.totalAmount || 754.80).toFixed(2)} USD</div>
+      <div style="margin-bottom: 30px;">The airfare you paid on this itinerary totals: ${Number(booking.totalAmount || 0).toFixed(2)} USD</div>
 
       <table width="100%" cellpadding="0" cellspacing="0" style="font-size: 11px; margin-bottom: 5px;">
         <tr>
           <td width="80" valign="top">Award Rules:</td>
           <td valign="top">
             Additional charges may apply for changes in addition to any fare rules listed.<br>
-            RWD WC77K/NONEND/-TRAN:VALID UA/A3/CA<br>
             All changes must be made prior to the departure date, or the ticket has no value.
           </td>
         </tr>
