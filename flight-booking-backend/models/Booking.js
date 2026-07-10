@@ -1,38 +1,101 @@
-// models/Booking.js
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+
+  bookingReference: {
+    type: String,
+    unique: true,
+    required: true
+  },
+
+  paymentId: {
+    type: String,
+    default: ""
+  },
+
+  paymentMethod: {
+    type: String,
+    enum: ["Stripe", "Razorpay", "PayPal"],
+    default: "Stripe"
+  },
+
+  paymentStatus: {
+    type: String,
+    enum: ["Pending", "Success", "Failed"],
+    default: "Pending"
+  },
+
+  status: {
+    type: String,
+    enum: ["confirmed", "cancelled", "pending"],
+    default: "confirmed"
+  },
+
   flight: {
-    from: { type: String, required: true },
-    to: { type: String, required: true },
-    date: { type: String, required: true },
-    airline: { type: String, required: true },
-    price: { type: Number, required: true },
-    departureTime: { type: String, required: true },
-    arrivalTime: { type: String, required: true }
+
+    flightNumber: String,
+
+    airline: String,
+
+    from: String,
+
+    to: String,
+
+    departureTime: String,
+
+    arrivalTime: String,
+
+    date: String,
+
+    price: Number
+
   },
-  travelers: { type: Number, required: true },
+
+  travelers: {
+    type: Number,
+    default: 1
+  },
+
   passengerDetails: {
-    title: { type: String },
-    firstName: { type: String },
-    lastName: { type: String },
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    phone: { type: String },
-    dob: { type: String },
-    gender: { type: String },
-    nationality: { type: String },
-    passport: { type: String },
-    baggage: { type: Boolean }
+
+    title: String,
+
+    firstName: String,
+
+    lastName: String,
+
+    name: String,
+
+    email: String,
+
+    phone: String,
+
+    dob: String,
+
+    gender: String,
+
+    nationality: String,
+
+    passport: String,
+
+    baggage: Boolean
+
   },
-  totalAmount: { type: Number, required: true },
-  status: { 
-    type: String, 
-    enum: ['confirmed', 'pending', 'cancelled'], 
-    default: 'confirmed' 
+
+  seatNumber: {
+    type: String,
+    default: ""
   },
-  bookingReference: { type: String, unique: true, required: true }
+
+  totalAmount: Number
+
 }, { timestamps: true });
 
-export default mongoose.models.Booking || mongoose.model('Booking', bookingSchema);
+export default mongoose.models.Booking ||
+  mongoose.model("Booking", bookingSchema);

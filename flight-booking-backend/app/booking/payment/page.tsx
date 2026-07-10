@@ -51,13 +51,13 @@ const StripeCheckoutForm = ({ totalAmount, onSuccess, onError }: { totalAmount: 
           }} />
         </div>
       </div>
-      
+
       <div>
         <label className="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Name on Card</label>
         <input type="text" placeholder="Cardholder Name" required className="w-full border border-slate-200 rounded-xl p-3 outline-none focus:border-[#0A58CA] font-medium text-slate-800" />
       </div>
 
-      <button 
+      <button
         type="submit"
         disabled={!stripe || processing}
         className="w-full bg-[#0A58CA] hover:bg-blue-700 text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center disabled:opacity-50"
@@ -104,22 +104,39 @@ export default function PaymentPage() {
   const handlePaymentSuccess = async () => {
     setPaymentStatus("processing");
     try {
+      let mappedMethod = "Stripe";
+      if (activeMethod === "upi" || activeMethod === "netbanking") mappedMethod = "Razorpay";
+      if (activeMethod === "paypal") mappedMethod = "PayPal";
+
       const payload = {
         userId: "647b2c9e78216b2341234567",
+        paymentMethod: mappedMethod,
+        seatNumber: selectedSeat || "",
         flight: {
-          from: selectedFlight?.from || "DEL",
-          to: selectedFlight?.to || "BOM",
-          date: selectedFlight?.date || new Date().toISOString(),
-          airline: selectedFlight?.airline || "INDIGO",
-          price: selectedFlight?.price || 12499,
-          departureTime: selectedFlight?.departureTime || new Date().toISOString(),
-          arrivalTime: selectedFlight?.arrivalTime || new Date(Date.now() + 7200000).toISOString()
+          flightNumber: selectedFlight?.flightNumber || "",
+          airline: selectedFlight?.airline || "",
+          from: selectedFlight?.from || "",
+          to: selectedFlight?.to || "",
+          departureTime: selectedFlight?.departureTime || "",
+          arrivalTime: selectedFlight?.arrivalTime || "",
+          date: selectedFlight?.date || "",
+          price: Number(selectedFlight?.price) || 0
         },
         travelers: 1,
         passengerDetails: {
-          name: passenger?.name || "Mock Passenger",
-          email: passenger?.email || "mock@test.com",
-          passport: passenger?.passport || "N/A"
+          title: passenger.title || "Mr",
+          firstName: passenger.firstName || "",
+          lastName: passenger.lastName || "",
+          name:
+            passenger.name ||
+            `${passenger.firstName || ""} ${passenger.lastName || ""}`.trim(),
+          email: passenger.email || "",
+          phone: passenger.phone || "",
+          dob: passenger.dob || "",
+          gender: passenger.gender || "",
+          nationality: passenger.nationality || "",
+          passport: passenger.passport || "",
+          baggage: passenger.baggage || false
         },
         totalAmount: totalAmount
       };
@@ -130,13 +147,13 @@ export default function PaymentPage() {
         body: JSON.stringify(payload)
       });
       const data = await res.json();
-      
+
       setPaymentStatus("success");
-      setBookingReference(data.pnr || `FB${Math.floor(100000 + Math.random() * 900000)}`);
+      setBookingReference(data.bookingReference || `FB${Math.floor(100000 + Math.random() * 900000)}`);
       setTimeout(() => {
         router.push(`/booking/confirmation`);
       }, 2000);
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       setPaymentStatus("success");
       setBookingReference(`FB${Math.floor(100000 + Math.random() * 900000)}`);
@@ -165,7 +182,7 @@ export default function PaymentPage() {
   return (
     <div className="pt-24 pb-16 bg-[#f8f9fa] min-h-screen font-sans">
       <div className="container max-w-[1200px] mx-auto px-4 md:px-8">
-        
+
         <Stepper steps={steps} />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -175,7 +192,7 @@ export default function PaymentPage() {
               <div className="bg-slate-50 border-b border-slate-200 p-6 font-bold text-slate-800 text-lg flex items-center gap-2">
                 <Lock className="w-5 h-5 text-slate-500" /> Secure Checkout
               </div>
-              
+
               <AnimatePresence mode="wait">
                 {paymentStatus === "idle" && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col md:flex-row min-h-[450px]">
@@ -192,8 +209,8 @@ export default function PaymentPage() {
                           onClick={() => setActiveMethod(method.id)}
                           className={cn(
                             "w-full flex items-center gap-3 p-4 rounded-xl text-sm font-bold transition-all text-left",
-                            activeMethod === method.id 
-                              ? "bg-white shadow-sm border border-slate-200 text-[#0A58CA]" 
+                            activeMethod === method.id
+                              ? "bg-white shadow-sm border border-slate-200 text-[#0A58CA]"
                               : "text-slate-600 hover:bg-slate-100 border border-transparent"
                           )}
                         >
@@ -202,15 +219,15 @@ export default function PaymentPage() {
                         </button>
                       ))}
                     </div>
-                    
+
                     {/* Tab Content */}
                     <div className="w-full md:w-2/3 p-8">
                       {activeMethod === "card" && (
                         <Elements stripe={stripePromise}>
-                          <StripeCheckoutForm totalAmount={totalAmount} onSuccess={handlePaymentSuccess} onError={() => {}} />
+                          <StripeCheckoutForm totalAmount={totalAmount} onSuccess={handlePaymentSuccess} onError={() => { }} />
                         </Elements>
                       )}
-                      
+
                       {activeMethod === "upi" && (
                         <div className="h-full flex flex-col items-center justify-center text-center">
                           <Smartphone className="w-16 h-16 mb-4 text-[#0A58CA]" />
@@ -228,7 +245,7 @@ export default function PaymentPage() {
                           <p className="text-sm text-slate-500 mb-8 text-center">You will be redirected to PayPal to complete your purchase securely.</p>
                           <div className="max-w-xs mx-auto w-full">
                             <PayPalScriptProvider options={{ clientId: "test", currency: "USD" }}>
-                              <PayPalButtons 
+                              <PayPalButtons
                                 style={{ layout: "vertical", shape: "rect" }}
                                 createOrder={(data, actions) => {
                                   return actions.order.create({
@@ -237,7 +254,7 @@ export default function PaymentPage() {
                                   });
                                 }}
                                 onApprove={async (data, actions) => {
-                                  if(actions.order) {
+                                  if (actions.order) {
                                     await actions.order.capture();
                                     handlePaymentSuccess();
                                   }
@@ -287,7 +304,7 @@ export default function PaymentPage() {
           <div className="lg:col-span-1">
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-6 sticky top-24">
               <h3 className="text-lg font-bold text-slate-800 mb-6">Payment Summary</h3>
-              
+
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between items-center text-sm font-medium">
                   <span className="text-slate-500">Base Fare</span>
@@ -306,7 +323,7 @@ export default function PaymentPage() {
                   <span className="text-slate-800">₹{convenienceFee.toLocaleString()}</span>
                 </div>
               </div>
-              
+
               <div className="border-t border-slate-200 pt-6 flex justify-between items-center mb-6">
                 <span className="font-bold text-slate-800">Total Amount</span>
                 <span className="text-2xl font-black text-[#0A58CA]">₹{totalAmount.toLocaleString()}</span>

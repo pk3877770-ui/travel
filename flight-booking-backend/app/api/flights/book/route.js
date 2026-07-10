@@ -1,55 +1,113 @@
-import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/mongodb';
-import Booking from '@/models/Booking';
-import crypto from 'crypto';
-import { sendBookingConfirmation } from '@/lib/notifications';
+import { NextResponse } from "next/server";
+import dbConnect from "@/lib/mongodb";
+import Booking from "@/models/Booking";
+import crypto from "crypto";
+import { sendBookingConfirmation } from "@/lib/notifications";
 
 export async function POST(request) {
   try {
+    await dbConnect();
+
     const payload = await request.json();
 
-    if (!payload.userId || !payload.flight || !payload.passengerDetails) {
-      return NextResponse.json({ success: false, error: 'Missing booking parameters' }, { status: 400 });
+    // Validation
+    if (!payload.userId) {
+      return NextResponse.json(
+        { success: false, error: "User ID is required" },
+        { status: 400 }
+      );
     }
 
-    let pnr = `FB-${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
-    let bookingId;
-    
+    if (!payload.flight) {
+      return NextResponse.json(
+        { success: false, error: "Flight details are missing" },
+        { status: 400 }
+      );
+    }
+
+    if (!payload.passengerDetails) {
+      return NextResponse.json(
+        { success: false, error: "Passenger details are missing" },
+        { status: 400 }
+      );
+    }
+
+    // Generate Booking Reference
+    const bookingReference =
+      "FB-" + crypto.randomBytes(4).toString("hex").toUpperCase();
+
+    // Save Booking
+    const booking = await Booking.create({
+      user: payload.userId,
+
+      bookingReference,
+
+      paymentId: payload.paymentId || "",
+
+      paymentMethod: payload.paymentMethod || "Stripe",
+
+      paymentStatus: "Success",
+
+      status: "confirmed",
+
+      flight: {
+        flightNumber: payload.flight.flightNumber || "",
+        airline: payload.flight.airline,
+        from: payload.flight.from,
+        to: payload.flight.to,
+        departureTime: payload.flight.departureTime,
+        arrivalTime: payload.flight.arrivalTime,
+        date: payload.flight.date,
+        price: payload.flight.price,
+      },
+
+      travelers: payload.travelers || 1,
+
+      passengerDetails: {
+        title: payload.passengerDetails.title,
+        firstName: payload.passengerDetails.firstName,
+        lastName: payload.passengerDetails.lastName,
+        name: payload.passengerDetails.name,
+        email: payload.passengerDetails.email,
+        phone: payload.passengerDetails.phone,
+        dob: payload.passengerDetails.dob,
+        gender: payload.passengerDetails.gender,
+        nationality: payload.passengerDetails.nationality,
+        passport: payload.passengerDetails.passport,
+        baggage: payload.passengerDetails.baggage,
+      },
+
+      seatNumber: payload.seatNumber || "",
+
+      totalAmount: payload.totalAmount,
+    });
+
+    // Send Email (optional)
     try {
-      await dbConnect();
-      const localBooking = new Booking({
-        user: payload.userId,
-        flight: payload.flight,
-        travelers: payload.travelers || 1,
-        passengerDetails: payload.passengerDetails,
-        totalAmount: payload.totalAmount,
-        status: "confirmed",
-        bookingReference: pnr,
+      await sendBookingConfirmation({
+        bookingReference,
+        flight: booking.flight,
+        passengerDetails: booking.passengerDetails,
+        totalAmount: booking.totalAmount,
       });
-      await localBooking.save();
-      bookingId = localBooking._id;
-    } catch (dbError) {
-      console.warn("DB connection or creation failed, falling back to mock flight booking success:", dbError.message);
-      bookingId = `mock-fb-${crypto.randomBytes(4).toString("hex")}`;
+    } catch (e) {
+      console.log("Email not sent:", e.message);
     }
 
-    // Send confirmation email asynchronously (no need to await and block response if we don't want to, but we'll await here to ensure it finishes or fails silently in the catch block inside notifications.js)
-    await sendBookingConfirmation({
-      bookingReference: pnr,
-      flight: payload.flight,
-      passengerDetails: payload.passengerDetails,
-      totalAmount: payload.totalAmount
+    return NextResponse.json({
+      success: true,
+      bookingReference,
+      booking,
     });
-
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Flight booked successfully!',
-      pnr: pnr,
-      bookingId: bookingId
-    });
-
   } catch (error) {
-    console.error("Flight Booking Finalization Error:", error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: error.message,
+      },
+      { status: 500 }
+    );
   }
 }
