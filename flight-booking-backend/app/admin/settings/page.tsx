@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Loader2, Save, Globe, Phone, Mail, DollarSign, ShieldAlert, CheckCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 
 export default function AdminSettingsPage() {
   const [activeTab, setActiveTab] = useState("general");
@@ -148,7 +148,7 @@ export default function AdminSettingsPage() {
                             onChange={(e) => setForm({ ...form, currency: e.target.value })}
                             className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-100 appearance-none cursor-pointer"
                           >
-                            <option value="INR">INR (₹)</option>
+                            <option value="INR">USD ($)</option>
                             <option value="USD">USD ($)</option>
                             <option value="EUR">EUR (€)</option>
                             <option value="GBP">GBP (£)</option>

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Plane, Info, Check, X } from "lucide-react";
 import { useBooking } from "@/context/BookingContext";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import Stepper, { Step } from "@/components/Stepper";
 
 const flightDateLabel = (() => {
@@ -201,7 +201,7 @@ export default function SeatsSelectionPage() {
                   
                   <div className="border-t border-slate-100 pt-6 flex flex-col gap-2">
                     <span className="text-xs font-bold text-slate-500">Price</span>
-                    <span className="text-xl font-bold text-slate-900">₹ 350</span>
+                    <span className="text-xl font-bold text-slate-900">{formatCurrency(5)}</span>
                   </div>
                 </div>
 

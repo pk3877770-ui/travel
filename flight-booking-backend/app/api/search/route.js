@@ -85,16 +85,16 @@ function buildMockFlights(from, to, date) {
   const L = (code) => `https://images.kiwi.com/airlines/64x64/${code}.png`;
 
   return [
-    { airline: "IndiGo",    logo: L("6E"), departureTime: "06:20", arrivalTime: "08:50", dur: "2h 30m", stops: "Non Stop", price: 12499, class: "Economy" },
-    { airline: "SpiceJet",  logo: L("SG"), departureTime: "05:30", arrivalTime: "08:00", dur: "2h 30m", stops: "Non Stop", price: 9890,  class: "Economy" },
-    { airline: "Air India", logo: L("AI"), departureTime: "07:45", arrivalTime: "13:25", dur: "5h 40m", stops: "1 Stop",   price: 13290, class: "Economy" },
-    { airline: "IndiGo",    logo: L("6E"), departureTime: "13:10", arrivalTime: "15:35", dur: "2h 25m", stops: "Non Stop", price: 10999, class: "Economy" },
-    { airline: "Vistara",   logo: L("UK"), departureTime: "09:15", arrivalTime: "11:50", dur: "2h 35m", stops: "Non Stop", price: 14210, class: "Business" },
-    { airline: "Akasa Air", logo: L("QP"), departureTime: "11:30", arrivalTime: "14:15", dur: "2h 45m", stops: "Non Stop", price: 11990, class: "Economy" },
-    { airline: "Air India", logo: L("AI"), departureTime: "18:05", arrivalTime: "22:50", dur: "4h 45m", stops: "1 Stop",   price: 13750, class: "Economy" },
-    { airline: "Vistara",   logo: L("UK"), departureTime: "16:40", arrivalTime: "19:20", dur: "2h 40m", stops: "Non Stop", price: 15600, class: "Business" },
-    { airline: "Akasa Air", logo: L("QP"), departureTime: "22:15", arrivalTime: "00:45", dur: "2h 30m", stops: "Non Stop", price: 11250, class: "Economy" },
-    { airline: "SpiceJet",  logo: L("SG"), departureTime: "20:45", arrivalTime: "02:55", dur: "6h 10m", stops: "1 Stop",   price: 12890, class: "Economy" },
+    { airline: "IndiGo",    logo: L("6E"), departureTime: "06:20", arrivalTime: "08:50", dur: "2h 30m", stops: "Non Stop", price: 150, class: "Economy" },
+    { airline: "SpiceJet",  logo: L("SG"), departureTime: "05:30", arrivalTime: "08:00", dur: "2h 30m", stops: "Non Stop", price: 119,  class: "Economy" },
+    { airline: "Air India", logo: L("AI"), departureTime: "07:45", arrivalTime: "13:25", dur: "5h 40m", stops: "1 Stop",   price: 159, class: "Economy" },
+    { airline: "IndiGo",    logo: L("6E"), departureTime: "13:10", arrivalTime: "15:35", dur: "2h 25m", stops: "Non Stop", price: 135, class: "Economy" },
+    { airline: "Vistara",   logo: L("UK"), departureTime: "09:15", arrivalTime: "11:50", dur: "2h 35m", stops: "Non Stop", price: 175, class: "Business" },
+    { airline: "Akasa Air", logo: L("QP"), departureTime: "11:30", arrivalTime: "14:15", dur: "2h 45m", stops: "Non Stop", price: 145, class: "Economy" },
+    { airline: "Air India", logo: L("AI"), departureTime: "18:05", arrivalTime: "22:50", dur: "4h 45m", stops: "1 Stop",   price: 165, class: "Economy" },
+    { airline: "Vistara",   logo: L("UK"), departureTime: "16:40", arrivalTime: "19:20", dur: "2h 40m", stops: "Non Stop", price: 189, class: "Business" },
+    { airline: "Akasa Air", logo: L("QP"), departureTime: "22:15", arrivalTime: "00:45", dur: "2h 30m", stops: "Non Stop", price: 135, class: "Economy" },
+    { airline: "SpiceJet",  logo: L("SG"), departureTime: "20:45", arrivalTime: "02:55", dur: "6h 10m", stops: "1 Stop",   price: 155, class: "Economy" },
   ].map((flight, i) => ({
     _id: `mock${i + 1}`,
     from: f,

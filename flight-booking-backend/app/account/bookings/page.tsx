@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatCurrency } from "@/lib/utils";
 
 type Booking = {
     _id: string;
@@ -181,7 +182,7 @@ export default function MyBookingsPage() {
 
                                     <h3 className="font-semibold">
 
-                                        ₹ {booking.totalAmount}
+                                        {formatCurrency(booking.totalAmount)}
 
                                     </h3>
 

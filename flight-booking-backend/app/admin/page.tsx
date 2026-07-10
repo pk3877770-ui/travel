@@ -16,9 +16,9 @@ import {
   X,
   ArrowUp,
   TrendingUp,
-  IndianRupee,
+  DollarSign,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import { logoutAction } from "./login/actions";
 
 const sidebarLinks = [
@@ -57,7 +57,7 @@ export default function AdminDashboardPage() {
 
   const stats = [
     { title: "Total Bookings", value: data.bookings.toLocaleString(), icon: Briefcase },
-    { title: "Revenue", value: `₹ ${data.revenue.toLocaleString()}`, icon: IndianRupee },
+    { title: "Revenue", value: formatCurrency(data.revenue), icon: DollarSign },
     { title: "Users", value: data.users.toLocaleString(), icon: Users },
     { title: "Inquiry Leads", value: data.leads.toLocaleString(), icon: UserPlus },
   ];
@@ -218,7 +218,7 @@ export default function AdminDashboardPage() {
                       <span className="text-xs font-bold text-slate-700 truncate">{booking.name}</span>
                     </div>
                     <div className="text-xs font-bold text-slate-500 text-center flex-1">{booking.route}</div>
-                    <div className="text-xs font-bold text-slate-800 text-right w-1/4">₹ {Number(booking.price).toLocaleString()}</div>
+                    <div className="text-xs font-bold text-slate-800 text-right w-1/4">{formatCurrency(Number(booking.price))}</div>
                   </div>
                 ))}
               </div>

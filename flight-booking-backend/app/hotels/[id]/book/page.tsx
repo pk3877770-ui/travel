@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
+import { formatCurrency } from '@/lib/utils';
 import { CheckCircle2, ChevronRight, Lock } from "lucide-react";
 import Link from "next/link";
 
@@ -240,8 +241,8 @@ export default function HotelBookingPage() {
 
               <div className="border-t border-slate-100 pt-4 mb-6">
                 <div className="flex justify-between items-center mb-2 text-sm">
-                  <span className="text-slate-500">{nights} {nights === 1 ? 'night' : 'nights'} @ ₹{room.price.toLocaleString()}</span>
-                  <span className="text-slate-800 font-medium">₹{(room.price * nights).toLocaleString()}</span>
+                  <span className="text-slate-500">{nights} {nights === 1 ? 'night' : 'nights'} @ {formatCurrency(room.price)}</span>
+                  <span className="text-slate-800 font-medium">{formatCurrency(room.price * nights)}</span>
                 </div>
                 <div className="flex justify-between items-center mb-4 text-sm">
                   <span className="text-slate-500">Taxes & Fees</span>
@@ -249,7 +250,7 @@ export default function HotelBookingPage() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-bold text-slate-800">Total Price</span>
-                  <span className="text-2xl font-black text-[#0A58CA]">₹{totalAmount.toLocaleString()}</span>
+                  <span className="text-2xl font-black text-[#0A58CA]">{formatCurrency(totalAmount)}</span>
                 </div>
               </div>
             </div>

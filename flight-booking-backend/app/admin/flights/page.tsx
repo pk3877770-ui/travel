@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import { Search, Plus, Loader2, Edit, Trash2, XCircle, AlertTriangle, Plane } from "lucide-react";
 
 export default function AdminFlightsPage() {
@@ -244,7 +244,7 @@ export default function AdminFlightsPage() {
                         <p className="text-[11px] text-slate-500">Duration: {flight.duration}</p>
                       </td>
                       <td className="p-4">
-                        <p className="font-bold text-emerald-600">₹{flight.price.toLocaleString("en-IN")}</p>
+                        <p className="font-bold text-emerald-600">{formatCurrency(flight.price)}</p>
                         <p className="text-[11px] text-slate-500">{flight.seatsAvailable} / {flight.totalSeats} Seats</p>
                       </td>
                       <td className="p-4">
@@ -390,7 +390,7 @@ export default function AdminFlightsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-500 mb-1.5">Price (₹)</label>
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">Price ($)</label>
                     <input
                       type="number"
                       required

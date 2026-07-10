@@ -4,7 +4,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Plane, Search, RefreshCcw } from "lucide-react";
-import { cn, formatSeoParam } from "@/lib/utils";
+import { cn, formatSeoParam, formatCurrency } from "@/lib/utils";
 import { useBooking } from "@/context/BookingContext";
 
 // Default to a week out so we never show a date in the past
@@ -24,16 +24,16 @@ const L = (code: string) => `https://images.kiwi.com/airlines/64x64/${code}.png`
 
 // Local fallback list (used only if the search API is unreachable)
 const MOCK_FLIGHTS = [
-  { id: 1,  airline: "IndiGo",    logo: L("6E"), dep: "06:20", arr: "08:50", dur: "2h 30m", stops: "Non Stop", price: 12499 },
-  { id: 2,  airline: "SpiceJet",  logo: L("SG"), dep: "05:30", arr: "08:00", dur: "2h 30m", stops: "Non Stop", price: 9890  },
-  { id: 3,  airline: "Air India", logo: L("AI"), dep: "07:45", arr: "13:25", dur: "5h 40m", stops: "1 Stop",   price: 13290 },
-  { id: 4,  airline: "IndiGo",    logo: L("6E"), dep: "13:10", arr: "15:35", dur: "2h 25m", stops: "Non Stop", price: 10999 },
-  { id: 5,  airline: "Vistara",   logo: L("UK"), dep: "09:15", arr: "11:50", dur: "2h 35m", stops: "Non Stop", price: 14210 },
-  { id: 6,  airline: "Akasa Air", logo: L("QP"), dep: "11:30", arr: "14:15", dur: "2h 45m", stops: "Non Stop", price: 11990 },
-  { id: 7,  airline: "Air India", logo: L("AI"), dep: "18:05", arr: "22:50", dur: "4h 45m", stops: "1 Stop",   price: 13750 },
-  { id: 8,  airline: "Vistara",   logo: L("UK"), dep: "16:40", arr: "19:20", dur: "2h 40m", stops: "Non Stop", price: 15600 },
-  { id: 9,  airline: "Akasa Air", logo: L("QP"), dep: "22:15", arr: "00:45", dur: "2h 30m", stops: "Non Stop", price: 11250 },
-  { id: 10, airline: "SpiceJet",  logo: L("SG"), dep: "20:45", arr: "02:55", dur: "6h 10m", stops: "1 Stop",   price: 12890 },
+  { id: 1,  airline: "IndiGo",    logo: L("6E"), dep: "06:20", arr: "08:50", dur: "2h 30m", stops: "Non Stop", price: 150 },
+  { id: 2,  airline: "SpiceJet",  logo: L("SG"), dep: "05:30", arr: "08:00", dur: "2h 30m", stops: "Non Stop", price: 55  },
+  { id: 3,  airline: "Air India", logo: L("AI"), dep: "07:45", arr: "13:25", dur: "5h 40m", stops: "1 Stop",   price: 65 },
+  { id: 4,  airline: "IndiGo",    logo: L("6E"), dep: "13:10", arr: "15:35", dur: "2h 25m", stops: "Non Stop", price: 135 },
+  { id: 5,  airline: "Vistara",   logo: L("UK"), dep: "09:15", arr: "11:50", dur: "2h 35m", stops: "Non Stop", price: 145 },
+  { id: 6,  airline: "Akasa Air", logo: L("QP"), dep: "11:30", arr: "14:15", dur: "2h 45m", stops: "Non Stop", price: 160 },
+  { id: 7,  airline: "Air India", logo: L("AI"), dep: "18:05", arr: "22:50", dur: "4h 45m", stops: "1 Stop",   price: 175 },
+  { id: 8,  airline: "Vistara",   logo: L("UK"), dep: "16:40", arr: "19:20", dur: "2h 40m", stops: "Non Stop", price: 195 },
+  { id: 9,  airline: "Akasa Air", logo: L("QP"), dep: "22:15", arr: "00:45", dur: "2h 30m", stops: "Non Stop", price: 140 },
+  { id: 10, airline: "SpiceJet",  logo: L("SG"), dep: "20:45", arr: "02:55", dur: "6h 10m", stops: "1 Stop",   price: 155 },
 ];
 
 // "2h 30m" -> 150 (minutes), for sorting
@@ -56,7 +56,7 @@ export default function FlightClient() {
 
   // Filters state
   const [filterAirline, setFilterAirline] = useState<string[]>([]);
-  const [filterMaxPrice, setFilterMaxPrice] = useState<number>(25000);
+  const [filterMaxPrice, setFilterMaxPrice] = useState<number>(300);
   const [filterStops, setFilterStops] = useState<string[]>([]);
   const [filterMaxDeparture, setFilterMaxDeparture] = useState<number>(24);
   const [filterMaxDuration, setFilterMaxDuration] = useState<number>(30);
@@ -201,7 +201,7 @@ export default function FlightClient() {
             "offers": {
               "@type": "Offer",
               "price": f.price,
-              "priceCurrency": "INR"
+              "priceCurrency": "USD"
             }
           }
         }))
@@ -249,15 +249,15 @@ export default function FlightClient() {
               <div className="mb-8">
                 <span className="font-bold text-sm text-slate-800 block mb-4">Price Range</span>
                 <div className="flex justify-between items-center mb-2 text-xs font-medium text-slate-500">
-                  <span>₹2,000</span>
+                  <span>$25</span>
                   <span>-</span>
-                  <span>₹{filterMaxPrice.toLocaleString()}</span>
+                  <span>${filterMaxPrice}</span>
                 </div>
                 <input 
                   type="range" 
-                  min="2000" 
-                  max="25000" 
-                  step="500"
+                  min="25" 
+                  max="300" 
+                  step="5"
                   value={filterMaxPrice}
                   onChange={(e) => setFilterMaxPrice(Number(e.target.value))}
                   className="w-full accent-primary h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer mt-2"
@@ -434,8 +434,8 @@ export default function FlightClient() {
                     {/* Price & Action */}
                     <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center w-full md:w-auto md:min-w-[150px] border-t md:border-t-0 border-slate-100 pt-4 md:pt-0">
                       <div className="text-left md:text-right">
-                        <div className="font-bold text-2xl text-slate-800">
-                          ₹{(flight.price || 12499).toLocaleString()}
+                        <div className="font-bold text-lg md:text-xl text-slate-800">
+                          {formatCurrency((flight.price || 150))}
                         </div>
                         <div className="text-[10px] text-slate-400 font-medium">per traveler</div>
                       </div>

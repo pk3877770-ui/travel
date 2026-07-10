@@ -4,7 +4,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useBooking } from "@/context/BookingContext";
 import { Plane, ChevronRight, Briefcase, Coffee, RefreshCcw } from "lucide-react";
-import { cn, formatSeoParam } from "@/lib/utils";
+import { cn, formatSeoParam, formatCurrency } from "@/lib/utils";
 
 const dateFromNow = (days: number) => {
   const d = new Date();
@@ -284,7 +284,7 @@ export default function FlightDetailsPage() {
 
                   <div className="flex items-center justify-between md:justify-end gap-8 w-full md:w-auto">
                     <div className="font-bold text-lg text-slate-800">
-                      ₹{flight.price.toLocaleString()}
+                      {formatCurrency(flight.price)}
                     </div>
                     <button 
                       onClick={() => {

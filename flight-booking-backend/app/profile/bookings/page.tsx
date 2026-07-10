@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
@@ -160,7 +160,7 @@ export default function MyBookingsPage() {
                               </div>
                               <div>
                                 <p className="text-[10px] text-slate-400 font-bold uppercase">Total Amount</p>
-                                <p className="text-xs font-bold text-slate-800">₹{booking.totalAmount}</p>
+                                <p className="text-xs font-bold text-slate-800">{formatCurrency(booking.totalAmount)}</p>
                               </div>
                             </div>
                             {!isCancelled && (

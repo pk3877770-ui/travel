@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import { 
   LayoutDashboard, Briefcase, Users, Plane, UserPlus, Tag, BarChart3, Settings, LogOut, 
-  TrendingUp, TrendingDown, IndianRupee, Target, CalendarDays, Map
+  TrendingUp, TrendingDown, DollarSign, Target, CalendarDays, Map
 } from "lucide-react";
 
 export default function AdminReportsPage() {
@@ -68,10 +68,10 @@ export default function AdminReportsPage() {
                 <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm flex items-center justify-between">
                   <div>
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">YTD Revenue</p>
-                    <p className="text-4xl font-black text-slate-800 tracking-tight">₹{totalYtdRevenue.toLocaleString()}</p>
+                    <p className="text-4xl font-black text-slate-800 tracking-tight">{formatCurrency(totalYtdRevenue)}</p>
                   </div>
                   <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
-                    <IndianRupee className="w-8 h-8" />
+                    <DollarSign className="w-8 h-8" />
                   </div>
                 </div>
 
@@ -113,7 +113,7 @@ export default function AdminReportsPage() {
                           <tr key={idx} className="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors">
                             <td className="py-4 font-bold text-slate-700">{m.month}</td>
                             <td className="py-4 text-center text-slate-600 font-medium">{m.bookings}</td>
-                            <td className="py-4 text-right font-black text-slate-800">₹{m.revenue.toLocaleString()}</td>
+                            <td className="py-4 text-right font-black text-slate-800">{formatCurrency(m.revenue)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -178,7 +178,7 @@ export default function AdminReportsPage() {
                           <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-[10px] p-2 rounded mb-2 whitespace-nowrap z-10 font-bold pointer-events-none">
                             {day._id}<br/>
                             {day.sales} Bookings<br/>
-                            ₹{day.revenue.toLocaleString()}
+                            {formatCurrency(day.revenue)}
                           </div>
                           {/* Bar */}
                           <div 

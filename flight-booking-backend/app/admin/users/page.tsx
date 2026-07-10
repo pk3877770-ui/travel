@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import {
   LayoutDashboard, Briefcase, Users, Plane, UserPlus, Tag, BarChart3, Settings, LogOut, Menu,
   Search, ShieldAlert, ShieldCheck, Ticket, XCircle, Plus, Loader2
@@ -258,7 +258,7 @@ export default function AdminUsersPage() {
                     <div className="text-right">
                       <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">Lifetime Revenue</p>
                       <p className="text-xl font-bold text-slate-800">
-                        ₹{userBookings.filter(b => b.status === "confirmed").reduce((sum, b) => sum + b.totalAmount, 0).toLocaleString()}
+                        {formatCurrency(userBookings.filter(b => b.status === "confirmed").reduce((sum, b) => sum + b.totalAmount, 0))}
                       </p>
                     </div>
                   </div>
@@ -283,7 +283,7 @@ export default function AdminUsersPage() {
                       </div>
                       <div className="text-right flex items-center justify-between md:flex-col md:items-end">
                         <span className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1 block">Amount Paid</span>
-                        <span className="font-black text-slate-800 text-lg">₹{b.totalAmount.toLocaleString()}</span>
+                        <span className="font-black text-slate-800 text-lg">{formatCurrency(b.totalAmount)}</span>
                       </div>
                     </div>
                   ))}

@@ -14,3 +14,15 @@ export function formatSeoParam(param: string | null): string | null {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
+
+/**
+ * Formats a given number into a currency string (e.g. $1,200)
+ */
+export function formatCurrency(amount: number, currency: string = "USD"): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+  }).format(amount);
+}

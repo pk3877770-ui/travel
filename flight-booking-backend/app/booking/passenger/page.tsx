@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useBooking } from "@/context/BookingContext";
 import { Calendar } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import Stepper, { Step } from "@/components/Stepper";
 
 export default function PassengerDetailsPage() {
@@ -172,7 +172,7 @@ export default function PassengerDetailsPage() {
                   />
                   <span className="text-sm font-medium text-slate-600">15 kg Check-in Baggage</span>
                 </div>
-                <span className="font-bold text-sm text-slate-800">₹ 1,200</span>
+                <span className="font-bold text-sm text-slate-800">{formatCurrency(15)}</span>
               </label>
             </div>
 

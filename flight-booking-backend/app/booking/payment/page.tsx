@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useBooking } from "@/context/BookingContext";
 import { CreditCard, Wallet, Landmark, RefreshCcw, Check, Smartphone, Lock, ShieldCheck } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import Stepper, { Step } from "@/components/Stepper";
 import { loadStripe } from "@stripe/stripe-js";
@@ -65,7 +65,7 @@ const StripeCheckoutForm = ({ totalAmount, onSuccess, onError }: { totalAmount: 
         {processing ? (
           <span className="flex items-center gap-2"><RefreshCcw className="w-5 h-5 animate-spin" /> Processing...</span>
         ) : (
-          <span className="flex items-center gap-2"><Lock className="w-4 h-4" /> Pay ₹{totalAmount.toLocaleString()}</span>
+          <span className="flex items-center gap-2"><Lock className="w-4 h-4" /> Pay {formatCurrency(totalAmount)}</span>
         )}
       </button>
     </form>
@@ -95,10 +95,10 @@ export default function PaymentPage() {
 
   // if (!selectedFlight) return null;
 
-  const basePrice = Number(selectedFlight?.price) || 12499;
+  const basePrice = Number(selectedFlight?.price) || 150;
   const taxes = Math.floor(basePrice * 0.18);
-  const seatFee = selectedSeat ? 450 : 0;
-  const convenienceFee = 250;
+  const seatFee = selectedSeat ? 5 : 0;
+  const convenienceFee = 3;
   const totalAmount = basePrice + taxes + seatFee + convenienceFee;
 
   const handlePaymentSuccess = async () => {
@@ -250,7 +250,7 @@ export default function PaymentPage() {
                                 createOrder={(data, actions) => {
                                   return actions.order.create({
                                     intent: "CAPTURE",
-                                    purchase_units: [{ amount: { currency_code: "USD", value: (totalAmount / 80).toFixed(2) } }],
+                                    purchase_units: [{ amount: { currency_code: "USD", value: totalAmount.toFixed(2) } }],
                                   });
                                 }}
                                 onApprove={async (data, actions) => {
@@ -308,25 +308,25 @@ export default function PaymentPage() {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between items-center text-sm font-medium">
                   <span className="text-slate-500">Base Fare</span>
-                  <span className="text-slate-800">₹{basePrice.toLocaleString()}</span>
+                  <span className="text-slate-800">{formatCurrency(basePrice)}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm font-medium">
                   <span className="text-slate-500">Taxes & Surcharges</span>
-                  <span className="text-slate-800">₹{taxes.toLocaleString()}</span>
+                  <span className="text-slate-800">{formatCurrency(taxes)}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm font-medium">
                   <span className="text-slate-500">Seat Selection</span>
-                  <span className="text-slate-800">₹{seatFee.toLocaleString()}</span>
+                  <span className="text-slate-800">{formatCurrency(seatFee)}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm font-medium">
                   <span className="text-slate-500">Convenience Fee</span>
-                  <span className="text-slate-800">₹{convenienceFee.toLocaleString()}</span>
+                  <span className="text-slate-800">{formatCurrency(convenienceFee)}</span>
                 </div>
               </div>
 
               <div className="border-t border-slate-200 pt-6 flex justify-between items-center mb-6">
                 <span className="font-bold text-slate-800">Total Amount</span>
-                <span className="text-2xl font-black text-[#0A58CA]">₹{totalAmount.toLocaleString()}</span>
+                <span className="text-2xl font-black text-[#0A58CA]">{formatCurrency(totalAmount)}</span>
               </div>
 
               {/* Secure Checkout Trust Badges */}
